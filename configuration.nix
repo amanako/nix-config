@@ -8,6 +8,7 @@
   imports =
     [ 
       ./hardware-configuration.nix
+      ./graphics.nix
     ];
 
   #FIXME Choose Bootloader.
@@ -88,16 +89,23 @@
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
-       kitty
-       vivaldi
-       yazi
-       starship
-       zoxide
-       fastfetch
-       sl
+      kitty
+      vivaldi
+      yazi
+      starship
+      zoxide
+      fastfetch
+      sl
+      protonup-qt
+      lutris
     ];
     shell = pkgs.fish;
+  };
+
+  programs.gamemode.enable = true;
+
+  environment.variables = {
+    EDITOR = "nvim";
   };
   
   programs.fish.enable = true;
