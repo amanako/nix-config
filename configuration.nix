@@ -10,14 +10,16 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
+  #FIXME Choose Bootloader.
+  #Uncomment first for classic systemd or leave as is for limine
+  
+  # Systemd setup from first install.
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
 
-  # Limine simple setup
+  # Limine simple setup.
   # Don't forget to changeup boot order for configuration to take effect
-  # For example efibootmgr -o ENTRIES and(or) efibootmgr -b ENTRY -B
-
+  # For example: efibootmgr -o ENTRIES and(or) efibootmgr -b ENTRY -B
   boot.loader = {
    efi = {
      canTouchEfiVariables = true;
@@ -30,6 +32,8 @@
    };
   };
 
+  # Define fonts for usage.
+  # My programming selection is victor-mono.
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
@@ -44,13 +48,13 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #FIXME Define your hostname.
+  networking.hostName = "nixos"; 
 
-  # Enable networking
+  # Enable networking.
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
+  #FIXME Set your time zone.
   time.timeZone = "Europe/Paris";
 
   # Define locale
@@ -79,7 +83,7 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.lunar-scar = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
@@ -98,11 +102,10 @@
   
   programs.fish.enable = true;
 
-  # Allow unfree packages
+  # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Add system packages.
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
