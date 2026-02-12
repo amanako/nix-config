@@ -6,7 +6,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
@@ -17,6 +17,7 @@
   # Limine simple setup
   # Don't forget to changeup boot order for configuration to take effect
   # For example efibootmgr -o ENTRIES and(or) efibootmgr -b ENTRY -B
+
   boot.loader = {
    efi = {
      canTouchEfiVariables = true;
@@ -44,19 +45,15 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Belgrade";
+  time.timeZone = "Europe/Paris";
 
-  # Select internationalisation properties.
+  # Define locale
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
@@ -72,9 +69,6 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -83,21 +77,11 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lunar-scar = {
     isNormalUser = true;
-    description = "Pavle";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     #  thunderbird
@@ -107,6 +91,7 @@
        starship
        zoxide
        fastfetch
+       sl
     ];
     shell = pkgs.fish;
   };
@@ -124,16 +109,6 @@
     git
     neovim
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
