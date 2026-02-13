@@ -8,12 +8,7 @@
   imports =
     [ 
       ./hardware-configuration.nix
-      #../modules/graphics.nix
-      ../modules/services.nix
       ../modules/boot-loader.nix
-      ../modules/fish.nix
-      ../modules/fonts.nix
-      ../modules/users.nix
     ];
 
   # Use latest kernel.
@@ -40,7 +35,7 @@
   ];
 
   programs = {
-    #gamemode.enable = true;
+    gamemode.enable = true;
     fish.enable = true;
   };
 
