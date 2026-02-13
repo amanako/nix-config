@@ -1,24 +1,27 @@
 { config, pkgs, ... }:
 
 {
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  programs.gamemode.enable = true;
+
   services.xserver.videoDrivers = [
     "amdgpu"
     "nvidia"
   ];
+
   hardware.nvidia = { 
     modesetting.enable = true;
-    powerManagement.finegrained = true;
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      sync.enable = true;
 
+      # Hardware specific - check out https://nixos.wiki/wiki/Nvidia
       amdgpuBusId = "PCI:5:0:0";
       nvidiaBusId = "PCI:1:0:0";
     };
