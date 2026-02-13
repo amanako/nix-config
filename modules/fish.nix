@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
+
 {
   programs.fish = {
     enable = true;
@@ -19,6 +15,7 @@
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
     };
+    # To be added with home-manager
     #plugins = [
     #  {
     #    name = "done";
