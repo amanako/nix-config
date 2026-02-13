@@ -22,7 +22,7 @@ rm -r /etc/nixos/
 sudo mv /etc/nixos /etc/nixos.bak
 ```
 
-4. Create a symlink to /etc/nixos/ for `sudo`-less file editing
+4. Create a symlink to `/etc/nixos/` for `sudo`-less file editing
 ```
 sudo ln -s ~/Documents/nixos-config /etc/nixos
 ```
