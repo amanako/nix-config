@@ -11,13 +11,18 @@
       #../modules/graphics.nix
       ../modules/services.nix
       ../modules/boot-loader.nix
-      #../modules/fish.nix
+      ../modules/fish.nix
       ../modules/fonts.nix
       ../modules/users.nix
     ];
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Define hostname
   networking = {

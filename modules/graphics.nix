@@ -5,10 +5,10 @@
     enable = true;
     enable32Bit = true;
   };
+
   programs.gamemode.enable = true;
 
   services.xserver.videoDrivers = [
-    "amdgpu"
     "nvidia"
   ];
 
