@@ -8,10 +8,10 @@
   imports =
     [ 
       ./hardware-configuration.nix
-      ../modules/graphics.nix
+      #../modules/graphics.nix
       ../modules/services.nix
       ../modules/boot-loader.nix
-      ../modules/fish.nix
+      #../modules/fish.nix
       ../modules/fonts.nix
       ../modules/users.nix
     ];
@@ -35,7 +35,8 @@
   ];
 
   programs = {
-    gamemode.enable = true;
+    #gamemode.enable = true;
+    fish.enable = true;
   };
 
   environment.variables = {
