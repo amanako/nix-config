@@ -40,7 +40,7 @@ mv hardware-configuration.nix nixos/hardware-configuration.nix
 
 4. Create a symlink to `/etc/nixos/` for `sudo`-less file editing
 ```
-sudo ln -s . /etc/nixos
+sudo ln ~/path-to-config /etc/nixos
 ```
 
 5. Rebuild
