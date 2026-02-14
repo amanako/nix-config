@@ -6,7 +6,7 @@
 
 {
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       ../modules/boot-loader.nix
       ../modules/services.nix
