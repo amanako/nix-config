@@ -4,3 +4,6 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# To force users to generate their own config
+hardware-configuration.nix

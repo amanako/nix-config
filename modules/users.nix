@@ -23,4 +23,3 @@
     shell = pkgs.fish;
   };
 }
-}

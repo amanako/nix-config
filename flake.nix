@@ -6,7 +6,7 @@
   };
 
   outputs = { self, nixpkgs }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nebula= nixpkgs.lib.nixosSystem {
       modules = [
         ./nixos/configuration.nix
       ];
