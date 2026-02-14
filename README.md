@@ -1,6 +1,6 @@
-1. Setup environment
+1. Setup environment (If applicable)
 ```
-mkdir -p ~/Documents/nixos-config && cd ~/Documents/nixos-config
+nix-shell -p git
 ```
 
 2. Clone the repository
@@ -22,9 +22,16 @@ rm -r /etc/nixos/
 sudo mv /etc/nixos /etc/nixos.bak
 ```
 
+4. **Important** Generate your own hardware configuration
+```
+nixos-generate-config --dir . 
+rm configuration.nix 
+mv hardware-configuration.nix nix-config/nixos/hardware-configuration.nix
+```
+
 4. Create a symlink to `/etc/nixos/` for `sudo`-less file editing
 ```
-sudo ln -s ~/Documents/nixos-config /etc/nixos
+sudo ln -s nixos-config /etc/nixos
 ```
 
 5. Rebuild

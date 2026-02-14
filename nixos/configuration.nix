@@ -9,6 +9,12 @@
     [ 
       ./hardware-configuration.nix
       ../modules/boot-loader.nix
+      ../modules/services.nix
+      ../modules/fonts.nix
+      ../modules/users.nix
+      # Pending fixes
+      # ../modules/fish.nix
+      # ../modules/graphics.nix
     ];
 
   # Use latest kernel.
@@ -21,8 +27,8 @@
 
   # Define hostname
   networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
+    hostName = "nebula";
+    #networkmanager.enable = true;
   };
 
   # Set your time zone.
@@ -35,7 +41,6 @@
   ];
 
   programs = {
-    gamemode.enable = true;
     fish.enable = true;
   };
 
