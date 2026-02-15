@@ -1,8 +1,8 @@
-{ inputs, lib, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
-
+    ./imports.nix
   ];
 
   home = {
@@ -20,6 +20,7 @@
     tree
     file
     pciutils
+    usbutils
     
     # Nix-related
     nix-output-monitor
@@ -42,7 +43,6 @@
       
     };
   };
-
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

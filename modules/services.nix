@@ -10,8 +10,8 @@
       enable = true;
 
       # Enable GNOME desktop environment;
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
+      # displayManager.gdm.enable = true;
+      # desktopManager.gnome.enable = true;
 
       #Configure keymap in X11
       xkb = {
@@ -30,6 +30,20 @@
       };
 
       pulse.enable = true;
+    };
+
+    displayManager = {
+      lemurs = {
+        enable = true;
+	settings = { 
+          tty = 1;
+          focus_behaviour = "username";
+	  remember = true;
+	  show_movers = true;
+	  left_mover = "<<";
+	  right_mover = ">>";
+	};
+      };
     };
   };
   #security.rtkit.enable = true;

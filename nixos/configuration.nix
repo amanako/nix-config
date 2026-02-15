@@ -28,7 +28,6 @@
   # Define hostname
   networking = {
     hostName = "nebula";
-    #networkmanager.enable = true;
   };
 
   # Set your time zone.
@@ -42,6 +41,7 @@
 
   programs = {
     fish.enable = true;
+    niri.enable = true;
   };
 
   environment.variables = {
