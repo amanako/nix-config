@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +39,7 @@
           ./nixos/configuration.nix
 	  ./home-manager/niri.nix
 	  ./home-manager/noctalia.nix
-        
+
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
 	    home-manager.useUserPackages = true;

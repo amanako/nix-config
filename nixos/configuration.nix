@@ -14,8 +14,10 @@
       ../modules/users.nix
       # Pending fixes
       # ../modules/fish.nix
-      # ../modules/graphics.nix
+      ../modules/graphics.nix
     ];
+
+  hardware.bluetooth.enable = true;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;

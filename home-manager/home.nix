@@ -6,6 +6,11 @@
     homeDirectory = "/home/lunar-scar";
   };
 
+  imports = [
+    inputs.dms.homeModules.dank-material-shell
+    inputs.dms.homeModules.niri
+  ];
+
   home.packages = with pkgs; [
     eza
     ripgrep
@@ -42,6 +47,15 @@
       
     };
   };
+  programs.dank-material-shell = {
+    enable = true;
+    niri = {
+      enableSpawn = true;
+      enableKeybinds = true;
+      includes.enable = false;
+    };
+  };
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
