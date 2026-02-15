@@ -22,25 +22,26 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: 
   let
-    inherit (self) outputs;
   in {
     nixosConfigurations = {
       nebula = nixpkgs.lib.nixosSystem {
         specialArgs = { 
 	  inherit
 	    inputs
-	    outputs
 	    ;
 	};
         modules = [
           ./nixos/configuration.nix
-
+	  ./home-manager/niri.nix
+	  ./home-manager/noctalia.nix
+        
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
 	    home-manager.useUserPackages = true;
-
-	    home-manager.users.lunar-scar = import ./home-manager/home.nix;
-	  }
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+ 
+            home-manager.users.lunar-scar = import ./home-manager/home.nix;
+	 }
 	];
       };
     };

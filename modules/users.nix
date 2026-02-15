@@ -19,7 +19,7 @@
         sl
         protonup-qt
         lutris
-        inputs.home-manager.packages.${pkgs.system}.default
+        #inputs.home-manager.packages.${pkgs.system}.default
       ];
       shell = pkgs.fish;
     };

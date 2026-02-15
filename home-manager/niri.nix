@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 
 {
   home-manager.users.lunar-scar = {
@@ -19,6 +19,12 @@
           XDG_CURRENT_DESKTOP = "niri";
 	  XDG_SESSION_TYPE = "wayland";
 	  QT_QPA_PLATFORM = "wayland";
+	};
+
+	binds = with config.lib.niri.actions; {
+          "Mod+Space".action = "qs -c noctalia-shell ipc call launcher toggle";
+	  "Mod+S".action = "qs -c noctalia-shell ipc call controlCenter toggle";
+	  "Mod+Comma".action = "qs -c noctalia-shell ipc call settings toggle";
 	};
       };
     };

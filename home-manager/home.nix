@@ -1,10 +1,6 @@
 { inputs, pkgs, ... }:
 
 {
-  imports = [
-    ./imports.nix
-  ];
-
   home = {
     username = "lunar-scar";
     homeDirectory = "/home/lunar-scar";
@@ -24,6 +20,9 @@
     
     # Nix-related
     nix-output-monitor
+
+    # Fallback options
+    alacritty
   ];
 
   programs.home-manager.enable = true;
