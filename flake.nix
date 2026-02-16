@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,11 +42,8 @@
 	};
         modules = [
           ./nixos/configuration.nix
-	  ./home-manager/niri.nix
-	  ./home-manager/noctalia.nix
 
           home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
 	    home-manager.useUserPackages = true;
 	    home-manager.extraSpecialArgs = { inherit inputs; };
  

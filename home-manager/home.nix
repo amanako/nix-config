@@ -5,10 +5,18 @@
     username = "lunar-scar";
     homeDirectory = "/home/lunar-scar";
   };
+ 
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
 
   imports = [
+    inputs.niri.homeModules.niri
     inputs.dms.homeModules.dank-material-shell
     inputs.dms.homeModules.niri
+    inputs.dms-plugin-registry.modules.default
+    ./programs
   ];
 
   home.packages = with pkgs; [
@@ -47,15 +55,6 @@
       
     };
   };
-  programs.dank-material-shell = {
-    enable = true;
-    niri = {
-      enableSpawn = true;
-      enableKeybinds = true;
-      includes.enable = false;
-    };
-  };
-
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

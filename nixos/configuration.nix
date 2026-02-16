@@ -8,16 +8,11 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../modules/boot-loader.nix
-      ../modules/services.nix
+      ../modules/system
       ../modules/fonts.nix
-      ../modules/users.nix
-      # Pending fixes
-      # ../modules/fish.nix
-      ../modules/graphics.nix
+      ../modules/users
+      ../modules/services
     ];
-
-  hardware.bluetooth.enable = true;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -48,16 +43,16 @@
 
   environment.variables = {
     EDITOR = "nvim";
+    TERM = "kitty";
   };
-
-  # Allow unfree packages.
-  nixpkgs.config.allowUnfree = true;
 
   # Add system packages.
   environment.systemPackages = with pkgs; [
     git
     neovim
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

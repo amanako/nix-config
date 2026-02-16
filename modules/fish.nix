@@ -11,24 +11,24 @@
       bios = "systemctl reboot --firmware-setup";
       cat = "${lib.getExe config.programs.bat.package}";
       cd = "z";
-      #ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
+      ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
     };
     # To be added with home-manager
     #plugins = [
-    #  {
-    #    name = "done";
-    #    inherit (pkgs.fishPlugins.done) src;
-    #  }
-    #  {
-    #    name = "git";
-    #    inherit (pkgs.fishPlugins.plugin-git) src;
-    #  }
-    #  {
-    #    name = "fzf-fish";
-    #    inherit (pkgs.fishPlugins.fzf-fish) src;
-    #  }
+    #{
+    #  name = "done";
+    #  inherit (pkgs.fishPlugins.done) src;
+    #}
+    #{
+    #  name = "git";
+    #  inherit (pkgs.fishPlugins.plugin-git) src;
+    #}
+    #{
+    #  name = "fzf-fish";
+    #  inherit (pkgs.fishPlugins.fzf-fish) src;
+    #}
     #];
   };
 }
