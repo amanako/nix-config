@@ -35,11 +35,9 @@
   i18n.extraLocales = [
     "ja_JP.UTF-8/UTF-8"
   ];
-
-  programs = {
-    fish.enable = true;
-    niri.enable = true;
-  };
+ 
+  programs.niri.enable = true;
+  programs.fish.enable = true;
 
   environment.variables = {
     EDITOR = "nvim";

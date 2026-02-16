@@ -19,25 +19,6 @@
     ./programs
   ];
 
-  home.packages = with pkgs; [
-    eza
-    ripgrep
-    fzf
-
-    # Nice command line tools
-    which
-    tree
-    file
-    pciutils
-    usbutils
-    
-    # Nix-related
-    nix-output-monitor
-
-    # Fallback options
-    alacritty
-  ];
-
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
@@ -48,13 +29,7 @@
   };
 
   programs.neovim.enable = true;
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-    settings = {
-      
-    };
-  };
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
