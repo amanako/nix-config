@@ -80,7 +80,6 @@
 	    "welcome"
 	    "doctor"
 	  ];
-
 	  "Mod+M" = dms [
             "processlist"
             "toggle"
@@ -89,7 +88,6 @@
             "notifications"
             "toggle"
           ];
-
 	  "Mod+Space" = dms [
             "spotlight"
             "toggle"
@@ -98,20 +96,19 @@
             "clipboard"
             "toggle"
           ];
-
           "XF86AudioLowerVolume" =
             sh "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-; dms ipc call audio increment 0";
+          "XF86AudioRaiseVolume" =
+            sh "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; dms ipc call audio increment 0";
           "XF86AudioMute" = dms [
             "audio"
             "mute"
           ];
-          "XF86AudioPlay" = dms [
+            "XF86AudioPlay" = dms [
             "mpris"
             "playPause"
           ];
-          "XF86AudioRaiseVolume" =
-            sh "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; dms ipc call audio increment 0";
-          "XF86MonBrightnessDown" = dms [
+           "XF86MonBrightnessDown" = dms [
             "brightness"
             "decrement"
             "5"
@@ -123,8 +120,6 @@
             "5"
             ""
           ];
-
-
 
 
           "Mod+0".action.focus-workspace = 10;

@@ -21,6 +21,7 @@
     file
     pciutils
     usbutils
+    bat
     
     # Nix-related
     nix-output-monitor
