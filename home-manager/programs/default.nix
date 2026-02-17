@@ -11,5 +11,6 @@
     ./qt.nix
     ./starship.nix
     ./packages.nix
+    ./nixvim.nix
   ];
 }

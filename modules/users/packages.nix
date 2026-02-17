@@ -4,5 +4,7 @@
   users.users.lunar-scar.packages = with pkgs; [
     mesa-demos
     unrar
+    xwayland-satellite
+    papirus-icon-theme
   ];
 }

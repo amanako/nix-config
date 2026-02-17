@@ -48,8 +48,6 @@
   environment.systemPackages = with pkgs; [
     git
     neovim
-    xwayland-satellite
-    papirus-icon-theme
   ];
 
   nixpkgs.config.allowUnfree = true;
