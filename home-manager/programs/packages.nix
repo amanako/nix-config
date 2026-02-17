@@ -26,7 +26,6 @@
     # Nix-related
     nix-output-monitor
 
-    # Fallback options
-    alacritty
+    wineWow64Packages.stable
   ];
 }
