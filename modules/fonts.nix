@@ -8,7 +8,7 @@
     liberation_ttf
     dina-font
     proggyfonts
-    victor-mono
+    nerd-fonts.victor-mono
     biz-ud-gothic
   ];
 }

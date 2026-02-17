@@ -6,10 +6,7 @@
     homeDirectory = "/home/lunar-scar";
   };
  
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   imports = [
     inputs.niri.homeModules.niri
