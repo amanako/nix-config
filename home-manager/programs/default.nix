@@ -11,5 +11,6 @@
     ./nixvim.nix
     ./noctalia.nix
     ./stylix.nix
+    ./kde-connect.nix
   ];
 }
