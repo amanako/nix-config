@@ -9,7 +9,7 @@
     };
     settings = {
       mgr = {
-        show_hidden = true;
+        show_hidden = false;
       };
       opener.edit = [
         {

@@ -5,6 +5,5 @@
     mesa-demos
     unrar
     xwayland-satellite
-    papirus-icon-theme
   ];
 }

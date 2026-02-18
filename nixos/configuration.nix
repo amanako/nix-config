@@ -1,8 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ inputs, config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -13,7 +9,6 @@
       ../modules/services
     ];
 
-  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [
@@ -21,15 +16,12 @@
     "flakes"
   ];
 
-  # Define hostname
   networking = {
     hostName = "nebula";
   };
 
-  # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  # Define locale
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocales = [
     "ja_JP.UTF-8/UTF-8"
@@ -38,12 +30,8 @@
   programs.niri.enable = true;
   programs.fish.enable = true;
 
-  environment.variables = {
-    EDITOR = "nvim";
-    TERM = "kitty";
-  };
+  environment.variables.TERM = "kitty";
 
-  # Add system packages.
   environment.systemPackages = with pkgs; [
     git
     neovim

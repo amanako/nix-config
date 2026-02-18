@@ -59,7 +59,7 @@
 
       ui = {
         fontDefault = "Noto Sans";
-        fontFixed = "VictorMono NF";
+	fontFixed = "VictorMono NF";
         tooltipEnabled = true;
       };
 

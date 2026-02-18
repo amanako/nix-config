@@ -13,6 +13,34 @@
 
     plugins = {
       lualine.enable = true;
+      web-devicons.enable = true;
+
+      telescope = {
+        enable = true;
+	keymaps = {
+          "<leader><leader>" = "find_files";
+	};
+      };
+
+      lsp = {
+        enable = true;
+
+	servers = {
+          nixd.enable = true;
+	  clangd.enable = true;
+	  cmake.enable = true;
+	  html.enable = true;
+	};
+      };
+
+      lsp_lines.enable = true;
+
+      diagnostic.settings = {
+        virtual_text = false;
+	virtual_lines = {
+          only_current_line = true;
+	};
+      };
     };
 
     opts = {
@@ -22,5 +50,14 @@
     };
 
     keymaps = [];
+
+    diagnostic.config = {
+      virtual_lines = {
+        current_line = true;
+      };
+      virtual_text = true;
+    };
+
+    clipboard.provides.wl-copy.enable = true;
   };
 }

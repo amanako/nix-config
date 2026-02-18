@@ -1,4 +1,7 @@
 {
-  nix.gc.automatic = true;
-  nix.gc.dates = "3:15";
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 }

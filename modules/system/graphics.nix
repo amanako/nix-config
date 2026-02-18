@@ -34,10 +34,6 @@
 	  });
 	};
     prime = {
-      #offload = {
-      #  enable = true;
-      #	enableOffloadCmd = true;
-      #};
       sync.enable = true;
 
       # Hardware specific - check out https://nixos.wiki/wiki/Nvidia
