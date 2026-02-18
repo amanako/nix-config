@@ -3,7 +3,6 @@
 {
   imports = [
     ./niri.nix
-    ./dms.nix
     ./fish.nix
     ./yazi.nix
     ./dconf.nix
@@ -12,5 +11,7 @@
     ./starship.nix
     ./packages.nix
     ./nixvim.nix
+    ./noctalia.nix
+    ./stylix.nix
   ];
 }

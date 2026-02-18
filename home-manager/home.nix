@@ -10,10 +10,9 @@
 
   imports = [
     inputs.niri.homeModules.niri
-    inputs.dms.homeModules.dank-material-shell
-    inputs.dms.homeModules.niri
-    inputs.dms-plugin-registry.modules.default
+    inputs.noctalia.homeModules.default
     inputs.nixvim.homeModules.nixvim
+    inputs.stylix.homeModules.stylix
     ./programs
   ];
 
@@ -25,8 +24,6 @@
       user.email = "github@kairi6.anonaddy.com";
     };
   };
-
-  programs.neovim.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

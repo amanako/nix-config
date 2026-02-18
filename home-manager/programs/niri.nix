@@ -11,6 +11,14 @@
 	  QT_QPA_PLATFORM = "wayland";
 	};
 
+        spawn-at-startup = [
+	  {
+            command = [
+              "noctalia-shell"
+	    ];
+	  }
+	];
+
         input = {
           touchpad = {
             tap = true;
@@ -31,17 +39,11 @@
           mod-key-nested = "Alt";
 	};
 
-	layout = {
-          border = {
-            enable = true;
-	  };
-	};
-
 	binds =
         let
-          dms = args: {
+          noctalia-shell = args: {
             action.spawn = [
-              "dms"
+              "noctalia-shell"
               "ipc"
               "call"
             ]
@@ -50,75 +52,45 @@
           sh = cmd: { action.spawn-sh = cmd; };
         in
         {
-          "Ctrl+Alt+A" = dms [
-            "dash"
-            "toggle"
-            "overview"
-          ];
-          "Ctrl+Alt+C" = dms [
-            "control-center"
+          "Mod+S" = noctalia-shell [
+            "controlCenter"
             "toggle"
           ];
-          "Ctrl+Alt+D" = dms [
-            "dash"
-            "toggle"
-            "media"
-          ];
-          "Ctrl+Alt+L" = dms [
-            "wallpaper"
-            "next"
-          ];
-          "Ctrl+Alt+S" = dms [
-            "powermenu"
-            "toggle"
-          ];
-	  "Mod+Comma" = dms [
+	  "Mod+Comma" = noctalia-shell [
             "settings"
 	    "toggle"
 	  ];
-	  "Mod+D" = dms [
-	    "welcome"
-	    "doctor"
-	  ];
-	  "Mod+M" = dms [
-            "processlist"
-            "toggle"
-          ];
-          "Mod+N" = dms [
+          "Mod+N" = noctalia-shell [
             "notifications"
             "toggle"
           ];
-	  "Mod+Space" = dms [
-            "spotlight"
+	  "Mod+Space" = noctalia-shell [
+            "launcher"
             "toggle"
           ];
-          "Mod+V" = dms [
+          "Mod+V" = noctalia-shell [
             "clipboard"
             "toggle"
           ];
-          "XF86AudioLowerVolume" =
-            sh "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-; dms ipc call audio increment 0";
-          "XF86AudioRaiseVolume" =
-            sh "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; dms ipc call audio increment 0";
-          "XF86AudioMute" = dms [
-            "audio"
-            "mute"
+          "XF86AudioLowerVolume" = noctalia-shell [
+            "volume"
+	    "decreease"
+	  ];
+          "XF86AudioRaiseVolume" = noctalia-shell [
+            "volume"
+	    "increase"
+	  ];
+          "XF86AudioMute" = noctalia-shell [
+            "volume"
+            "muteOutput"
           ];
-            "XF86AudioPlay" = dms [
-            "mpris"
-            "playPause"
-          ];
-           "XF86MonBrightnessDown" = dms [
+           "XF86MonBrightnessDown" = noctalia-shell [
             "brightness"
-            "decrement"
-            "5"
-            ""
+            "decrease"
           ];
-          "XF86MonBrightnessUp" = dms [
+          "XF86MonBrightnessUp" = noctalia-shell [
             "brightness"
-            "increment"
-            "5"
-            ""
+            "increase"
           ];
 
 

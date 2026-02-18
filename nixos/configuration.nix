@@ -9,7 +9,6 @@
     [
       ./hardware-configuration.nix
       ../modules/system
-      ../modules/fonts.nix
       ../modules/users
       ../modules/services
     ];
