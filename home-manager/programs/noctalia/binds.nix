@@ -35,7 +35,7 @@
 	  "plugin:keybind-cheatsheet"
 	  "toggle"
 	];
-	"Ctrl+Shift+C" = noctalia [
+	"Alt+Shift+C" = noctalia [
 	  "calendar"
 	  "toggle"
 	];
