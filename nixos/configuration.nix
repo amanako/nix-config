@@ -29,6 +29,10 @@
  
   programs.niri.enable = true;
   programs.fish.enable = true;
+  programs.gamemode = {
+    enable = true;
+    enableRenice = true;
+  };
 
   environment.variables.TERM = "kitty";
 
