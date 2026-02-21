@@ -14,6 +14,7 @@
       ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first -1";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
+      rebuild = "sudo nixos-rebuild switch";
     };
     # To be added with home-manager
     plugins = [ ];
