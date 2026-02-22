@@ -2,10 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    kitty
     vivaldi
-    yazi
-    starship
     zoxide
     fastfetch
     sl
