@@ -41,7 +41,7 @@
 	];
         "XF86AudioLowerVolume" = noctalia [
           "volume"
-          "decreease"
+          "decrease"
         ];
         "XF86AudioRaiseVolume" = noctalia [
           "volume"
