@@ -8,30 +8,20 @@
       "$schema" = "https://starship.rs/config-schema.json";
 
       format = lib.concatStrings [
-        "[](color_orange)"
         "$username"
-        "[](bg:color_yellow fg:color_orange)"
+	"$hostname"
         "$directory"
-        "[](fg:color_yellow bg:color_aqua)"
         "$git_branch"
+	"$git_state"
         "$git_status"
-        "[](fg:color_aqua bg:color_blue)"
-        "[](fg:color_blue bg:color_bg3)"
-        "$docker_context"
-        "$conda"
-        "$pixi"
-        "[](fg:color_bg3 bg:color_bg1)"
-        "$time"
-        "[](fg:color_bg1)"
-        "$line_break$character"
+	"$cmd_duration"
+	"$line_break"
+	"$character"
       ];
 
       palette = "gruvbox_dark";
 
       palettes.gruvbox_dark = {
-        color_fg0 = "#fbf1c7";
-        color_bg1 = "#3c3836";
-        color_bg3 = "#665c54";
         color_blue = "#458588";
         color_aqua = "#689d6a";
         color_green = "#98971a";
@@ -41,58 +31,29 @@
         color_yellow = "#d79921";
       };
 
-      username = {
-        show_always = true;
-	style_user = "fg:color_fg0 bg:color_orange";
-	style_root = "bg:color_orange";
-        format = "[ $user ]($style)";
-      };
-      
       directory = {
-        style = "fg:color_fg0 bg:color_yellow";
-	format = "[ $path ]($style)";
-	truncation_length = 3;
-	truncation_symbol = "…/";
-      };
-
-      directory.substitutions = {
-        "Documents" = "󰈙";
-        "Downloads" = " ";
-        "Music" = "󰝚 ";
-        "Pictures" = " ";
-        "Developer" = "󰲋 ";
+        style = "color_orange";
       };
 
       git_branch = {
         symbol = "";
-	style = "bg:color_aqua";
-	format = "[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)";
+	style = "color_aqua";
+	format = "[[ $symbol $branch ](color_blue color_aqua)]($style)";
       };
 
       git_status = {
-        style = "bg:color_aqua";
-	format = "[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)";
-      };
-
-      time = {
-        disabled = false;
-        time_format = "%R";
-        style = "bg:color_bg1";
-        format = "[[  $time ](fg:color_fg0 bg:color_bg1)]($style)";
-      };
-
-      line_break = {
-        disabled = false;
+        style = "color_aqua";
+	format = "[[($all_status$ahead_behind )](color_orange colow_yellow)]($style)";
       };
 
       character = {
-        disabled = false;
-        success_symbol = "[ ](bold fg:color_green)";
-        error_symbol = "[ ](bold fg:color_red)";
-        vimcmd_symbol = "[ ](bold fg:color_green)";
-        vimcmd_replace_one_symbol = "[ ](bold fg:color_purple)";
-        vimcmd_replace_symbol = "[ ](bold fg:color_purple)";
-        vimcmd_visual_symbol = "[ ](bold fg:color_yellow)";
+        success_symbol = "[ ](bold color_green)";
+        error_symbol = "[ ](bold color_red)";
+        vimcmd_symbol = "[ ](bold color_purple)";
+      };
+
+      cmd_duration = {
+	format = "[$duration]($style) ";
       };
     };
   };

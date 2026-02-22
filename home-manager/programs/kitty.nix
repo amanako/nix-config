@@ -3,8 +3,9 @@
 {
   programs.kitty = {
     enable = true;
-    themeFile = "GruvboxMaterialDarkHard";
+    themeFile = "Apprentice";
     font = {
+      name = "Victor Mono NF";
       package = pkgs.nerd-fonts.victor-mono;
       size = 12;
     };
@@ -12,6 +13,8 @@
     shellIntegration.enableFishIntegration = true;
     settings = {
       window_padding_width = 4;
+      hide_window_decorations = true;
+      cursor_trail = 5;
     };
   };
 }
