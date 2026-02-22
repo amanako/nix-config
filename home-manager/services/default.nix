@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./polkit-agent.nix
-  ];
-}
