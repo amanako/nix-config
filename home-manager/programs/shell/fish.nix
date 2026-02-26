@@ -10,13 +10,27 @@
     shellAliases = {
       bios = "systemctl reboot --firmware-setup";
       cat = "${lib.getExe config.programs.bat.package}";
-      #cd = "z";
-      ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first -1";
+      cd = "z";
+      ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
       rebuild = "sudo nixos-rebuild switch";
+      flake-u = "sudo nix flake update";
     };
     # To be added with home-manager
-    plugins = [ ];
+    plugins = [
+      {
+				name = "fzf-fish";
+				inherit (pkgs.fishPlugins.fzf-fish) src;
+      }
+      {
+				name = "git";
+        inherit (pkgs.fishPlugins.plugin-git) src;
+      }
+      {
+				name = "done";
+        inherit (pkgs.fishPlugins.done) src;
+      }
+    ];
   };
 }

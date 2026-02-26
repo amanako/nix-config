@@ -1,47 +1,17 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../modules/system
-      ../modules/users
-      ../modules/services
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../modules/system
+    ../modules/users
+    ../modules/services
+		../modules/env
+		../modules/i18n
+  ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  networking = {
-    hostName = "nebula";
-  };
-
-  time.timeZone = "Europe/Paris";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocales = [
-    "ja_JP.UTF-8/UTF-8"
-  ];
- 
-  programs.niri.enable = true;
-  programs.fish.enable = true;
-  programs.gamemode = {
-    enable = true;
-    enableRenice = true;
-  };
-
-  environment.variables.TERM = "kitty";
-
-  environment.systemPackages = with pkgs; [
-    git
-    neovim
-  ];
-
-  nixpkgs.config.allowUnfree = true;
+  networking.hostName = "nebula";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

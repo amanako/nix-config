@@ -1,0 +1,5 @@
+{
+	imports = [
+		./hyprpolkitagent.nix
+	];
+}

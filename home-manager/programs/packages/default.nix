@@ -2,23 +2,17 @@
 
 {
   home.packages = with pkgs; [
-    vivaldi
-    zoxide
-    fastfetch
-    sl
     protonup-qt
     lutris
-    eza
-    ripgrep
-    fzf
+		thunar
 
     # Nice command line tools
     which
-    tree
     file
     pciutils
     usbutils
-    bat
+		ripgrep
+    fastfetch
     
     # Nix-related
     nix-output-monitor

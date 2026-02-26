@@ -1,7 +1,4 @@
-{ pkgs , ... }:
-
 {
-
   home = {
     username = "lunar-scar";
     homeDirectory = "/home/lunar-scar";
@@ -9,10 +6,10 @@
  
   imports = [
     ./programs
-    ./services/podman.nix
+		./services
   ];
 
-  nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
 
   # Nicely reload system units when changing configs

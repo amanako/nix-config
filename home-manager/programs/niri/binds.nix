@@ -44,9 +44,9 @@
 	"Mod+Tab".action.toggle-overview = [ ];
 
         "Mod+T".action.spawn = "kitty";
-	"Mod+B".action.spawn = "vivaldi";
-	"Mod+Y" = sh "kitty -e yazi";
-	"Mod+N" = sh "kitty -e nvim";
+				"Mod+B".action.spawn = "zen-beta";
+				"Mod+Y" = sh "kitty -e yazi";
+				"Mod+N" = sh "kitty -e nvim";
 
         "Mod+Shift+C".action.center-visible-columns = [ ];
         "Mod+Shift+F".action.fullscreen-window = [ ];

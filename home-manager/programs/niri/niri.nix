@@ -9,9 +9,9 @@
     settings = {
       environment = {
         XDG_CURRENT_DESKTOP = "niri";
-	XDG_SESSION_TYPE = "wayland";
+				XDG_SESSION_TYPE = "wayland";
         QT_QPA_PLATFORM = "wayland";
-	QT_QPA_PLATFORMTHEME = "qt6ct";
+				QT_QPA_PLATFORMTHEME = "qt6ct";
       };
 
       layout = {
@@ -19,9 +19,12 @@
       };
 
       spawn-at-startup = [
-	{
+				{
           command = [ "noctalia-shell" ];
-	}
+				}
+				{
+					command = [ "fcitx5" ];
+				}
       ];
 
       input = {

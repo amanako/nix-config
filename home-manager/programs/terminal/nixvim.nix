@@ -66,24 +66,16 @@
           "<leader>fb" = "buffers";  
           "<leader>fh" = "help_tags";
 	      };
-        extension."fzf-native" = {
-          enable = true;
-          settings = {
-            fuzzy = true;
-            override_file_sorter = true;
-            override_generic_sorter = true;
-            case_mode = "smart_case";
-          };
-        };
+				extensions = {
+					ui-select.enable = true;
+					zf-native.enable = true;
+				};
       };
 
       lsp = {
         enable = true;
-	      keymaps.lspBuf = {
-	        "<leader>lf" = "format";  
-	      };
 	      servers = {
-          	nixd.enable = true;
+          nixd.enable = true;
 	        clangd.enable = true;
 	        cmake.enable = true;
 	        html.enable = true;
@@ -109,57 +101,57 @@
 
           completion = {  
             keyword = {  
-            range = "prefix"; # or "full"  
-            regex = "[-_]\\|\\k";  
-          };  
-          trigger = {  
-            prefetch_on_insert = false;  
-            show_in_snippet = true;  
-            show_on_keyword = true;  
-            show_on_trigger_character = true;  
-          };  
-          list = {  
-            max_items = 200;  
-            selection = {  
-              preselect = true;  
-              auto_insert = true;  
-            };  
-            cycle = {  
-              from_bottom = true;  
-              from_top = true;  
-            };  
-          };  
-          accept = {  
-            create_undo_point = true;  
-            auto_brackets = {  
-              enabled = true;  
-              default_brackets = [ "(" ")" ];  
-              semantic_token_resolution.enabled = false;  
-            };  
-          };  
-          menu = {  
-            enabled = true;  
-            min_width = 15;  
-            max_height = 10;  
-            border = "none";  
-            winblend = 0;  
-            winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None";  
-            scrolloff = 2;  
-            scrollbar = true;  
-            direction_priority = [ "s" "n" ];  
-            auto_show = true;  
-          };  
-          documentation = {  
-            auto_show = true;  
-            window = {  
-              border = "padded";  
-              winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder";  
-              winblend = 0;  
-              max_width = 80;  
-              max_height = 20;  
-            };  
-          };  
-        }; 
+            	range = "prefix"; # or "full"  
+            	regex = "[-_]\\|\\k";  
+          	};  
+          	trigger = {  
+            	prefetch_on_insert = false;  
+            	show_in_snippet = true;  
+            	show_on_keyword = true;  
+            	show_on_trigger_character = true;  
+          	};  
+          	list = {  
+            	max_items = 200;  
+            	selection = {  
+              	preselect = true;  
+              	auto_insert = true;  
+            	};  
+            	cycle = {  
+              	from_bottom = true;  
+              	from_top = true;  
+            	};  
+          	};  
+          	accept = {  
+            	create_undo_point = true;  
+            	auto_brackets = {  
+              	enabled = true;  
+              	default_brackets = [ "(" ")" ];  
+              	semantic_token_resolution.enabled = false;  
+            	};  
+          	};  
+          	menu = {  
+            	enabled = true;  
+            	min_width = 15;  
+            	max_height = 10;  
+            	border = "none";  
+            	winblend = 0;  
+            	winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None";  
+            	scrolloff = 2;  
+            	scrollbar = true;  
+            	direction_priority = [ "s" "n" ];  
+            	auto_show = true;  
+          	};  
+          	documentation = {  
+            	auto_show = true;  
+            	window = {  
+              	border = "padded";  
+              	winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder";  
+              	winblend = 0;  
+              	max_width = 80;  
+              	max_height = 20;  
+            	};  
+          	};  
+        	}; 
 
 	        signature = {
             enabled = true;
@@ -193,10 +185,6 @@
       lsp-format = {
         enable = true;
 	      lspServersToEnable = "all";
-
-	      keymaps.lspBuf = {
-          "<leader>f" = "format";
-      	};
       };
 
       lsp_lines.enable = true;
@@ -223,7 +211,6 @@
         settings = {  
           highlight = {  
             enable = true;  
-            additional_vim_regex_highlighting = false;  
           };  
           indent = { enable = true; };  
           incremental_selection = {  
@@ -239,7 +226,6 @@
       };
       nvim-tree = {  
         enable = true;  
-        openOnSetup = true;  
         autoClose = true;  
         settings = {  
           disable_netrw = true;  
@@ -262,9 +248,8 @@
       dashboard = {
         enable = true;
         settings = {
-          theme = "hyper";
+          theme = "doom";
           config = {
-            week_header.enable = true;
             center = [  
               {  
                 icon = "";  
@@ -294,7 +279,53 @@
             footer = [ "Made with ❤️" ];  
           };  
         };  
-      };  
+      };
+
+			zen-mode = {
+				enable = true;
+
+				settings = {
+					window = {
+						backdrop = 0.95;
+						height = 1;
+						width = 120;
+
+						options = {
+							signcolumn = "no";
+							number = false;
+						};
+					};
+
+					plugins = {
+						gitsigns.enabled = false;
+						kitty.enabled = true;
+
+						options = {
+							enabled = true;
+							ruler = false;
+							showcmd = true;
+						};
+					};
+				};
+
+				refactoring = {
+					enable = true;
+					enableTelescope = true;
+
+					settings = {
+						prompt_func_param_type = {
+							cpp = true;
+							c = true;
+					  	java = true;
+							cxx = true;
+							hpp = true;
+							h = true;
+						};
+						show_success_message = true;
+					};
+				};
+			};
+    }; 
 
     dependencies = {  
       git.enable = true;  
@@ -309,7 +340,6 @@
       wrap = false;
       cursorline = true;
       signcolumn = "yes";
-      colorcolumn = "80";
       scrolloff = 21;
       sidescrolloff = 20;
 
@@ -323,6 +353,7 @@
 
       # Tab/Shift
       shiftwidth = 2;
+      tabstop = 2;
 
       # Swap
       swapfile = false;
@@ -333,7 +364,7 @@
       # Fold
       foldmethod = "indent";
       foldlevel = 99;
-      foldenable = true;
+      foldenable = false;
 
       timeoutlen = 500;
       completeopt = "menuone,noselect";
@@ -352,7 +383,7 @@
       }
       {
 	      mode = "n";
-	      key = "<leader>c";
+	      key = "<leader>q";
 	      action = ":q<CR>";
 	      options = { desc = "Quit file"; };
       }
@@ -366,7 +397,7 @@
 	      mode = "n";  
 	      key = "<leader>sf";  
 	      action = "<cmd>Telescope find_files<CR>";  
-	      options = { desc = "Search files"; };  
+	    	options = { desc = "Search files"; };  
       }  
       {  
 	      mode = "n";  
@@ -386,7 +417,38 @@
         action = "<cmd>LazyGit<CR>";
         options = { desc = "Open lazygit"; };
       }
+			{
+				mode = "n";
+				key = "<leader>zm";
+				action = "<cmd>ZenMode<CR>";
+				options = { desc = "Go zen-mode"; };
+			}
+			{
+				mode = "n";
+				key = "<leader>lf";
+				action = "<cmd>Format<CR>";
+				options = { desc = "Format file"; };
+			}
     ];
-  };
+
+		diagnostic.settings = {
+			virtual_text = false;
+			virtual_lines.only_current_line = true;
+			plugins.lsp-lines.enable = true;
+		};
+
+		plugins.actions-preview.enable = true;  
+  	plugins.lsp.keymaps.extra = [  
+    	{  
+      	key = "<leader>ca";  
+      	action.__raw = "require('actions-preview').code_actions";  
+      	options = { desc = "LSP code actions (actions-preview)"; };  
+    	}  
+			#{  
+			#	key = "<leader>cA";  
+			#	action.__raw = "require('telescope.builtin').code_actions";  
+			# 	options.desc = "LSP code actions (all in buffer)";  
+			#}  
+  	];
   };
 }

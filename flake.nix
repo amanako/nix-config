@@ -14,16 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +23,19 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+		zen-browser = {
+    	url = "github:0xc000022070/zen-browser-flake";
+    	inputs = {
+      	nixpkgs.follows = "nixpkgs";
+      	home-manager.follows = "home-manager";
+    	};
+ 	 	};
+
+		firefox-addons = {
+    	url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    	inputs.nixpkgs.follows = "nixpkgs";
+  	};
 
     stylix = {
       url = "github:nix-community/stylix";
@@ -44,22 +47,20 @@
   let
   in {
     nixosConfigurations = {
-      nebula = nixpkgs.lib.nixosSystem {
-        specialArgs = { 
-	  inherit
-	    inputs
-	    ;
-	};
+ 		nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nebula = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
         modules = [
+
           ./nixos/configuration.nix
 
           home-manager.nixosModules.home-manager {
-	    home-manager.useUserPackages = true;
-	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    			home-manager.useUserPackages = true;
+	    			home-manager.extraSpecialArgs = { inherit inputs; };
  
-            home-manager.users.lunar-scar = import ./home-manager/home.nix;
-	 }
-	];
+          	home-manager.users.lunar-scar = import ./home-manager/home.nix;
+	 				}
+				];
       };
     };
   };

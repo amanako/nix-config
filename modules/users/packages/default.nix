@@ -2,8 +2,9 @@
 
 {
   users.users.lunar-scar.packages = with pkgs; [
-    mesa-demos
     unrar
+		kdePackages.okular
     xwayland-satellite
+    youtube-tui
   ];
 }

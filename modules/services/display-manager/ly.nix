@@ -1,11 +1,9 @@
-{ lib, ... }:
-
 {
 	services.displayManager.ly = {
 	  enable = true;
 		settings = {
-			animation = "colormix";
-			animation_frame_delay = 6;
+			animation = "matrix";
+			animation_frame_delay = 5;
 
 			asterisk = "*";
 			blank_box = true;
@@ -17,14 +15,12 @@
 			text_in_center = true;
 			full_color = true;
 
-			hide_key_hints = true;
-			hide_version_string = true;
-
 			clear_password = true;
 			default_input = "password";
 
 			vi_mode = true;
 			vi_default_mode = "insert";
+			battery_id = "BAT1";
 	  };
 	};
 }

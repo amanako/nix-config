@@ -28,6 +28,7 @@
       kitty.enable = false;
       starship.enable = false;
       nixvim.enable = false;
+      yazi.enable = false;
     };
   };
 }

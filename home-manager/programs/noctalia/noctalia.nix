@@ -143,7 +143,7 @@
       };
 
       dock = {
-        enable = false;
+        enabled = false;
       };
 
       notifications = {
@@ -152,7 +152,7 @@
 	respectExpireTimeout = true;
 
         sounds = {
-	  enable = true;
+	  enabled = true;
           volume = 0.5;
 	};
         enableMediaToast = false;
@@ -161,7 +161,7 @@
       };
 
       osd = {
-        enable = true;
+        enabled = true;
 	overlayLayer = true;
 	autoHideMs = 2000;
 	backgroundOpacity = 1;
