@@ -8,6 +8,7 @@
     ../modules/services
 		../modules/env
 		../modules/i18n
+		../modules/programs
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
