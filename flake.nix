@@ -47,7 +47,6 @@
   let
   in {
     nixosConfigurations = {
- 		nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nebula = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
         modules = [
