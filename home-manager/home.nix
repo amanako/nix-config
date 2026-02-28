@@ -6,7 +6,6 @@
  
   imports = [
     ./programs
-		./services
   ];
 
 	nixpkgs.config.allowUnfree = true;
