@@ -13,6 +13,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.hostName = "nebula";
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
