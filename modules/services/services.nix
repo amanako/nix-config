@@ -1,7 +1,6 @@
 {
   services = {
     upower.enable = true;
-    tuned.enable = true;
     
     pipewire = {
       enable = true;
