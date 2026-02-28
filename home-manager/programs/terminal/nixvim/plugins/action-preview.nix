@@ -1,6 +1,6 @@
 {
-	plugins.actions-preview.enable = true;  
-  plugins.lsp.keymaps.extra = [  
+	programs.nixvim.plugins.actions-preview.enable = true;  
+  programs.nixvim.plugins.lsp.keymaps.extra = [  
     {  
       key = "<leader>ca";  
       action.__raw = "require('actions-preview').code_actions";  

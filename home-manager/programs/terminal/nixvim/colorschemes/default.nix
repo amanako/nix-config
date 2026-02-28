@@ -1,3 +1,3 @@
 {
-	colorschemes.gruvbox.enable = true;
+	programs.nixvim.colorschemes.gruvbox.enable = true;
 }

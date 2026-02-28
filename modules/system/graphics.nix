@@ -26,11 +26,11 @@
       in
       base
       //  {
-	  ${driveAttr} = base.${driveAttr}.overrideAttrs (oldAttrs : {
-	    patches = (oldAttrs.patches or [ ]) ++
-	      [ cachyos-nvidia-patch ];
-	  });
-	};
+	  		${driveAttr} = base.${driveAttr}.overrideAttrs (oldAttrs : {
+	    		patches = (oldAttrs.patches or [ ]) ++
+	      		[ cachyos-nvidia-patch ];
+	  		});
+			};
     prime = {
       sync.enable = true;
 

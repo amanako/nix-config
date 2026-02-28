@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-	plugins.treesitter = {  
+	programs.nixvim.plugins.treesitter = {  
     enable = true;  
     nixGrammars = true;  
     grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [  

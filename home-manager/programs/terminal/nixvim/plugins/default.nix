@@ -8,7 +8,7 @@
 		./lsp-format.nix
 		./lsp.nix
 		./lualine.nix
-		./neotree.nix
+		./neo-tree.nix
 		./refactoring.nix
 		./telescope.nix
 		./treesitter.nix
