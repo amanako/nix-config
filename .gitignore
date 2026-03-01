@@ -6,4 +6,4 @@ result-*
 .direnv
 
 # Ignore stuff for setting up anki sync
-*/anki/*.txt
+**/anki/*.txt
