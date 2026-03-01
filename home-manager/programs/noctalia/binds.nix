@@ -47,33 +47,37 @@
         "volume"
 	      "increase"
 			];
-			 "Mod+Alt+V" = noctalia [
+			"Mod+Alt+V" = noctalia [
          "volume"
 	  		 "togglePanel"
-			 ];
-       "XF86AudioMute" = noctalia [
+			];
+			"Mod+Shift+B" = noctalia [
+					"battery"
+					"togglePanel"
+			];
+      "XF86AudioMute" = noctalia [
          "volume"
          "muteOutput"
-       ];
-       "XF86MonBrightnessDown" = noctalia [
-         "brightness"
-         "decrease"
-       ];
-       "XF86MonBrightnessUp" = noctalia [
-         "brightness"
-         "increase"
-       ];
-			 "Mod+A" = noctalia [
-	  	   "idleInhibitor"
-	  		 "toggle"
-			 ];
-			 "Alt+Shift+L" = noctalia [
-         "lockScreen"
-	  		 "lock"
-			 ];
-			 "Alt+Shift+M" = noctalia [
-         "sessionMenu"
-	  		 "toggle"
+      ];
+      "XF86MonBrightnessDown" = noctalia [
+        "brightness"
+        "decrease"
+      ];
+      "XF86MonBrightnessUp" = noctalia [
+        "brightness"
+        "increase"
+      ];
+			"Mod+A" = noctalia [
+	  	  "idleInhibitor"
+	  	  "toggle"
+			];
+			"Alt+Shift+L" = noctalia [
+        "lockScreen"
+	  	 "lock"
+			];
+			"Alt+Shift+M" = noctalia [
+        "sessionMenu"
+	  	  "toggle"
 			];
     };
 }
