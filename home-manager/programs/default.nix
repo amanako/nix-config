@@ -2,6 +2,7 @@
 
 {
   imports = [
+		./education
     ./niri
     ./noctalia
 		./zen-browser

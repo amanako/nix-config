@@ -4,3 +4,7 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# Ignore stuff for setting up anki sync
+anki/sync-key.txt
+anki/username.txt

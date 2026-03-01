@@ -29,6 +29,7 @@
       starship.enable = false;
       nixvim.enable = false;
       yazi.enable = false;
+			zen-browser.enable = false;
     };
   };
 }
