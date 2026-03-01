@@ -2,8 +2,8 @@
   programs.git = {
     enable = true;
     settings = {
-      user.name = "shizumu-iruka";
-      user.email = "github@kairi6.anonaddy.com";
+      user.name = "arcane-moonlight";
+      user.email = "gitlab@kairi6.anonaddy.com";
     };
   };
 }
