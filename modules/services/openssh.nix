@@ -2,7 +2,10 @@
   services.openssh = {
     enable = true;
     settings = {
-      PermitRootLogin = "prohibit-password";
+			PasswordAuthentication = false;
+			KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+			AllowUsers = [ "lunar-scar" ];
     };
   };
 }

@@ -4,5 +4,6 @@
 	  ./fish.nix
 	  ./fzf.nix
 	  ./zoxide.nix
+		./ssh.nix
 	];
 }
