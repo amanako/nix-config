@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostname, ... }:
 
 {
   imports = [
@@ -12,7 +12,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  networking.hostName = "nebula";
+  networking.hostName = hostname;
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
@@ -22,6 +22,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }
-

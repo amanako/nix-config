@@ -46,6 +46,7 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs: 
   let
 		username = "lunar-scar";
+		hostname = "nebula";
 		term = "kitty";
 		editor = "nvim";
 		file-manager = "yazi";
@@ -56,20 +57,29 @@
 		};
 		in {
     nixosConfigurations = {
-    nebula = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs username git; };
+			${hostname} = nixpkgs.lib.nixosSystem {
+      	specialArgs = { inherit 
+						inputs
+						hostname
+						username
+						git;
+					};
         modules = [
           ./nixos/configuration.nix
 
           home-manager.nixosModules.home-manager {
 	    			home-manager.useUserPackages = true;
 	    			home-manager.extraSpecialArgs = { inherit 
-								inputs username
-								term editor
-								file-manager browser
-								git; };
+							inputs
+							username
+							term
+							editor
+							file-manager
+							browser
+							git;
+						};
  
-          	home-manager.users.lunar-scar = import ./home-manager/home.nix;
+          	home-manager.users.${username} = import ./home-manager/home.nix;
 	 				}
 				];
       };
