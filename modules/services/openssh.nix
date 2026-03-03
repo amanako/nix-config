@@ -1,3 +1,5 @@
+{ username, ... }:
+
 {
   services.openssh = {
     enable = true;
@@ -5,7 +7,7 @@
 			PasswordAuthentication = false;
 			KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";
-			AllowUsers = [ "lunar-scar" ];
+			AllowUsers = [ username ];
     };
   };
 }

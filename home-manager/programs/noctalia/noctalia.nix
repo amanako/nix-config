@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, term, ... }:
 
 {
   imports = [ inputs.noctalia.homeModules.default ]; 
@@ -9,81 +9,82 @@
       bar = {
         barType = "framed";
         position = "top";
-	monitors = [
+				monitors = [
           "eDP-1"
-	];
-	density = "default";
+				];
+				density = "default";
         showCapsule = false;
-	showOutline = false;
-	display_mode = "always_visible";
-	backgroundOpacity = 0.8;
-	useSeparateOpacity = true;
-	marginVertical = 4;
-	marginHorizontal = 8;
-	floating = false;
-	frameRadius = 12;
-	frameThickness = 8;
+				showOutline = false;
+				display_mode = "always_visible";
+				backgroundOpacity = 0.8;
+				useSeparateOpacity = true;
+				marginVertical = 4;
+				marginHorizontal = 8;
+				floating = false;
+				frameRadius = 12;
+				frameThickness = 8;
         widgets = {
           left = [
             {
               id = "ControlCenter";
               useDistroLogo = true;
-	      colorizeDistroLogo = true;
-	      enableColorization = true;
-	      colorizeSystemIcon = "primary";
+	      			colorizeDistroLogo = true;
+	      			enableColorization = true;
+	      			colorizeSystemIcon = "primary";
             }
             {
               id = "Network";
-	      iconColor = "primary";
+	      			iconColor = "primary";
             }
             {
               id = "Bluetooth";
-	      iconColor = "primary";
+	      			iconColor = "primary";
             }
           ];
           center = [
             {
-	      id = "Workspace";
+	      			id = "Workspace";
               hideUnoccupied = false;
               labelMode = "index";
             }
-	    {
-	      id = "AudioVisualizer";
-	      colorName = "primary";
-	      hideWhenIdle = true;
-	      width = 200;
-	    }
-	    {
-	      id = "plugin:github-feed";
-	    }
+	    			{
+	      			id = "AudioVisualizer";
+	      			colorName = "primary";
+	      			hideWhenIdle = true;
+	      			width = 200;
+	    			}
+	    			{
+	      			id = "plugin:github-feed";
+	    			}
           ];
           right = [
-	    {
+	    			{
               id = "plugin:clipper";
-	    }
-	    {
-	      id = "SystemMonitor";
-              compactMode = true;
-	      iconColor = "primary";
-	      showCpuTemp = true;
-	      showCpuUsage = true;
-	      showMemoryAsPercent = true;
-	      showMemoryUsage = true;
-	      textColor = "primary";
-	      userMonospaceFont = true;
-	    }
+	    			}
+	    			{
+	      			id = "SystemMonitor";
+            	compactMode = true;
+	      			iconColor = "primary";
+	      			showCpuTemp = true;
+	     	 			showCpuUsage = true;
+	      			showMemoryAsPercent = true;
+	      			showMemoryUsage = true;
+	      			textColor = "primary";
+	      			userMonospaceFont = true;
+	    			}
             {
-	      id = "Battery";
-	      displayMode = "graphic-clean";
+	      			id = "Battery";
+	      			displayMode = "graphic-clean";
               alwaysShowPercentage = false;
               warningThreshold = 20;
+							showPowerProfiles = true;
             }
             {
-	      id = "Clock";
-	      clocColor = "primary";
+	      			id = "Clock";
+	      			clocColor = "primary";
               formatHorizontal = "h:mm AP";
               formatVertical = "t";
-	      tooltipFormat = "HH:mm ddd, MMM dd";
+	      			tooltipFormat = "HH:mm ddd, MMM dd";
               useMonospacedFont = true;
               usePrimaryColor = true;
             }
@@ -94,30 +95,29 @@
       general = {
         avatarImage = "/home/lunar-scar/.face";
         radiusRatio = 0.8;
-	dimmerOpacity = 0.5;
-	showScreenCorners = true;
-	forceBlackScreenCorners = true;
-	screenRadisuRatio = 1.1;
-	lockScreenAnimations = true;
-	enableShadows = false;
-	allowPanelsOnScreenWithoutBar = true;
-	showChangelogOnStartup = true;
+				dimmerOpacity = 0.5;
+				showScreenCorners = true;
+				forceBlackScreenCorners = true;
+				screenRadisuRatio = 1.1;
+				lockScreenAnimations = true;
+				enableShadows = false;
+				allowPanelsOnScreenWithoutBar = true;
+				showChangelogOnStartup = true;
       };
 
       ui = {
-        fontDefault = "Noto Sans";
-	fontFixed = "VictorMono NF";
+				fontFixed = "VictorMono NF";
         tooltipEnabled = true;
-	panelBackgroundOpacity = 0.8;
-	panelsAttachedToBar = true;
-	settingsPanelMode = "attached";
+				panelBackgroundOpacity = 0.8;
+				panelsAttachedToBar = true;
+				settingsPanelMode = "attached";
       };
 
       location = {
         monthBeforeDay = true;
         name = "Niš, Serbia";
-	weatherEnabled = true;
-	weatherShowEffects = true;
+				weatherEnabled = true;
+				weatherShowEffects = true;
       };
 
       appLauncher = {
@@ -125,11 +125,11 @@
         enableClipPreview = true;
         position = "top_center";
         sortByMostUsed = "true";
-        terminalCommand = "kitty -e";
-	enableSettingsSearch = true;
-	enableWindowsSearch = true;
-	enableSessionSearch = true;
-	overviewLayer = true;
+        terminalCommand = "${term} -e";
+				enableSettingsSearch = true;
+				enableWindowsSearch = true;
+				enableSessionSearch = true;
+				overviewLayer = true;
         density = "comfortable";
       };
 
@@ -139,7 +139,7 @@
 
       systemMonitor = {
         tempWarningThreshold = 60;
-	tempCriticalThreshold = 80;
+				tempCriticalThreshold = 80;
       };
 
       dock = {
@@ -149,27 +149,28 @@
       notifications = {
         enable = true;
         location = "top_right";
-	respectExpireTimeout = true;
+				respectExpireTimeout = false;
 
         sounds = {
-	  enabled = true;
+	  			enabled = true;
           volume = 0.5;
-	};
+				};
+
         enableMediaToast = false;
         enableBatteryToast = true;
-	enableKeyboardLayoutToast = true;
+				enableKeyboardLayoutToast = true;
       };
 
       osd = {
         enabled = true;
-	overlayLayer = true;
-	autoHideMs = 2000;
-	backgroundOpacity = 1;
+				overlayLayer = true;
+				autoHideMs = 2000;
+				backgroundOpacity = 1;
       };
 
       audio = {
         volumeStep = 5;
-	cavaFrameRate = 30;
+				cavaFrameRate = 30;
       };
 
       colorSchemes = {

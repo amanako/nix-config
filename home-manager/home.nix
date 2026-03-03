@@ -1,11 +1,14 @@
+{ username, ... }:
+
 {
   home = {
-    username = "lunar-scar";
-    homeDirectory = "/home/lunar-scar";
+    username = username;
+    homeDirectory = "/home/${username}";
   };
  
   imports = [
     ./programs
+		./env/session-variables.nix
   ];
 
 	nixpkgs.config.allowUnfree = true;
