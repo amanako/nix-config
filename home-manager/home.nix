@@ -8,6 +8,7 @@
  
   imports = [
     ./programs
+		./fcitx5
 		./env/session-variables.nix
   ];
 

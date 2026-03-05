@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
 	programs.anki = {
 		enable = true;
@@ -9,9 +11,11 @@
 		hideTopBar = true;
 		hideTopBarMode = "always";
 		videoDriver = "opengl";
-		profiles."User 1".sync = {
-			usernameFile = "/home/lunar-scar/nix-config/home-manager/programs/education/anki/username.txt";
-			keyFile = "/home/lunar-scar/nix-config/home-manager/programs/education/anki/sync-key.txt";
+		profiles."${config.home.username}".sync = {
+			# Add your own username and sync key text here
+			usernameFile = "${config.home.homeDirectory}/nix-config/home-manager/programs/education/anki/username.txt";
+			keyFile = "${config.home.homeDirectory}/nix-config/home-manager/programs/education/anki/sync-key.txt";
+
 			autoSync = true;
 			syncMedia = true;
 		};

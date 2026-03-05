@@ -1,5 +1,15 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, lib, ... }:
 
+let 
+	services = [
+    "noctalia-shell"
+    "kitty"
+    "starship"
+    "nixvim"
+    "yazi"
+    "zen-browser"
+  ];
+in
 {
   imports = [ inputs.stylix.homeModules.stylix ];
 
@@ -23,13 +33,8 @@
       };
     };
 
-    targets = {
-      noctalia-shell.enable = false;
-      kitty.enable = false;
-      starship.enable = false;
-      nixvim.enable = false;
-      yazi.enable = false;
-			zen-browser.enable = false;
-    };
-  };
+		targets = lib.fold ( service: acc:
+	    acc // { ${service}.enable = false; }
+		) {} services;
+	};
 }

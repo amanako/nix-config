@@ -12,9 +12,8 @@
 		};
 
 		globalOptions = {
-			EnumerateWithTriggerKeys = true;
-			EnumerateSkipFirst = true;
-			ModifierOnlyKeyTimeout = 250;
+			EnumerateWithTriggerKeys.enabled = true;
+			EnumerateSkipFirst.enabled = true;
 			"Hotkey/EnumerateForwardKeys"."0" = "Control+Shift";
 			"Hotkey/EnumerateBackwardKeys"."0" = "Control+Shift+space";
 			"Hotkey/EnumerateGroupForwardKeys"."0" = "Control+Shift";
