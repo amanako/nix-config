@@ -33,7 +33,7 @@ in
       };
     };
 
-		targets = lib.fold ( service: acc:
+		targets = lib.foldr ( service: acc:
 	    acc // { ${service}.enable = false; }
 		) {} services;
 	};
