@@ -7,7 +7,7 @@
     ../modules/users
     ../modules/services
 		../modules/env
-		../modules/i18n
+		../modules/i18n/locale
 		../modules/programs
   ];
 
