@@ -1,12 +1,13 @@
-{ lib, hardware, ... }:
+{ lib, config, ... }:
 
-let
-	bluemanEnable = lib.mkOptions {
-		default = hardware.bluetooth.enable;
+{
+	config.lib.mkIf = config.bluemanEnable {
+		services.blueman.enable = true;
+	};
+
+	options.bluemanEnable = lib.mkOption {
+		default = config.hardware.bluetooth.enable;
 		type = lib.types.bool;
 		description = "Whether to enable blueman, a bluetooth manager";
 	};
-in
-{
-	services.blueman.enable = bluemanEnable;
 }
