@@ -1,13 +1,18 @@
-{ pkgs, username, git, ... }:
+{ pkgs, config, lib, username, git, ... }:
 
+let 
+  lemursGroup = if config.lemurs.enable then [ "seat" ] else [];
+in
 {
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ 
+    extraGroups = lemursGroup
+		++
+		[ 
       "wheel"
       "networkmanager"
-			"seat"
     ];
+
     initialPassword = "koko";
     shell = pkgs.fish;
 		openssh.authorizedKeys.keys = [

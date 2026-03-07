@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+let
+  nh = lib.getExe pkgs.nh;
+in
 {
   programs.fish = {
     enable = true;
@@ -9,27 +12,28 @@
     '';
     shellAliases = {
       bios = "systemctl reboot --firmware-setup";
-      cat = "${lib.getExe config.programs.bat.package}";
+      cat = "${lib.getExe config.programs.bat.package} --theme=ansi";
       cd = "z";
       ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
-      rebuild = "sudo nixos-rebuild switch";
-      flake-u = "sudo nix flake update";
+      rebuild = "${nh} os switch --ask --diff always --verbose";
+			clean = "${nh} clean all --keep 4 --verbose --optimise";
+			search = "${nh} search";
+      flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
     };
-    # To be added with home-manager
     plugins = [
       {
 				name = "fzf-fish";
-				inherit (pkgs.fishPlugins.fzf-fish) src;
+				src = pkgs.fishPlugins.fzf-fish.src;
       }
       {
 				name = "git";
-        inherit (pkgs.fishPlugins.plugin-git) src;
+        src = pkgs.fishPlugins.plugin-git.src;
       }
       {
 				name = "done";
-        inherit (pkgs.fishPlugins.done) src;
+        src = pkgs.fishPlugins.done.src;
       }
     ];
   };
