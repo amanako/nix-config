@@ -5,5 +5,6 @@
 	  ./fzf.nix
 	  ./zoxide.nix
 		./ssh.nix
+		./nh.nix
 	];
 }

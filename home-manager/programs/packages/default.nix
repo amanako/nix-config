@@ -17,12 +17,10 @@
     fastfetch
 		p7zip
 		unrar
+		bat
     
     # Compatibility
 		xwayland-satellite
-
-    # Nix-related
-    nix-output-monitor
 
     wineWow64Packages.stable
   ];
