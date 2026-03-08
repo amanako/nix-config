@@ -14,6 +14,8 @@
   hardware.nvidia = { 
     open = true;
     modesetting.enable = true;
+		powerManagement.enable = true;
+		powerManagement.finegrained = true;
     nvidiaSettings = true;
     package = 
     let 
@@ -32,7 +34,10 @@
 	  		});
 			};
     prime = {
-      sync.enable = true;
+      offload = {
+        enable = true;
+				enableOffloadCmd = true;
+			};
 
 			# Hardware specific - https://nixos.wiki/wiki/Nvidia#Configuring_Optimus_PRIME:_Bus_ID_Values_.28Mandatory.29
       amdgpuBusId = "PCI:0@5:0:0";
