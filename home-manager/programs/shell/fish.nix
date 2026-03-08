@@ -17,8 +17,8 @@ in
       ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
-      rebuild = "${nh} os switch --ask --diff always --verbose";
-			clean = "${nh} clean all --keep 4 --verbose --optimise";
+      rebuild = "${nh} os switch --ask --diff always";
+			clean = "${nh} clean all --keep 4 --optimise";
 			search = "${nh} search";
       flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
     };

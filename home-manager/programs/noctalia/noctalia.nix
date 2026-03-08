@@ -15,15 +15,22 @@
 				density = "default";
         showCapsule = false;
 				showOutline = false;
-				display_mode = "always_visible";
+				contentPadding = 2;
+				fontScale = 1;
 				backgroundOpacity = 0.8;
 				useSeparateOpacity = true;
+				floating = false;
 				marginVertical = 4;
 				marginHorizontal = 8;
-				floating = false;
-				frameRadius = 12;
 				frameThickness = 8;
-        widgets = {
+				frameRadius = 12;
+				outerCorners = false;
+				hideOnOverview = true;
+ 				displayMode = "auto_hide";
+				autoHideDelay = 500;
+				autoShowDelay = 150;
+				showOnWorkspaceSwitch = true;
+				widgets = {
           left = [
             {
               id = "ControlCenter";
@@ -94,30 +101,39 @@
 
       general = {
         avatarImage = "/home/lunar-scar/.face";
-        radiusRatio = 0.8;
 				dimmerOpacity = 0.5;
-				showScreenCorners = true;
-				forceBlackScreenCorners = true;
-				screenRadisuRatio = 1.1;
+				showScreenCorners = false;
+				forceBlackScreenCorners = false;
+				scaleRation = 1;
+        radiusRatio = 0.8;
+				screenRadiusRatio = 1.1;
+				animationSpeed = 0.7;
+				lockOnSuspend = true;
 				lockScreenAnimations = true;
 				enableShadows = false;
+				enableBlurBehind = true;
 				allowPanelsOnScreenWithoutBar = true;
 				showChangelogOnStartup = true;
+				telemetryEnabled = false;
+				enableLockScreenCountdown = true;
+				lockScreenCountdownDuration = 10000;
+				passwordChars = true;
       };
 
       ui = {
 				fontFixed = "VictorMono NF";
-        tooltipEnabled = true;
+        tooltipsEnabled = true;
+				boxBorderEnabled = true;
 				panelBackgroundOpacity = 0.8;
 				panelsAttachedToBar = true;
 				settingsPanelMode = "attached";
       };
 
       location = {
-        monthBeforeDay = true;
         name = "Niš, Serbia";
-				weatherEnabled = true;
 				weatherShowEffects = true;
+        monthBeforeDay = false;
+				weatherEnabled = true;
       };
 
       appLauncher = {
@@ -147,8 +163,10 @@
       };
 
       notifications = {
-        enable = true;
+        enabled = true;
+				enableMarkdown = true;
         location = "top_right";
+				backgroundOpacity = 0.8;
 				respectExpireTimeout = false;
 
         sounds = {
@@ -157,8 +175,8 @@
 				};
 
         enableMediaToast = false;
-        enableBatteryToast = true;
 				enableKeyboardLayoutToast = true;
+        enableBatteryToast = true;
       };
 
       osd = {
@@ -180,9 +198,9 @@
 
       nightLight = {
         enabled = true;
+        autoSchedule = true;
         nightTemp = 3500;
         dayTemp = 6000;
-        autoSchedule = true;
       };
 
       desktopWidgets = {

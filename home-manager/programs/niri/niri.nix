@@ -15,8 +15,29 @@
       };
 
       layout = {
-        default-column-width.proportion = 0.5;
+				gaps = 2;
+				default-column-width.proportion = 0.5;
+				preset-column-widths = [
+					{
+						proportion = 0.33333;
+					}
+					{
+					  proportion = 0.5;
+					}
+					{
+						proportion = 0.66667;
+					}
+				];
+
+				focus-ring = {
+          width = 2;
+					active.color = "#98971a";
+				};
+
+				border.width = 0;
       };
+
+			animations.slowdown = 1.5;
 
       spawn-at-startup = [
 				{
