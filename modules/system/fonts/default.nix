@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+		./config.nix
+	];
+
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
@@ -10,5 +14,9 @@
     proggyfonts
     nerd-fonts.victor-mono
     biz-ud-gothic
+		maple-mono.CN
+		maple-mono.NF
+    mona-sans
+		ipafont
   ];
 }
