@@ -5,9 +5,43 @@
 
   programs.noctalia-shell = {
     enable = true;
+		plugins = {
+			sources = [
+				{
+					enabled = true;
+					name = "Official Noctalia Plugins";
+					url = "https://github.com/noctalia-dev/noctalia-plugins";
+				}
+			];
+
+			states = {
+				pomodoro = {
+					enabled = true;
+					sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+				};
+				battery-actions = {
+					enabled = true;
+					sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+				};
+        clipper = {
+					enabled = true;
+					sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
+				};
+				file-search = {
+					enabled = true;
+					sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
+				};
+				polkit-agent = {
+					enabled = true;
+          sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
+				};
+			};
+
+			version = 2;
+		};
     settings = {
       bar = {
-        barType = "framed";
+        barType = "floating";
         position = "top";
 				monitors = [
           "eDP-1"
@@ -121,6 +155,7 @@
       };
 
       ui = {
+				fontDefault = "Mona Sans Display Light";
 				fontFixed = "VictorMono NF";
         tooltipsEnabled = true;
 				boxBorderEnabled = true;
@@ -130,7 +165,7 @@
       };
 
       location = {
-        name = "Niš, Serbia";
+        name = "Serbia";
 				weatherShowEffects = true;
         monthBeforeDay = false;
 				weatherEnabled = true;

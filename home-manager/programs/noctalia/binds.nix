@@ -39,6 +39,10 @@
 	 			"calendar"
 	 			"toggle"
 			];
+			"Alt+Shift+B" = noctalia [
+				"bluetooth"
+				"togglePanel"
+			];
       "XF86AudioLowerVolume" = noctalia [
         "volume"
         "decrease"
