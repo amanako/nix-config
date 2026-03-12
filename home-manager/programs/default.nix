@@ -2,7 +2,8 @@
   imports = [
 		./education
     ./niri
-    ./noctalia
+		./noctalia
+		#./dms
 		./zen-browser
 		./packages
 		./shell

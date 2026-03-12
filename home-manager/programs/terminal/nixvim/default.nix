@@ -5,7 +5,6 @@
 		inputs.nixvim.homeModules.nixvim
 		./colorschemes
 		./dependencies
-		./diagnostic
 		./keymaps
 		./opts
 		./plugins

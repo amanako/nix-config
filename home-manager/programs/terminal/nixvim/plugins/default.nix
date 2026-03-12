@@ -1,18 +1,19 @@
 {
 	imports = [
-		./action-preview.nix
+		./bufferline.nix
 		./blink-cmp.nix
-		./dashboard.nix
+		./competitest.nix
 		./gitsigns.nix
 		./lazygit.nix
 		./lsp-format.nix
 		./lsp.nix
 		./lualine.nix
-		./neo-tree.nix
-		./refactoring.nix
+		./mini.nix
+		./mini-files.nix
+		./noice.nix
 		./telescope.nix
 		./treesitter.nix
-		./web-devicons.nix
 		./zen-mode.nix
+		./kitty-scrollback.nix
 	];
 }

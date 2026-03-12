@@ -17,7 +17,6 @@
       completion = {  
         keyword = {  
          	range = "prefix"; # or "full"  
-         	regex = "[-_]\\|\\k";  
        	};  
        	trigger = {  
          	prefetch_on_insert = false;  

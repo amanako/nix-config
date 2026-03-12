@@ -2,22 +2,28 @@
 	programs.nixvim.keymaps = [
     {
       mode = "n";
-      key = "<leader>w";
+      key = "<C-s>";
       action = ":w<CR>";
       options = { desc = "Write file"; };
     }
     {
 	    mode = "n";
-	    key = "<leader>q";
+	    key = "<C-q>";
 	    action = ":q<CR>";
-	    options = { desc = "Quit file"; };
+	    options = { desc = "Close file"; };
     }
-    {  
-	    mode = "n";  
-	    key = "<leader>e";  
-	    action = "<cmd>NvimTreeToggle<CR>";  
-	    options = { desc = "Toggle file tree"; };  
-    }  
+		{
+			mode = "n";
+			key = "<leader>w";
+			action = ":wa<CR>";
+			options = { desc = "Write all files"; };
+		}
+		{
+			mode = "n";
+			key = "<leader>qq";
+			action = ":qa!<CR>";
+			options = { desc = "Close all files"; };
+		}
     {  
 	    mode = "n";  
 	    key = "<leader>sf";  
@@ -27,7 +33,7 @@
     {  
 	    mode = "n";  
 	    key = "<leader>o";  
-	    action = "<cmd>NvimTreeFocus<CR>";  
+	    action = "<cmd>lua MiniFiles.open()<CR>";  
 	    options = { desc = "Focus file tree"; };  
     }
     {
@@ -54,5 +60,17 @@
 			action = "<cmd>Format<CR>";
 		  options = { desc = "Format file"; };
 	  }
+		{
+			mode = "n";
+			key = "<leader>bn";
+			action = "<cmd>BufferLineCycleNext<CR>";
+			options = { desc = "Go to next buffer"; };
+		}
+		{
+			mode = "n";
+			key = "<leader>bp";
+			action = "<cmd>BufferLineCyclePrev<CR>";
+			options = { desc = "Go to previous buffer"; };
+		}
   ];
 }
