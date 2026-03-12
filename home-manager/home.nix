@@ -1,4 +1,4 @@
-{ username, ... }:
+{ lib, username, ... }:
 
 {
   home = {
@@ -12,7 +12,12 @@
 		./env/session-variables.nix
   ];
 
-	nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+		"lutris"
+    "steam"
+		"steam-unwrapped"
+		"unrar"
+	];
   programs.home-manager.enable = true;
 
   # Nicely reload system units when changing configs
