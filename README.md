@@ -14,3 +14,7 @@ git clone https://gitlab.com/homelab3330409/nix-config.git && cd nix-config
 ```
 chmod +x install.sh; ./install.sh
 ```
+
+## Inspirations
+* https://github.com/AniviaFlome/nix-config (fish)
+* https://github.com/zerokqx/ZNix (nixvim)
