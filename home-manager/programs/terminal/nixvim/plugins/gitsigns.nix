@@ -18,9 +18,6 @@
       	delay = 1000;  
     	};  
           
-      # Diff configuration  
-      diff_algorithm = "myers";  
-          
       # Attachment behavior  
       auto_attach = true;  
       attach_to_untracked = true;  

@@ -1,6 +1,6 @@
 {
   imports = [
     ./niri.nix
-    ./binds.nix
+		./binds.nix
   ];
 }

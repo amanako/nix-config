@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
 	imports = [ inputs.zen-browser.homeModules.beta ];
@@ -24,8 +24,10 @@
 		};
 
 		profiles."*" = {
-			extensions.packages = 
-				with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+			extensions = {
+        force = true;
+
+				packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
 			  	darkreader
 					proton-pass
 					yomitan
@@ -34,19 +36,49 @@
 					addy_io
 				];
 
+			  settings = {
+					"uBlock0@raymondhill.net".settings = {
+						userSettings = rec {
+						  uiTheme = "dark";
+						  cloudStorageEnabled = lib.mkForce false;
+						  
+						  importedLists = [
+                "https://gitlab.com/hagezi/mirror/-/raw/main/dns-blocklists/adblock/pro.plus.txt"
+							  "https://hosts.celsoazevedo.com/gambling-porn-social.txt"
+						  ];
+						  externalLists = lib.concatStringsSep "\n" importedLists;
+						};
+						selectedFilterLists = [
+							"ublock-filters"
+              "ublock-badware"
+							"ublock-privacy"
+							"ublock-quick-fixes"
+							"plowe-0"
+							"easyprivacy"
+							"fanboy-cookiemonster"
+							"ublock-cookies-easylist"
+							"fanboy-social"
+							"ublock-annoyances"
+						];
+				  };
+				};
+			};
+
 			settings = {
 				"browser.warnOnClose" = false;
 				"browser.warnOnQuit" = false;
 				"font.cjk_pref_fallback_order" = "ja,zh-cn,zh-hk,zh-tw,ko";
+				"font.default.ja" = "serif";
 				"services.sync.engine.addons" = false;
 				"services.sync.engine.addresses" = false;
-				"services.sync.engine.bookmarks" = false;
 				"services.sync.engine.credicards" = false;
 				"services.sync.engine.passwords" = false;
+				"services.sync.engine.bookmarks" = true;
 				"services.sync.engine.history" = true;
 				"services.sync.engine.prefs" = true;
 				"services.sync.engine.tabs" = true;
 				"services.sync.engine.workspaces" = true;
+				"extensions.autoDisableScope" = 0;
 				"zen.window-sync.enabled" = false;
 			};
 

@@ -30,7 +30,6 @@
     "Mod+C".action.center-column = [ ];
 		"Mod+Ctrl+C".action.center-visible-columns = [ ];
     "Mod+F".action.maximize-column = [ ];
-		"Mod+M".action.maximize-window-to-edges = [ ];
 
     "Mod+K".action.focus-window-or-workspace-up = [ ];
     "Mod+J".action.focus-window-or-workspace-down = [ ];

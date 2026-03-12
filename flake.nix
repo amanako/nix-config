@@ -14,6 +14,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+		dms = {
+			url = "github:AvengeMedia/DankMaterialShell/stable";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+    dms-plugin-registry = {
+			url = "github:AvengeMedia/dms-plugin-registry";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,6 +68,7 @@
 		in {
     nixosConfigurations = {
 			${hostname} = nixpkgs.lib.nixosSystem {
+				system = "x86_64-linux";
       	specialArgs = { inherit 
 						inputs
 						hostname

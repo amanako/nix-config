@@ -16,12 +16,15 @@
 		ripgrep
     fastfetch
 		p7zip
+		unzip
 		unrar
 		bat
-    
-    # Compatibility
-		xwayland-satellite
 
+		# Development
+		clang
+		cmake
+		gnumake
+    
     wineWow64Packages.stable
   ];
 }

@@ -38,6 +38,7 @@
       };
 
 			animations.slowdown = 1.5;
+			hotkey-overlay.skip-at-startup = true;
 
       spawn-at-startup = [
 				{
