@@ -11,7 +11,7 @@
 		../modules/programs
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   networking.hostName = hostname;
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
