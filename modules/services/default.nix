@@ -1,8 +1,10 @@
 {
   imports = [
-    ./services.nix
+		./auto-cpufreq.nix
+		./pipewire.nix
 		./display-manager
 		./openssh.nix
-		./blueman.nix
+		./upower.nix
+		./thermald.nix
   ];
 }
