@@ -1,6 +1,5 @@
 {
   imports = [
-		./education
     ./niri
 		./noctalia
 		#./dms
