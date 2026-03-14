@@ -1,5 +1,5 @@
 {
-	programs.nixvim.opts = {
+	opts = {
     # Numbers
     number = true;
     relativenumber = true;
@@ -20,6 +20,7 @@
     # Tab/Shift
     shiftwidth = 2;
     tabstop = 2;
+		expandtab = true;
 
     # Swap
     swapfile = false;

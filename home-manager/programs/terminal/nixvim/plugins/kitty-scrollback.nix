@@ -1,5 +1,5 @@
 {
-	programs.nixvim.plugins.kitty-scrollback = {
+	plugins.kitty-scrollback = {
 		enable = true;
 	};
 }

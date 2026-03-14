@@ -2,15 +2,19 @@
 
 {
   imports = [ 
-		inputs.nixvim.homeModules.nixvim
-		./colorschemes
-		./dependencies
-		./keymaps
-		./opts
-		./plugins
+	  inputs.nixvim.homeModules.nixvim
 	];
 
   programs.nixvim = {
+		imports = [
+			./colorschemes
+		  ./dependencies
+		  ./keymaps
+		  ./opts
+      ./extraConfig
+      ./plugins
+    ];
+
     enable = true;
     defaultEditor = true;
     viAlias = true;

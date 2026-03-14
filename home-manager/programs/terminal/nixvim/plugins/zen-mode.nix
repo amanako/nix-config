@@ -1,5 +1,5 @@
 {
-	programs.nixvim.plugins.zen-mode = {
+	plugins.zen-mode = {
 		enable = true;
 		settings = {
 			window = {

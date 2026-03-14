@@ -1,5 +1,5 @@
 {
-	programs.nixvim.plugins.gitsigns = {  
+	plugins.gitsigns = {  
     enable = true;  
     settings = {  
       signs = {  

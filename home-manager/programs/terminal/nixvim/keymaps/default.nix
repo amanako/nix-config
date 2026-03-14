@@ -1,5 +1,5 @@
 {
-	programs.nixvim.keymaps = [
+	keymaps = [
     {
       mode = "n";
       key = "<C-s>";
@@ -71,6 +71,12 @@
 			key = "<leader>bp";
 			action = "<cmd>BufferLineCyclePrev<CR>";
 			options = { desc = "Go to previous buffer"; };
+		}
+		{
+      mode = "n";
+      key = "<leader>n";
+      action = "<cmd>NoiceSnacks<cr>";
+      options = { silent = true; };
 		}
   ];
 }

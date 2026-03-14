@@ -1,10 +1,10 @@
-{ config, ... }:
+{ lib, ... }:
 
 let 
-	helpers = config.lib.nixvim;
+	helpers = lib.nixvim;
 in
 {
-	programs.nixvim.plugins.mini-files = {
+	plugins.mini-files = {
 	  enable = true;
 		settings = {
       content = {
