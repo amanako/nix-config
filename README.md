@@ -1,23 +1,6 @@
-<h1 align="center">:snowflake: NixOS configuration :snowflake:</h1>
-
-## Included (by importance for me)
-
-|  Functionality |   Software                                                                                |
-|:--------------:|:-----------------------------------------------------------------------------------------:|
-| Shell          | [fish][fish]                                                                              |
-| Terminal       | [kitty][kitty]                                                                            |
-| File Editor    | [neovim][neovim] via [nixvim][nixvim]                                                     |
-| File Manager   | [yazi][yazi]                                                                              |
-| Compositor     | [wayland][wayland]                                                                        |
-| Window Manager | [niri][niri]                                                                              |
-| Quickshell     | [noctalia][noctalia]                                                                      |
-| Browser        | [zen-browser][zen-browser]                                                                |
-| Input Method   | [fcitx5][fcitx5]                                                                          |
-| Display Manager| [ly][ly]                                                                                  |
-| Boot Loader    | [limine][limine], for setup checkout corresponding [file](./modules/system/bootloader.nix)|
-| Document Viewer| [okular][okular]                                                                          |
-
-and many other smaller ones...
+<center>
+  <h1>:snowflake: NixOS configuration :snowflake:</h1>
+</center>
 
 ## Goals
 * This config's main focus is **[TUI][TUI] experience** improvement via various tweaks, plugins, integrations etc. to elevate everyday terminal tasks.
@@ -28,6 +11,29 @@ and many other smaller ones...
 * **Fallback GUI software** is present for some inescapable situations.
 * **Uniformness** prefered, therefore config is made to employ widely-supported **[gruvbox][gruvbox] theme** for most of the software.
 * **Light gaming** software packed as well, I use it primarily for [VNs][VN]
+
+## Included (by importance for me)
+
+<center>
+
+  |  Functionality |   Software                                                                                |
+  |:--------------:|:-----------------------------------------------------------------------------------------:|
+  | Shell          | [fish][fish]                                                                              |
+  | Terminal       | [kitty][kitty]                                                                            |
+  | File Editor    | [neovim][neovim] via [nixvim][nixvim]                                                     |
+  | File Manager   | [yazi][yazi]                                                                              |
+  | Compositor     | [wayland][wayland]                                                                        |
+  | Window Manager | [niri][niri]                                                                              |
+  | Quickshell     | [noctalia][noctalia]                                                                      |
+  | Browser        | [zen-browser][zen-browser]                                                                |
+  | Input Method   | [fcitx5][fcitx5]                                                                          |
+  | Display Manager| [ly][ly]                                                                                  |
+  | Boot Loader    | [limine][limine], for setup checkout corresponding [file](./modules/system/bootloader.nix)|
+  | Document Viewer| [okular][okular]                                                                          |
+
+</center>
+
+and many other smaller ones...
 
 ## Screenshoots
 
