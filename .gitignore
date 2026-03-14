@@ -5,5 +5,5 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
-# Ignore stuff for setting up anki sync
-**/anki/*.txt
+# Currently no need for public TODO schedule
+todo.txt
