@@ -19,7 +19,7 @@
         force = true;
         default = "ddg";
         privateDefault = "ddg";
-        engines = import ./search-engines { inherit pkgs; };
+        engines = import ./search-engines { inherit pkgs lib; };
       };
     };
 	};

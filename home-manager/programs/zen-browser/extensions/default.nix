@@ -19,7 +19,7 @@
 			};
 			selectedFilterLists = [
 				"ublock-filters"
-         "ublock-badware"
+        "ublock-badware"
 				"ublock-privacy"
 				"ublock-quick-fixes"
 				"plowe-0"
