@@ -7,6 +7,7 @@
 		thunar
 		kdePackages.okular
 		youtube-tui
+		abiword
 
     # Nice command line tools
     which
