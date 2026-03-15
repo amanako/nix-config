@@ -1,5 +1,5 @@
 {
-  programs.niri.settings.binds = 
+  programs.niri.settings.binds =
     let
       noctalia = args: {
         action.spawn = [
@@ -19,49 +19,49 @@
         "settings"
         "toggle"
       ];
-			"Mod+Alt+C" = noctalia [
+      "Mod+Alt+C" = noctalia [
         "plugin:clipper"
- 				"toggle"
-			];
+        "toggle"
+      ];
       "Mod+Space" = noctalia [
         "launcher"
         "toggle"
       ];
-			"Mod+Shift+N" = noctalia [
+      "Mod+Shift+N" = noctalia [
         "notifications"
-	  		"toggleHistory"
-			];
+        "toggleHistory"
+      ];
       "Ctrl+K" = noctalia [
-	 			"plugin:keybind-cheatsheet"
-	 			"toggle"
-			];
-			"Alt+Shift+C" = noctalia [
-	 			"calendar"
-	 			"toggle"
-			];
-			"Alt+Shift+B" = noctalia [
-				"bluetooth"
-				"togglePanel"
-			];
+        "plugin:keybind-cheatsheet"
+        "toggle"
+      ];
+      "Alt+Shift+C" = noctalia [
+        "calendar"
+        "toggle"
+      ];
+      "Alt+Shift+B" = noctalia [
+        "bluetooth"
+        "togglePanel"
+      ];
       "XF86AudioLowerVolume" = noctalia [
         "volume"
         "decrease"
       ];
       "XF86AudioRaiseVolume" = noctalia [
         "volume"
-	      "increase"
-			];
-			"Mod+Alt+V" = noctalia [
-         "volume"
-	  		 "togglePanel"
-			];
-			"Mod+Shift+B" = noctalia [
-					"battery"
-					"togglePanel"
-			];
+        "increase"
+      ];
+      "Mod+Alt+V" = noctalia [
+        "volume"
+        "togglePanel"
+      ];
+      "Mod+Shift+B" = noctalia [
+        "battery"
+        "togglePanel"
+      ];
       "XF86AudioMute" = noctalia [
-         "volume"
-         "muteOutput"
+        "volume"
+        "muteOutput"
       ];
       "XF86MonBrightnessDown" = noctalia [
         "brightness"
@@ -71,17 +71,17 @@
         "brightness"
         "increase"
       ];
-			"Mod+A" = noctalia [
-	  	  "idleInhibitor"
-	  	  "toggle"
-			];
-			"Alt+Shift+L" = noctalia [
-        "lockScreen"
-	  	 "lock"
-			];
-			"Alt+Shift+M" = noctalia [
+      "Mod+A" = noctalia [
+        "idleInhibitor"
+        "toggle"
+      ];
+      "Alt+Shift+L" = noctalia [
         "sessionMenu"
-	  	  "toggle"
-			];
+        "lockAndSuspend"
+      ];
+      "Alt+Shift+M" = noctalia [
+        "sessionMenu"
+        "toggle"
+      ];
     };
 }

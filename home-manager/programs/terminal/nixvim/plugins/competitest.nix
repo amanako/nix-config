@@ -1,25 +1,35 @@
 {
-	plugins.competitest = {
+  plugins.competitest = {
     enable = true;
-		settings = {
+    settings = {
       compile_command = {
-				c = {
-				  exec = "clang";
-				  args = [ " -Wall -Wextra" "$(FNAME)" "-o" "$(FNOEXT)" ];
-			  };
-				cpp = {
+        c = {
+          exec = "clang";
+          args = [
+            " -Wall -Wextra"
+            "$(FNAME)"
+            "-o"
+            "$(FNOEXT)"
+          ];
+        };
+        cpp = {
           exec = "clang++";
-					args = [ " -Wall -Wextra" "$(FNAME)" "-o" "$(FNOEXT)" ];
-				};
-			};
-			run_command = {
-				c = {
-				  exec = "./$(FNOEXT)";
-			  };
-				cpp = {
-					exec = "./$(FNOEXT)";
-				};
-			};
-		};
-	};
+          args = [
+            " -Wall -Wextra"
+            "$(FNAME)"
+            "-o"
+            "$(FNOEXT)"
+          ];
+        };
+      };
+      run_command = {
+        c = {
+          exec = "./$(FNOEXT)";
+        };
+        cpp = {
+          exec = "./$(FNOEXT)";
+        };
+      };
+    };
+  };
 }

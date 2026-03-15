@@ -6,14 +6,17 @@
     ../modules/system
     ../modules/users
     ../modules/services
-		../modules/env
-		../modules/i18n/locale
-		../modules/programs
+    ../modules/env
+    ../modules/i18n/locale
+    ../modules/programs
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
   networking.hostName = hostname;
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

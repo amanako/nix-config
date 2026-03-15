@@ -1,8 +1,8 @@
 {
-	imports = [
-		./git.nix
-		./mpv.nix
-		./jq.nix
-		./gpg.nix
-	];
+  imports = [
+    ./git.nix
+    ./mpv.nix
+    ./jq.nix
+    ./gpg.nix
+  ];
 }

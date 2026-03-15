@@ -9,14 +9,14 @@
 
       format = lib.concatStrings [
         "$username"
-				"$hostname"
+        "$hostname"
         "$directory"
         "$git_branch"
-				"$git_state"
+        "$git_state"
         "$git_status"
-				"$cmd_duration"
-				"$line_break"
-				"$character"
+        "$cmd_duration"
+        "$line_break"
+        "$character"
       ];
 
       palette = "gruvbox_dark";
@@ -37,13 +37,13 @@
 
       git_branch = {
         symbol = "";
-				style = "color_aqua";
-				format = "[[ $symbol $branch ](color_blue color_aqua)]($style)";
+        style = "color_aqua";
+        format = "[[ $symbol $branch ](color_blue color_aqua)]($style)";
       };
 
       git_status = {
         style = "color_aqua";
-				format = "[[($all_status$ahead_behind )](color_orange colow_yellow)]($style)";
+        format = "[[($all_status$ahead_behind )](color_orange colow_yellow)]($style)";
       };
 
       character = {
@@ -53,7 +53,7 @@
       };
 
       cmd_duration = {
-				format = "[$duration]($style) ";
+        format = "[$duration]($style) ";
       };
     };
   };

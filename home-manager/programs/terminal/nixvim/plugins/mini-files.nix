@@ -1,12 +1,12 @@
 { lib, ... }:
 
-let 
-	helpers = lib.nixvim;
+let
+  helpers = lib.nixvim;
 in
 {
-	plugins.mini-files = {
-	  enable = true;
-		settings = {
+  plugins.mini-files = {
+    enable = true;
+    settings = {
       content = {
         filter = helpers.mkRaw "nil";
         highlight = helpers.mkRaw "nil";
@@ -39,6 +39,6 @@ in
         width_nofocus = 15;
         width_preview = 25;
       };
-		};
-	};
+    };
+  };
 }

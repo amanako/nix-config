@@ -6,7 +6,7 @@
     enableFishIntegration = true;
     shellWrapperName = "y";
     keymap = {
-      mgr.prepend_keymap = [];
+      mgr.prepend_keymap = [ ];
     };
     settings = {
       mgr = {

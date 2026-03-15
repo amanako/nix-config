@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   nh = lib.getExe pkgs.nh;
@@ -18,22 +23,22 @@ in
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
       rebuild = "${nh} os switch --ask --diff always --show-trace";
-			clean = "${nh} clean all --keep 4 --optimise";
-			search = "${nh} search";
+      clean = "${nh} clean all --keep 4 --optimise";
+      search = "${nh} search";
       # Updates all flake inputs by default, a single one can be passed as well
       flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
     };
     plugins = [
       {
-				name = "fzf-fish";
-				src = pkgs.fishPlugins.fzf-fish.src;
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
       }
       {
-				name = "git";
+        name = "git";
         src = pkgs.fishPlugins.plugin-git.src;
       }
       {
-				name = "done";
+        name = "done";
         src = pkgs.fishPlugins.done.src;
       }
     ];

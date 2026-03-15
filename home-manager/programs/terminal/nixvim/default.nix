@@ -1,16 +1,16 @@
 { inputs, ... }:
 
 {
-  imports = [ 
-	  inputs.nixvim.homeModules.nixvim
-	];
+  imports = [
+    inputs.nixvim.homeModules.nixvim
+  ];
 
   programs.nixvim = {
-		imports = [
-			./colorschemes
-		  ./dependencies
-		  ./keymaps
-		  ./opts
+    imports = [
+      ./colorschemes
+      ./dependencies
+      ./keymaps
+      ./opts
       ./extraConfig
       ./plugins
     ];
@@ -25,5 +25,5 @@
     globals = {
       mapleader = " ";
     };
-	};
+  };
 }

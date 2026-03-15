@@ -8,13 +8,13 @@ in
     name = "Nix Packages";
     template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
     icon = nixPkgsIcon;
-    aliases = ["@np"];
+    aliases = [ "@np" ];
   };
 
   # uses default icon
   mynixos = {
     name = "My NixOS";
     template = "https://mynixos.com/search?q={searchTerms}";
-    aliases = ["@nx"];
-	};
+    aliases = [ "@nx" ];
+  };
 }

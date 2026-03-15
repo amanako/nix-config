@@ -10,7 +10,7 @@
     icon = "briefcase";
     id = 2;
   };
-    
+
   JP = {
     color = "green";
     icon = "gift";

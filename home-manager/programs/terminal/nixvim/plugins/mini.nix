@@ -1,21 +1,21 @@
 {
-	plugins.mini = {
-	  enable = true;
+  plugins.mini = {
+    enable = true;
     mockDevIcons = true;
 
-		modules = {
+    modules = {
       icons = {
         enable = true;
-			};
-			starter = {
-				enable = true;
-			};
-			pairs = {
-				enable = true;
-			};
-			cmdline = {
-				enable = true;
-			};
-		};
-	};
+      };
+      starter = {
+        enable = true;
+      };
+      pairs = {
+        enable = true;
+      };
+      cmdline = {
+        enable = true;
+      };
+    };
+  };
 }

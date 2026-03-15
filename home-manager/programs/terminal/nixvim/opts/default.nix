@@ -1,5 +1,5 @@
 {
-	opts = {
+  opts = {
     # Numbers
     number = true;
     relativenumber = true;
@@ -9,7 +9,7 @@
     scrolloff = 21;
     sidescrolloff = 20;
 
-    # Search 
+    # Search
     ignorecase = true;
     smartcase = true;
     incsearch = true;
@@ -20,7 +20,7 @@
     # Tab/Shift
     shiftwidth = 2;
     tabstop = 2;
-		expandtab = true;
+    expandtab = true;
 
     # Swap
     swapfile = false;

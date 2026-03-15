@@ -1,7 +1,7 @@
 {
-	imports = [
-		./localsend.nix
-		./steam.nix	
-		./ssh.nix
-	];
+  imports = [
+    ./localsend.nix
+    ./steam.nix
+    ./ssh.nix
+  ];
 }

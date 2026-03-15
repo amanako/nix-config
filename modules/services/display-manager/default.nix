@@ -1,6 +1,6 @@
 {
-	imports = [
+  imports = [
     ./ly.nix
-		./lemurs.nix
-	];
+    ./lemurs.nix
+  ];
 }

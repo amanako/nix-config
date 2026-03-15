@@ -1,32 +1,32 @@
 { inputs, ... }:
 
 {
-	imports = [ 
-		inputs.dms.homeModules.dank-material-shell
+  imports = [
+    inputs.dms.homeModules.dank-material-shell
     inputs.dms.homeModules.niri
-	];
+  ];
 
-	programs.dank-material-shell = {
-		enable = true;
-		niri = {
-			enableKeybinds = true;
-			enableSpawn = true;
-			includes.enable = false;
-		};
+  programs.dank-material-shell = {
+    enable = true;
+    niri = {
+      enableKeybinds = true;
+      enableSpawn = true;
+      includes.enable = false;
+    };
 
     enableSystemMonitoring = true;
     enableVPN = true;
     enableDynamicTheming = true;
     enableAudioWavelength = true;
-    enableCalendarEvents = true; 
+    enableCalendarEvents = true;
     enableClipboardPaste = true;
 
-		settings = {
-			theme = "dark";
-			dynamicTheming = true;
-		};
+    settings = {
+      theme = "dark";
+      dynamicTheming = true;
+    };
 
-		clipboardSettings = {
+    clipboardSettings = {
       maxHistory = 50;
       maxEntrySize = 5242880;
       autoClearDays = 2;
@@ -34,6 +34,6 @@
       disabled = false;
       disableHistory = false;
       disablePersist = false;
-		};
-	};
+    };
+  };
 }

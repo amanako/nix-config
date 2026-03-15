@@ -1,6 +1,6 @@
 {
-	imports = [
-		./dms.nix
-		./plugins.nix
-	];
+  imports = [
+    ./dms.nix
+    ./plugins.nix
+  ];
 }

@@ -1,10 +1,10 @@
 {
-	imports = [
-		./eza.nix
-	  ./fish.nix
-	  ./fzf.nix
-	  ./zoxide.nix
-		./ssh.nix
-		./nh.nix
-	];
+  imports = [
+    ./eza.nix
+    ./fish.nix
+    ./fzf.nix
+    ./zoxide.nix
+    ./ssh.nix
+    ./nh.nix
+  ];
 }

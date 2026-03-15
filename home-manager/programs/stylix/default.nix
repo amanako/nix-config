@@ -1,7 +1,12 @@
-{ inputs, pkgs, lib, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 
-let 
-	services = [
+let
+  services = [
     "noctalia-shell"
     "kitty"
     "starship"
@@ -29,12 +34,10 @@ in
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.victor-mono;
-      	name = "Victor Mono NF";
+        name = "Victor Mono NF";
       };
     };
 
-		targets = lib.foldr ( service: acc:
-	    acc // { ${service}.enable = false; }
-		) {} services;
-	};
+    targets = lib.foldr (service: acc: acc // { ${service}.enable = false; }) { } services;
+  };
 }

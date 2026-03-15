@@ -2,19 +2,15 @@
 
 engines:
 
-builtins.mapAttrs
-  (_: engine:
+builtins.mapAttrs (_: engine: {
+  inherit (engine) name;
+  icon = engine.icon or defaultIcon;
+
+  urls = [
     {
-      inherit (engine) name;
-      icon = engine.icon or defaultIcon;
-
-      urls = [
-        {
-          inherit (engine) template;
-        }
-      ];
-
-      definedAliases = engine.aliases;
+      inherit (engine) template;
     }
-  )
-  engines
+  ];
+
+  definedAliases = engine.aliases;
+}) engines

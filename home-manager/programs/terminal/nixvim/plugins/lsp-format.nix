@@ -1,6 +1,6 @@
 {
-	plugins.lsp-format = {
+  plugins.lsp-format = {
     enable = true;
-	  lspServersToEnable = "all";
+    lspServersToEnable = "all";
   };
 }

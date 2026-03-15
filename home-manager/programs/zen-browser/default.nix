@@ -1,10 +1,16 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 
 {
-	imports = [ inputs.zen-browser.homeModules.beta ];
+  imports = [ inputs.zen-browser.homeModules.beta ];
 
-	programs.zen-browser = {
-		enable = true;
+  programs.zen-browser = {
+    enable = true;
     policies = import ./policies;
     profiles."*" = {
       extensions = import ./extensions { inherit pkgs lib inputs; };
@@ -22,5 +28,5 @@
         engines = import ./search-engines { inherit pkgs lib; };
       };
     };
-	};
+  };
 }

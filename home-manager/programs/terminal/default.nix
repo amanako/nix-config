@@ -1,8 +1,8 @@
 {
-	imports = [
-		./nixvim
-		./kitty.nix
-		./starship.nix
-		./yazi.nix
-	];
+  imports = [
+    ./nixvim
+    ./kitty.nix
+    ./starship.nix
+    ./yazi.nix
+  ];
 }

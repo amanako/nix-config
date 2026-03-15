@@ -1,13 +1,13 @@
 {
   imports = [
     ./niri
-		./noctalia
-		#./dms
-		./zen-browser
-		./packages
-		./shell
-		./stylix
-		./terminal
-		./utility
-	];
+    ./noctalia
+    #./dms
+    ./zen-browser
+    ./packages
+    ./shell
+    ./stylix
+    ./terminal
+    ./utility
+  ];
 }

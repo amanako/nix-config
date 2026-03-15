@@ -15,10 +15,8 @@ let
 
   # Merge all files/modules as attributes passing them iconBasePath to allow for choosing of icons
   rawEngines = lib.attrsets.mergeAttrsList (
-    map
-      (file: import file { inherit iconBasePath; })
-      engineFiles
-    );
+    map (file: import file { inherit iconBasePath; }) engineFiles
+  );
 
 in
-  mkEngines rawEngines
+mkEngines rawEngines
