@@ -66,6 +66,7 @@
 			email = "gitlab@kairi6.anonaddy.com";
 		};
 		in {
+    packages.system.default = self.packages.${nixpkgs.system}.default;
     nixosConfigurations = {
 			${hostname} = nixpkgs.lib.nixosSystem {
 				system = "x86_64-linux";
