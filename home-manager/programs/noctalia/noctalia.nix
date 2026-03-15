@@ -1,5 +1,16 @@
-{ inputs, term, ... }:
+{ lib, inputs, term, ... }:
 
+let 
+  noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";
+  officialPlugins = [
+    "battery-actions"
+    "clipper"
+    "file-search"
+    "polkit-agent"
+    "pomodoro"
+    "keybind-cheatsheet"
+  ];
+in
 {
   imports = [ inputs.noctalia.homeModules.default ]; 
 
@@ -10,38 +21,18 @@
 				{
 					enabled = true;
 					name = "Official Noctalia Plugins";
-					url = "https://github.com/noctalia-dev/noctalia-plugins";
+					url = noctaliaPluginURL;
 				}
 			];
 
-			states = {
-				pomodoro = {
-					enabled = true;
-					sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-				};
-				battery-actions = {
-					enabled = true;
-					sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-				};
-        clipper = {
-					enabled = true;
-					sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
-				};
-				file-search = {
-					enabled = true;
-					sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
-				};
-				polkit-agent = {
-					enabled = true;
-          sourceUrl = "https://guthub.com/noctalia-dev/noctalia-plugins";
-				};
-			};
+			states = lib.genAttrs officialPlugins
+        (_: { enabled = true; sourceUrl = noctaliaPluginURL; });
 
 			version = 2;
 		};
     settings = {
       bar = {
-        barType = "floating";
+        barType = "simple";
         position = "top";
 				monitors = [
           "eDP-1"
@@ -58,9 +49,9 @@
 				marginHorizontal = 8;
 				frameThickness = 8;
 				frameRadius = 12;
-				outerCorners = false;
 				hideOnOverview = true;
- 				displayMode = "auto_hide";
+ 				displayMode = "always_visible";
+				outerCorners = false;
 				autoHideDelay = 500;
 				autoShowDelay = 150;
 				showOnWorkspaceSwitch = true;
@@ -161,7 +152,7 @@
 				boxBorderEnabled = true;
 				panelBackgroundOpacity = 0.8;
 				panelsAttachedToBar = true;
-				settingsPanelMode = "attached";
+				settingsPanelMode = "centered";
       };
 
       location = {
@@ -174,7 +165,7 @@
       appLauncher = {
         enableClipboardHistory = true;
         enableClipPreview = true;
-        position = "top_center";
+        position = "center";
         sortByMostUsed = "true";
         terminalCommand = "${term} -e";
 				enableSettingsSearch = true;
@@ -238,11 +229,17 @@
         dayTemp = 6000;
       };
 
-      desktopWidgets = {
-        enabled = true;
-      };
+      desktopWidgets.enabled = false;
 
       plugins.autoUpdate = true;
+
+      idle = {
+        enabled = true;
+        screenOffTimeout = 300;
+        lockTimeout = 600;
+        suspendTimeout = 600;
+        fadeDuration = 10;
+      };
     };
   };
 }
