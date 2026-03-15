@@ -17,9 +17,10 @@ in
       ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
       man = "${lib.getExe pkgs.bat-extras.batman}";
       rm = "rm -I";
-      rebuild = "${nh} os switch --ask --diff always";
+      rebuild = "${nh} os switch --ask --diff always --show-trace";
 			clean = "${nh} clean all --keep 4 --optimise";
 			search = "${nh} search";
+      # Updates all flake inputs by default, a single one can be passed as well
       flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
     };
     plugins = [
