@@ -6,7 +6,7 @@ in
 {
   programs.kitty = {
     enable = true;
-    themeFile = "GruvboxMaterialDarkHard";
+    themeFile = "GruvboxMaterialDarkMedium";
     font = {
       name = fontName;
       package = pkgs.nerd-fonts.victor-mono;

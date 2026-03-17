@@ -6,7 +6,7 @@
 }:
 
 let
-  services = [
+  disabledTargets = [
     "noctalia-shell"
     "kitty"
     "starship"
@@ -20,7 +20,7 @@ in
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
     polarity = "dark";
 
     icons = {
@@ -38,6 +38,8 @@ in
       };
     };
 
-    targets = lib.foldr (service: acc: acc // { ${service}.enable = false; }) { } services;
+    targets = lib.genAttrs disabledTargets (_: {
+      enable = false;
+    });
   };
 }
