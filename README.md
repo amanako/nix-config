@@ -49,7 +49,7 @@ nix-shell -p git
 
 2. Clone the repository
 ```
-git clone https://gitlab.com/homelab3330409/nix-config.git && cd nix-config
+git clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
 ```
 
 3. Run install.sh

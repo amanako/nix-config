@@ -1,11 +1,9 @@
-{ git, ... }:
-
 {
   programs.git = {
     enable = true;
     settings = {
-      user.name = git.name;
-      user.email = git.email;
+      user.name = "abyssal-twilight";
+      user.email = "codeberg@kairi6.anonaddy.com";
     };
   };
 }

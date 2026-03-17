@@ -3,8 +3,10 @@
     enable = true;
     enableDefaultConfig = false;
     matchBlocks."*" = {
-      host = "gitlab.io";
-      hostname = "104.21.96.56";
+      host = "codeberg.org";
+      user = "git";
+      port = 22;
+      identityFile = "~/.ssh/id_ed25519_codeberg";
     };
   };
 }
