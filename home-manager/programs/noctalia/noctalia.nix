@@ -1,11 +1,12 @@
 {
+  config,
   lib,
   inputs,
-  term,
   ...
 }:
 
 let
+  term = config.home.sessionVariables.TERM;
   noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";
   officialPlugins = [
     "battery-actions"

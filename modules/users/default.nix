@@ -1,19 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  username,
-  git,
-  ...
-}:
+{ pkgs, ... }:
 
-let
-  lemursGroup = if config.lemurs.enable then [ "seat" ] else [ ];
-in
 {
-  users.users.${username} = {
+  users.users.lunar-scar = {
     isNormalUser = true;
-    extraGroups = lemursGroup ++ [
+    extraGroups = [
       "wheel"
       "networkmanager"
     ];
@@ -21,7 +11,7 @@ in
     initialPassword = "koko";
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKmiabb2d60IC4q/jCD5KX/uLlZccZ+pK6G9Tp2NVQbe ${git.email}"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJu+Btx2UdY+nVSsHXs9BfSIJfeZuUgFSDHqAFvWD8rN codeberg@kairi6.anonaddy.com"
     ];
   };
 }

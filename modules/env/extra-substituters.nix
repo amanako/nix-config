@@ -1,8 +1,6 @@
-{ username, ... }:
-
 {
   nix.settings = {
-    trusted-users = [ username ];
+    trusted-users = [ "lunar-scar" ];
 
     # nix-community's cache server is included
     extra-substituters = [

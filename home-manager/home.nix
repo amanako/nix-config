@@ -1,9 +1,7 @@
-{ lib, username, ... }:
-
 {
   home = {
-    username = username;
-    homeDirectory = "/home/${username}";
+    username = "lunar-scar";
+    homeDirectory = "/home/lunar-scar";
   };
 
   imports = [
@@ -12,14 +10,6 @@
     ./env/session-variables.nix
   ];
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "lutris"
-      "steam"
-      "steam-unwrapped"
-      "unrar"
-    ];
   programs.home-manager.enable = true;
 
   # Nicely reload system units when changing configs

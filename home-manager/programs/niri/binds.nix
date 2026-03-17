@@ -1,11 +1,11 @@
-{
-  term,
-  editor,
-  file-manager,
-  browser,
-  ...
-}:
+{ config, ... }:
 
+let
+  editor = config.home.sessionVariables.EDITOR;
+  term = config.home.sessionVariables.TERM;
+  fileManager = "yazi";
+  browser = "zen-beta";
+in
 {
   programs.niri.settings.binds =
     let
@@ -53,7 +53,7 @@
 
       "Mod+T".action.spawn = term;
       "Mod+B".action.spawn = browser;
-      "Mod+Y" = sh "${term} -e ${file-manager}";
+      "Mod+Y" = sh "${term} -e ${fileManager}";
       "Mod+N" = sh "${term} -e ${editor}";
 
       "Mod+Shift+C".action.center-visible-columns = [ ];

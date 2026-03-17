@@ -51,6 +51,11 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -61,48 +66,31 @@
       ...
     }:
     let
-      username = "lunar-scar";
       hostname = "nebula";
-      term = "kitty";
-      editor = "nvim";
-      file-manager = "yazi";
-      browser = "zen-beta";
-      git = {
-        name = "arcane-moonlight";
-        email = "gitlab@kairi6.anonaddy.com";
-      };
+      system = "x86_64-linux";
     in
     {
       nixosConfigurations = {
         ${hostname} = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs = {
             inherit
               inputs
               hostname
-              username
-              git
               ;
           };
           modules = [
             ./nixos/configuration.nix
-
             home-manager.nixosModules.home-manager
             {
               home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs
-                  username
-                  term
-                  editor
-                  file-manager
-                  browser
-                  git
                   ;
               };
-
-              home-manager.users.${username} = import ./home-manager/home.nix;
+              home-manager.users."lunar-scar" = import ./home-manager/home.nix;
             }
           ];
         };
