@@ -1,0 +1,50 @@
+{ inputs, ... }:
+
+{
+  flake.hmModules.fish =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      nh = lib.getExe pkgs.nh;
+    in
+    {
+      programs.fish = {
+        enable = true;
+        interactiveShellInit = ''
+          set -U fish_greeting
+          ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+        '';
+        shellAliases = {
+          bios = "systemctl reboot --firmware-setup";
+          cat = "${lib.getExe config.programs.bat.package} --theme=ansi";
+          cd = "z";
+          ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
+          man = "${lib.getExe pkgs.bat-extras.batman}";
+          rm = "rm -I";
+          rebuild = "${nh} os switch --ask --diff always --show-trace";
+          clean = "${nh} clean all --keep 4 --optimise";
+          search = "${nh} search";
+          # Updates all flake inputs by default, a single one can be passed as well
+          flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
+        };
+        plugins = [
+          {
+            name = "fzf-fish";
+            src = pkgs.fishPlugins.fzf-fish.src;
+          }
+          {
+            name = "git";
+            src = pkgs.fishPlugins.plugin-git.src;
+          }
+          {
+            name = "done";
+            src = pkgs.fishPlugins.done.src;
+          }
+        ];
+      };
+    };
+}

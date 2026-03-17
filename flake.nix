@@ -1,8 +1,17 @@
 {
-  description = "A basic flake";
+  description = "A cute dendritic flake";
+
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Small team to enable system #######################
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+    den.url = "github:vic/den";
+    flake-aspects.url = "github:vic/flake-aspects";
+    #####################################################
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -57,43 +66,4 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }:
-    let
-      hostname = "nebula";
-      system = "x86_64-linux";
-    in
-    {
-      nixosConfigurations = {
-        ${hostname} = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              inputs
-              hostname
-              ;
-          };
-          modules = [
-            ./nixos/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  ;
-              };
-              home-manager.users."lunar-scar" = import ./home-manager/home.nix;
-            }
-          ];
-        };
-      };
-    };
 }
