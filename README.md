@@ -37,8 +37,8 @@ and many other smaller ones...
 
 ## Screenshoots
 
-![noctalia-overview](./assets/screenshoots/2026-03-14-noctalia-preview.png)
-![features-overview](./assets/screenshoots/2026-03-14-tui-features-preview.png)
+![noctalia-overview](./assets/screenshots/2026-03-14-noctalia-preview.png)
+![features-overview](./assets/screenshots/2026-03-14-tui-features-preview.png)
 
 ## Build steps
 
