@@ -38,11 +38,8 @@
 
       # Home manager overrides
       homeManager = {
-        home-manager.useUserPackages = true;
-
         imports = with inputs.self.hmModules; [
           niri
-          noctalia
         ];
 
         #home.sessionVariables = {

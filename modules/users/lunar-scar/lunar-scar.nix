@@ -43,6 +43,10 @@ in
       { pkgs, ... }:
       {
         imports = with inputs.self.hmModules; [
+          niri
+          noctalia
+
+          nixvim
           fcitx5
           git
           nix-index-database
@@ -52,9 +56,10 @@ in
           nh
           ssh
           zoxide
-	  kitty
-	  starship
-	  yazi
+          kitty
+          starship
+          yazi
+          mpv
         ];
 
         home.packages = with pkgs; [
