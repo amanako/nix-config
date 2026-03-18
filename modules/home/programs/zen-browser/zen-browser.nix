@@ -1,12 +1,9 @@
-{
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 
 {
+  flake.hmModules.zen-browser = 
+    { pkgs, lib, config, ... }:
+  {
   imports = [ inputs.zen-browser.homeModules.beta ];
 
   programs.zen-browser = {
@@ -28,5 +25,6 @@
         engines = import ./search-engines { inherit pkgs lib; };
       };
     };
+  };
   };
 }
