@@ -39,7 +39,7 @@
           version = 2;
         };
         settings = {
-          #binds = import ./_binds.nix;
+          binds = import ./_binds.nix;
           bar = {
             barType = "simple";
             position = "top";
@@ -253,4 +253,3 @@
       };
     };
 }
-

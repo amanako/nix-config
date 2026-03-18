@@ -4,7 +4,7 @@ let
   editor = "nvim";
   term = "kitty";
   fileManager = "yazi";
-  #browser = "zen-beta";
+  browser = "zen-beta";
   sh = cmd: { action.spawn-sh = cmd; };
 in
 {

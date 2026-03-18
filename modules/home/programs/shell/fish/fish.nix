@@ -12,6 +12,7 @@
       nh = lib.getExe pkgs.nh;
     in
     {
+      imports = [ inputs.self.hmModules.jq ];
       programs.fish = {
         enable = true;
         interactiveShellInit = ''

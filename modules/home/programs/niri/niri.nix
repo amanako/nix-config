@@ -21,7 +21,7 @@
             QT_QPA_PLATFORMTHEME = "qt6ct";
           };
 
-          #binds = import ./_binds.nix;
+          binds = import ./_binds.nix;
 
           layout = {
             gaps = 2;
