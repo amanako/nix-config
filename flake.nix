@@ -6,12 +6,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Small team to enable system #######################
+    # Inputs in charge of enabling setup #######################
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     den.url = "github:vic/den";
     flake-aspects.url = "github:vic/flake-aspects";
-    #####################################################
+    ############################################################
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -20,6 +20,12 @@
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
