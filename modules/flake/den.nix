@@ -9,6 +9,7 @@
       imports = [ ];
       home-manager.useGlobalPkgs = true;
       nix.settings.trusted-users = [ "lunar-scar" ];
+      # Enable flakes and new nix command
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"

@@ -13,21 +13,21 @@
 
       programs.zen-browser = {
         enable = true;
-        policies = import ./policies;
+        policies = import ./_policies;
         profiles."*" = {
-          extensions = import ./extensions { inherit pkgs lib inputs; };
+          extensions = import ./_extensions { inherit pkgs lib inputs; };
 
           containersForce = true;
-          containers = import ./containers;
+          containers = import ./_containers;
           spacesForce = true;
-          spaces = import ./spaces { inherit config; };
+          spaces = import ./_spaces { inherit config; };
 
-          settings = import ./settings;
+          settings = import ./_settings;
           search = {
             force = true;
             default = "ddg";
             privateDefault = "ddg";
-            engines = import ./search-engines { inherit pkgs lib; };
+            engines = import ./_search-engines { inherit pkgs lib; };
           };
         };
       };

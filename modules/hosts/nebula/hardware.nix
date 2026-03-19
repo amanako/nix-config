@@ -2,24 +2,29 @@
 
 {
   flake.modules.nixos.nebula-hw =
-    { pkgs, ... }:
     {
-      imports = with inputs.self.modules.nixos; [
-        limine
-        upower
-        auto-cpufreq
-        thermald
-        pipewire
-        networkmanager
-        bluetooth
-        graphics
-      ];
+      lib,
+      modulesPath,
+      ...
+    }:
+    {
+      imports =
+        with inputs.self.modules.nixos;
+        [
+          upower
+          auto-cpufreq
+          thermald
+          pipewire
+          networkmanager
+          bluetooth
+          graphics
+        ]
+        ++ [ (modulesPath + "/installer/scan/not-detected.nix") ];
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"
       ];
       boot.initrd.kernelModules = [ ];
-      boot.kernelPackages = pkgs.linuxPackages_zen;
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
 
@@ -38,5 +43,6 @@
       };
 
       swapDevices = [ ];
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     };
 }

@@ -5,7 +5,7 @@
     { config, lib, ... }:
     let
       # TODO: change hard-coded variables
-      term = "kitty";
+      term = config.home.sessionVariables.TERM;
       noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";
       officialPlugins = [
         "battery-actions"

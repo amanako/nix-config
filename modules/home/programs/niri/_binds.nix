@@ -1,10 +1,11 @@
-#{ config, ... }:
-#
+{ config, ... }:
+
 let
-  editor = "nvim";
-  term = "kitty";
-  fileManager = "yazi";
-  browser = "zen-beta";
+  variables = config.home.sessionVariables;
+  editor = variables.EDITOR;
+  term = variables.TERM;
+  fileManager = variables.FILE_MANAGER;
+  browser = variables.BROWSER;
   sh = cmd: { action.spawn-sh = cmd; };
 in
 {
@@ -48,7 +49,7 @@ in
   "Mod+Tab".action.toggle-overview = [ ];
 
   "Mod+T".action.spawn = term;
-  #"Mod+B".action.spawn = browser;
+  "Mod+B".action.spawn = browser;
   "Mod+Y" = sh "${term} -e ${fileManager}";
   "Mod+N" = sh "${term} -e ${editor}";
 

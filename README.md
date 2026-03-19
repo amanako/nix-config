@@ -1,5 +1,5 @@
 *This branch is made as my attempt to employ dendritic pattern via [den][den] and is still a **WORK IN PROGRESS**  
-It currently **doesn't work completely** and I am looking for a way to fix it*
+Current caveat is regarding noctalia binds and fcitx5*
 
 ## Build steps
 
@@ -26,4 +26,4 @@ https://github.com/Doc-Steve/dendritic-design-with-flake-parts
 * https://github.com/AniviaFlome/nix-config (fish, zen-browser)
 * https://github.com/zerokqx/ZNix (some nixvim plugins)
 
-[den]: den.oeiuwq.com
+[den]: https://den.oeiuwq.com/

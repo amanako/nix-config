@@ -10,14 +10,7 @@
     }:
     let
       defaultTargetsToDisable = [
-        #"noctalia-shell"
-        #"niri"
         "fish"
-        #"kitty"
-        #"starship"
-        #"nixvim"
-        #"yazi"
-        #"zen-beta"
       ];
       eligibleTargets = lib.filterAttrs (name: _: lib.hasAttrs name config.stylix.targets) (
         lib.genAttrs defaultTargetsToDisable
@@ -48,9 +41,9 @@
         };
 
         # TODO: Implement removal for eligibleTargets
-        targets = lib.genAttrs defaultTargetsToDisable (_: {
-          enable = false;
-        });
+        #targets = lib.genAttrs eligibleTargets (_: {
+        #  enable = false;
+        #});
       };
     };
 }

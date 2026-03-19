@@ -2,7 +2,7 @@
 
 {
   flake.hmModules.niri =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       imports = [ inputs.niri.homeModules.niri ];
 
@@ -21,20 +21,20 @@
             QT_QPA_PLATFORMTHEME = "qt6ct";
           };
 
-          binds = import ./_binds.nix;
+          binds = import ./_binds.nix { inherit config; };
 
           layout = {
             gaps = 2;
             default-column-width.proportion = 0.5;
             preset-column-widths = [
               {
-                proportion = 0.33333;
+                proportion = 0.333333;
               }
               {
                 proportion = 0.5;
               }
               {
-                proportion = 0.66667;
+                proportion = 0.666667;
               }
             ];
 
@@ -50,15 +50,15 @@
           hotkey-overlay.skip-at-startup = true;
 
           spawn-at-startup = [
-            #{
-            #  command = [ "noctalia-shell" ];
-            #}
-            #{
-            #  command = [ "fcitx5" ];
-            #}
-            #{
-            #  command = [ "zen-beta" ];
-            #}
+            {
+              command = [ "noctalia-shell" ];
+            }
+            {
+              command = [ "fcitx5" ];
+            }
+            {
+              command = [ "zen-beta" ];
+            }
           ];
 
           input = {

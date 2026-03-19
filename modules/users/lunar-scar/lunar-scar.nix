@@ -46,6 +46,7 @@ in
           niri
           noctalia
 
+          zen-browser
           nixvim
           fcitx5
           git
@@ -94,6 +95,10 @@ in
         ];
 
         home.sessionVariables = {
+          EDITOR = "nvim";
+          TERM = "kitty";
+          BROWSER = "zen-browser";
+          FILE_MANAGER = "yazi";
           NH_FLAKE = "${h}/nix-config/";
         };
 

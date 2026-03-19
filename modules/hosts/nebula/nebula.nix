@@ -15,16 +15,18 @@
 
         imports = with inputs.self.modules.nixos; [
           nebula-hw
+          limine
           ly
         ];
 
         # Enable programs for proper functionality
+        # Should also be enabled for each user individually
         programs.niri.enable = true;
         programs.fish.enable = true;
         programs.gamemode.enable = true;
         programs.gamemode.enableRenice = true;
 
-        # Allow following unfree software for everyone on the host
+        # Allow following unfree software for every user on the host
         nixpkgs.config.allowUnfreePredicate =
           pkg:
           builtins.elem (lib.getName pkg) [
@@ -40,6 +42,7 @@
       homeManager = {
         imports = with inputs.self.hmModules; [
           niri
+          noctalia
         ];
 
         #home.sessionVariables = {
