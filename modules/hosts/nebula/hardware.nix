@@ -3,27 +3,39 @@
 {
   flake.modules.nixos.nebula-hw =
     {
+      pkgs,
       lib,
-      modulesPath,
+      # modulesPath,
       ...
     }:
     {
-      imports =
-        with inputs.self.modules.nixos;
-        [
-          upower
-          auto-cpufreq
-          thermald
-          pipewire
-          networkmanager
-          bluetooth
-          graphics
-        ]
-        ++ [ (modulesPath + "/installer/scan/not-detected.nix") ];
+      imports = with inputs.self.modules.nixos; [
+        upower
+        auto-cpufreq
+        thermald
+        pipewire
+        networkmanager
+        bluetooth
+        nvidia
+      ]
+      # Without adding this modulesPath AMD and bluetooth service fail to start
+      # With message hardware initialization failed
+
+      # EDIT: After adding facter.json report below it seems OK to remove this line
+      # Anyhow, you may wish to uncomment in case of hardware failure (and above)
+      # ++ [ (modulesPath + "/installer/scan/not-detected.nix") ]
+      ;
+
+      hardware.facter.reportPath = ./facter.json;
+
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"
       ];
+
+      # I like to use zen packages buy it may be changed
+      boot.kernelPackages = pkgs.linuxPackages_zen;
+
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
