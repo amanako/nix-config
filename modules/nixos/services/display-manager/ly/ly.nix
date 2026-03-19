@@ -1,6 +1,9 @@
 { inputs, ... }:
 
 {
+  # Ly is great because it doesn't require systemd to function
+  # Configuration file for reference can be found here:
+  # https://codeberg.org/fairyglade/ly/src/branch/master/res/config.ini#
   flake.modules.nixos.ly = {
     services.displayManager.ly = {
       enable = true;

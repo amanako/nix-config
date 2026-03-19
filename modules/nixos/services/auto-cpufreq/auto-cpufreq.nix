@@ -1,6 +1,8 @@
 { inputs, ... }:
 
 {
+  # GUI app comes included as well
+  # Current config is tailored to prioritize powersave while not plugen in
   flake.modules.nixos.auto-cpufreq = {
     services.auto-cpufreq = {
       enable = true;

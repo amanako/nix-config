@@ -4,6 +4,12 @@
   flake.modules.nixos.steam =
     { pkgs, ... }:
     {
+      # Apply useful host optimizations
+      programs.gamemode = {
+        enable = true;
+        enableRenice = true;
+      };
+
       programs.steam = {
         enable = true;
         gamescopeSession.enable = true;

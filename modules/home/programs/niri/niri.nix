@@ -1,19 +1,27 @@
 { inputs, ... }:
 
 {
+  # TODO: Use config.lib.mkOutOfSymlink for auto-reload
   flake.hmModules.niri =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      ...
+    }:
     {
       imports = [ inputs.niri.homeModules.niri ];
 
+      # For compatibility with various X11-based programs while running niri
       home.packages = [
         pkgs.xwayland-satellite
       ];
 
       programs.niri = {
         enable = true;
+        # Pin latest nixpkgs version - required for dms and noctalia
         package = pkgs.niri;
         settings = {
+          # Important variables to initialize wayland - will likely crash otherwise
           environment = {
             XDG_CURRENT_DESKTOP = "niri";
             XDG_SESSION_TYPE = "wayland";
@@ -43,23 +51,20 @@
               active.color = "#98971a";
             };
 
-            border.width = 0;
+            # border.width = 0;
+          };
+
+          #window-rules = {
+          #  geometry-corner-radius = 20;
+          #  clip-to-geometry = true;
+          #};
+
+          debug = {
+            honor-xdg-activation-with-invalid-serial = true;
           };
 
           animations.slowdown = 1.5;
           hotkey-overlay.skip-at-startup = true;
-
-          spawn-at-startup = [
-            {
-              command = [ "noctalia-shell" ];
-            }
-            {
-              command = [ "fcitx5" ];
-            }
-            {
-              command = [ "zen-beta" ];
-            }
-          ];
 
           input = {
             touchpad = {
