@@ -4,21 +4,21 @@
   flake.hmModules.noctalia =
     { config, lib, ... }:
     let
-      # TODO: change hard-coded variables
       term = config.home.sessionVariables.TERM;
       noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";
       officialPlugins = [
         "battery-actions"
         "clipper"
-        "file-search"
         "polkit-agent"
         "pomodoro"
         "keybind-cheatsheet"
       ];
     in
     {
-
       imports = [ inputs.noctalia.homeModules.default ];
+
+      # Inject binds for noctalia into niri
+      programs.niri.settings.binds = import ./_binds.nix;
 
       programs.noctalia-shell = {
         enable = true;
@@ -39,7 +39,6 @@
           version = 2;
         };
         settings = {
-          binds = import ./_binds.nix;
           bar = {
             barType = "simple";
             position = "top";
