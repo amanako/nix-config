@@ -1,7 +1,8 @@
 <div align="center">
-  <h1>:snowflake: NixOS configuration :snowflake:</h1>
+  <h1> :snowflake: NixOS configuration :snowflake: </h1>
 </div>
-
+  
+  
 <p align="center">
   <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?logo=nixos&logoColor=fff" /></a>
   <a href="https://github.com/mightyiam/dendritic"> <img alt="Dendritic pattern" src="https://img.shields.io/badge/Dendritic--Pattern-Nix-informational?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAA5CAYAAAB0+HhyAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAbpJREFUaN7tWcGuwyAMW6L9/y/nXTZpr4PiJA6sqJwmrZQYjOOk8igcZmbv3yIilWvpY9L4BHVpINXjBnIDKRrP1arEUjZlgIiokr0GS9mo1GoFN0uKJUMBdkCt96J00wyt5DUYALLv0ch96O3kCgD0O+INqvdslK5ypApLJnsBjea25o1Ai4gIOvH4XARMdAOO81rPaEWOYCiXB8RpZkfoNtPuDwUnsusoOBa1kFg0ojozqYaqpLJywioAp5cdOZ2KU8kkXmEEiiY3RhLsvYObXQdSiUppZC312HAm3bL+7WuToi9F5rROpGotyfgi5qXP+jeJJi4mIM96PS8mTEsSzcrZ4s5V6s7KB+mafYsT2eaObKtal80jmeDOAjmjLHutbbzW3u63zNglTae7HkF2aGY7CFlbq0DM7rQoWov8WvPhGK9mi6mK5oKnf/CO/flr9Bm5jNb/ZmaK7soqkKhg6L/sCDbpop/XmL7sK+6M48wIAfMTRrdBN6MeiTar3Q06zy5lKTMyk8ipbPNVt6SsHXVnKvKWsncUokGBfCuD15HgWqAzAEsTG6OpsYRaK8cN5AZyRSAzXfIf7j4IjUJ5XtMAAAAASUVORK5CYII=&logoColor=white" alt="Dendritic Pattern"/></a>
@@ -9,8 +10,8 @@
 </p>
 
 ## Design
-* Config was made using [github:vic/den][den] configuration tool with [SoC][SoC] in mind
-* Code is documented with tips I learned along the way and should assist with user comprehension
+* Config was made using [github:vic/den][den] configuration tool with [SoC][SoC] in mind.
+* Code is documented with tips I learned along the way and should assist with user comprehension.
 
 ## Goals
 * This config's main focus is **[TUI][TUI] experience** improvement via various tweaks, plugins, integrations etc. to elevate everyday terminal tasks.
@@ -20,26 +21,26 @@
 * **[Neovim][neovim]** is pushed to the edges and is meant to be used as an **all-encompassing text editor**. Currently it is equiped with capabilities for my workflow ([C++][C++] mostly) but will likely be extended in the future.
 * **Fallback GUI software** is present for some inescapable situations.
 * **Uniformness** prefered, therefore config is made to employ widely-supported **[gruvbox][gruvbox] theme** for most of the software.
-* **Light gaming** software packed as well, I use it primarily for [VNs][VN]
+* **Light gaming** software packed as well, I use it primarily for [VNs][VN].
 
 ## Included
 
 <div align="center">
 
-  |  Functionality |   Software                                                                                                |
-  |:--------------:|:---------------------------------------------------------------------------------------------------------:|
-  | Shell          | [fish][fish]                                                                                              |
-  | Terminal       | [kitty][kitty]                                                                                            | 
-  | File Editor    | [neovim][neovim] via [nixvim][nixvim]                                                                     |
-  | File Manager   | [yazi][yazi], with [thunar][thunar] as fallback                                                           |
-  | Compositor     | [wayland][wayland]                                                                                        |
-  | Window Manager | [niri][niri]                                                                                              |
-  | Quickshell     | [noctalia][noctalia], with [dms][dms] as another option                                                   |
-  | Browser        | [zen-browser][zen-browser]                                                                                |
-  | Input Method   | [fcitx5][fcitx5]                                                                                          |
-  | Display Manager| [ly][ly]                                                                                                  |
-  | Boot Loader    | [limine][limine], for setup check out [limine's README](./modules/nixos/system/hardware/limine/limine.nix)|
-  | Document Viewer| [okular][okular]                                                                                          |
+  |  Functionality |   Software                                                                                     |
+  |:--------------:|:----------------------------------------------------------------------------------------------:|
+  | Shell          | [fish][fish]                                                                                   |
+  | Terminal       | [kitty][kitty]                                                                                 | 
+  | File Editor    | [neovim][neovim] via [nixvim][nixvim]                                                          |
+  | File Manager   | [yazi][yazi], with [thunar][thunar] as fallback                                                |
+  | Compositor     | [wayland][wayland]                                                                             |
+  | Window Manager | [niri][niri]                                                                                   |
+  | Quickshell     | [noctalia][noctalia], with [dms][dms] as another option                                        |
+  | Browser        | [zen-browser][zen-browser]                                                                     |
+  | Input Method   | [fcitx5][fcitx5]                                                                               |
+  | Display Manager| [ly][ly]                                                                                       |
+  | Boot Loader    | [limine][limine], for setup check out [limine's README](./modules/nixos/system/hardware/limine)|
+  | Document Viewer| [okular][okular]                                                                               |
 
 </div>
 
@@ -55,14 +56,14 @@ You may clone the repo with the following command:
 ```
 nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
 ```
-This is preferably done within user's `home` folder(`~`), but anything is fine.  
-Users can be created by making a folder in [`users`]('./modules/users/') directory and adding an entry to [`hosts.nix`]('./modules/flake/hosts.nix')  
+This is preferably done in user's `home` folder a.k.a. `~`, but anything is fine.  
+Users can be created by making a folder in [`users`](modules/users/) directory and adding an entry to [`hosts.nix`](modules/flake/hosts.nix).  
 My current user is provided as an example.
 
 ## Inspirations
 * https://nixos-and-flakes.thiscute.world (the cornerstone of my journey)
-* https://codeberg.org/Moortu/dotfiles (dendritic design with den)
-* https://github.com/AniviaFlome/nix-config ([fish][fish] and [zen-browser][zen-browser]))
+* https://codeberg.org/Moortu/dotfiles (dendritic design with [den][den])
+* https://github.com/AniviaFlome/nix-config ([fish][fish] and [zen-browser][zen-browser])
 * https://github.com/zerokqx/ZNix (some [nixvim][nixvim] plugins)
 
 ## Caveats
@@ -73,7 +74,7 @@ My current user is provided as an example.
 </details>
 
 <details>
-  <summary><a href="https://fcitx-im.org/wiki/Fcitx_5">fcitx5</a></summary>
+  <summary> <a href="https://fcitx-im.org/wiki/Fcitx_5">fcitx5</a> </summary>
   I set up the `GTK_IM_MODULE` environment variable despite warnings since that seems to be  
   the only way for fcitx5 to work within <a href=https://noctalia.dev>noctalia</a>.  
   Details 
@@ -86,9 +87,11 @@ My current user is provided as an example.
 [neovim]: https://neovim.io
 [nixvim]: https://github.com/nix-community/nixvim
 [yazi]: https://yazi-rs.github.io
+[thunar]: https://docs.xfce.org/xfce/thunar/start
 [wayland]: https://wayland.freedesktop.org
 [niri]: https://niri-wm.github.io/niri
 [noctalia]: https://noctalia.dev
+[dms]: https://danklinux.com/
 [zen-browser]: https://github.com/0xc000022070/zen-browser-flake 
 [fcitx5]: https://fcitx-im.org/wiki/Fcitx_5
 [ly]: https://codeberg.org/fairyglade/ly

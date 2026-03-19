@@ -123,10 +123,10 @@ in
         home.sessionVariables = {
           EDITOR = "nvim";
           TERM = "kitty";
-          BROWSER = "zen-browser";
+          BROWSER = "zen-beta";
           FILE_MANAGER = "yazi";
 
-          # NH_FLAKE variable for rebuilding without specyfing flake location
+          # NH_FLAKE variable for rebuilding with nh without specyfing flake location
           NH_FLAKE = "${h}/nix-config/";
         };
 

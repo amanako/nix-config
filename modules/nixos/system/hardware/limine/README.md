@@ -2,7 +2,7 @@
 
 **Note that without this setup old bootloader with previous entries will likely start preventing you from booting to new generations**.
 
-<h3> This can either be done: </h3>
+<h3> The setup can either be done: </h3>
 <hr>
 
 <details>
@@ -33,9 +33,9 @@ efibootmgr --verbose
 3. Look at `BootOrder` section and note limine entry in the list in form of 4 digits, usually 000x.
 4. Swap out boot order and activate limine entry.
 ```
-sudo efibootmgr -o <limine entry>,000a,000b,000c,...000z -A -b <limine entry>
+sudo efibootmgr -o <limine entry>,num1,num2,num3,...numx -b <limine entry> -a
 ```
-where `a,b,c,...,z` are other boot entry numbers.
+where `num1,num2,num3,...numx` are other boot entry numbers in same format and `-b <limine entry> -a` activates the entry.
 </details>
 <hr>
 
