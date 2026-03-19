@@ -23,8 +23,6 @@
         # Should also be enabled for each user individually
         programs.niri.enable = true;
         programs.fish.enable = true;
-        programs.gamemode.enable = true;
-        programs.gamemode.enableRenice = true;
 
         # Allow following unfree software for every user on the host
         nixpkgs.config.allowUnfreePredicate =
@@ -41,16 +39,7 @@
       # Home manager overrides
       homeManager = {
         imports = with inputs.self.hmModules; [
-          niri
-          noctalia
         ];
-
-        #home.sessionVariables = {
-        #  EDITOR = "nvim";
-        #  TERM = "kitty";
-        #  GTK_IM_MODULE = "fcitx";
-        #  QT_IM_MODULE = "fcitx";
-        #};
       };
     };
 }

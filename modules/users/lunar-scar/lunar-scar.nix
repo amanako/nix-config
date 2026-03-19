@@ -24,17 +24,32 @@ in
     nixos =
       { pkgs, ... }:
       {
+        # All locales follow this format:
+        # {country-code}.{encoding-standard}/{encoding-standard}
+        i18n.extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
+
         imports = with inputs.self.modules.nixos; [
           stylix
           localsend
           steam
           openssh
-          fonts
-          fontconfig
-          extraLocales-jp
         ];
 
-        programs.fish.enable = true;
+        fonts.packages = with pkgs; [
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-color-emoji
+          liberation_ttf
+          dina-font
+          proggyfonts
+          nerd-fonts.victor-mono
+          biz-ud-gothic
+          maple-mono.CN
+          maple-mono.NF
+          mona-sans
+          ipafont
+        ];
+
         users.users.${u}.shell = pkgs.fish;
         users.mutableUsers = false;
       };
@@ -94,13 +109,39 @@ in
           wineWow64Packages.stable
         ];
 
+        # Add a custom fontconfig file from current directory
+        fonts.fontconfig.enable = true;
+        home.file.".config/fontconfig/fonts.conf".source = ./fontconfig.conf;
+
+        # Add personal config file for fcitx5
+        # Recusrive is necessary when it's a folder
+        home.file.".config/fcitx5" = {
+          source = ./fcitx5;
+          recursive = true;
+        };
+
         home.sessionVariables = {
           EDITOR = "nvim";
           TERM = "kitty";
           BROWSER = "zen-browser";
           FILE_MANAGER = "yazi";
+
+          # NH_FLAKE variable for rebuilding without specyfing flake location
           NH_FLAKE = "${h}/nix-config/";
         };
+
+        # Tell niri to start with these programs
+        programs.niri.settings.spawn-at-startup = [
+          {
+            command = [ "noctalia-shell" ];
+          }
+          {
+            command = [ "fcitx5" ];
+          }
+          {
+            command = [ "zen-beta" ];
+          }
+        ];
 
         programs.git.settings.user = {
           name = "arcane-moonlight";
