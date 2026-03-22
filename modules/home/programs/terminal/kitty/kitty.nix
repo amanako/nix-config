@@ -22,6 +22,7 @@
 
         settings = {
           confirm_os_window_close = -1;
+          background_opacity = 0.7;
           window_padding_width = 4;
           hide_window_decorations = true;
           cursor_trail = 1;
@@ -32,6 +33,8 @@
           listen_on = "unix:/tmp/kitty";
         };
 
+        # Setup for kitty scrollback nvim extension
+        # Reference: https://github.com/mikesmithgh/kitty-scrollback.nvim
         actionAliases = {
           "kitty_scrollback_nvim" =
             "kitten '${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py'";

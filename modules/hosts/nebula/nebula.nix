@@ -15,7 +15,6 @@
 
         imports = with inputs.self.modules.nixos; [
           nebula-hw
-          limine
           ly
         ];
 
@@ -23,6 +22,8 @@
         # Should also be enabled for each user individually
         programs.niri.enable = true;
         programs.fish.enable = true;
+
+        home-manager.useGlobalPkgs = true;
 
         # Allow following unfree software for every user on the host
         nixpkgs.config.allowUnfreePredicate =

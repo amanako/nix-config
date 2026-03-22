@@ -27,7 +27,7 @@
           palettes.gruvbox_dark = {
             color_blue = "#458588";
             color_aqua = "#689d6a";
-            color_green = "#98971a";
+            color_main = "#98971a";
             color_orange = "#d65d0e";
             color_purple = "#b16286";
             color_red = "#cc241d";
@@ -50,7 +50,7 @@
           };
 
           character = {
-            success_symbol = "[ ](bold color_green)";
+            success_symbol = "[ ](bold color_main)";
             error_symbol = "[ ](bold color_red)";
             vimcmd_symbol = "[ ](bold color_purple)";
           };

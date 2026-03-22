@@ -1,4 +1,5 @@
 { inputs, den, ... }:
+
 let
   u = "lunar-scar";
   h = "/home/lunar-scar";
@@ -29,25 +30,20 @@ in
         i18n.extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
 
         imports = with inputs.self.modules.nixos; [
-          stylix
           localsend
           steam
           openssh
         ];
 
         fonts.packages = with pkgs; [
-          noto-fonts
-          noto-fonts-cjk-sans
-          noto-fonts-color-emoji
-          liberation_ttf
-          dina-font
-          proggyfonts
+          # Crucial
           nerd-fonts.victor-mono
-          biz-ud-gothic
-          maple-mono.CN
-          maple-mono.NF
           mona-sans
+
+          noto-fonts-cjk-serif
           ipafont
+          biz-ud-gothic
+          inconsolata
         ];
 
         users.users.${u}.shell = pkgs.fish;
@@ -60,9 +56,12 @@ in
         imports = with inputs.self.hmModules; [
           niri
           noctalia
+          dms
 
+          stylix
           zen-browser
           nixvim
+          zathura
           fcitx5
           git
           nix-index-database
@@ -82,7 +81,6 @@ in
           protonup-qt
           lutris
           thunar
-          kdePackages.okular
           youtube-tui
           abiword
 
@@ -120,7 +118,20 @@ in
           recursive = true;
         };
 
+        # Use options to achieve conditionals
+        stylix.targetsToDisable = [
+          "noctalia-shell"
+          "kitty"
+          "yazi"
+          "fcitx5"
+          "starship"
+          "zen-browser"
+          "nixvim"
+          "dank-material-shell"
+        ];
+
         home.sessionVariables = {
+          # This 4 variables should be configured because other components might use them
           EDITOR = "nvim";
           TERM = "kitty";
           BROWSER = "zen-beta";
@@ -133,15 +144,11 @@ in
         # Tell niri to start with these programs
         programs.niri.settings.spawn-at-startup = [
           {
-            command = [ "noctalia-shell" ];
-          }
-          {
             command = [ "fcitx5" ];
           }
-          {
-            command = [ "zen-beta" ];
-          }
         ];
+
+        programs.niri.autoSpawnShell = "dms";
 
         programs.git.settings.user = {
           name = "arcane-moonlight";

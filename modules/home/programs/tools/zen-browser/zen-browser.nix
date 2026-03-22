@@ -13,6 +13,7 @@
 
       programs.zen-browser = {
         enable = true;
+
         policies = import ./_policies;
         profiles."*" = {
           extensions = import ./_extensions { inherit pkgs lib inputs; };
@@ -22,7 +23,7 @@
           spacesForce = true;
           spaces = import ./_spaces { inherit config; };
 
-          settings = import ./_settings;
+          settings = import ./_settings { inherit lib; };
           search = {
             force = true;
             default = "ddg";

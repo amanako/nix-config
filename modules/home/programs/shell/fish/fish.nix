@@ -23,6 +23,7 @@
           bios = "systemctl reboot --firmware-setup";
           cat = "${lib.getExe config.programs.bat.package} --theme=ansi";
           cd = "z";
+
           ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
           man = "${lib.getExe pkgs.bat-extras.batman}";
           rm = "rm -I";
@@ -33,6 +34,18 @@
           flake-u = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
         };
         plugins = [
+          {
+            name = "bass";
+            src = pkgs.fishPlugins.bass.src;
+          }
+          {
+            name = "fish-you-should-use";
+            src = pkgs.fishPlugins.fish-you-should-use.src;
+          }
+          {
+            name = "z";
+            src = pkgs.fishPlugins.z.src;
+          }
           {
             name = "fzf-fish";
             src = pkgs.fishPlugins.fzf-fish.src;

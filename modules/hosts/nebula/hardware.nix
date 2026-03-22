@@ -17,6 +17,7 @@
         networkmanager
         bluetooth
         nvidia
+        limine
       ]
       # Without adding this modulesPath AMD and bluetooth service fail to start
       # With message hardware initialization failed

@@ -9,21 +9,21 @@
         enable32Bit = true;
       };
 
-      services.xserver.videoDrivers = [
-        "amdgpu"
-        "nvidia"
-      ];
+      services.xserver.videoDrivers = [ "nvidia" ];
 
       hardware.nvidia = {
         # Turing and newer architectures must use open kernel modules
         open = lib.mkDefault true;
         package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
         modesetting.enable = true;
+
         # Enable experimental sleep features
         powerManagement.enable = true;
         powerManagement.finegrained = true;
+
         # Enable nvidia settings for manual tweaks
         nvidiaSettings = true;
+
         prime = {
           # Enable use of nvidia via "nvidia-offload {command}"
           offload = {

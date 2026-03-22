@@ -1,3 +1,4 @@
+# Reference: https://mozilla.github.io/policy-templates
 {
   AutofillAddressEnabled = false;
   AutofillCreditCardEnabled = false;
