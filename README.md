@@ -10,41 +10,36 @@
 </p>
 
 ## Design
-* Config was made using [github:vic/den][den] configuration tool with [SoC][SoC] in mind.
-* Code is documented with tips I learned along the way and should assist with user comprehension.
+* [github:vic/den][den] configuration tool with [SoC][SoC] in mind.
+* Code is documented with tips I learned along the way.
 
 ## Goals
-* This config's main focus is **[TUI][TUI] experience** improvement via various tweaks, plugins, integrations etc. to elevate everyday terminal tasks.
-  Most of the software comprising this config are aiming to assist this goal.
-* The config aims to be **keyboard-driven** wherever I found so to be fitting.
-* All choices are usually made with regard to **elegance** and **privacy** as well.
-* **[Neovim][neovim]** is pushed to the edges and is meant to be used as an **all-encompassing text editor**. Currently it is equiped with capabilities for my workflow ([C++][C++] mostly) but will likely be extended in the future.
-* **Fallback GUI software** is present for some inescapable situations.
-* **Uniformness** prefered, therefore config is made to employ widely-supported **[gruvbox][gruvbox] theme** for most of the software.
-* **Light gaming** software packed as well, I use it primarily for [VNs][VN].
+* [TUI][TUI] experience
+* Keyboard-driven
+* Elegance and privacy
+* [Neovim][neovim] as an **all-encompassing text editor**
+* Uniformness with **[gruvbox][gruvbox]** theme
+* **Light gaming** , I use it primarily for [VNs][VN]
 
 ## Included
 
 <div align="center">
 
-  |  Functionality |   Software                                                                                     |
-  |:--------------:|:----------------------------------------------------------------------------------------------:|
-  | Shell          | [fish][fish]                                                                                   |
-  | Terminal       | [kitty][kitty]                                                                                 | 
-  | File Editor    | [neovim][neovim] via [nixvim][nixvim]                                                          |
-  | File Manager   | [yazi][yazi], with [thunar][thunar] as fallback                                                |
-  | Compositor     | [wayland][wayland]                                                                             |
-  | Window Manager | [niri][niri]                                                                                   |
-  | Quickshell     | [noctalia][noctalia], with [dms][dms] as another option                                        |
-  | Browser        | [zen-browser][zen-browser]                                                                     |
-  | Input Method   | [fcitx5][fcitx5]                                                                               |
-  | Display Manager| [ly][ly]                                                                                       |
-  | Boot Loader    | [limine][limine], for setup check out [limine's README](./modules/nixos/system/hardware/limine)|
-  | Document Viewer| [okular][okular]                                                                               |
+  |  Functionality  |   Software                                                                                  |
+  |:---------------:|:-------------------------------------------------------------------------------------------:|
+  | Shell           | [fish][fish]                                                                                |
+  | Terminal        | [kitty][kitty]                                                                              | 
+  | File Editor     | [neovim][neovim] via [nixvim][nixvim]                                                       |
+  | File Manager    | [yazi][yazi] / [thunar][thunar]                                                             |
+  | Window Manager  | [niri][niri]                                                                                |
+  | Quickshell      | [noctalia][noctalia], with [dms][dms] as another option                                     |
+  | Browser         | [zen-browser][zen-browser]                                                                  |
+  | Input Method    | [fcitx5][fcitx5]                                                                            |
+  | Display Manager | [ly][ly]                                                                                    |
+  | Boot Loader     | [limine][limine], for setup check [limine's README](./modules/nixos/system/hardware/limine) |
+  | Document Viewer | [zathura][zathura]
 
 </div>
-
-and many other smaller, however equally significant ones...
 
 ## Screenshoots
 
@@ -56,7 +51,7 @@ You may clone the repo with the following command:
 ```
 nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
 ```
-This is preferably done in user's `home` folder a.k.a. `~`, but anything is fine.  
+This is preferably done in user's `home` folder.  
 Users can be created by making a folder in [`users`](modules/users/) directory and adding an entry to [`hosts.nix`](modules/flake/hosts.nix).  
 My current user is provided as an example.
 
@@ -96,7 +91,7 @@ My current user is provided as an example.
 [fcitx5]: https://fcitx-im.org/wiki/Fcitx_5
 [ly]: https://codeberg.org/fairyglade/ly
 [limine]: https://codeberg.org/Limine/Limine
-[okular]: https://okular.kde.org
+[zathura]: https://pwmt.org/projects/zathura
 
 [den]: https://den.oeiuwq.com
 [SoC]: https://en.wikipedia.org/wiki/Separation_of_concerns
