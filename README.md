@@ -41,10 +41,21 @@
 
 </div>
 
-## Screenshoots
+## Screenshots
 
-![noctalia-overview](./assets/screenshots/2026-03-14-noctalia-preview.png)
-![features-overview](./assets/screenshots/2026-03-14-tui-features-preview.png)
+<h2>
+  Noctalia preview
+</h2>
+
+![noctalia-preview](./assets/screenshots/2026-03-14-noctalia-preview.png)
+
+<h2>
+  Dank Material Shell preview
+</h2>
+
+![dank-material-shell-preview](./assets/screenshots/2026-03-23-dms-preview.png)
+
+All screenshots can be found [here](./assets/screenshots).
 
 ## Build steps
 You may clone the repo with the following command:

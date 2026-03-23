@@ -20,7 +20,10 @@
         programs.niri.settings.binds = import ./_binds.nix { inherit lib; };
 
         # Generate symlink to .config/niri/dms for automatic reload with configuration
-        xdg.configFile."niri/dms".source = config.lib.file.mkOutOfStoreSymlink ./dms;
+        home.file.".config/niri/dms" = {
+          source = ./dms;
+          recursive = true;
+        };
 
         programs.dank-material-shell = {
           enable = true;
@@ -35,7 +38,7 @@
 
               # Allow dms to override config.kdl for functionality only if it will be spawned
               override = true;
-              # Set name to something different for easier recognition
+              # Change name to something different for easier recognition
               originalFileName = "dank";
               filesToInclude = [
                 "colors"

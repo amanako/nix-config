@@ -88,7 +88,7 @@
       workspaceScrolling = false;
       showWorkspaceApps = true;
       workspaceDragReorder = true;
-      maxWorkspaceIcons = 3;
+      maxWorkspaceIcons = 5;
       workspaceAppIconSizeOffset = 2;
       groupWorkspaceApps = true;
       workspaceFollowFocus = false;

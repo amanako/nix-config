@@ -1,7 +1,6 @@
 { inputs, ... }:
 
 {
-  # TODO: Use config.lib.mkOutOfSymlink for auto-reload
   flake.hmModules.niri =
     {
       pkgs,
@@ -26,12 +25,7 @@
           description = "Which shell to automatically spawn when starting niri.";
         };
 
-      # For compatibility with various X11-based programs while running niri
-      config.home.packages = [
-        pkgs.xwayland-satellite
-      ];
-
-      # Clean old niri config to ensure unused shell files are cleaned up and resolve conflicts
+      # TODO: Watch out if this works | You changed home.file in dms.nix
       config.home.activation.regenerateNiriConfig =
         lib.mkIf (config.programs.niri.autoSpawnShell != "none")
           (
@@ -52,6 +46,9 @@
             QT_QPA_PLATFORM = "wayland";
             QT_QPA_PLATFORMTHEME = "qt6ct";
           };
+
+          # For compatibility with various X11-based programs while running niri
+          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
           binds = import ./_binds.nix { inherit config; };
 
@@ -101,6 +98,25 @@
               clip-to-geometry = true;
               tiled-state = true;
               draw-border-with-background = false;
+            }
+            {
+              # Last one is ProtonUp-Qt
+              matches = [
+                {
+                  app-id = "^(org.quickshell|nvidia-settings|net.davidotek.pupgui2)$";
+                }
+              ];
+              open-floating = true;
+              default-column-width.proportion = 0.5;
+              default-window-height.proportion = 0.9;
+            }
+            {
+              matches = [
+                {
+                  app-id = "zen-beta";
+                }
+              ];
+              default-column-width.proportion = 1.0;
             }
           ];
 
