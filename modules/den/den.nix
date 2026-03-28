@@ -1,10 +1,8 @@
 { inputs, ... }:
 
 {
-  imports = [ inputs.den.flakeModule ];
-
   den.default.nixos =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         nix-settings
@@ -32,5 +30,10 @@
       system.stateVersion = "25.11";
     };
 
-  den.default.homeManager.home.stateVersion = "25.11";
+  den.default.homeManager = {
+    # New behaviour since release 26.05
+    gtk.gtk4.theme = null;
+
+    home.stateVersion = "25.11";
+  };
 }

@@ -32,7 +32,6 @@ in
   "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
   "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
   "Mod+C".action.center-column = [ ];
-  "Mod+Ctrl+C".action.center-visible-columns = [ ];
   "Mod+F".action.maximize-column = [ ];
 
   "Mod+K".action.focus-window-or-workspace-up = [ ];
@@ -52,6 +51,7 @@ in
   "Mod+B".action.spawn = browser;
   "Mod+Y" = sh "${term} -e ${fileManager}";
   "Mod+N" = sh "${term} -e ${editor}";
+  "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
 
   "Mod+Shift+C".action.center-visible-columns = [ ];
   "Mod+Shift+F".action.fullscreen-window = [ ];

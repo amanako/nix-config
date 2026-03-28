@@ -5,7 +5,7 @@
     {
       pkgs,
       lib,
-      # modulesPath,
+      modulesPath,
       ...
     }:
     {
@@ -24,7 +24,7 @@
 
       # EDIT: After adding facter.json report below it seems OK to remove this line
       # Anyhow, you may wish to uncomment in case of hardware failure (and above)
-      # ++ [ (modulesPath + "/installer/scan/not-detected.nix") ]
+      #++ [ (modulesPath + "/installer/scan/not-detected.nix") ]
       ;
 
       hardware.facter.reportPath = ./facter.json;

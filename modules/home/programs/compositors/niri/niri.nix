@@ -25,7 +25,6 @@
           description = "Which shell to automatically spawn when starting niri.";
         };
 
-      # TODO: Watch out if this works | You changed home.file in dms.nix
       config.home.activation.regenerateNiriConfig =
         lib.mkIf (config.programs.niri.autoSpawnShell != "none")
           (
@@ -53,7 +52,7 @@
           binds = import ./_binds.nix { inherit config; };
 
           layout = {
-            gaps = 2;
+            gaps = 10;
             background-color = "transparent";
             center-focused-column = "never";
             default-column-width.proportion = 0.5;
@@ -78,7 +77,7 @@
 
             border = {
               enable = false;
-              width = 2;
+              width = 4;
             };
 
             shadow = {
@@ -91,10 +90,10 @@
 
           window-rules = [
             {
-              geometry-corner-radius.top-left = 10.0;
-              geometry-corner-radius.top-right = 10.0;
-              geometry-corner-radius.bottom-left = 10.0;
-              geometry-corner-radius.bottom-right = 10.0;
+              geometry-corner-radius.top-left = 12.0;
+              geometry-corner-radius.top-right = 12.0;
+              geometry-corner-radius.bottom-left = 12.0;
+              geometry-corner-radius.bottom-right = 12.0;
               clip-to-geometry = true;
               tiled-state = true;
               draw-border-with-background = false;
@@ -113,21 +112,10 @@
             {
               matches = [
                 {
-                  app-id = "zen-beta";
+                  app-id = "^(zen-beta|mpv)$";
                 }
               ];
               default-column-width.proportion = 1.0;
-            }
-          ];
-
-          layer-rules = [
-            {
-              matches = [
-                {
-                  namespace = "^quickshell$";
-                }
-              ];
-              place-within-backdrop = true;
             }
           ];
 

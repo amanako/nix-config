@@ -1,70 +1,73 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 
 {
-  flake.hmModules.dms =
-    { lib, config, ... }:
-    let
-      isAutoSpawned = config.programs.niri.autoSpawnShell == "dms";
-    in
-    {
-      imports = [
-        inputs.dms.homeModules.dank-material-shell
-        inputs.dms.homeModules.niri
-        inputs.self.hmModules.dms-plugins
-        inputs.self.hmModules.dms-settings
-      ];
+  den.aspects.dms = {
+    homeManager =
+      { lib, config, ... }:
+      let
+        isAutoSpawned = config.programs.niri.autoSpawnShell == "dms";
+        # This path needs to be updated each time folders are moved around or renamed
+        # This remains pure but don't forget to change accordingly
+        currentDir = "${config.home.homeDirectory}/nix-config/modules/home/programs/shells/dms";
+      in
+      {
+        imports = [
+          inputs.dms.homeModules.dank-material-shell
+          inputs.dms.homeModules.niri
+          self.hmModules.dms-plugins
+          self.hmModules.dms-settings
+          self.hmModules.dms-session
+        ];
 
-      config = lib.mkIf isAutoSpawned {
+        config = lib.mkIf isAutoSpawned {
+          # Generate symlink to .config/niri/dms and .config/DankMaterialShell/settings.json for automatic reload with configuration
+          xdg.configFile."niri/dms".source = config.lib.file.mkOutOfStoreSymlink "${currentDir}/dmsNiriFiles";
 
-        # Inject binds into niri if dms will be spawned
-        programs.niri.settings.binds = import ./_binds.nix { inherit lib; };
+          programs.dank-material-shell = {
+            enable = true;
+            # Systemd service provides better integration and 'dms restart' works
+            systemd.enable = true;
 
-        # Generate symlink to .config/niri/dms for automatic reload with configuration
-        home.file.".config/niri/dms" = {
-          source = ./dms;
-          recursive = true;
-        };
+            niri = {
+              # Don't use preset keybinds because of low coverage
+              enableKeybinds = false;
+              includes = {
+                enable = true;
 
-        programs.dank-material-shell = {
-          enable = true;
-          # Systemd service provides better integration and restarting works
-          systemd.enable = true;
-
-          niri = {
-            # Don't use preset keybinds because of low coverage
-            enableKeybinds = false;
-            includes = {
-              enable = true;
-
-              # Allow dms to override config.kdl for functionality only if it will be spawned
-              override = true;
-              # Change name to something different for easier recognition
-              originalFileName = "dank";
-              filesToInclude = [
-                "colors"
-                "layout"
-                #"cursor"
-              ];
+                # Allow dms niri settings to take precedence over niri-flake settings
+                override = true;
+                # Change name to something different for easier recognition
+                originalFileName = "dank";
+                filesToInclude = [
+                  "alttab"
+                  "binds"
+                  "colors"
+                  "layout"
+                  "outputs"
+                  "windowrules"
+                  "wpblur"
+                ];
+              };
             };
-          };
 
-          enableSystemMonitoring = true;
-          enableVPN = true;
-          enableDynamicTheming = true;
-          enableAudioWavelength = true;
-          enableCalendarEvents = true;
-          enableClipboardPaste = true;
+            enableSystemMonitoring = true;
+            enableVPN = false;
+            enableDynamicTheming = true;
+            enableAudioWavelength = true;
+            enableCalendarEvents = true;
+            enableClipboardPaste = true;
 
-          clipboardSettings = {
-            maxHistory = 50;
-            maxEntrySize = 5242880;
-            autoClearDays = 2;
-            clearAtStartup = false;
-            disabled = false;
-            disableHistory = false;
-            disablePersist = false;
+            clipboardSettings = {
+              maxHistory = 50;
+              maxEntrySize = 5242880;
+              autoClearDays = 2;
+              clearAtStartup = false;
+              disabled = false;
+              disableHistory = false;
+              disablePersist = false;
+            };
           };
         };
       };
-    };
+  };
 }

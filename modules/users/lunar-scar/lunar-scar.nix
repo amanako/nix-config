@@ -1,22 +1,31 @@
-{ inputs, den, ... }:
+{
+  inputs,
+  self,
+  den,
+  ...
+}:
 
 let
   u = "lunar-scar";
   h = "/home/lunar-scar";
 in
 {
-  den.aspects.lunar-scar = {
+  den.aspects.${u} = {
     includes = [
-      den.provides.define-user
+      den._.primary-user
+      (den._.user-shell "fish")
+    ]
+    ++ [
+      den.aspects.kitty
+      den.aspects.fish
+      den.aspects.stylix
+      den.aspects.dms
+      den.aspects.development._.neovim
     ];
 
     user = {
       isNormalUser = true;
       initialPassword = "koko";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJu+Btx2UdY+nVSsHXs9BfSIJfeZuUgFSDHqAFvWD8rN codeberg@kairi6.anonaddy.com"
       ];
@@ -29,7 +38,7 @@ in
         # {country-code}.{encoding-standard}/{encoding-standard}
         i18n.extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
 
-        imports = with inputs.self.modules.nixos; [
+        imports = with self.modules.nixos; [
           localsend
           steam
           openssh
@@ -46,32 +55,32 @@ in
           inconsolata
         ];
 
-        users.users.${u}.shell = pkgs.fish;
         users.mutableUsers = false;
       };
 
     homeManager =
-      { pkgs, ... }:
       {
-        imports = with inputs.self.hmModules; [
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      {
+        imports = with self.hmModules; [
           niri
           noctalia
-          dms
 
-          stylix
-          zen-browser
           nixvim
+          zen-browser
           zathura
           fcitx5
           git
           nix-index-database
           eza
-          fish
           fzf
           nh
           ssh
           zoxide
-          kitty
           starship
           yazi
           mpv
@@ -105,6 +114,9 @@ in
           gnumake
 
           wineWow64Packages.stable
+
+          capitaine-cursors
+          bibata-cursors
         ];
 
         # Add a custom fontconfig file from current directory
@@ -120,15 +132,16 @@ in
 
         # Use options to achieve conditionals
         stylix.targetsToDisable = [
-          "noctalia-shell"
+          # Temporary
+          "qt"
           "kitty"
           "yazi"
           "fcitx5"
           "starship"
-          "zen-browser"
           "nixvim"
-          "dank-material-shell"
-        ];
+        ]
+        ++ lib.optionals (config.programs.noctalia-shell.enable) [ "noctalia-shell" ]
+        ++ lib.optionals (config.programs.dank-material-shell.enable) [ "dank-material-shell" ];
 
         home.sessionVariables = {
           # This 4 variables should be configured because other components might use them
@@ -149,6 +162,41 @@ in
         ];
 
         programs.niri.autoSpawnShell = "dms";
+
+        programs.dank-material-shell = {
+          userSettings = {
+            fontFamily = "Noto Serif CJK JP";
+            monoFontFamily = "Victor Mono Nerd Font";
+            powerMenuActions = [
+              "restart"
+              "logout"
+              "lock"
+              "suspend"
+              "poweroff"
+              "reboot"
+            ];
+
+            iconTheme = "papirus";
+            networkPreference = "ethernet";
+
+            currentThemeName = "custom";
+            currentThemeCategory = "registry";
+            customThemeFile = "/home/lunar-scar/.config/DankMaterialShell/themes/gruvboxMaterial/theme.json";
+            registryThemeVariants = {
+              gruvboxMaterial = "medium";
+            };
+          };
+
+          userSession = rec {
+            nightModeAutoEnabled = true;
+            nightModeAutoMode = "location";
+
+            latitude = 43.3333;
+            longitude = 21.9097;
+            weatherLocation = "Serbia, Niš";
+            weatherCoordinates = "${toString latitude},${toString longitude}";
+          };
+        };
 
         programs.git.settings.user = {
           name = "arcane-moonlight";

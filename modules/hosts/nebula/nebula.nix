@@ -5,42 +5,41 @@
 }:
 
 {
-  den.aspects.nebula =
-    { lib, ... }:
-    {
-      nixos = {
-        networking.hostName = "nebula";
-        time.timeZone = "Europe/Paris";
-        i18n.defaultLocale = "en_US.UTF-8";
+  den.aspects.nebula = {
+    includes = [
+      (den._.unfree [
+        "steam"
+        "steam-unwrapped"
+        "nvidia-x11"
+        "nvidia-settings"
+        "unrar"
+      ])
+    ];
 
-        imports = with inputs.self.modules.nixos; [
-          nebula-hw
-          ly
-        ];
+    os.networking.hostName = "nebula";
 
-        # Enable programs for proper functionality
-        # Should also be enabled for each user individually
-        programs.niri.enable = true;
-        programs.fish.enable = true;
+    nixos = {
 
-        home-manager.useGlobalPkgs = true;
+      time.timeZone = "Europe/Paris";
+      i18n.defaultLocale = "en_US.UTF-8";
 
-        # Allow following unfree software for every user on the host
-        nixpkgs.config.allowUnfreePredicate =
-          pkg:
-          builtins.elem (lib.getName pkg) [
-            "steam"
-            "steam-unwrapped"
-            "nvidia-x11"
-            "nvidia-settings"
-            "unrar"
-          ];
-      };
+      imports = with inputs.self.modules.nixos; [
+        nebula-hw
+        ly
+      ];
 
-      # Home manager overrides
-      homeManager = {
-        imports = with inputs.self.hmModules; [
-        ];
-      };
+      # Enable programs for proper functionality
+      # Should also be enabled for each user individually
+      programs.niri.enable = true;
+      programs.fish.enable = true;
+
+      home-manager.useGlobalPkgs = true;
     };
+
+    # Home manager overrides
+    homeManager = {
+      #imports = with inputs.self.hmModules; [
+      #];
+    };
+  };
 }

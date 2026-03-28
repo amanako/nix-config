@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+
+ICON_DIRS=(
+  "$HOME/.nix-profile/share/icons"
+  "$HOME/.local/share/icons"
+  "/run/current-system/sw/share/icons"
+  "/usr/share/icons"
+)
+
+THEMES=$(find "${ICON_DIRS[@]}" -maxdepth 1 -type d -printf "%f\n" 2>/dev/null | sort -u)
+
+if [ -z "$1" ]; then
+  THEME=$(echo "$THEMES" | fzf --prompt="Select cursor theme: ")
+else
+  THEME="$1"
+fi
+
+[ -z "$THEME" ] && exit 1
+
+export XCURSOR_THEME="$THEME"
+export XCURSOR_SIZE=24
+
+# Persist for future shells
+mkdir -p ~/.config/environment.d
+echo "XCURSOR_THEME=$THEME" > ~/.config/environment.d/cursor.conf
+echo "XCURSOR_SIZE=24" >> ~/.config/environment.d/cursor.conf
+
+echo "Switched cursor to: $THEME"
+
+# Reload :contentReference[oaicite:0]{index=0} if possible
+#if command -v niri >/dev/null; then
+#  niri msg reload 2>/dev/null || true
+#fi
