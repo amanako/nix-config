@@ -1,75 +1,78 @@
+# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
-  description = "A cute dendritic flake";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # Inputs in charge of enabling setup #######################
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
     den.url = "github:vic/den";
-    flake-aspects.url = "github:vic/flake-aspects";
-    ############################################################
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     dms = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
-
     dms-plugin-registry = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    firefox-addons = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    };
+    flake-file.url = "github:vic/flake-file";
+    flake-parts = {
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+      url = "github:hercules-ci/flake-parts";
+    };
+    hjem = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:feel-co/hjem";
+    };
+    home-manager = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+    };
+    import-tree.url = "github:vic/import-tree";
     niri = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    nix-index-database = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nix-index-database";
+    };
+    nix-maid.url = "github:viperML/nix-maid";
+    nixos-wsl = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/NixOS-WSL";
+    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-lib.follows = "nixpkgs";
     nixvim = {
-      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
     };
-
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
+    noctalia = {
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
+        noctalia-qs.follows = "noctalia-qs";
       };
+      url = "github:noctalia-dev/noctalia-shell";
     };
-
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    noctalia-qs = {
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:noctalia-dev/noctalia-qs";
     };
-
     stylix = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:0xc000022070/zen-browser-flake";
     };
   };
+
 }

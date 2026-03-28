@@ -1,0 +1,32 @@
+{
+  den.default.nixos =
+    { pkgs, ... }:
+    {
+      # Flakes are superiour to channels so they won't be needed
+      nix.channel.enable = false;
+
+      # Enable flakes and new nix command
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
+      environment.systemPackages = with pkgs; [
+        # For flakes to work properly
+        git
+        # Text editor to use
+        neovim
+      ];
+
+      system.stateVersion = "25.11";
+    };
+
+  den.default.homeManager = {
+    # New behaviour since release 26.05
+    gtk.gtk4.theme = null;
+
+    home.stateVersion = "25.11";
+  };
+
+  den.aspects.hjem.enable = false;
+}

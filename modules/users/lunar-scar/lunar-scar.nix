@@ -1,9 +1,4 @@
-{
-  inputs,
-  self,
-  den,
-  ...
-}:
+{ den, ... }:
 
 let
   u = "lunar-scar";
@@ -12,15 +7,22 @@ in
 {
   den.aspects.${u} = {
     includes = [
+      den._.define-user
       den._.primary-user
       (den._.user-shell "fish")
     ]
     ++ [
-      den.aspects.kitty
-      den.aspects.fish
-      den.aspects.stylix
-      den.aspects.dms
-      den.aspects.development._.neovim
+      den.aspects.appearance
+      den.aspects.terminal
+      den.aspects.dev
+      den.aspects.shell
+      den.aspects.nix
+      # den.aspects.system
+      den.aspects.system._.dms
+      den.aspects.terminal._.nixvim
+      den.aspects.gaming
+      den.aspects.browsers._.zen-browser
+      den.aspects.utility
     ];
 
     user = {
@@ -37,12 +39,6 @@ in
         # All locales follow this format:
         # {country-code}.{encoding-standard}/{encoding-standard}
         i18n.extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
-
-        imports = with self.modules.nixos; [
-          localsend
-          steam
-          openssh
-        ];
 
         fonts.packages = with pkgs; [
           # Crucial
@@ -66,26 +62,6 @@ in
         ...
       }:
       {
-        imports = with self.hmModules; [
-          niri
-          noctalia
-
-          nixvim
-          zen-browser
-          zathura
-          fcitx5
-          git
-          nix-index-database
-          eza
-          fzf
-          nh
-          ssh
-          zoxide
-          starship
-          yazi
-          mpv
-        ];
-
         home.packages = with pkgs; [
           protonup-qt
           lutris
@@ -139,9 +115,8 @@ in
           "fcitx5"
           "starship"
           "nixvim"
-        ]
-        ++ lib.optionals (config.programs.noctalia-shell.enable) [ "noctalia-shell" ]
-        ++ lib.optionals (config.programs.dank-material-shell.enable) [ "dank-material-shell" ];
+          "dank-material-shell"
+        ];
 
         home.sessionVariables = {
           # This 4 variables should be configured because other components might use them
@@ -199,7 +174,7 @@ in
         };
 
         programs.git.settings.user = {
-          name = "arcane-moonlight";
+          name = "abyssal-twilight";
           email = "codeberg@kairi6.anonaddy.com";
         };
 
