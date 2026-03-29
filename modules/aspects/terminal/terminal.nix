@@ -95,7 +95,7 @@
 
           settings = {
             confirm_os_window_close = -1;
-            background_opacity = 0.7;
+            background_opacity = 0.8;
             window_padding_width = 4;
             hide_window_decorations = true;
             cursor_trail = 1;

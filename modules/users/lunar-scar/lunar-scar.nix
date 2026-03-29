@@ -55,12 +55,7 @@ in
       };
 
     homeManager =
-      {
-        pkgs,
-        lib,
-        config,
-        ...
-      }:
+      { pkgs, ... }:
       {
         home.packages = with pkgs; [
           protonup-qt
@@ -140,8 +135,9 @@ in
 
         programs.dank-material-shell = {
           userSettings = {
-            fontFamily = "Noto Serif CJK JP";
+            fontFamily = "Mona Sans Display Light";
             monoFontFamily = "Victor Mono Nerd Font";
+            notepadFontFamily = "Noto Serif CJK JP";
             powerMenuActions = [
               "restart"
               "logout"

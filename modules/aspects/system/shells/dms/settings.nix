@@ -147,9 +147,9 @@
         launcherLogoColorOverride = "primary";
         fontWeight = 400;
         fontScale = 1;
-        notepadUseMonospace = true;
+        notepadUseMonospace = false;
         notepadFontFamily = "";
-        notepadFontSize = 16;
+        notepadFontSize = 22;
         notepadShowLineNumbers = false;
         soundsEnabled = true;
         useSystemSoundTheme = false;
@@ -216,11 +216,14 @@
           "restart"
         ];
         powerMenuDefaultAction = "logout";
+        # Disable builtin wallpapers
+        screenPreferences = {
+          wallpaper = [ ];
+        };
         barMaxVisibleApps = 0;
         barMaxVisibleRunningApps = 0;
 
         barConfigs = [
-          # Everything in bar is enabled implicitly so no need for enabled = true
           {
             enabled = true;
             autoHide = false;
@@ -238,10 +241,12 @@
             leftWidgets = [
               {
                 id = "music";
+                enabled = true;
                 mediaSize = 2;
               }
               {
                 id = "clock";
+                enabled = true;
                 clockCompactMode = true;
               }
               "weather"
@@ -257,10 +262,12 @@
               "controlCenterButton"
               {
                 id = "cpuUsage";
+                enabled = true;
                 minimumWidth = true;
               }
               {
                 id = "memUsage";
+                enabled = true;
                 minimumWidth = true;
               }
             ];

@@ -24,19 +24,20 @@
 
 <div align="center">
 
-  |  Functionality  |   Software                                                                                  |
-  |:---------------:|:-------------------------------------------------------------------------------------------:|
-  | Shell           | [fish][fish]                                                                                |
-  | Terminal        | [kitty][kitty]                                                                              | 
-  | File Editor     | [neovim][neovim] via [nixvim][nixvim]                                                       |
-  | File Manager    | [yazi][yazi] / [thunar][thunar]                                                             |
-  | Window Manager  | [niri][niri]                                                                                |
-  | Quickshell      | [noctalia][noctalia], with [dms][dms] as another option                                     |
-  | Browser         | [zen-browser][zen-browser]                                                                  |
-  | Input Method    | [fcitx5][fcitx5]                                                                            |
-  | Display Manager | [ly][ly]                                                                                    |
-  | Boot Loader     | [limine][limine], for setup check [README](./modules/aspects/hardware)                      |
-  | Document Viewer | [zathura][zathura]                                                                          |
+  |  Functionality   |   Software                                                            |
+  |:----------------:|:---------------------------------------------------------------------:|
+  | Shell            | [fish][fish]                                                          |
+  | Terminal         | [kitty][kitty]                                                        | 
+  | File Editor      | [neovim][neovim] via [nixvim][nixvim]                                 |
+  | File Manager     | [yazi][yazi] / [thunar][thunar]                                       |
+  | Window Manager   | [niri][niri]                                                          |
+  | Quickshell       | [noctalia][noctalia], with [dms][dms] as another option               |
+  | Browser          | [zen-browser][zen-browser]                                            |
+  | Input Method     | [fcitx5][fcitx5]                                                      |
+  | Display Manager  | [ly][ly]                                                              |
+  | Boot Loader      | [limine][limine], for setup check [README](./modules/aspects/hardware)|
+  | Document Viewer  | [zathura][zathura]                                                    |
+  | Wallpaper Manager| [awww][awww]                                                          |
 
 </div>
 
@@ -52,9 +53,10 @@
   Dank Material Shell preview
 </h2>
 
-![dank-material-shell-preview](./assets/screenshots/2026-03-23-dms-preview.png)
+![dank-material-shell-preview](./assets/screenshots/2026-03-29-dms-preview.png)
 
 All screenshots can be found [here](./assets/screenshots).
+Wallpapers can be found [here](https://codeberg.org/voidptrx/wallpapers).
 
 ## Build steps
 You may clone the repo with the following command:
@@ -65,7 +67,7 @@ This is preferably done in user's `home` folder.
 Users can be created by making a folder in [`users`](modules/users) directory and adding an entry to [`hosts.nix`](modules/den/hosts.nix).  
 My current user is provided as an example.
 
-## Inspirations
+## Credits
 * https://nixos-and-flakes.thiscute.world (the cornerstone of my journey)
 * https://den.oeiuwq.com/tutorials/default (base)
 * https://github.com/AniviaFlome/nix-config ([fish][fish] and [zen-browser][zen-browser])
@@ -102,6 +104,7 @@ My current user is provided as an example.
 [ly]: https://codeberg.org/fairyglade/ly
 [limine]: https://codeberg.org/Limine/Limine
 [zathura]: https://pwmt.org/projects/zathura
+[awww]: https://codeberg.org/LGFae/awww
 
 [den]: https://den.oeiuwq.com
 [SoC]: https://en.wikipedia.org/wiki/Separation_of_concerns

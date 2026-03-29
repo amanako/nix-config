@@ -5,6 +5,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
+    awww.url = "git+https://codeberg.org/LGFae/awww";
     den.url = "github:vic/den";
     dms = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +66,10 @@
     stylix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/stylix";
+    };
+    wallpapers = {
+      flake = false;
+      url = "git+https://codeberg.org/voidptrx/wallpapers";
     };
     zen-browser = {
       inputs = {

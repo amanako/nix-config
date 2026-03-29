@@ -46,6 +46,7 @@
                 "alttab"
                 "binds"
                 "colors"
+                "cursor"
                 "layout"
                 "outputs"
                 "windowrules"

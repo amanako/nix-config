@@ -2,6 +2,7 @@ binds {
     Super+Alt+L { spawn "dms" "ipc" "call" "lock" "lock"; }
     Super+X { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
     Alt+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Alt+P { spawn "dms" "ipc" "call" "color-picker" "toggle"; }
     Mod+Alt+N { spawn "dms" "ipc" "call" "notifications" "open"; }
     Mod+Comma { spawn "dms" "ipc" "call" "settings" "focusOrToggle"; }
     Mod+D { spawn "dms" "ipc" "call" "dash" "toggle" "\"\""; }
@@ -9,6 +10,7 @@ binds {
     Mod+N { spawn-sh "kitty -e nvim"; }
     Mod+P { spawn "dms" "ipc" "call" "notepad" "toggle"; }
     Mod+S { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+    Mod+A { spawn "dms" "ipc" "call" "inhibit" "toggle"; }
     Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Mod+W { spawn "dms" "ipc" "call" "welcome" "page" "2"; }
     XF86AudioMute { spawn "dms" "ipc" "call" "audio" "mute"; }
