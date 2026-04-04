@@ -5,6 +5,7 @@
     includes = [
       den.aspects.hardware
       den.aspects.hardware._.with-disko
+      den.aspects.hardware._.with-impermanence
     ];
 
     nixos =
@@ -54,7 +55,8 @@
                     priority = 1;
                     name = "ESP";
                     start = "1M";
-                    end = "512M";
+                    # Better to be generous in case
+                    end = "2G";
                     type = "EF00";
                     content = {
                       type = "filesystem";
@@ -68,19 +70,15 @@
                     content = {
                       type = "btrfs";
                       extraArgs = [ "-f" ]; # Override existing partition
-                      # Subvolumes must set a mountpoint in order to be mounted,
-                      # unless their parent is mounted
                       subvolumes = {
-                        # Subvolume name is different from mountpoint
-                        "/rootfs" = {
+                        "/root" = {
                           mountpoint = "/";
+                          mountOptions = [
+                            "subvol=root"
+                            "compress=zstd"
+                            "noatime"
+                          ];
                         };
-                        # Subvolume name is the same as the mountpoint
-                        "/home" = {
-                          mountOptions = [ "compress=zstd" ];
-                          mountpoint = "/home";
-                        };
-                        # Parent is not mounted so the mountpoint must be set
                         "/nix" = {
                           mountOptions = [
                             "compress=zstd"
@@ -88,22 +86,18 @@
                           ];
                           mountpoint = "/nix";
                         };
-                        # This subvolume will be created but not mounted
-                        "/test" = { };
-                        # Subvolume for the swapfile
+                        "/persist" = {
+                          mountpoint = "/persist";
+                          mountOptions = [
+                            "subvol=persist"
+                            "compress=zstd"
+                            "noatime"
+                          ];
+                        };
                         "/swap" = {
-                          mountpoint = "/.swapvol";
+                          mountpoint = "/swap";
                           swap.swapfile.size = "16G";
-                        };
-                      };
-
-                      mountpoint = "/partition-root";
-                      swap = {
-                        swapfile = {
-                          size = "20M";
-                        };
-                        swapfile1 = {
-                          size = "20M";
+                          mountOptions = [ "nodatacow" ];
                         };
                       };
                     };
@@ -113,6 +107,54 @@
             };
           };
         };
+
+        fileSystems."/persist".neededForBoot = true;
+
+        boot.initrd.postResumeCommands = lib.mkAfter ''
+          mkdir /btrfs_tmp
+            mount /dev/disk/by-id/nvme-eui.002538d321454dfa /btrfs_tmp # CONFIRM THIS IS CORRECT FROM findmnt
+            if [[ -e /btrfs_tmp/root ]]; then
+              mkdir -p /btrfs_tmp/old_roots
+              timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
+              mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+            fi
+
+            delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                delete_subvolume_recursively "/btrfs_tmp/$i"
+              done
+              btrfs subvolume delete "$1"
+            }
+
+            for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+              delete_subvolume_recursively "$i"
+            done
+
+            btrfs subvolume create /btrfs_tmp/root
+            umount /btrfs_tmp
+        '';
+
+        # Use /persist as the persistence root, matching Disko's mountpoint
+        environment.persistence."/persist" = {
+          hideMounts = true;
+          directories = [
+            "/var/lib/nixos"
+            "/var/lib/bluetooth"
+          ];
+          files = [
+            # Fix network and wpa... errors
+            "/etc/machine-id"
+          ];
+          users.lunar-scar = {
+            directories = [
+              "nix-config" # Main config
+              "Downloads"
+              "Faks"
+            ];
+          };
+        };
+
       };
   };
 }

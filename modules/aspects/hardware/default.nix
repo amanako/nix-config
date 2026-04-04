@@ -6,6 +6,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
 
   den.aspects.hardware = {
@@ -17,6 +20,12 @@
     provides.with-disko = {
       nixos = {
         imports = [ inputs.disko.nixosModules.disko ];
+      };
+    };
+
+    provides.with-impermanence = {
+      nixos = {
+        imports = [ inputs.impermanence.nixosModules.impermanence ];
       };
     };
 
@@ -38,7 +47,8 @@
       boot.loader.efi.canTouchEfiVariables = true;
       boot.loader.limine = {
         enable = true;
-        maxGenerations = 20;
+        # Limine may fill up quickly
+        maxGenerations = 5;
         efiSupport = true;
         enableEditor = true;
       };

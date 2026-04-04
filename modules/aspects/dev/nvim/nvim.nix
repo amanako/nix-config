@@ -22,17 +22,7 @@
         overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
       in
       {
-        # TODO: Fix this weird error
         xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
-        #home.file.".config/nvim" = {
-        #  source = ./nvim;
-        #  recursive = true;
-        #};
-        #home.activation.generateSymlink = (
-        #  lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-        #    ln -s ${configDir} ${config.home.homeDirectory}/.config/nvim
-        #  ''
-        #);
         stylix.targets.neovim.enable = false;
 
         nixpkgs.overlays = overlays;
