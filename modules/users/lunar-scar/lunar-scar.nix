@@ -19,7 +19,8 @@ in
       den.aspects.nix
       # den.aspects.system
       den.aspects.system._.dms
-      den.aspects.terminal._.nixvim
+      # den.aspects.terminal._.nixvim
+      den.aspects.dev._.neovim
       den.aspects.gaming
       den.aspects.browsers._.zen-browser
       den.aspects.utility
@@ -70,7 +71,6 @@ in
           pciutils
           usbutils
           ripgrep
-          fastfetch
           p7zip
           unzip
           unrar
@@ -80,7 +80,6 @@ in
           nixfmt
 
           # Development
-          clang
           cmake
           gnumake
 
@@ -103,8 +102,6 @@ in
 
         # Use options to achieve conditionals
         stylix.targetsToDisable = [
-          # Temporary
-          "qt"
           "kitty"
           "yazi"
           "fcitx5"
@@ -156,6 +153,8 @@ in
             registryThemeVariants = {
               gruvboxMaterial = "medium";
             };
+            cursorSettings.size = 36;
+            cursorSettings.theme = "capitaine-cursors-white";
           };
 
           userSession = rec {

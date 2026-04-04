@@ -1,7 +1,17 @@
+{ inputs, ... }:
+
 {
+  flake-file.inputs = {
+    ascii = {
+      url = "git+https://codeberg.org/permafrozen/ascii";
+      flake = false;
+    };
+  };
+
   den.aspects.shell = {
     nixos = {
       programs.fish.enable = true;
+      programs.fzf.fuzzyCompletion = true;
     };
 
     homeManager =
@@ -13,21 +23,61 @@
       }:
       let
         nh = lib.getExe pkgs.nh;
+        fd = lib.getExe pkgs.fd;
       in
       {
         programs.ssh.enable = true;
         programs.git.enable = true;
 
-        programs.fzf = {
+        programs.fzf = rec {
           enable = true;
           # Enables the following
           # <C-t> = fzf select
           # <C-r> = fzf history
           # Alt-c = fzf cd
           enableFishIntegration = true;
+          defaultCommand = "${fd} --type file --follow --hidden --exclude .git";
+          fileWidgetCommand = defaultCommand;
           defaultOptions = [
+            "--ansi"
             "--border"
           ];
+          colors = lib.mkDefault {
+            fg = "#ebdbb2";
+            bg = "#282828";
+            hl = "#b16286";
+            "fg+" = "#689d6a";
+            "bg+" = "#32302f";
+            "hl+" = "#d3869b";
+            info = "#d65d0e";
+            prompt = "#458588";
+            pointer = "#fe8019";
+            marker = "#8ec07c";
+            spinner = "#cc241d";
+            header = "#fabd2f";
+          };
+          tmux.enableShellIntegration = true;
+        };
+
+        programs.fastfetch = {
+          enable = true;
+          settings = builtins.fromJSON (builtins.readFile ./config.jsonc) // {
+            logo = {
+              type = "file";
+              source = "${inputs.ascii.outPath}/src/nixos_logo.txt";
+              color = {
+                "1" = "blue";
+              };
+              padding = {
+                top = 1;
+                bottom = 0;
+                left = 1;
+                right = 2;
+              };
+              recache = true;
+              chafa.fgOnly = true;
+            };
+          };
         };
 
         programs.zoxide = {
@@ -45,7 +95,6 @@
           enable = true;
           interactiveShellInit = ''
             set -U fish_greeting
-            ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
           '';
           shellAliases = {
             bios = "systemctl reboot --firmware-setup";

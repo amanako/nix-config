@@ -1,7 +1,25 @@
-{ den, ... }:
+{ den, inputs, ... }:
 
 {
+  flake-file.inputs = {
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   den.aspects.hardware = {
+    # TODO: Add conditional based on host configuration
+    includes = [
+      den.aspects.nvidia
+    ];
+
+    provides.with-disko = {
+      nixos = {
+        imports = [ inputs.disko.nixosModules.disko ];
+      };
+    };
+
     nixos = {
       services.pipewire = {
         enable = true;
@@ -25,10 +43,5 @@
         enableEditor = true;
       };
     };
-
-    # TODO: Add conditional based on host configuration
-    includes = [
-      den.aspects.hardware._.nvidia
-    ];
   };
 }

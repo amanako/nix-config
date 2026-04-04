@@ -1,5 +1,5 @@
 {
-  den.aspects.hardware._.nvidia = {
+  den.aspects.nvidia = {
     nixos =
       { lib, config, ... }:
       {

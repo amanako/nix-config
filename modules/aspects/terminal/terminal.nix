@@ -44,6 +44,7 @@
             palette = "gruvbox_dark";
 
             palettes.gruvbox_dark = {
+              # this one is more of greenish
               color_blue = "#458588";
               color_aqua = "#689d6a";
               color_main = "#98971a";
@@ -82,7 +83,7 @@
 
         programs.kitty = {
           enable = true;
-          themeFile = "GruvboxMaterialDarkMedium";
+          themeFile = "GruvboxMaterialDarkSoft";
           font = {
             name = "VictorMono Nerd Font";
             package = pkgs.nerd-fonts.victor-mono;
@@ -95,7 +96,7 @@
 
           settings = {
             confirm_os_window_close = -1;
-            background_opacity = 0.8;
+            background_opacity = 0.95;
             window_padding_width = 4;
             hide_window_decorations = true;
             cursor_trail = 1;

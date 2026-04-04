@@ -14,8 +14,6 @@
       environment.systemPackages = with pkgs; [
         # For flakes to work properly
         git
-        # Text editor to use
-        neovim
       ];
 
       system.stateVersion = "25.11";

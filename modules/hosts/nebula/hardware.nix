@@ -1,9 +1,10 @@
-{ den, ... }:
+{ den, inputs, ... }:
 
 {
   den.aspects.nebula._.hardware = {
     includes = [
       den.aspects.hardware
+      den.aspects.hardware._.with-disko
     ];
 
     nixos =
@@ -18,8 +19,7 @@
         # With message hardware initialization failed
         # EDIT: After adding facter.json report below it seems OK to remove this line
         # Anyhow, you may wish to uncomment in case of hardware failure (and above)
-        imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
+        # imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
         hardware.facter.reportPath = ./facter.json;
 
         boot.initrd.availableKernelModules = [
@@ -34,21 +34,84 @@
         boot.kernelModules = [ "kvm-amd" ];
         boot.extraModulePackages = [ ];
 
-        swapDevices = [ ];
-        nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+        boot.supportedFilesystems = [
+          "btrfs"
+          "ext4"
+          "fat"
+          "vfat"
+          "exfat"
+        ];
 
-        fileSystems."/" = {
-          device = "/dev/disk/by-uuid/d720667a-89c7-472d-9ee4-68c52e48878f";
-          fsType = "ext4";
-        };
+        disko.devices = {
+          disk = {
+            main = {
+              type = "disk";
+              device = "/dev/disk/by-id/nvme-eui.002538d321454dfa";
+              content = {
+                type = "gpt";
+                partitions = {
+                  ESP = {
+                    priority = 1;
+                    name = "ESP";
+                    start = "1M";
+                    end = "512M";
+                    type = "EF00";
+                    content = {
+                      type = "filesystem";
+                      format = "vfat";
+                      mountpoint = "/boot";
+                      mountOptions = [ "umask=0077" ];
+                    };
+                  };
+                  root = {
+                    size = "100%";
+                    content = {
+                      type = "btrfs";
+                      extraArgs = [ "-f" ]; # Override existing partition
+                      # Subvolumes must set a mountpoint in order to be mounted,
+                      # unless their parent is mounted
+                      subvolumes = {
+                        # Subvolume name is different from mountpoint
+                        "/rootfs" = {
+                          mountpoint = "/";
+                        };
+                        # Subvolume name is the same as the mountpoint
+                        "/home" = {
+                          mountOptions = [ "compress=zstd" ];
+                          mountpoint = "/home";
+                        };
+                        # Parent is not mounted so the mountpoint must be set
+                        "/nix" = {
+                          mountOptions = [
+                            "compress=zstd"
+                            "noatime"
+                          ];
+                          mountpoint = "/nix";
+                        };
+                        # This subvolume will be created but not mounted
+                        "/test" = { };
+                        # Subvolume for the swapfile
+                        "/swap" = {
+                          mountpoint = "/.swapvol";
+                          swap.swapfile.size = "16G";
+                        };
+                      };
 
-        fileSystems."/boot" = {
-          device = "/dev/disk/by-uuid/C192-78A7";
-          fsType = "vfat";
-          options = [
-            "fmask=0077"
-            "dmask=0077"
-          ];
+                      mountpoint = "/partition-root";
+                      swap = {
+                        swapfile = {
+                          size = "20M";
+                        };
+                        swapfile1 = {
+                          size = "20M";
+                        };
+                      };
+                    };
+                  };
+                };
+              };
+            };
+          };
         };
       };
   };

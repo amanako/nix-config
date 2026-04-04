@@ -136,7 +136,6 @@
         dankLauncherV2UnloadOnClose = false;
         useAutoLocation = false;
         cursorSettings = {
-          theme = "System Default";
           size = 24;
           niri = {
             hideWhenTyping = true;

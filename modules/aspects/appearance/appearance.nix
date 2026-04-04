@@ -28,7 +28,7 @@
 
         wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
           DIR="${wallpapersPath}"
-          INTERVAL=600
+          INTERVAL=1800
 
           while true; do
             img=$( ${pkgs.findutils}/bin/find "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${pkgs.coreutils}/bin/shuf -n 1)
@@ -98,7 +98,7 @@
 
         config.stylix = {
           enable = true;
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
+          base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
           polarity = "dark";
 
           icons = {

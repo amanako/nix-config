@@ -17,7 +17,7 @@
     };
 
     homeManager =
-      { pkgs, ... }:
+      { pkgs, lib, ... }:
       {
         home.sessionVariables = {
           # This may collide with *fcitx5.waylandFrontend* option
@@ -60,11 +60,11 @@
         programs.zathura = {
           enable = true;
           options = {
-
+            # Evade blinding
+            recolor = true;
+            recolor-lightcolor = lib.mkDefault "#1e3a8a";
+            recolor-darkcolor = lib.mkDefault "#e0f2fe";
           };
-          #extraConfig = {
-
-          #};
         };
       };
   };
