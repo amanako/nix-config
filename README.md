@@ -15,7 +15,6 @@
 ## Goals
 * [TUI][TUI] experience
 * Keyboard-driven
-* Elegance and privacy
 * [Neovim][neovim] as an **all-encompassing text editor**
 * Uniformness with **[gruvbox][gruvbox]** theme
 * **Light gaming** , I use it primarily for [VNs][VN]
@@ -26,18 +25,21 @@
 
   |  Functionality   |   Software                                                            |
   |:----------------:|:---------------------------------------------------------------------:|
-  | Shell            | [fish][fish]                                                          |
   | Terminal         | [kitty][kitty]                                                        | 
-  | File Editor      | [neovim][neovim] via [nixvim][nixvim]                                 |
+  | File Editor      | [neovim][neovim](native)                                              |
   | File Manager     | [yazi][yazi] / [thunar][thunar]                                       |
   | Window Manager   | [niri][niri]                                                          |
   | Quickshell       | [noctalia][noctalia], with [dms][dms] as another option               |
   | Browser          | [zen-browser][zen-browser]                                            |
+  | Document Viewer  | [zathura][zathura]                                                    |
   | Input Method     | [fcitx5][fcitx5]                                                      |
+  | Wallpaper Manager| [awww][awww]                                                          |
+  | Shell            | [fish][fish]                                                          |
   | Display Manager  | [ly][ly]                                                              |
   | Boot Loader      | [limine][limine], for setup check [README](./modules/aspects/hardware)|
-  | Document Viewer  | [zathura][zathura]                                                    |
-  | Wallpaper Manager| [awww][awww]                                                          |
+  | Memory layout    | btrfs (unencrypted) via [disko][disko] + [impermanence][impermanence] |
+
+and some secondary options.
 
 </div>
 
@@ -89,22 +91,22 @@ My current user is provided as an example.
     ,_GTK_IM_MODULE_and_QT_IM_MODULE?>here</a>.
 </details>
 
-[fish]: https://fishshell.com
 [kitty]: https://sw.kovidgoyal.net/kitty
 [neovim]: https://neovim.io
-[nixvim]: https://github.com/nix-community/nixvim
 [yazi]: https://yazi-rs.github.io
 [thunar]: https://docs.xfce.org/xfce/thunar/start
-[wayland]: https://wayland.freedesktop.org
 [niri]: https://niri-wm.github.io/niri
 [noctalia]: https://noctalia.dev
 [dms]: https://danklinux.com/
 [zen-browser]: https://github.com/0xc000022070/zen-browser-flake 
+[zathura]: https://pwmt.org/projects/zathura
 [fcitx5]: https://fcitx-im.org/wiki/Fcitx_5
+[awww]: https://codeberg.org/LGFae/awww
+[fish]: https://fishshell.com
 [ly]: https://codeberg.org/fairyglade/ly
 [limine]: https://codeberg.org/Limine/Limine
-[zathura]: https://pwmt.org/projects/zathura
-[awww]: https://codeberg.org/LGFae/awww
+[disko]: https://github.com/nix-community/disko
+[impermanence]: https://github.com/nix-community/impermanence
 
 [den]: https://den.oeiuwq.com
 [SoC]: https://en.wikipedia.org/wiki/Separation_of_concerns

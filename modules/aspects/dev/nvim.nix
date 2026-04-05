@@ -7,6 +7,7 @@
 
   den.aspects.dev._.neovim = {
     nixos = {
+      # Should fix many binary problems with mason/tree-sitter for example
       programs.nix-ld.enable = true;
     };
 
@@ -18,11 +19,12 @@
         ...
       }:
       let
-        configDir = "${config.home.homeDirectory}/nix-config/modules/aspects/dev/nvim/nvim";
+        configDir = "${config.home.homeDirectory}/nix-config/modules/aspects/dev/nvim";
         overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
       in
       {
         xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
+	# Crucial fix for mkOutOfStoreSymlink to work
         stylix.targets.neovim.enable = false;
 
         nixpkgs.overlays = overlays;
@@ -31,12 +33,15 @@
           enable = true;
           viAlias = true;
           vimAlias = true;
+
+	  # Add wl-copy
           waylandSupport = true;
           package = pkgs.neovim-unwrapped;
           plugins = [
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
           ];
 
+	  # Tips from 
           extraWrapperArgs = with pkgs; [
             # LIBRARY_PATH is used by gcc before compilation to search directories
             # containing static and shared libraries that need to be linked to your program.
@@ -61,6 +66,7 @@
         };
 
         home.packages = with pkgs; [
+	  # Faster alternative for find
           fd
           stylua
           chafa

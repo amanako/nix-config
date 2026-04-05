@@ -5,8 +5,8 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
-# Currently no need for public TODO schedule
-todo.txt
-
 # Remove VM files
 *.qcow2
+
+# Trash files
+.Trash-*/
