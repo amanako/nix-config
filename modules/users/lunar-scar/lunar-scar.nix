@@ -30,7 +30,7 @@ in
       isNormalUser = true;
       initialPassword = "koko";
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJu+Btx2UdY+nVSsHXs9BfSIJfeZuUgFSDHqAFvWD8rN codeberg@kairi6.anonaddy.com"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIt+pO+vGitCLBgAza007py6ze41xHFfMDSLfbd2K/ES codeberg"
       ];
     };
 
@@ -144,6 +144,7 @@ in
               "reboot"
             ];
 
+            # Ensure you have installed the package first
             iconTheme = "papirus";
             networkPreference = "ethernet";
 
@@ -179,7 +180,7 @@ in
             host = "codeberg.org";
             user = "git";
             port = 22;
-            identityFile = "~/.ssh/id_ed25519_codeberg";
+            identityFile = "~/.ssh/id_ed25519";
           };
         };
       };

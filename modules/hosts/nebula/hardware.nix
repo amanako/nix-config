@@ -15,6 +15,11 @@
         modulesPath,
         ...
       }:
+      let
+        btrfs = lib.getExe pkgs.btrfs-progs;
+        # Recommended to use by-id instead of label or uuid because it's more reliable
+        device = "/dev/disk/by-id/nvme-eui.002538d321454dfa";
+      in 
       {
         # Without adding this modulesPath AMD and bluetooth service fail to start
         # With message hardware initialization failed
@@ -29,11 +34,11 @@
         ];
 
         # I like to use zen packages buy it may be changed
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        # Using _latest is likely to overflow the /boot
+        boot.kernelPackages = pkgs.linuxPackages_zen;
 
-        boot.initrd.kernelModules = [ ];
+        # Amd support
         boot.kernelModules = [ "kvm-amd" ];
-        boot.extraModulePackages = [ ];
 
         boot.supportedFilesystems = [
           "btrfs"
@@ -47,7 +52,7 @@
           disk = {
             main = {
               type = "disk";
-              device = "/dev/disk/by-id/nvme-eui.002538d321454dfa";
+              device = device;
               content = {
                 type = "gpt";
                 partitions = {
@@ -79,6 +84,7 @@
                             "noatime"
                           ];
                         };
+                        # nix-store 
                         "/nix" = {
                           mountOptions = [
                             "compress=zstd"
@@ -112,11 +118,11 @@
 
         boot.initrd.postResumeCommands = lib.mkAfter ''
           mkdir /btrfs_tmp
-            mount /dev/disk/by-id/nvme-eui.002538d321454dfa /btrfs_tmp # CONFIRM THIS IS CORRECT FROM findmnt
+            mount ${device} /btrfs_tmp
             if [[ -e /btrfs_tmp/root ]]; then
               mkdir -p /btrfs_tmp/old_roots
               timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
-              mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+              ${btrfs} subvolume snapshot -r /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
             fi
 
             delete_subvolume_recursively() {
@@ -124,14 +130,14 @@
               for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
                 delete_subvolume_recursively "/btrfs_tmp/$i"
               done
-              btrfs subvolume delete "$1"
+              ${btrfs} subvolume delete "$1"
             }
 
-            for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+            for i in $(find /btrfs_tmp/old_roots/ -mindepth 1-maxdepth 1 -mtime +30); do
               delete_subvolume_recursively "$i"
             done
 
-            btrfs subvolume create /btrfs_tmp/root
+            ${btrfs} subvolume create /btrfs_tmp/root
             umount /btrfs_tmp
         '';
 
@@ -148,13 +154,16 @@
           ];
           users.lunar-scar = {
             directories = [
+              "Dev"
               "nix-config" # Main config
               "Downloads"
               "Faks"
+              ".ssh"
+            ];
+            files = [
             ];
           };
         };
-
       };
   };
 }

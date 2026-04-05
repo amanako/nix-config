@@ -48,7 +48,7 @@
       boot.loader.limine = {
         enable = true;
         # Limine may fill up quickly
-        maxGenerations = 5;
+        maxGenerations = 10;
         efiSupport = true;
         enableEditor = true;
       };
