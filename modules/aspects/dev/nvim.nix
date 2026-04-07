@@ -24,7 +24,7 @@
       in
       {
         xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
-	# Crucial fix for mkOutOfStoreSymlink to work
+        # Crucial fix for mkOutOfStoreSymlink to work
         stylix.targets.neovim.enable = false;
 
         nixpkgs.overlays = overlays;
@@ -34,14 +34,11 @@
           viAlias = true;
           vimAlias = true;
 
-	  # Add wl-copy
-          waylandSupport = true;
-          package = pkgs.neovim-unwrapped;
-          plugins = [
-            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+          plugins = with pkgs.vimPlugins; [
+            nvim-treesitter.withAllGrammars
           ];
 
-	  # Tips from 
+          # Tips from
           extraWrapperArgs = with pkgs; [
             # LIBRARY_PATH is used by gcc before compilation to search directories
             # containing static and shared libraries that need to be linked to your program.
@@ -66,9 +63,10 @@
         };
 
         home.packages = with pkgs; [
-	  # Faster alternative for find
+          # Faster alternative for find
           fd
-          stylua
+
+          wl-clipboard
           chafa
           tree-sitter
           clang
