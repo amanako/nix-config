@@ -15,3 +15,4 @@ Add standalone niri config with:
 ---------Low priority-------------
 Expose programs via perSystem
 Make a iso with said programs
+Checkout cachix

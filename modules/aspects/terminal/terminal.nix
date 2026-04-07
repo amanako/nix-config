@@ -1,8 +1,16 @@
+{ inputs, ... }:
+
 {
+  flake-file.inputs = {
+    yazi.url = "github:sxyazi/yazi";
+  };
+
   den.aspects.terminal = {
     homeManager =
       { pkgs, lib, ... }:
       {
+        nixpkgs.overlays = [ inputs.yazi.overlays.default ];
+
         programs.yazi = {
           enable = true;
           enableFishIntegration = true;

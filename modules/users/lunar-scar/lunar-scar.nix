@@ -74,7 +74,6 @@ in
           p7zip
           unzip
           unrar
-          bat
 
           # Must have
           nixfmt
@@ -107,6 +106,7 @@ in
           "fcitx5"
           "starship"
           "nixvim"
+          "neovim"
           "dank-material-shell"
         ];
 

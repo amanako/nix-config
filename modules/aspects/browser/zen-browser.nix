@@ -28,6 +28,7 @@
 
         programs.zen-browser = {
           enable = true;
+          setAsDefaultBrowser = true;
 
           policies = import ./_policies;
           profiles."*" = {

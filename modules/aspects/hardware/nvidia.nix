@@ -20,9 +20,6 @@
           powerManagement.enable = true;
           powerManagement.finegrained = true;
 
-          # Enable nvidia settings for manual tweaks
-          nvidiaSettings = true;
-
           prime = {
             # Enable use of nvidia via "nvidia-offload {command}"
             offload = {

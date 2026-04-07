@@ -107,7 +107,7 @@
             # For compatibility with various X11-based programs while running niri
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
-            binds = import ./_binds.nix { inherit config; };
+            binds = import ./_binds.nix { inherit pkgs lib config; };
 
             layout = {
               gaps = 10;

@@ -76,6 +76,7 @@
       url = "git+https://codeberg.org/voidptrx/wallpapers";
       flake = false;
     };
+    yazi.url = "github:sxyazi/yazi";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {

@@ -1,4 +1,9 @@
-{ config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   variables = config.home.sessionVariables;
@@ -49,9 +54,25 @@ in
 
   "Mod+T".action.spawn = term;
   "Mod+B".action.spawn = browser;
-  "Mod+Y" = sh "${term} -e ${fileManager}";
+  # Use shell wrapper "y" for greater flexibility if yazi is file manager
+  "Mod+Y" =
+    let
+      shellExe = lib.getExe pkgs.fish;
+      fmCmd =
+        if fileManager == "yazi" then
+          lib.escapeShellArgs [
+            shellExe
+            "-ic"
+            "y; exec ${shellExe}"
+          ]
+        else
+          fileManager;
+    in
+    sh "${term} -e ${fmCmd}";
+
   "Mod+N" = sh "${term} -e ${editor}";
-  "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
+  # TODO: Fix script and call
+  # "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
 
   "Mod+Shift+C".action.center-visible-columns = [ ];
   "Mod+Shift+F".action.fullscreen-window = [ ];

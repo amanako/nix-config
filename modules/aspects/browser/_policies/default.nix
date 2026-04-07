@@ -26,7 +26,6 @@
   ExtensionUpdate = false;
   PasswordManagerEnabled = false;
   PromptForDownloadLocation = true;
-  StartDownloadsInTempDirectory = true;
   UserMessaging = {
     ExtensionRecommendations = false;
     FeatureRecommendations = false;

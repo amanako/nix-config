@@ -2,9 +2,6 @@
   den.default.nixos =
     { pkgs, ... }:
     {
-      # Flakes are superiour to channels so they won't be needed
-      nix.channel.enable = false;
-
       # Enable flakes and new nix command
       nix.settings.experimental-features = [
         "nix-command"

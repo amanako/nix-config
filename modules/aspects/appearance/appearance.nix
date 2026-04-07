@@ -60,6 +60,7 @@
             ExecStart = "${awwwPackage}/bin/awww-daemon";
             Restart = "on-failure";
             RestartSec = 5;
+            Environment = "WAYLAND_DISPLAY=wayland-1";
           };
 
           Install = {

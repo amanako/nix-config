@@ -3,14 +3,15 @@
 {
   den.aspects.nebula = {
     includes = [
+      den._.hostname
       (den._.unfree [
-        "steam"
-        "steam-unwrapped"
         "nvidia-x11"
         "nvidia-settings"
+        "steam"
+        "steam-unwrapped"
+        "rar"
         "unrar"
       ])
-      den._.hostname
       den.aspects.nebula._.hardware
 
       den.aspects.performance
@@ -18,10 +19,12 @@
       den.aspects.utility
     ];
 
-    nixos = {
-      time.timeZone = "Europe/Paris";
-      i18n.defaultLocale = "en_US.UTF-8";
-      home-manager.useGlobalPkgs = true;
-    };
+    nixos =
+      { lib, ... }:
+      {
+        home-manager.useGlobalPkgs = true;
+        time.timeZone = "Europe/Paris";
+        i18n.defaultLocale = "en_US.UTF-8";
+      };
   };
 }

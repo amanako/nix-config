@@ -43,18 +43,21 @@
             "--border"
           ];
           colors = lib.mkDefault {
-            fg = "#ebdbb2";
-            bg = "#282828";
-            hl = "#b16286";
-            "fg+" = "#689d6a";
-            "bg+" = "#32302f";
-            "hl+" = "#d3869b";
-            info = "#d65d0e";
-            prompt = "#458588";
-            pointer = "#fe8019";
-            marker = "#8ec07c";
-            spinner = "#cc241d";
-            header = "#fabd2f";
+            fg = "#d4be98";
+            bg = "#282626";
+
+            hl = "#d3869b"; # magenta highlight (matches your accents)
+
+            "fg+" = "#d4be98";
+            "bg+" = "#32302f"; # selection background
+            "hl+" = "#e78a4e"; # stronger highlight (orange)
+
+            info = "#89b482"; # cyan-ish info line
+            prompt = "#7daea3"; # blue prompt
+            pointer = "#ea6962"; # red pointer (nice contrast)
+            marker = "#a9b665"; # green multi-select
+            spinner = "#d8a657"; # yellow spinner
+            header = "#d3869b"; # magenta header
           };
           tmux.enableShellIntegration = true;
         };
@@ -91,21 +94,37 @@
           icons = "always";
         };
 
+        programs.bat = {
+          enable = true;
+          config = {
+            theme = lib.mkDefault "ansi";
+            style = "full";
+            italic-text = "always";
+          };
+          extraPackages = with pkgs.bat-extras; [
+            # Integration for various programs
+            core
+          ];
+        };
+
         programs.fish = {
           enable = true;
           interactiveShellInit = ''
-            set -U fish_greeting
+                        set -U fish_greeting
+            	    # Shell remains same when nix run or nix-shell
+            	    ${lib.getExe pkgs.any-nix-shell} fish --info-right | source
           '';
           shellAliases = {
             bios = "systemctl reboot --firmware-setup";
-            cat = "${lib.getExe config.programs.bat.package} --theme=ansi";
+            # Literally replace cat with bat to keep bat config active
+            cat = "bat";
             cd = "z";
 
             ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
             man = "${lib.getExe pkgs.bat-extras.batman}";
             rm = "rm -I";
             rebuild = "${nh} os switch --ask --diff always --show-trace";
-            clean = "${nh} clean all --keep 4 --optimise";
+            clean = "${nh} clean all --keep 5 --optimise";
             search = "${nh} search";
             # Updates all flake inputs by default, a single one can be passed as well
             fup = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
