@@ -22,3 +22,6 @@ jobs:
 
       - name: Flake check
         run: nix flake check -L
+
+      - name: Build a host
+        run: nix build .#nixosConfigurations.nebula.config.system.build.toplevel
