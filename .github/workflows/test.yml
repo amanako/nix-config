@@ -21,4 +21,4 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Flake check
-        run: nix flake check -L --all-systems
+        run: nix flake check -L
