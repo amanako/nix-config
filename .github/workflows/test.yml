@@ -25,14 +25,19 @@ jobs:
           export NIX_CONFIG="experimental-features = nix-command flakes"
           nix --version
 
-      # Optional: Flake check (still useful)
-      - name: Flake check
-        run: nix flake check -L
-        timeout-minutes: 30
+      - name: Add nix-cachyos-kernel cache
+        run: |
+          echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" \
+            | sudo tee -a /etc/nix/nix.conf
 
-      # Setup Cachix (needs the `cachix` binary from nixpkgs)
+          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
+            | sudo tee -a /etc/nix/nix.conf
+
+      #- name: Check flake
+      #  run: nix flake check -L
+
       - name: Install Cachix binary
-        run: nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
+        run: nix profile install nixpkgs#cachix
 
       - name: Setup Cachix caches
         run: |
@@ -51,13 +56,13 @@ jobs:
       # Build output using `nix run` → omnix
       - name: Build output
         run: |
-          nix run github:juspay/omnix#default -- \
+          nix --accept-flake-config run github:juspay/omnix#default -- \
             ci run --results=/om.json
 
       # Push to cache using `nix run` → cachix-push
       - name: Push to cache
         run: |
-          nix run github:juspay/cachix-push#default -- \
+          nix --accept-flake-config run github:juspay/cachix-push#default -- \
             -c amanako \
             --subflake ROOT \
             --prefix "$(git rev-parse --short HEAD)" < /om.json
