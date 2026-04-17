@@ -13,12 +13,10 @@
       nixos =
         {
           pkgs,
-          lib,
           # modulesPath,
           ...
         }:
         let
-          btrfs = lib.getExe pkgs.btrfs-progs;
           # Recommended to use by-id instead of label or uuid because it's more reliable
           deviceID = "nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
           device = "/dev/disk/by-id/${deviceID}";
@@ -79,36 +77,75 @@
 
           fileSystems."/persist".neededForBoot = true;
 
-          boot.initrd.postResumeCommands = lib.mkAfter ''
-            mkdir /btrfs_tmp
-            mount ${partition} /btrfs_tmp
-            if [[ -e /btrfs_tmp/root ]]; then
-              mkdir -p /btrfs_tmp/persist/old_roots
-              timestamp=$(TZ=${host.timeZone} date "+%h-%d-%Y_%R")
-              mv /btrfs_tmp/root "/btrfs_tmp/persist/old_roots/$timestamp"
-              echo "Created backup at /btrfs_tmp/persist/old_roots with timestamp $timestamp."
-            fi
+          boot.initrd.systemd = {
+            services.impermanence-btrfs-rolling-root = {
+              description = "Archiving existing BTRFS root subvolume and creating a fresh one";
 
-            delete_subvolume_recursively() {
-              IFS=$'\n'
-              for i in $(${btrfs} subvolume list -o "$1" | cut -f 9- -d ' '); do
-                delete_subvolume_recursively "/btrfs_tmp/$i"
-              done
-              ${btrfs} subvolume delete "$1"
-            }
+              # Specify dependencies explicitly
+              unitConfig.DefaultDependencies = false;
+              serviceConfig = {
+                Type = "oneshot";
+                # NOTE: to be able to see errors in your script do this
+                StandardOutput = "journal+console";
+                StandardError = "journal+console";
+              };
 
-            max_age=30 #days 
-            for i in $(find /btrfs_tmp/persist/old_roots/ -mindepth 1 -maxdepth 1 -mtime $max_age); do
-              delete_subvolume_recursively "$i"
-            done
+              # This service is required for boot to succeed
+              requiredBy = [ "initrd.target" ];
+              # Should complete before any file systems are mounted
+              before = [ "sysroot.mount" ];
 
-            echo "Cleaned root."
+              # Wait until the root device is available
+              # If you're altering a different device, specify its device unit explicitly.
+              # see: systemd-escape(1)
+              requires = [ "initrd-root-device.target" ];
+              after = [
+                "initrd-root-device.target"
+                # Allow hibernation to resume before trying to alter any data
+                "local-fs-pre.target"
+              ];
 
-            ${btrfs} subvolume create /btrfs_tmp/root
+              script = ''
+                mkdir /btrfs_tmp
+                mount ${partition} /btrfs_tmp
+                if [[ -e /btrfs_tmp/root ]]; then
+                  mkdir -p /btrfs_tmp/persist/old_roots
+                  timestamp=$(TZ=${host.timeZone} date "+%h-%d-%Y_%R")
+                  mv /btrfs_tmp/root "/btrfs_tmp/persist/old_roots/$timestamp"
+                  echo "Created backup at /btrfs_tmp/persist/old_roots with timestamp $timestamp."
+                fi
 
-            umount /btrfs_tmp
-            echo "Created fresh root."
-          '';
+                delete_subvolume_recursively() {
+                  IFS=$'\n'
+                  for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                    delete_subvolume_recursively "/btrfs_tmp/$i"
+                  done
+                  btrfs subvolume delete "$1"
+                }
+
+                max_age=30 #days 
+                for i in $(find /btrfs_tmp/persist/old_roots/ -mindepth 1 -maxdepth 1 -mtime $max_age); do
+                  delete_subvolume_recursively "$i"
+                done
+
+                echo "Cleaned root."
+
+                btrfs subvolume create /btrfs_tmp/root
+
+                umount /btrfs_tmp
+                echo "Created fresh root."
+              '';
+            };
+
+            extraBin = {
+              "mkdir" = "${pkgs.coreutils}/bin/mkdir";
+              "date" = "${pkgs.coreutils}/bin/date";
+              "mv" = "${pkgs.coreutils}/bin/mv";
+              "find" = "${pkgs.findutils}/bin/find";
+              "btrfs" = "${pkgs.btrfs-progs}/bin/btrfs";
+              # mount & umount already exist
+            };
+          };
 
           boot.loader.limine = {
             resolution = "1920x1080x32";

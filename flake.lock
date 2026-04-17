@@ -462,7 +462,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs-lib"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -1410,9 +1410,6 @@
         "nix-maid": "nix-maid",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_8",
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ],
         "nixvim": "nixvim",
         "noctalia": "noctalia",
         "noctalia-qs": "noctalia-qs",
