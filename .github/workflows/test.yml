@@ -18,19 +18,20 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: Print version
-        run: nix --version
-
-      - name: Enable nix-command feature
+      - name: Enable nix-command & flakes
         run: |
           echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+          export NIX_CONFIG="experimental-features = nix-command flakes"
+          nix --version   # sanity check
+          nix profile list   # should show an empty list, not an error
+
+      - name: Install Needed Packages
+        run: nix profile add github:juspay/omnix github:juspay/cachix-push nixpkgs#cachix
 
       - name: Flake check
         run: nix flake check -L
         timeout-minutes: 30
 
-      - name: Install Needed Packages
-        run: nix profile add github:juspay/omnix github:juspay/cachix-push nixpkgs#cachix
       - name: Setup Cachix
         run: |
           CACHES=(
