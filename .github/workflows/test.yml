@@ -22,6 +22,8 @@ jobs:
 
       - name: Flake check
         run: nix flake check -L
+        timeout-minutes: 30
 
       - name: Build a host
         run: nix build .#nixosConfigurations.nebula.config.system.build.toplevel
+        timeout-minutes: 60
