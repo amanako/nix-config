@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Needed Packages
         run: |
-          nix-env -iA nixpkgs.cachix
+          nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
           nix-env -iA github:juspay/omnix
           nix-env -iA github:juspay/cachix-push
 
