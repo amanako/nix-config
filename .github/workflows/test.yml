@@ -42,7 +42,7 @@ jobs:
             yazi
             niri
             noctalia
-            nix
+            helix
           )
           for cache in "${CACHES[@]}"; do
             cachix use "$cache"
