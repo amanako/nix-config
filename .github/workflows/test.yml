@@ -22,11 +22,14 @@ jobs:
         run: |
           echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
           export NIX_CONFIG="experimental-features = nix-command flakes"
-          nix --version   # sanity check
-          nix profile list   # should show an empty list, not an error
+          nix --version
+          nix profile list
 
       - name: Install Needed Packages
-        run: nix profile add github:juspay/omnix github:juspay/cachix-push nixpkgs#cachix
+        run: |
+          nix-env -iA nixpkgs.cachix
+          nix-env -iA github:juspay/omnix
+          nix-env -iA github:juspay/cachix-push
 
       - name: Flake check
         run: nix flake check -L
