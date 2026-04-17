@@ -1,7 +1,7 @@
-name: "Test"
-
+name: Test
 env:
   CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
 on:
   pull_request:
   push:
@@ -9,46 +9,56 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install nix
+      # Install Nix (still needed for the `nix` command itself)
+      - name: Install Nix
         uses: cachix/install-nix-action@v25
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
+      # Enable the new command & flakes (same as before)
       - name: Enable nix-command & flakes
         run: |
           echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
           export NIX_CONFIG="experimental-features = nix-command flakes"
           nix --version
-          nix profile list
 
-      - name: Install Needed Packages
-        run: |
-          nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
-          nix-env -iA github:juspay/omnix
-          nix-env -iA github:juspay/cachix-push
-
+      # Optional: Flake check (still useful)
       - name: Flake check
         run: nix flake check -L
         timeout-minutes: 30
 
-      - name: Setup Cachix
+      # Setup Cachix (needs the `cachix` binary from nixpkgs)
+      - name: Install Cachix binary
+        run: nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
+
+      - name: Setup Cachix caches
         run: |
           CACHES=(
-            'amanako'
-            'nix-community'
-            'yazi'
-            'niri'
-            'noctalia'
-            'nix'
+            amanako
+            nix-community
+            yazi
+            niri
+            noctalia
+            nix
           )
-          for cache in ${CACHES[@]}; do
-            cachix use $cache
+          for cache in "${CACHES[@]}"; do
+            cachix use "$cache"
           done
+
+      # Build output using `nix run` → omnix
       - name: Build output
-        run: om ci run --results=/om.json
+        run: |
+          nix run github:juspay/omnix#default -- \
+            ci run --results=/om.json
+
+      # Push to cache using `nix run` → cachix-push
       - name: Push to cache
-        run: cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git rev-parse --short HEAD)" < /om.json
+        run: |
+          nix run github:juspay/cachix-push#default -- \
+            -c amanako \
+            --subflake ROOT \
+            --prefix "$(git rev-parse --short HEAD)" < /om.json
+
