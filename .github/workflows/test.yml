@@ -37,7 +37,7 @@ jobs:
         run: nix flake check -L
 
       - name: Install Cachix binary
-        run: nix profile install nixpkgs#cachix
+        run: nix profile install nixpkgs#cachix github:juspay/omnix github:juspay/cachix-push
 
       - name: Setup Cachix caches
         run: |
@@ -53,17 +53,9 @@ jobs:
             cachix use "$cache"
           done
 
-      # Build output using `nix run` → omnix
       - name: Build output
-        run: |
-          nix --accept-flake-config run github:juspay/omnix#default -- \
-            ci run --results=/om.json
+        run: om ci run --results=/om.json
 
-      # Push to cache using `nix run` → cachix-push
       - name: Push to cache
-        run: |
-          nix --accept-flake-config run github:juspay/cachix-push#default -- \
-            -c amanako \
-            --subflake ROOT \
-            --prefix "$(git rev-parse --short HEAD)" < /om.json
+        run: cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git rev-parse --short HEAD)" < /om.json
 
