@@ -11,8 +11,8 @@
 
   den.aspects.hardware = {
     # TODO: Add conditional based on host configuration
-    includes = [
-      den.aspects.nvidia
+    includes = with den.aspects; [
+      nvidia
     ];
 
     provides.with-disko = {

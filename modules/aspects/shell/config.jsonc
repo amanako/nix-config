@@ -10,6 +10,21 @@
     },
     "separator": ""
   },
+  "logo": {
+    "color": {
+      "1": "blue"
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 0,
+      "left": 1,
+      "right": 2
+    },
+    "recache": true,
+    "chafa": {
+      "fgOnly": true
+    }
+  },
   "modules": [
     {
       "type": "custom",

@@ -3,17 +3,15 @@
     nixos =
       { lib, config, ... }:
       {
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
-        };
-
         services.xserver.videoDrivers = [ "nvidia" ];
 
         hardware.nvidia = {
+          package = config.boot.kernelPackages.nvidiaPackages.beta;
+
           # Turing and newer architectures must use open kernel modules
           open = lib.mkDefault true;
-          package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
+
+          nvidiaSettings = true;
           modesetting.enable = true;
 
           # Enable experimental sleep features

@@ -4,8 +4,8 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
-    ascii = {
-      url = "git+https://codeberg.org/permafrozen/ascii";
+    ascii-art = {
+      url = "gitlab:ntgn/ascii-art";
       flake = false;
     };
     awww.url = "git+https://codeberg.org/LGFae/awww";

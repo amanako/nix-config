@@ -2,8 +2,8 @@
 
 {
   flake-file.inputs = {
-    ascii = {
-      url = "git+https://codeberg.org/permafrozen/ascii";
+    ascii-art = {
+      url = "gitlab:ntgn/ascii-art";
       flake = false;
     };
   };
@@ -66,21 +66,10 @@
 
         programs.fastfetch = {
           enable = true;
-          settings = builtins.fromJSON (builtins.readFile ./config.jsonc) // {
+          settings = lib.recursiveUpdate (builtins.fromJSON (builtins.readFile ./config.jsonc)) {
             logo = {
               type = "file";
-              source = "${inputs.ascii.outPath}/src/nixos_logo.txt";
-              color = {
-                "1" = "blue";
-              };
-              padding = {
-                top = 1;
-                bottom = 0;
-                left = 1;
-                right = 2;
-              };
-              recache = true;
-              chafa.fgOnly = true;
+              source = "${inputs.ascii-art.outPath}/src/legacy/nixos_logo.txt";
             };
           };
         };
@@ -112,9 +101,9 @@
         programs.fish = {
           enable = true;
           interactiveShellInit = ''
-                        set -U fish_greeting
-            	    # Shell remains same when nix run or nix-shell
-            	    ${lib.getExe pkgs.any-nix-shell} fish --info-right | source
+            set -U fish_greeting
+            # Shell remains same when running "nix run" or "nix-shell"
+            ${lib.getExe pkgs.any-nix-shell} fish --info-right | source
           '';
           shellAliases = {
             bios = "systemctl reboot --firmware-setup";
@@ -130,7 +119,7 @@
             search = "${nh} search";
             # Updates all flake inputs by default, a single one can be passed as well
             fup = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
-            fcheck = "nix flake check --accept-flake-config ${config.home.sessionVariables.NH_FLAKE}";
+            fcheck = "nix flake check -L --accept-flake-config ${config.home.sessionVariables.NH_FLAKE}";
           };
           plugins = [
             {

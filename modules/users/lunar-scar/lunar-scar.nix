@@ -23,6 +23,7 @@ in
       terminal
       dev
       nix
+      nvidia
       shell
       system
       system._.noctalia
