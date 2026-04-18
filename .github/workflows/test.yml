@@ -37,7 +37,7 @@ jobs:
         run: nix flake check -L
 
       - name: Install Cachix binary
-        run: nix profile install nixpkgs#cachix github:juspay/omnix github:juspay/cachix-push
+        run: nix --accept-flake-config profile install nixpkgs#cachix github:juspay/omnix github:juspay/cachix-push
 
       - name: Setup Cachix caches
         run: |
