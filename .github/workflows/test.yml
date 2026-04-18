@@ -23,19 +23,6 @@ jobs:
           export NIX_CONFIG="experimental-features = nix-command flakes"
           nix --version
 
-      - name: Add runner to nixbld group
-        run: |
-          sudo usermod -aG nixbld runner
-          newgrp nixbld
-
-      - name: Debug Nix setup
-        run: |
-          sudo systemctl status nix-daemon
-          ls -la /nix/store | head -20
-          nix store info
-          whoami
-          id
-
       - name: Add nixos and nix-cachyos-kernel caches
         run: |
           echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" \
@@ -64,8 +51,17 @@ jobs:
             cachix use "$cache"
           done
 
-      - name: Build output
-        run: om ci run --results=/om.json
+      - name: Add user to nixbld group and build
+        run: |
+          sudo usermod -aG nixbld runner
+          sudo systemctl restart nix-daemon
+          sleep 2
+          sudo systemctl status nix-daemon
+          ls -la /nix/store | head -20
+          nix store info
+          whoami
+          id
+          sg nixbld -c "om ci run --results=/om.json"
 
       - name: Push to cache
         run: cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git rev-parse --short HEAD)" < /om.json
