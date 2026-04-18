@@ -1,3 +1,0 @@
-{
-  cachix.push = "amanako";
-}

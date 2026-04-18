@@ -5,19 +5,21 @@ env:
 on:
   pull_request:
   push:
+   branches:
+    - main
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
-
-      #- name: Enable nix-command & flakes
-      #  run: |
-      #    echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-      #    export NIX_CONFIG="experimental-features = nix-command flakes"
-      #    nix --version
+      - uses: DeterminateSystems/nix-flake-checker-action@main
+      - name: Check flake
+        run: nix flake check -L
 
       - name: Add nixos and nix-cachyos-kernel caches
         run: |
@@ -44,5 +46,8 @@ jobs:
             cachix use "$cache"
           done
 
-      - name: Build and push to cache
-        run: om ci run --include-all-dependencies | xargs cachix push amanako
+      - name: Build flake
+        run: om ci run --results=om.json
+
+      - name: Push to cache
+        run: nix run github:juspay/cachix-push -- --cache amanako --subflake ROOT --prefix "$(git branch --show-current)" < om.json
