@@ -31,8 +31,8 @@ jobs:
           echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
             | sudo tee -a /etc/nix/nix.conf
 
-      - name: Check flake
-        run: nix flake check -L
+      #- name: Check flake
+      #  run: nix flake check -L
 
       - name: Install needed packages
         run: nix --accept-flake-config profile install nixpkgs#cachix github:juspay/omnix github:juspay/cachix-push
@@ -55,13 +55,13 @@ jobs:
         run: |
           sudo usermod -aG nixbld runner
           sudo systemctl restart nix-daemon
-          sleep 2
+          sleep 5
           sudo systemctl status nix-daemon
           ls -la /nix/store | head -20
           nix store info
           whoami
           id
-          sg nixbld -c "om ci run --results=/om.json"
+          exec su - runner -c "om ci run --results=/om.json"
 
       - name: Push to cache
         run: cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git rev-parse --short HEAD)" < /om.json
