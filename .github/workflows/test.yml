@@ -5,8 +5,7 @@ env:
 on:
   pull_request:
   push:
-   branches:
-    - main
+   branches: [main]
 
 jobs:
   tests:
@@ -15,11 +14,9 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/nix-flake-checker-action@main
-      - name: Check flake
-        run: nix flake check -L
+      - uses: DeterminateSystems/flake-checker-action@main
 
       - name: Add nixos and nix-cachyos-kernel caches
         run: |
@@ -28,6 +25,9 @@ jobs:
 
           echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
             | sudo tee -a /etc/nix/nix.conf
+
+      - name: Check flake
+        run: nix flake check -L
 
       - name: Install needed packages
         run: nix --accept-flake-config profile add nixpkgs#cachix github:juspay/omnix
