@@ -1,6 +1,7 @@
 name: Test
 env:
   CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+  FLAKEHUB_DISABLE: 1
 
 on:
   pull_request:
@@ -22,7 +23,7 @@ jobs:
       - name: Install needed packages
         run: nix --accept-flake-config profile add nixpkgs#cachix github:juspay/omnix
 
-      - name: Setup caches ( Cachix + extra substituters )
+      - name: Setup caches ( cachix + extra substituters )
         run: |
           CACHES=(
             amanako
@@ -44,9 +45,6 @@ jobs:
 
       - name: Lint flake
         uses: DeterminateSystems/flake-checker-action@main
-
-      - name: Print debug info
-        run: om health
 
       - name: Build flake
         run: om ci run --results=om.json
