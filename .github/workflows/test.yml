@@ -15,24 +15,14 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
 
-      - name: Add nixos and nix-cachyos-kernel caches
-        run: |
-          echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" \
-            | sudo tee -a /etc/nix/nix.conf
-
-          echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
-            | sudo tee -a /etc/nix/nix.conf
-
-      - name: Check flake
-        run: nix flake check -L
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
 
       - name: Install needed packages
         run: nix --accept-flake-config profile add nixpkgs#cachix github:juspay/omnix
 
-      - name: Setup Cachix caches
+      - name: Setup caches ( Cachix + extra substituters )
         run: |
           CACHES=(
             amanako
@@ -45,6 +35,18 @@ jobs:
           for cache in "${CACHES[@]}"; do
             cachix use "$cache"
           done
+
+          echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" \
+            | sudo tee -a /etc/nix/nix.conf
+
+          echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
+            | sudo tee -a /etc/nix/nix.conf
+
+      - name: Lint flake
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Print debug info
+        run: om health
 
       - name: Build flake
         run: om ci run --results=om.json
