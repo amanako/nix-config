@@ -51,6 +51,8 @@ and some secondary options.
 
 ![noctalia-preview](./assets/screenshots/2026-03-14-noctalia-preview.png)
 
+Logo is from https://gitlab.com/ntgn/ascii-art, licenced under [Creative Commons Attribution 4.0 International][https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE]
+
 <h2>
   Dank Material Shell preview
 </h2>

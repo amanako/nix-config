@@ -19,7 +19,7 @@
     "useSeparateOpacity": true,
     "marginVertical": 4,
     "marginHorizontal": 8,
-    "frameThickness": 8,
+    "frameThickness": 5,
     "frameRadius": 16,
     "outerCorners": false,
     "hideOnOverview": true,

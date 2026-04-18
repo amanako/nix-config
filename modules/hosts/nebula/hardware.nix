@@ -13,8 +13,7 @@
       nixos =
         {
           pkgs,
-          lib,
-          # modulesPath,
+          modulesPath,
           ...
         }:
         let
@@ -27,16 +26,17 @@
           # Without adding this modulesPath AMD and bluetooth service fail to start
           # With message hardware initialization failed
           # EDIT: After adding facter.json report below it seems OK to remove this line
-          # imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-          imports = [ ./_disko.nix ];
-          hardware.facter.reportPath = ./facter.json;
+          imports = [ ./_disko.nix ] ++ 
+            [(modulesPath + "/installer/scan/not-detected.nix")];
+
+          # hardware.facter.reportPath = ./facter.json;
 
           boot.initrd.availableKernelModules = [
             "nvme"
             "xhci_pci"
           ];
 
-          boot.kernelPackages = lib.mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
+          boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-rt-bore-lto;
 
           boot.kernelModules = [
             "kvm-amd"
@@ -62,11 +62,6 @@
             "softdog"
             "sp5100_tco"
           ];
-
-          #services.udev.extraRules = ''
-          # /etc/udev/rules.d/99-no-watchdog.rules
-          #SUBSYSTEM=="char", KERNEL=="watchdog*", OPTIONS+="ignore_remove"
-          #'';
 
           boot.supportedFilesystems = [
             "btrfs"

@@ -10,8 +10,6 @@
 
   den.aspects.system = {
     nixos = {
-      # services.displayManager.autoLogin.user = user.userName;
-
       services.displayManager.lemurs = {
         enable = false;
         settings = {
@@ -59,7 +57,7 @@
       };
 
       # Necessary for niri to be enabled globally and then enabled per-user
-      # This helps since it can be caught by display managers as well
+      # This helps since it can be caught by display managers
       programs.niri.enable = true;
     };
 
@@ -137,7 +135,7 @@
             binds = import ./_binds.nix { inherit pkgs lib config; };
 
             layout = {
-              gaps = 10;
+              gaps = 4;
               background-color = "transparent";
               center-focused-column = "never";
               default-column-width.proportion = 0.5;
