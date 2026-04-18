@@ -17,15 +17,24 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
+      - name: Enable nix-command & flakes
+        run: |
+          echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+          export NIX_CONFIG="experimental-features = nix-command flakes"
+          nix --version
+
       - name: Add runner to nixbld group
         run: |
           sudo usermod -aG nixbld runner
           newgrp nixbld
 
-      - name: Enable nix-command & flakes
+      - name: Debug Nix setup
         run: |
-          echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-          export NIX_CONFIG="experimental-features = nix-command flakes"
+          sudo systemctl status nix-daemon
+          ls -la /nix/store | head -20
+          nix store info
+          whoami
+          id
 
       - name: Add nixos and nix-cachyos-kernel caches
         run: |
