@@ -1,0 +1,33 @@
+name: Weekly Flake Update
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Enable flakes
+        run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Test build
+        uses: ./.github/workflows/build.yml
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "Weekly flake update"
+          branch: "weekly-flake-update"
+          commit-message: "chore: update flake.lock"

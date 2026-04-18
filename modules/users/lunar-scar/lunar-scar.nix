@@ -184,7 +184,7 @@ in
         #};
 
         programs.noctalia-shell.userSettings = {
-          location = "Serbia, Niš";
+          location.name = "Serbia, Niš";
         };
 
         programs.git.settings.user = {

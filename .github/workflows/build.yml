@@ -1,13 +1,9 @@
-name: Test
+name: Test build
 env:
   CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
-  FLAKEHUB_DISABLE: 1
 
 on:
-  pull_request:
-  push:
-   branches: [main]
-
+  workflow_call:
 jobs:
   tests:
     runs-on: ubuntu-latest
