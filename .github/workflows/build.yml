@@ -1,12 +1,14 @@
 name: Test build
-env:
-  CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
 on:
   workflow_call:
-  secrets:
-    CACHIX_AUTH_TOKEN:
-      required: true
+    secrets:
+      CACHIX_AUTH_TOKEN:
+        required: true
+
+env:
+  CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
