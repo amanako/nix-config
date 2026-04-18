@@ -25,6 +25,15 @@ jobs:
           export NIX_CONFIG="experimental-features = nix-command flakes"
           nix --version
 
+      # Print debug info
+      - name: Debug Nix setup
+        run: |
+          sudo systemctl status nix-daemon
+          ls -la /nix/store | head -20
+          nix store info
+          whoami
+          id
+
       - name: Add nixos and nix-cachyos-kernel caches
         run: |
           echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" \
@@ -52,11 +61,6 @@ jobs:
           for cache in "${CACHES[@]}"; do
             cachix use "$cache"
           done
-
-      - name: Fix store permissions
-        run: |
-          sudo chown -R $(whoami) /nix/store
-          sudo chmod -R u+w /nix/store
 
       - name: Build output
         run: om ci run --results=/om.json
