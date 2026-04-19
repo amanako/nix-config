@@ -24,14 +24,14 @@ jobs:
 
       - name: Enable flakes
         run: |
-          echo "experimental-features = nix-command flakes" | \
-          sudo tee -a /etc/nix/nix.conf
+          echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
 
       - name: Update flake.lock
         run: nix flake update
 
   build:
     needs: update
+    runs-on: ubuntu-latest
     steps:
       - name: Test bulid
         uses: ./.github/workflows/build.yml

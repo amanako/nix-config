@@ -22,7 +22,7 @@ jobs:
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@main
 
-      - name: Setup caches ( cachix + extra substituters )
+      - name: Setup caches (cachix + extra substituters)
         run: |
           nix profile add nixpkgs#cachix
 
@@ -38,23 +38,17 @@ jobs:
             cachix use "$cache"
           done
 
-          echo "substituters = \
-            https://cache.nixos.org \
-            https://attic.xuyh0120.win/lantian" \
-            | sudo tee -a /etc/nix/nix.conf
-
-          echo "trusted-public-keys = \
-            cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= \
-            lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" \
-            | sudo tee -a /etc/nix/nix.conf
+          echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
+          echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
 
       - name: Lint flake
         uses: DeterminateSystems/flake-checker-action@main
 
       - name: Build flake
-        run: nix --accept-flake-config run github:juspay/omnix#default \
-          -- ci run --results=om.json
+        run: |
+          nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
 
       - name: Push to cache
-        run: nix run github:juspay/cachix-push -- --cache amanako \
-          --subflake ROOT --prefix "$(git branch --show-current)" < om.json
+        run: |
+          nix run github:juspay/cachix-push -- --cache amanako \
+            --subflake ROOT --prefix "$(git branch --show-current)" < om.json
