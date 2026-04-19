@@ -39,10 +39,8 @@ jobs:
 
   create-pr:
     needs: build
-    steps:
-      - name: Open a PR
-      uses: peter-evans/create-pull-request@v6
-      with:
-        title: "Weekly flake update"
-        branch: "weekly-flake-update-${{github.run_id}}"
-        commit-message: "chore: update flake.lock"
+    uses: peter-evans/create-pull-request@v6
+    with:
+      title: "Weekly flake update"
+      branch: "weekly-flake-update-${{github.run_id}}"
+      commit-message: "chore: update flake.lock"
