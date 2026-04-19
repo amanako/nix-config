@@ -1,3 +1,4 @@
+---
 name: CI
 
 on:
@@ -9,6 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  call-build:
-    uses: ./.github/workflows/build.yml
-    secrets: inherit
+  build:
+    steps:
+      - name: Test build
+        uses: ./.github/workflows/build.yml
+        secrets: inherit

@@ -1,3 +1,4 @@
+---
 name: Weekly flake update
 
 on:
@@ -22,18 +23,26 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Enable flakes
-        run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+        run: |
+          echo "experimental-features = nix-command flakes" | \
+          sudo tee -a /etc/nix/nix.conf
 
       - name: Update flake.lock
         run: nix flake update
 
-      - name: Test build
+  build:
+    needs: update
+    steps:
+      - name: Test bulid
         uses: ./.github/workflows/build.yml
         secrets: inherit
 
-      - name: Create PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          title: "Weekly flake update"
-          branch: "weekly-flake-update"
-          commit-message: "chore: update flake.lock"
+  create-pr:
+    needs: build
+    steps:
+      - name: Open a PR
+      uses: peter-evans/create-pull-request@v6
+      with:
+        title: "Weekly flake update"
+        branch: "weekly-flake-update-${{github.run_id}}"
+        commit-message: "chore: update flake.lock"
