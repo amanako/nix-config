@@ -32,10 +32,8 @@ jobs:
   build:
     needs: update
     runs-on: ubuntu-latest
-    steps:
-      - name: Test bulid
-        uses: ./.github/workflows/build.yml
-        secrets: inherit
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
 
   create-pr:
     needs: build
