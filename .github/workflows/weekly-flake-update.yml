@@ -31,12 +31,12 @@ jobs:
 
   build:
     needs: update
-    uses: ./.github/workflows/build.yml
+    uses: .github/workflows/build.yml
     secrets: inherit
 
   create-pr:
     needs: build
-    uses: peter-evans/create-pull-request@v6
+    uses: peter-evans/create-pull-request@v8
     with:
       title: "Weekly flake update"
       branch: "weekly-flake-update-${{github.run_id}}"
