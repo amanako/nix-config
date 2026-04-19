@@ -31,7 +31,7 @@ jobs:
 
   build:
     needs: update
-    uses: .github/workflows/build.yml
+    uses: .github/workflows/build.yml@main
     secrets: inherit
 
   create-pr:
