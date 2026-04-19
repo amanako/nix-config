@@ -1,23 +1,19 @@
 ---
-name: Weekly flake update
+name: Weekly flake.lock update
 
 on:
-  schedule:
-    - cron: "0 3 * * 0"
   workflow_dispatch:
-
-permissions:
-  id-token: write
-  contents: write
-  pull-requests: write
+  schedule:
+    - cron: "0 3 * * 0"  # runs weekly on Sunday at 3AM
 
 jobs:
-  update:
-    runs-on: ubuntu-latest
+  nix-flake-update:
     permissions:
       contents: write
+      id-token: write
+      issues: write
       pull-requests: write
-
+    runs-on: ubuntu-latest
     steps:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
@@ -26,18 +22,11 @@ jobs:
         run: |
           echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
 
-      - name: Update flake.lock
-        run: nix flake update
-
-  build:
-    needs: update
-    uses: ./.github/workflows/build.yml
-    secrets: inherit
-
-  create-pr:
-    needs: build
-    uses: peter-evans/create-pull-request@v8
-    with:
-      title: "Weekly flake update"
-      branch: "weekly-flake-update-${{github.run_id}}"
-      commit-message: "chore: update flake.lock"
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v28
+      - uses: DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+            automated
