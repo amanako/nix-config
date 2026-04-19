@@ -23,7 +23,7 @@ jobs:
           echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
 
       - uses: actions/checkout@v6
-      - uses: DeterminateSystems/determinate-nix-action@v28
+      - uses: DeterminateSystems/determinate-nix-action@v3
       - uses: DeterminateSystems/update-flake-lock@main
         with:
           pr-title: "Update flake.lock"
