@@ -22,9 +22,9 @@ jobs:
 
       - name: Setup caches
         run: |
-        nix profile add nixpkgs#cachix
+          nix profile add nixpkgs#cachix
 
-        CACHES=(
+          CACHES=(
             amanako
             nix-community
             yazi
