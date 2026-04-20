@@ -6,6 +6,8 @@ on:
     secrets:
       CACHIX_AUTH_TOKEN:
         required: true
+env:
+  CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
 jobs:
   tests:
@@ -19,16 +21,23 @@ jobs:
           extra_nix_config: experimental-features = nix-command flakes
 
       - name: Setup caches
-        uses: cachix/cachix-action@v17
-        with:
-          name: amanako
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          extraPullNames: nix-community,yazi,niri,noctalia,helix
-
-      - name: Add extra substituters
         run: |
-          echo "extra-substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
-          echo "extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
+        nix profile add nixpkgs#cachix
+
+        CACHES=(
+            amanako
+            nix-community
+            yazi
+            niri
+            noctalia
+            helix
+          )
+          for cache in "${CACHES[@]}"; do
+            cachix use "$cache"
+          done
+
+          echo "substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
+          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
 
       - name: Lint flake
         uses: DeterminateSystems/flake-checker-action@v12
