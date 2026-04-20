@@ -10,14 +10,18 @@ jobs:
   nix-flake-update:
     permissions:
       contents: write
-      id-token: write
-      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: DeterminateSystems/determinate-nix-action@v3
-      - uses: DeterminateSystems/update-flake-lock@main
+
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: experimental-features = nix-command flakes
+
+      - name: Update flake.lock and create a PR
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           pr-title: "Update flake.lock"
           pr-labels: |

@@ -7,45 +7,35 @@ on:
       CACHIX_AUTH_TOKEN:
         required: true
 
-env:
-  CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
 jobs:
   tests:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v6
 
       - name: Install nix
-        uses: DeterminateSystems/nix-installer-action@main
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: experimental-features = nix-command flakes
 
-      - name: Setup caches (cachix + extra substituters)
+      - name: Setup caches
+        uses: cachix/cachix-action@v17
+        with:
+          name: amanako
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          extraPullNames: nix-community,yazi,niri,noctalia,helix
+
+      - name: Add extra substituters
         run: |
-          nix profile add nixpkgs#cachix
-
-          CACHES=(
-            amanako
-            nix-community
-            yazi
-            niri
-            noctalia
-            helix
-          )
-          for cache in "${CACHES[@]}"; do
-            cachix use "$cache"
-          done
-
-          echo "substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
-          echo "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
+          echo "extra-substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
+          echo "extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
 
       - name: Lint flake
-        uses: DeterminateSystems/flake-checker-action@main
+        uses: DeterminateSystems/flake-checker-action@v12
 
       - name: Build flake
         run: |
+          set -xeuo pipefail
           nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
 
       - name: Push to cache
