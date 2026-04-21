@@ -7,6 +7,8 @@ vim.o.updatetime = 300
 vim.o.timeoutlen = 500
 vim.o.clipboard = "unnamedplus"
 
+-- beam cursosr blinking
+vim.opt.guicursor = "a:ver20-blinkwait300-blinkon250-blinkoff200"
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
