@@ -4,22 +4,18 @@
   flake-file.inputs = {
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  den.aspects.system._.noctalia =
+  den.aspects.shells._.noctalia =
     { user, ... }:
     {
-      persys.users.${user.userName}.directories = [
-        ".config/noctalia"
-      ];
+      persys = {
+        users.${user.userName}.directories = [
+          ".config/noctalia"
+        ];
+      };
 
       homeManager =
         { config, lib, ... }:
@@ -66,9 +62,6 @@
                 command = [ "noctalia-shell" ];
               }
             ];
-
-            # Inject binds for noctalia into niri
-            programs.niri.settings.binds = import ./_binds.nix { inherit lib; };
 
             programs.noctalia-shell = {
               enable = true;

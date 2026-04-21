@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  den.aspects.system._.dms.homeManager =
+  den.aspects.shells._.dms.homeManager =
     { lib, config, ... }:
     {
       options.programs.dank-material-shell.userSession = lib.mkOption {

@@ -1,5 +1,5 @@
 {
-  den.aspects.system._.dms.homeManager =
+  den.aspects.shells._.dms.homeManager =
     { config, lib, ... }:
     let
       browser = config.home.sessionVariables.BROWSER;

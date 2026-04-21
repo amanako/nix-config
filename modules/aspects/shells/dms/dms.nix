@@ -8,14 +8,13 @@
     };
   };
 
-  den.aspects.system._.dms.includes = [ den.aspects.system ];
-  den.aspects.system._.dms.homeManager =
+  den.aspects.shells._.dms.homeManager =
     { lib, config, ... }:
     let
       isAutoSpawned = config.programs.niri.autoSpawnShell == "dms";
       # This path needs to be updated each time folders are moved around or renamed
       # This remains pure but don't forget to change accordingly
-      currentDir = "${config.home.homeDirectory}/nix-config/modules/aspects/system/shells/dms";
+      currentDir = "${config.home.homeDirectory}/nix-config/modules/aspects/shells/shells/dms";
     in
     {
       imports = [

@@ -8,7 +8,7 @@
     };
   };
 
-  den.aspects.system._.dms.homeManager = {
+  den.aspects.shells._.dms.homeManager = {
     imports = [
       inputs.dms-plugin-registry.modules.default
     ];
