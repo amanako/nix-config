@@ -7,14 +7,6 @@ in
 {
   den.aspects.${u} = {
     includes = [
-      (den._.unfree [
-        "nvidia-x11"
-        "nvidia-settings"
-        "steam"
-        "steam-unwrapped"
-        "rar"
-        "unrar"
-      ])
       den._.primary-user
       (den._.user-shell "fish")
     ]
@@ -25,8 +17,12 @@ in
       nix
       nvidia
       shell
-      system
-      system._.noctalia
+      displayManagers._.ly
+
+      compositors._.niri
+      niri-binds
+      shells._.noctalia
+      shells._.noctalia._.niri
       editors._.nixvim
       editors._.helix
       gaming

@@ -1,17 +1,14 @@
 ---------High pritory--------------
-Recompile neovim configuration
-Look into vm nvidia problems
-Tweak impermanence to reduce broken links
+Mime / zen workspaces
 
 ---------Medium priority-----------
-Fix bloatiness and reorganize
+Make small build status icon on README
 Add standalone niri config with:
-- Launcher (rofi likely)
-- Status bar (waybar / polybar)
-- Notification daemon ( dunster / mako)
-- Look into .desktop apps not starting in kitty
-
+Launcher (rofi likely)
+Status bar (waybar / polybar)
+Notification daemon ( dunster / mako)
 
 ---------Low priority-------------
 Expose programs via perSystem
 Make a iso with said programs
+Recompile neovim configuration
