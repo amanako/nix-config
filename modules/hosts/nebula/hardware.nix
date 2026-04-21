@@ -147,56 +147,22 @@
               ];
             };
           };
-      };
+        };
 
       persys = {
-            hideMounts = true;
-            directories = [
-              # Without this dir all users/groups without specified
-              # uids/gids will have them reassigned on reboot.
-              "/var/lib/nixos"
-              # Preserve bluetooth device history
-              "/var/lib/bluetooth"
-            ];
+        hideMounts = true;
+        directories = [
+          # Without this dir all users/groups without specified
+          # uids/gids will have them reassigned on reboot.
+          "/var/lib/nixos"
+          # Preserve bluetooth device history
+          "/var/lib/bluetooth"
+        ];
 
-            files = [
-              # Fix wpa/network errors
-              "/etc/machine-id"
-            ];
-
-            users.lunar-scar = {
-              directories = [
-                "Dev"
-                "Documents"
-                "Downloads"
-                "Faks"
-                "nix-config" # Main config
-                "Pictures"
-                {
-                  directory = ".ssh";
-                  mode = "0600";
-                }
-                {
-                  directory = ".gnupg";
-                  mode = "0600";
-                }
-
-                ".config/zen/*"
-
-                ".local/share/nvim"
-                ".local/state/nvim"
-
-                ".local/share/Steam"
-                ".local/share/lutris/runners"
-                ".local/share/youtube-tui"
-
-                ".local/share/zoxide" # zoxide database
-              ];
-              files = [
-                ".bash_history" # bash history
-                ".local/share/fish/fish_history" # fish history
-              ];
-            };
-          };
+        files = [
+          # Fix wpa/network errors
+          "/etc/machine-id"
+        ];
+      };
     };
 }

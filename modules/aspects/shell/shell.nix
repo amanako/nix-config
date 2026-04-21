@@ -14,6 +14,26 @@
       programs.fzf.fuzzyCompletion = true;
     };
 
+    persysUser = {
+      directories = [
+        {
+          directory = ".ssh";
+          mode = "0600";
+        }
+        {
+          directory = ".gnupg";
+          mode = "0600";
+        }
+
+        ".local/share/zoxide" # preserve zoxide database
+      ];
+
+      files = [
+        ".bash_history"
+        ".local/share/fish/fish_history"
+      ];
+    };
+
     homeManager =
       {
         pkgs,

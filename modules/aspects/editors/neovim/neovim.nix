@@ -5,6 +5,13 @@
       programs.nix-ld.enable = true;
     };
 
+    persysUser = {
+      directories = [
+        ".local/share/nvim"
+        ".local/state/nvim"
+      ];
+    };
+
     homeManager =
       {
         pkgs,

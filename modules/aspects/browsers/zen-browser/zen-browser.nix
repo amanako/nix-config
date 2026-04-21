@@ -16,6 +16,12 @@
   };
 
   den.aspects.browsers._.zen-browser = {
+    persysUser = {
+      directories = [
+        ".config/zen/*"
+      ];
+    };
+
     homeManager =
       {
         pkgs,

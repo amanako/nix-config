@@ -1,5 +1,12 @@
 {
   den.aspects.gaming = {
+    persysUser = {
+      directories = [
+        ".local/share/Steam"
+        ".local/share/lutris/runners"
+      ];
+    };
+
     nixos =
       { pkgs, ... }:
       {
@@ -21,5 +28,11 @@
           ];
         };
       };
+
+    homeManager = {
+      programs.lutris = {
+        enable = true;
+      };
+    };
   };
 }

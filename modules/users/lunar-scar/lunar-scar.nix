@@ -39,6 +39,19 @@ in
       ];
     };
 
+    persysUser = {
+      directories = [
+        "Dev"
+        "Documents"
+        "Downloads"
+        "Faks"
+        "nix-config" # Main config
+        "Pictures"
+
+        ".local/share/youtube-tui"
+      ];
+    };
+
     nixos =
       { pkgs, ... }:
       {
@@ -70,7 +83,6 @@ in
       {
         home.packages = with pkgs; [
           protonup-qt
-          lutris
           thunar
           youtube-tui
           abiword
@@ -190,18 +202,6 @@ in
 
         programs.git.signing = {
           key = "0606F86026761462";
-          signByDefault = true;
-        };
-
-        programs.gpg = {
-          enable = true;
-        };
-
-        services.gpg-agent = {
-          enable = true;
-          pinentry.package = pkgs.pinentry-curses;
-          enableFishIntegration = true;
-          enableSshSupport = true;
         };
 
         programs.ssh = {
