@@ -4,6 +4,7 @@
   flake-file.inputs = {
     hydra-check.url = "github:nix-community/hydra-check";
     cachix.url = "github:cachix/cachix";
+    statix.url = "github:oppiliappan/statix";
   };
 
   den.aspects.nix =
@@ -27,6 +28,8 @@
             # nix cachyos kernels
             "https://attic.xuyh0120.win/lantian"
             "https://helix.cachix.org"
+            "https://cachix.cachix.org"
+            "https://statix.cachix.org"
 
             # cache for this repo
             "https://amanako.cachix.org"
@@ -39,6 +42,8 @@
             "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
             "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
             "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
+            "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+            "statix.cachix.org-1:Z9E/g1YjCjU117QOOt07OjhljCoRZddiAm4VVESvais="
 
             # cache for this repo
             "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
@@ -57,7 +62,8 @@
         { pkgs, ... }:
         let
           # Allows querying hydra for the build status of a package
-          hydraCheckPackage = inputs.hydra-check.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          hydraCheck = inputs.hydra-check.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          statix = inputs.statix.packages.${pkgs.stdenv.hostPlatform.system}.statix;
         in
         {
           programs.nh = {
@@ -68,7 +74,8 @@
 
           home.packages = [
             pkgs.cachix
-            hydraCheckPackage
+            hydraCheck
+            statix
           ];
         };
     };
