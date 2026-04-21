@@ -1,31 +1,14 @@
-{ den, inputs, ... }:
+{
+  den,
+  ...
+}:
 
 {
-  flake-file.inputs = {
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    impermanence.url = "github:nix-community/impermanence";
-  };
-
   den.aspects.hardware = {
     # TODO: Add conditional based on host configuration
-    includes = with den.aspects; [
-      nvidia
+    includes = [
+      den.aspects.nvidia
     ];
-
-    provides.with-disko = {
-      nixos = {
-        imports = [ inputs.disko.nixosModules.disko ];
-      };
-    };
-
-    provides.with-impermanence = {
-      nixos = {
-        imports = [ inputs.impermanence.nixosModules.impermanence ];
-      };
-    };
 
     nixos =
       {

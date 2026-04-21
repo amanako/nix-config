@@ -4,11 +4,7 @@
   den.aspects.nebula._.hardware =
     { host, ... }:
     {
-      includes = [
-        den.aspects.hardware
-        den.aspects.hardware._.with-disko
-        den.aspects.hardware._.with-impermanence
-      ];
+      includes = [ den.aspects.hardware ];
 
       nixos =
         {
@@ -23,13 +19,7 @@
           partition = "${device}-part2";
         in
         {
-          # Without adding this modulesPath AMD and bluetooth service fail to start
-          # With message hardware initialization failed
-          # EDIT: After adding facter.json report below it seems OK to remove this line
-          imports = [ ./_disko.nix ] ++ 
-            [(modulesPath + "/installer/scan/not-detected.nix")];
-
-          # hardware.facter.reportPath = ./facter.json;
+          imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
           boot.initrd.availableKernelModules = [
             "nvme"
@@ -44,7 +34,6 @@
           ];
 
           boot.kernelParams = [
-            "video=DP-1:1920x1080@144"
             # The driver will attempt to reset the GPU and continue instead of requiring a full system reboot
             "amdgpu.gpu_recovery=1"
             # Enables GPU memory retry logic
@@ -70,8 +59,6 @@
             "vfat"
             "exfat"
           ];
-
-          fileSystems."/persist".neededForBoot = true;
 
           boot.initrd.systemd = {
             services.impermanence-btrfs-rolling-root = {
@@ -160,8 +147,9 @@
               ];
             };
           };
+      };
 
-          environment.persistence."/persist" = {
+      persys = {
             hideMounts = true;
             directories = [
               # Without this dir all users/groups without specified
@@ -175,6 +163,7 @@
               # Fix wpa/network errors
               "/etc/machine-id"
             ];
+
             users.lunar-scar = {
               directories = [
                 "Dev"
@@ -209,6 +198,5 @@
               ];
             };
           };
-        };
     };
 }

@@ -6,9 +6,21 @@
       nebula._.hardware
 
       performance
-      system
       utility
     ];
+
+    provides.to-users = {
+      includes = [
+        (den._.unfree [
+          "nvidia-x11"
+          "nvidia-settings"
+          "steam"
+          "steam-unwrapped"
+          "rar"
+          "unrar"
+        ])
+      ];
+    };
 
     nixos = {
       home-manager.backupFileExtension = "backup";
