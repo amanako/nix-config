@@ -1,15 +1,8 @@
-<div align="center">
-  <h1> :snowflake: NixOS configuration :snowflake: </h1>
-</div>
-
-<div style="text-align: center;">
+# NixOS configuration
 
 <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=%23a89984&labelColor=%2332302f&color=%23a9b665" /></a>
-<a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b
-"/> </a> 
-![Build status](https://img.shields.io/github/actions/workflow/status/amanako/nix-config/ci.yml?branch=main&style=for-the-badge&logo=ebox&logoColor=%23d4be98&label=build&labelColor=%2332302f)
-
-</div>
+<a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b" /></a> 
+[![Build status](https://img.shields.io/github/actions/workflow/status/amanako/nix-config/ci.yml?branch=main&style=for-the-badge&logo=ebox&logoColor=%23d4be98&label=build&labelColor=%2332302f)](https://github.com/amanako/nix-config/actions/workflows/ci.yml)
 
 ## Design
 * [vic/den][den] framework with [SoC][SoC] in mind.
@@ -48,18 +41,12 @@ and some secondary options.
 
 ## Screenshots
 
-<h2>
-  Noctalia preview
-</h2>
-
+### Noctalia
 ![noctalia-preview](./assets/screenshots/2026-03-14-noctalia-preview.png)
 
 Logo is from https://gitlab.com/ntgn/ascii-art, licenced under [Creative Commons Attribution 4.0 International](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE)
 
-<h2>
-  Dank Material Shell preview
-</h2>
-
+### Dank Material Shell
 ![dank-material-shell-preview](./assets/screenshots/2026-03-29-dms-preview.png)
 
 All screenshots can be found [here](./assets/screenshots).
