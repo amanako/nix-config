@@ -21,21 +21,14 @@ jobs:
           extra_nix_config: experimental-features = nix-command flakes
 
       - name: Setup caches
+        uses: cachix/cachix-action@v17
+        with:
+          name: amanako
+          skipPush: true
+          extraPullNames: nix-community, yazi, niri, noctalia, helix, statix
+
+      - name: Setup additional substituters
         run: |
-          nix profile add nixpkgs#cachix
-
-          CACHES=(
-            amanako
-            nix-community
-            yazi
-            niri
-            noctalia
-            helix
-          )
-          for cache in "${CACHES[@]}"; do
-            cachix use "$cache"
-          done
-
           echo "substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
           echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
 

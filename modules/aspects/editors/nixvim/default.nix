@@ -9,12 +9,15 @@
   };
 
   den.aspects.editors._.nixvim = {
-    nixos = {
-
+    persysUser = {
+      directories = [
+      ".local/share/nvim"
+      ".local/state/nvim"
+      ];
     };
 
     homeManager =
-      { config, ... }:
+      { pkgs, config, ... }:
       {
         imports = [
           inputs.nixvim.homeModules.nixvim
@@ -43,6 +46,7 @@
           ];
 
           enable = true;
+          package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
           defaultEditor = true;
           viAlias = true;
           vimAlias = true;
