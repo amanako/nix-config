@@ -1,12 +1,15 @@
 <div align="center">
   <h1> :snowflake: NixOS configuration :snowflake: </h1>
 </div>
-  
-  
-<p align="center">
-  <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?logo=nixos&logoColor=fff" /></a>
-  <a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-informational?logo=nixos&logoColor=white"/> </a>
-</p>
+
+<div style="text-align: center;">
+
+<a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=%23a89984&labelColor=%2332302f&color=%23a9b665" /></a>
+<a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b
+"/> </a> 
+![Build status](https://img.shields.io/github/actions/workflow/status/amanako/nix-config/ci.yml?branch=main&style=for-the-badge&logo=ebox&logoColor=%23d4be98&label=build&labelColor=%2332302f)
+
+</div>
 
 ## Design
 * [vic/den][den] framework with [SoC][SoC] in mind.
