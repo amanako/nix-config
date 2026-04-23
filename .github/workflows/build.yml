@@ -25,12 +25,15 @@ jobs:
         with:
           name: amanako
           skipPush: true
-          extraPullNames: nix-community, yazi, niri, noctalia, helix, statix
+          extraPullNames: nix-community, yazi, niri, noctalia, helix, statix, nix-gaming
 
       - name: Setup additional substituters
         run: |
-          echo "substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
-          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
+          echo "substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss" | sudo tee -a /etc/nix/nix.conf
+          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=" | sudo tee -a /etc/nix/nix.conf
+
+      - name: Check flake
+        run: nix --accept-flake-config flake check -L
 
       - name: Lint flake
         uses: DeterminateSystems/flake-checker-action@v12
