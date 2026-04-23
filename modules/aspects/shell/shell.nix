@@ -6,6 +6,8 @@
       url = "gitlab:ntgn/ascii-art";
       flake = false;
     };
+
+    omnix.url = "github:juspay/omnix";
   };
 
   den.aspects.shell = {
@@ -44,6 +46,7 @@
       let
         nh = lib.getExe pkgs.nh;
         fd = lib.getExe pkgs.fd;
+        omnix-cli = lib.getExe inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.omnix-cli;
         defaultCommand = "${fd} --type file --follow --hidden --exclude .git";
       in
       {
@@ -137,6 +140,8 @@
             rebuild = "${nh} os switch --ask --diff always --show-trace";
             clean = "${nh} clean all --keep 5 --optimise";
             search = "${nh} search";
+            # Great visuals and tabular view of flakes as an upgrade to nix flake show
+            show = "${omnix-cli} show";
             # Updates all flake inputs by default, a single one can be passed as well
             fup = "nix flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
             fcheck = "nix flake check -L --accept-flake-config ${config.home.sessionVariables.NH_FLAKE}";
