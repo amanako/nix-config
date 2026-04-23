@@ -18,7 +18,14 @@ jobs:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
+          # Remove tools which take up most space quickly
+          android: true
+          haskell: true
+          dotnet: true
+          large-packages: false
           tool-cache: false
+          docker-images: false
+          swap-storage: false
 
       - name: Install nix
         uses: cachix/install-nix-action@v31
