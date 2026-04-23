@@ -68,7 +68,6 @@ in
           nerd-fonts.victor-mono
         ];
 
-        # TODO: Use options to achieve conditionals
         stylix.targetsToDisable = [
           "fish"
           "limine"
@@ -117,7 +116,6 @@ in
           recursive = true;
         };
 
-        # TODO: Usage of custom option
         stylix.targetsToDisable = [
           "kitty"
           "yazi"

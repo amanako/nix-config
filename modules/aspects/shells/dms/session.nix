@@ -1,5 +1,3 @@
-{ inputs, ... }:
-
 {
   den.aspects.shells._.dms.homeManager =
     { lib, config, ... }:
@@ -15,8 +13,7 @@
         description = "User session to add to default session, overriding if necessary.";
       };
 
-      # TODO: Check why default aren't overriden properly
-      config.programs.dank-material-shell.session = {
+      config.programs.dank-material-shell.session = lib.recursiveUpdate {
         isLightMode = false;
 
         nightModeEnabled = true;
@@ -30,7 +27,6 @@
         nightModeUseIpLocation = false;
 
         showThirdPartyPlugins = true;
-      }
-      // config.programs.dank-material-shell.userSession;
+      } (config.programs.dank-material-shell.userSession);
     };
 }
