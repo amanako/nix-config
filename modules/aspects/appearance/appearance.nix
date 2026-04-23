@@ -91,14 +91,14 @@
         ...
       }:
       let
-        awwwPackage = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
+        awwwPkg = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
         wallpapersPath = inputs.wallpapers.outPath;
 
         wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
           DIR="${wallpapersPath}"
           img=$( ${pkgs.findutils}/bin/find "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${pkgs.coreutils}/bin/shuf -n 1)
           if [ -n "$img" ]; then
-            ${awwwPackage}/bin/awww img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
+            ${awwwPkg}/bin/awww img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
           fi
         '';
       in
@@ -115,13 +115,12 @@
             description = "List of stylix targets which theming to disable.";
           };
 
-        # TODO: Move zen browser to separate file
         config.stylix.targets = lib.genAttrs config.stylix.targetsToDisable (_: {
           enable = false;
         });
 
         config.home.packages = [
-          awwwPackage
+          awwwPkg
           wallpaperScript
         ];
 
@@ -133,7 +132,7 @@
           };
 
           Service = {
-            ExecStart = "${awwwPackage}/bin/awww-daemon";
+            ExecStart = "${awwwPkg}/bin/awww-daemon";
             Restart = "on-failure";
             RestartSec = 1;
           };

@@ -31,7 +31,6 @@ in
     ]);
 
     user = {
-      isNormalUser = true;
       initialPassword = "koko";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3FV9ENyYeC2/oiTYklKYSW3zEeUIDiv4kY6SLpVvGD github@kairi6.anonaddy.com"
@@ -68,8 +67,6 @@ in
           inconsolata
           nerd-fonts.victor-mono
         ];
-
-        users.mutableUsers = false;
 
         # TODO: Use options to achieve conditionals
         stylix.targetsToDisable = [

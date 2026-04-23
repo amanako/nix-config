@@ -11,8 +11,8 @@
   den.aspects.editors._.nixvim = {
     persysUser = {
       directories = [
-      ".local/share/nvim"
-      ".local/state/nvim"
+        ".local/share/nvim"
+        ".local/state/nvim"
       ];
     };
 
