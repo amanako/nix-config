@@ -1,6 +1,8 @@
 {
   den.aspects.displayManagers = {
     provides.lemurs = {
+      # TODO: Implement conditional for adding user to "seat" group
+      # Required for Wayland and would work correctly
       nixos.services.displayManager.lemurs = {
         enable = true;
         settings = {
@@ -45,7 +47,6 @@
 
           vi_mode = true;
           vi_default_mode = "insert";
-          battery_id = "BAT1";
         };
       };
     };
