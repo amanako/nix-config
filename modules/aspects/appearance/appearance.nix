@@ -25,6 +25,7 @@
       {
         imports = [ inputs.stylix.nixosModules.stylix ];
 
+        # TODO: Implement as a den class with guard instead
         options.stylix.targetsToDisable =
           with lib;
           mkOption {

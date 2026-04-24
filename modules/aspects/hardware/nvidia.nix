@@ -1,6 +1,7 @@
 { den, ... }:
 
 {
+  # TODO: Further modularize and add conditionals, even assertions for BusID
 
   den.aspects.nvidia = {
     provides.to-users = {
@@ -39,6 +40,7 @@
             };
             # sync.enable = true;
 
+            # TODO: Move to host config
             # Hardware specific - https://nixos.wiki/wiki/Nvidia#Configuring_Optimus_PRIME:_Bus_ID_Values_.28Mandatory.29
             amdgpuBusId = "PCI:0@5:0:0";
             nvidiaBusId = "PCI:0@1:0:0";
