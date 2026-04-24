@@ -146,23 +146,12 @@
                 })
               ];
             };
+
+            panicOnChecksumMismatch = true;
+            extraEntries = "/memtest86
+                              protocol: chainload
+                              path: boot():///efi/memtest86/memtest86.efi";
           };
         };
-
-      persys = {
-        hideMounts = true;
-        directories = [
-          # Without this dir all users/groups without specified
-          # uids/gids will have them reassigned on reboot.
-          "/var/lib/nixos"
-          # Preserve bluetooth device history
-          "/var/lib/bluetooth"
-        ];
-
-        files = [
-          # Fix wpa/network errors
-          "/etc/machine-id"
-        ];
-      };
     };
 }

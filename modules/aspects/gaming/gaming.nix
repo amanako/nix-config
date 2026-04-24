@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, den, ... }:
 
 {
   flake-file.inputs = {
@@ -6,6 +6,13 @@
   };
 
   den.aspects.gaming = {
+    includes = [
+      (den._.unfree [
+        "steam"
+        "steam-unwrapped"
+      ])
+    ];
+
     persysUser = {
       directories = [
         ".local/share/Steam"

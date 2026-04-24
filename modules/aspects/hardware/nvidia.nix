@@ -1,5 +1,17 @@
+{ den, ... }:
+
 {
+
   den.aspects.nvidia = {
+    provides.to-users = {
+      includes = [
+        (den._.unfree [
+          "nvidia-x11"
+          "nvidia-settings"
+        ])
+      ];
+    };
+
     nixos =
       { lib, config, ... }:
       {
@@ -20,9 +32,9 @@
           powerManagement.finegrained = true;
 
           prime = {
-            # Enable use of nvidia via "nvidia-offload {command}"
             offload = {
               enable = true;
+              # Enable use of nvidia via "nvidia-offload {command}"
               enableOffloadCmd = true;
             };
             # sync.enable = true;

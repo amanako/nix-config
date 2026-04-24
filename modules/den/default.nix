@@ -2,6 +2,22 @@
 
 {
   den.default = {
+    persys = {
+      hideMounts = true;
+      directories = [
+        # Without this dir all users/groups without specified
+        # uids/gids will have them reassigned on reboot.
+        "/var/lib/nixos"
+        # Preserve bluetooth device history
+        "/var/lib/bluetooth"
+      ];
+
+      files = [
+        # Fix wpa/network errors
+        "/etc/machine-id"
+      ];
+    };
+
     nixos =
       { pkgs, ... }:
       {
@@ -17,6 +33,8 @@
         ];
 
         system.stateVersion = "25.11";
+
+        home-manager.backupFileExtension = "backup";
       };
 
     homeManager = {
