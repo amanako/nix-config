@@ -20,10 +20,6 @@
       { pkgs, lib, ... }:
       {
         home.sessionVariables = {
-          # This may collide with *fcitx5.waylandFrontend* option
-          # so you can try enabling one at a time
-          GTK_IM_MODULE = "fcitx";
-
           QT_IM_MODULE = "fcitx";
         };
 

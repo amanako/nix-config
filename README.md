@@ -68,22 +68,6 @@ My current user is provided as an example.
 * https://github.com/AniviaFlome/nix-config ([fish][fish] and [zen-browser][zen-browser])
 * https://github.com/zerokqx/ZNix (some [nixvim][nixvim] plugins)
 
-## Caveats
-<details>
-  <summary><a href="https://gihub.com/0xc000022070/zen-browser-flake">zen-browser-flake</a></summary>  
-  Only setting `*` as the profile name seems to yield expected results for containers and workspaces, 
-  so I have resorted to that instead of `$username`. I cannot assert why at the moment.
-</details>
-
-<details>
-  <summary> <a href="https://fcitx-im.org/wiki/Fcitx_5">fcitx5</a> </summary>
-  I set up the `GTK_IM_MODULE` environment variable despite warnings since that seems to be  
-  the only way for fcitx5 to work within <a href=https://noctalia.dev>noctalia</a>.  
-  Details 
-  <a href=https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#TL;DR_Do_we_still_need_XMODIFIERS
-    ,_GTK_IM_MODULE_and_QT_IM_MODULE?>here</a>.
-</details>
-
 [kitty]: https://sw.kovidgoyal.net/kitty
 [neovim]: https://neovim.io
 [yazi]: https://yazi-rs.github.io
