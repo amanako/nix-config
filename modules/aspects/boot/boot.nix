@@ -22,9 +22,6 @@
             "udev.log_level=3"
             "systemd.show_status=auto"
           ];
-          # Setting to 0 will hide the OS choice for bootloaders
-          # and any keypress will trigger it.
-          loader.timeout = 5;
         };
       };
   };

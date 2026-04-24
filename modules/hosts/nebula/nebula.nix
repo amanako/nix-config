@@ -4,12 +4,13 @@
   den.aspects.nebula = {
     includes = with den.aspects; [
       nebula._.hardware
+      bootloader._.limine
 
-      performance
-      utility
-      displayManagers._.ly
-      nvidia
       boot
+      performance
+      nvidia
+      displayManagers._.ly
+      utility
     ];
   };
 }

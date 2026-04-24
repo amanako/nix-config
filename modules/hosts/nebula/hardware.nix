@@ -4,7 +4,21 @@
   den.aspects.nebula._.hardware =
     { host, ... }:
     {
-      includes = [ den.aspects.hardware ];
+      includes = [ den.aspects.hardware ] ++
+        [
+          (den._.unfree [
+            # Proper support for bluetooth devices on linux kernels.
+            "broadcom-bt-firmware"
+            # Driver for certain Broadcom 43xx wireless network cards.
+            "b43-firmware"
+            # Xbox stuff.
+            "xone-dongle-firmware"
+            # Camera functionality.
+            "facetimehd-calibration"
+            "facetimehd-firmware"
+            ]
+          )
+        ];
 
       nixos =
         {
@@ -13,13 +27,17 @@
           ...
         }:
         let
-          # Recommended to use by-id instead of label or uuid because it's more reliable
+          # Recommended to use by-id instead of label or uuid because it's more reliable.
           deviceID = "nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
           device = "/dev/disk/by-id/${deviceID}";
           partition = "${device}-part2";
         in
         {
           imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+          # Option enableAllFirmware is usually redundant.
+          hardware.enableAllFirmware = true;
+          hardware.enableAllHardware = true;
 
           boot.initrd.availableKernelModules = [
             "nvme"
@@ -129,29 +147,6 @@
               # mount & umount already exist
             };
           };
-
-          boot.loader.limine = {
-            resolution = "1920x1080x32";
-            style = {
-              interface = {
-                resolution = "1920x1080";
-                branding = "Paranoia";
-                brandingColor = 3;
-              };
-              wallpaperStyle = "stretched";
-              wallpapers = [
-                (pkgs.fetchurl {
-                  url = "https://pic1.cdncl.net/game/user_upload/hssaole/36d351cc7ab10fadfb1953704de2b5d4.jpeg";
-                  hash = "sha256-si07feEPfDcxfTUGrL7ThVRtp8pHxwtrff+DLOXqZpM=";
-                })
-              ];
-            };
-
-            panicOnChecksumMismatch = true;
-            extraEntries = "/memtest86
-                              protocol: chainload
-                              path: boot():///efi/memtest86/memtest86.efi";
-          };
-        };
+      };
     };
 }
