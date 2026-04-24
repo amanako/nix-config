@@ -15,9 +15,7 @@ in
       terminal
       dev
       nix
-      nvidia
       shell
-      displayManagers._.ly
 
       compositors._.niri
       niri-binds
@@ -78,7 +76,6 @@ in
       { pkgs, ... }:
       {
         home.packages = with pkgs; [
-          protonup-qt
           thunar
           youtube-tui
           abiword
@@ -89,9 +86,6 @@ in
           pciutils
           usbutils
           ripgrep
-          p7zip
-          unzip
-          unrar
 
           # Must have
           nixfmt
