@@ -2,6 +2,16 @@
 
 {
   den.default = {
+    includes = [
+      # Using perHost avoids duplication.
+      (den.lib.perHost (
+        { host, lib, ... }:
+        lib.optionals host.wantsNvidiaSupport [
+          den.aspects.nvidia
+        ]
+      ))
+    ];
+
     persys = {
       hideMounts = true;
       directories = [

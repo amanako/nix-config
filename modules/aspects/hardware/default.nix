@@ -1,15 +1,5 @@
 {
-  den,
-  ...
-}:
-
-{
   den.aspects.hardware = {
-    # TODO: Add conditional based on host configuration
-    includes = [
-      den.aspects.nvidia
-    ];
-
     nixos =
       {
         pkgs,
