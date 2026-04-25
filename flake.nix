@@ -42,7 +42,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
-    omnix.url = "github:juspay/omnix";
     rust-overlay.url = "github:oxalica/rust-overlay";
     statix.url = "github:oppiliappan/statix";
     stylix.url = "github:nix-community/stylix";
