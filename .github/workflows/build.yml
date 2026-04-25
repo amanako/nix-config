@@ -13,7 +13,9 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6 
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
@@ -41,8 +43,11 @@ jobs:
 
       - name: Setup additional substituters
         run: |
-          echo "substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss" | sudo tee -a /etc/nix/nix.conf
-          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=" | sudo tee -a /etc/nix/nix.conf
+          echo "substituters = https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
+          echo "trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
+
+      - name: Sync flake
+        run: nix run .#write-flake --show-trace
 
       - name: Check flake
         run: nix --accept-flake-config flake check -L

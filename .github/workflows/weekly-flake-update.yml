@@ -8,9 +8,6 @@ on:
 
 jobs:
   nix-flake-update:
-    permissions:
-      contents: write
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -20,10 +17,48 @@ jobs:
         with:
           extra_nix_config: experimental-features = nix-command flakes
 
-      - name: Update flake.lock and create a PR
-        uses: DeterminateSystems/update-flake-lock@v28
+      - name: Update flake
+        run: nix flake update
+
+      - name: Configure git
+        run: |
+          git config --local user.email "github@kairi6.anonaddy.com"
+          git config --local user.name "amanako"
+
+      - name: Commit and push changes
+        run: |
+          git add flake.lock
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Weekly flake.lock update" && git push origin HEAD:weekly-flake-update --force)
+
+  build:
+    needs: nix-flake-update
+    uses: ./.github/workflows/build.yml
+    with:
+      ref: weekly-flake-update
+    secrets: inherit
+
+  open-PR:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
         with:
-          pr-title: "Update flake.lock"
-          pr-labels: |
-            dependencies
+          ref: weekly-flake-update
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: |
+            Weekly flake.lock update finished
+
+            - Weekly flake update successfully updated dependencies.
+          title: Weekly flake update
+          body: |
+            Automated weekly flake.lock update
+          branch: weekly-flake-update
+          delete-branch: true
+          labels: |
+            report
             automated
+          assignees: amanako
+          reviewers: amanako
