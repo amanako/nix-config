@@ -10,14 +10,13 @@
     formatter = pkgs: pkgs.alejandra;
 
     inputs = {
+      flake-file.url = "github:vic/flake-file";
+
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       home-manager = {
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
       };
-      den.url = "github:vic/den";
-      flake-file.url = "github:vic/flake-file";
-      flake-parts.url = "github:hercules-ci/flake-parts";
     };
   };
 }
