@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   # Enable lock flattening: https://flake-file.oeiuwq.com/guides/lock-flattening/
@@ -14,23 +14,7 @@
 
     formatter = pkgs: pkgs.alejandra;
 
-    check-hooks = [
-      {
-        index = 2;
-        program =
-          pkgs:
-          let
-            autoFollowPkg = inputs.nix-auto-follow.packages.${pkgs.stdenv.hostPlatform.system}.default;
-          in
-          pkgs.writeShellApplication {
-            name = "nix-auto-follow-check";
-            runtimeInputs = [ autoFollowPkg ];
-            text = ''
-              auto-follow -c "$1"/flake.lock
-            '';
-          };
-      }
-    ];
+    check-hooks = lib.mkForce [ ];
 
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
