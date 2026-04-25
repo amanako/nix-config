@@ -3,7 +3,6 @@
 {
   flake-file.inputs = {
     hydra-check.url = "github:nix-community/hydra-check";
-    cachix.url = "github:cachix/cachix";
     statix.url = "github:oppiliappan/statix";
   };
 

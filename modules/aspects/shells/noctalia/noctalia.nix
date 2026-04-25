@@ -2,10 +2,7 @@
 
 {
   flake-file.inputs = {
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
   };
 
   den.aspects.shells._.noctalia =

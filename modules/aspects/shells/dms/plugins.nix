@@ -2,10 +2,7 @@
 
 {
   flake-file.inputs = {
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
   };
 
   den.aspects.shells._.dms.homeManager = {

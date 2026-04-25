@@ -2,6 +2,7 @@
 
 {
   flake-file.inputs = {
+    flake-file.url = "github:vic/flake-file";
     den.url = lib.mkDefault "github:vic/den";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };

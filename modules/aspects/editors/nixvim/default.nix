@@ -2,10 +2,7 @@
 
 {
   flake-file.inputs = {
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   den.aspects.editors._.nixvim = {
