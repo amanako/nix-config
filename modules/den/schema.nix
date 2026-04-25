@@ -8,6 +8,16 @@
         description = "Define time zone";
       };
 
+      options.batteryID = lib.mkOption {
+        type = lib.types.str;
+        default = "";
+        description = ''
+          Option named native-path assigned to batteries of pcs and laptops.
+          Can be obtained by running `upower -b | grep -E 'vendor|model|native-path'`
+          Currently used by ly display manager to display battery percentage.
+        '';
+      };
+
       options.impermanence =
         let
           defaultPersysDir = "/nix/persist/system";

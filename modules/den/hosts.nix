@@ -1,7 +1,8 @@
 {
   den.hosts.x86_64-linux.nebula = {
     timeZone = "Europe/Serbia";
-    impermanence.enable = true;
+    batteryID = "BAT1";
+    # Changing default directory implicitly enables module
     impermanence.persistenceDir = "/persist";
 
     users = {
