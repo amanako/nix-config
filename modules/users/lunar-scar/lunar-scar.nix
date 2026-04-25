@@ -21,7 +21,8 @@ in
       niri-binds
       shells._.noctalia
       shells._.noctalia._.niri
-      editors._.nixvim
+      # TODO: Return when fixed
+      # editors._.nixvim
       editors._.helix
       gaming
       browsers._.zen-browser

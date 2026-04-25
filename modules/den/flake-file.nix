@@ -14,6 +14,24 @@
 
     formatter = pkgs: pkgs.alejandra;
 
+    check-hooks = [
+      {
+        index = 2;
+        program =
+          pkgs:
+          let
+            autoFollowPkg = inputs.nix-auto-follow.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          in
+          pkgs.writeShellApplication {
+            name = "nix-auto-follow-check";
+            runtimeInputs = [ autoFollowPkg ];
+            text = ''
+              auto-follow -c "$1"/flake.lock
+            '';
+          };
+      }
+    ];
+
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       home-manager.url = "github:nix-community/home-manager";

@@ -33,6 +33,7 @@
           "https://nix-gaming.cachix.org"
           # omnix
           "https://cache.nixos.asia/oss"
+          "fzakaria.cachix.org"
 
           # cache for this repo
           "https://amanako.cachix.org"
@@ -51,6 +52,7 @@
           "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
           # omnix
           "oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU="
+          "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng="
 
           # cache for this repo
           "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
