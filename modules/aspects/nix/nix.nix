@@ -16,7 +16,6 @@
         http-connections = 50;
 
         trusted-users = [
-          "root"
           "@wheel"
         ];
 
