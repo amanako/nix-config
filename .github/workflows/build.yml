@@ -58,6 +58,7 @@ jobs:
       - name: Build flake
         run: |
           set -xeuo pipefail
+          nix run .#write-flake --show-trace
           nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
 
       - name: Push to cache
