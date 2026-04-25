@@ -20,6 +20,6 @@
     in
     {
       nixos.nixpkgs.overlays = overlays;
-      homeManager.nixkpgs.overlays = overlays;
+      homeManager.nixpkgs.overlays = overlays;
     };
 }

@@ -30,7 +30,7 @@
           "https://cachix.cachix.org"
           "https://statix.cachix.org"
           "https://nix-gaming.cachix.org"
-          "fzakaria.cachix.org"
+          "https://fzakaria.cachix.org"
 
           # cache for this repo
           "https://amanako.cachix.org"
