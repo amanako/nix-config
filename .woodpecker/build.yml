@@ -1,0 +1,84 @@
+kind: pipeline
+type: docker
+name: build
+
+when:
+  event: [push]               # runs on every push
+  branch: [main]              # only for the main branch
+
+environment:
+  CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
+
+steps:
+  - name: checkout
+    image: alpine/git:latest
+    commands:
+      - |
+        # Use the ref that triggered the run, otherwise default to the current commit
+        if [ -z "${CI_COMMIT_REF}" ]; then
+          git clone --depth 1 https://github.com/${CI_REPO}.git .
+        else
+          git clone --depth 1 --branch "${CI_COMMIT_REF}" https://github.com/${CI_REPO}.git .
+        fi
+
+  - name: install-nix
+    image: nixos/nix:unstable
+    privileged: true               # required for Nix daemon
+    commands:
+      - curl -L https://nixos.org/nix/install | bash
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix --version
+      - |
+        sudo mkdir -p /etc/nix
+        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+
+  - name: setup-cachix
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix profile install github:cachix/cachix/v17
+      - cachix use amanako
+      # skipPush is handled later; just make the substituter available
+
+  - name: extra-substituters
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - |
+        sudo tee -a /etc/nix/nix.conf <<'EOF'
+        substituters = https://attic.xuyh0120.win/lantian
+        trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+        EOF
+
+  - name: flake-check
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix run .#write-flake --show-trace
+      - nix flake check -L
+
+  - name: flake-lint
+    image: ghcr.io/determinate-systems/flake-checker:latest
+    commands:
+      - flake-checker .   # default lint mode
+
+  - name: build-flake
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - set -xeuo pipefail
+      - nix run .#write-flake --show-trace
+      - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
+
+  - name: push-to-cache
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix run github:juspay/cachix-push -- \
+          --cache amanako \
+          --subflake ROOT \
+          --prefix "$(git rev-parse --abbrev-ref HEAD)" < om.json

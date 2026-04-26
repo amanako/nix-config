@@ -1,0 +1,91 @@
+kind: pipeline
+type: docker
+name: weekly-flake-update
+
+when:
+  cron: "40 3 * * 0"
+
+environment:
+  GITEA_TOKEN: ${GITEA_TOKEN}
+  GIT_AUTHOR_NAME: "abyssal-twilight"
+  GIT_AUTHOR_EMAIL: "codeberg@kairi6.anonaddy.com"
+
+steps:
+  - name: checkout
+    image: alpine/git:latest
+    commands:
+      - git clone https://codeberg.org/${CI_REPO}.git .
+      - git checkout main
+
+  - name: install-nix
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - curl -L https://nixos.org/nix/install | bash
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - |
+        sudo mkdir -p /etc/nix
+        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+
+  - name: update-flake
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix flake update
+
+  - name: check-flake
+    image: nixos/nix:unstable
+    privileged: true
+    commands:
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix run .#write-flake --show-trace
+      - nix flake check -L
+
+  - name: commit-and-push
+    image: alpine/git:latest
+    environment:
+      GIT_AUTHOR_NAME: ${GIT_AUTHOR_NAME}
+      GIT_AUTHOR_EMAIL: ${GIT_AUTHOR_EMAIL}
+    commands:
+      - |
+        # Create a unique branch name (timestamp based)
+        BRANCH="weekly-flake-update-$(date +%Y%m%d%H%M%S)"
+        git checkout -b "$BRANCH"
+
+        git add flake.lock
+        if git diff --cached --quiet; then
+          echo "flake.lock unchanged – nothing to do."
+          exit 0
+        fi
+
+        git commit -m "Weekly flake.lock update"
+        git push https://x-access-token:${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
+
+        echo "BRANCH=$BRANCH" >> /woodpecker/env
+
+  - name: open-pr
+    image: curlimages/curl:8
+    commands:
+      - |
+        source /woodpecker/env
+        if [ -z "$BRANCH" ]; then
+          echo "No branch to PR – exiting."
+          exit 0
+        fi
+
+        read -r -d '' PAYLOAD <<EOF
+        {
+          "title": "Weekly flake.lock update",
+          "head": "$BRANCH",
+          "base": "main",
+          "body": "Automated weekly flake.lock update.\n\n- Dependencies refreshed via \`nix flake update\`."
+        }
+        EOF
+
+        curl -sSL -X POST \
+          -H "Authorization: token ${GITEA_TOKEN}" \
+          -H "Content-Type: application/json" \
+          -d "$PAYLOAD" \
+          "https://codeberg.org/api/v1/repos/${CI_REPO}/pulls" \
+          | jq '.html_url // "PR creation failed"'
