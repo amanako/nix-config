@@ -2,110 +2,52 @@
 
 {
   flake-file.inputs = {
-    awww.url = "git+https://codeberg.org/LGFae/awww";
     wallpapers = {
       url = "git+https://codeberg.org/voidptrx/wallpapers";
       flake = false;
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    stylix.url = "github:nix-community/stylix";
   };
 
   den.aspects.appearance = {
-    homeManager =
+    nixos =
       {
         pkgs,
         lib,
         config,
         ...
       }:
-      let
-        awwwPackage = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
-        wallpapersPath = inputs.wallpapers.outPath;
-
-        wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
-          DIR="${wallpapersPath}"
-          INTERVAL=1800
-
-          while true; do
-            img=$( ${pkgs.findutils}/bin/find "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${pkgs.coreutils}/bin/shuf -n 1)
-            
-          if [ -n "$img" ]; then
-            ${awwwPackage}/bin/awww img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
-          fi
-            
-          ${pkgs.coreutils}/bin/sleep "$INTERVAL"
-          done
-        '';
-      in
-      with lib;
       {
-        imports = [ inputs.stylix.homeModules.stylix ];
+        imports = [ inputs.stylix.nixosModules.stylix ];
 
-        config.home.packages = [
-          awwwPackage
-          wallpaperScript
-        ];
-
-        config.systemd.user.services.awww-daemon = {
-          Unit = {
-            Description = "AWWW Wallpaper daemon";
-            After = [ "graphical-session.target" ];
+        # TODO: Implement as a den class with guard instead
+        options.stylix.targetsToDisable =
+          with lib;
+          mkOption {
+            type = types.listOf types.str;
+            default = [ ];
+            example = [
+              "fish"
+            ];
+            description = "List of stylix targets which theming to disable.";
           };
-
-          Service = {
-            ExecStart = "${awwwPackage}/bin/awww-daemon";
-            Restart = "on-failure";
-            RestartSec = 5;
-            Environment = "WAYLAND_DISPLAY=wayland-1";
-          };
-
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
-        };
-
-        config.systemd.user.services.awww-random = {
-          Unit = {
-            Description = "Wallpaper rotator";
-            After = [ "awww-daemon.service" ];
-            Wants = [ "awww-daemon.service" ];
-          };
-
-          Service = {
-            ExecStart = "${wallpaperScript}/bin/awww-random";
-            Restart = "on-failure";
-            RestartSec = 2;
-            Environment = "WAYLAND_DISPLAY=wayland-1";
-          };
-
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
-        };
-
-        options.stylix.targetsToDisable = mkOption {
-          type = types.listOf types.str;
-          default = [ ];
-          example = [
-            "kitty"
-            "neovim"
-          ];
-          description = "List of stylix targets which theming to disable.";
-        };
 
         config.stylix = {
           enable = true;
           base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
           polarity = "dark";
 
+          opacity = {
+            applications = 0.87;
+            desktop = 0.85;
+            popups = 0.86;
+            terminal = 0.85;
+          };
+
           icons = {
             enable = true;
             package = pkgs.papirus-icon-theme;
-
             dark = "Papirus-Dark";
             light = "Papirus-Light";
           };
@@ -127,9 +69,96 @@
             };
           };
 
-          targets = genAttrs config.stylix.targetsToDisable (_: {
+          targets = lib.genAttrs config.stylix.targetsToDisable (_: {
             enable = false;
           });
+        };
+      };
+
+    homeManager =
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      let
+        wallpapersPath = inputs.wallpapers.outPath;
+        awwwPkg = pkgs.awww;
+
+        wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
+          DIR="${wallpapersPath}"
+          img=$( ${pkgs.findutils}/bin/find "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${pkgs.coreutils}/bin/shuf -n 1)
+          if [ -n "$img" ]; then
+            ${awwwPkg}/bin/awww img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
+          fi
+        '';
+      in
+      {
+        options.stylix.targetsToDisable =
+          with lib;
+          mkOption {
+            type = types.listOf types.str;
+            default = [ ];
+            example = [
+              "kitty"
+              "neovim"
+            ];
+            description = "List of stylix targets which theming to disable.";
+          };
+
+        config.stylix.targets = lib.genAttrs config.stylix.targetsToDisable (_: {
+          enable = false;
+        });
+
+        config.home.packages = [
+          awwwPkg
+          wallpaperScript
+        ];
+
+        config.systemd.user.services.awww-daemon = {
+          Unit = {
+            Description = "awww Wallpaper daemon";
+            After = [ "graphical-session.target" ];
+            Wants = [ "awww-random.timer" ];
+          };
+
+          Service = {
+            ExecStart = "${awwwPkg}/bin/awww-daemon";
+            Restart = "on-failure";
+            RestartSec = 1;
+          };
+
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        config.systemd.user.services.awww-random = {
+          Unit = {
+            Description = "Wallpaper rotator";
+          };
+
+          Service = {
+            ExecStart = "${wallpaperScript}/bin/awww-random";
+            Restart = "on-failure";
+            RestartSec = 2;
+
+            Type = "oneshot";
+          };
+        };
+
+        config.systemd.user.timers.awww-random = {
+          Unit = {
+            Description = "Change wallpaper every 30 minutes";
+            BindsTo = [ "awww-daemon.service" ];
+            Wants = [ "awww-random.service" ];
+          };
+
+          Timer = {
+            OnUnitActiveSec = "30min";
+            AccuracySec = "1s";
+          };
         };
       };
   };

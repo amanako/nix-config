@@ -2,65 +2,78 @@
 
 let
   u = "lunar-scar";
-  h = "/home/lunar-scar";
+  h = "/home/${u}";
 in
 {
   den.aspects.${u} = {
     includes = [
-      den._.define-user
       den._.primary-user
       (den._.user-shell "fish")
     ]
-    ++ [
-      den.aspects.appearance
-      den.aspects.terminal
-      den.aspects.dev
-      den.aspects.shell
-      den.aspects.nix
-      # den.aspects.system
-      den.aspects.system._.dms
-      # den.aspects.terminal._.nixvim
-      den.aspects.dev._.neovim
-      den.aspects.gaming
-      den.aspects.browsers._.zen-browser
-      den.aspects.utility
-    ];
+    ++ (with den.aspects; [
+      appearance
+      terminal
+      dev
+      nix
+      shell
+
+      compositors._.niri
+      niri-binds
+      shells._.noctalia
+      shells._.noctalia._.niri
+      # TODO: Return when fixed
+      # editors._.nixvim
+      # TODO: Look for failing to initiate init.lua out of $XDG_HOME
+      # editors._.neovim
+      editors._.helix
+      gaming
+      browsers._.zen-browser
+      utility
+    ]);
 
     user = {
-      isNormalUser = true;
       initialPassword = "koko";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIt+pO+vGitCLBgAza007py6ze41xHFfMDSLfbd2K/ES codeberg"
       ];
     };
 
+    persysUser = {
+      directories = [
+        "Dev"
+        "Documents"
+        "Downloads"
+        "Faks"
+        "nix-config" # Main config
+        "Pictures"
+
+        ".local/share/youtube-tui"
+      ];
+    };
+
     nixos =
       { pkgs, ... }:
       {
-        # All locales follow this format:
-        # {country-code}.{encoding-standard}/{encoding-standard}
-        i18n.extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
-
         fonts.packages = with pkgs; [
-          # Crucial
-          nerd-fonts.victor-mono
           mona-sans
 
           noto-fonts-cjk-serif
           ipafont
           biz-ud-gothic
           inconsolata
+          nerd-fonts.victor-mono
         ];
 
-        users.mutableUsers = false;
+        stylix.targetsToDisable = [
+          "fish"
+          "limine"
+        ];
       };
 
     homeManager =
       { pkgs, ... }:
       {
         home.packages = with pkgs; [
-          protonup-qt
-          lutris
           thunar
           youtube-tui
           abiword
@@ -71,9 +84,6 @@ in
           pciutils
           usbutils
           ripgrep
-          p7zip
-          unzip
-          unrar
 
           # Must have
           nixfmt
@@ -82,10 +92,8 @@ in
           cmake
           gnumake
 
-          wineWow64Packages.stable
-
-          capitaine-cursors
           bibata-cursors
+          wineWow64Packages.stable
         ];
 
         # Add a custom fontconfig file from current directory
@@ -99,7 +107,6 @@ in
           recursive = true;
         };
 
-        # Use options to achieve conditionals
         stylix.targetsToDisable = [
           "kitty"
           "yazi"
@@ -107,7 +114,8 @@ in
           "starship"
           "nixvim"
           "neovim"
-          "dank-material-shell"
+          "zen-browser"
+          "noctalia-shell"
         ];
 
         home.sessionVariables = {
@@ -128,50 +136,58 @@ in
           }
         ];
 
-        programs.niri.autoSpawnShell = "dms";
+        programs.niri.autoSpawnShell = "noctalia";
 
-        programs.dank-material-shell = {
-          userSettings = {
-            fontFamily = "Mona Sans Display Light";
-            monoFontFamily = "Victor Mono Nerd Font";
-            notepadFontFamily = "Noto Serif CJK JP";
-            powerMenuActions = [
-              "restart"
-              "logout"
-              "lock"
-              "suspend"
-              "poweroff"
-              "reboot"
-            ];
+        # Example config for dms
+        # programs.dank-material-shell = {
+        #  userSettings = {
+        #    fontFamily = "Mona Sans Display Light";
+        #    monoFontFamily = "Victor Mono Nerd Font";
+        #    notepadFontFamily = "Noto Serif CJK JP";
+        #    powerMenuActions = [
+        #      "restart"
+        #      "logout"
+        #      "lock"
+        #      "suspend"
+        #      "poweroff"
+        #      "reboot"
+        #    ];
 
-            # Ensure you have installed the package first
-            iconTheme = "papirus";
-            networkPreference = "ethernet";
+        # Ensure you have installed the package first
+        #    iconTheme = "papirus";
+        #    networkPreference = "ethernet";
 
-            currentThemeName = "custom";
-            currentThemeCategory = "registry";
-            customThemeFile = "/home/lunar-scar/.config/DankMaterialShell/themes/gruvboxMaterial/theme.json";
-            registryThemeVariants = {
-              gruvboxMaterial = "medium";
-            };
-            cursorSettings.size = 36;
-            cursorSettings.theme = "capitaine-cursors-white";
-          };
+        #    currentThemeName = "custom";
+        #    currentThemeCategory = "registry";
+        #    registryThemeVariants = {
+        #       gruvboxMaterial = "medium";
+        #   };
+        #    cursorSettings.size = 36;
+        #    cursorSettings.theme = "capitaine-cursors-white";
+        #  };
 
-          userSession = rec {
-            nightModeAutoEnabled = true;
-            nightModeAutoMode = "location";
+        #   userSession = rec {
+        #    nightModeAutoEnabled = true;
+        #    nightModeAutoMode = "location";
 
-            latitude = 43.3333;
-            longitude = 21.9097;
-            weatherLocation = "Serbia, Niš";
-            weatherCoordinates = "${toString latitude},${toString longitude}";
-          };
+        #    latitude = 43.3333;
+        #    longitude = 21.9097;
+        #    weatherLocation = "Serbia, Niš";
+        #    weatherCoordinates = "${toString latitude},${toString longitude}";
+        #  };
+        #};
+
+        programs.noctalia-shell.userSettings = {
+          location.name = "Serbia, Niš";
         };
 
         programs.git.settings.user = {
           name = "abyssal-twilight";
           email = "codeberg@kairi6.anonaddy.com";
+        };
+
+        programs.git.signing = {
+          key = "8AE5B72E5D17E0F5";
         };
 
         programs.ssh = {

@@ -1,12 +1,7 @@
-<div align="center">
-  <h1> :snowflake: NixOS configuration :snowflake: </h1>
-</div>
-  
-  
-<p align="center">
-  <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?logo=nixos&logoColor=fff" /></a>
-  <a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-informational?logo=nixos&logoColor=white"/> </a>
-</p>
+# NixOS configuration
+
+<a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=%23a89984&labelColor=%2332302f&color=%23a9b665" /></a>
+<a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b" /></a> 
 
 ## Design
 * [vic/den][den] framework with [SoC][SoC] in mind.
@@ -45,16 +40,12 @@ and some secondary options.
 
 ## Screenshots
 
-<h2>
-  Noctalia preview
-</h2>
-
+### Noctalia
 ![noctalia-preview](./assets/screenshots/2026-03-14-noctalia-preview.png)
 
-<h2>
-  Dank Material Shell preview
-</h2>
+Logo is from https://gitlab.com/ntgn/ascii-art, licenced under [Creative Commons Attribution 4.0 International](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE)
 
+### Dank Material Shell
 ![dank-material-shell-preview](./assets/screenshots/2026-03-29-dms-preview.png)
 
 All screenshots can be found [here](./assets/screenshots).
@@ -63,7 +54,7 @@ Wallpapers can be found [here](https://codeberg.org/voidptrx/wallpapers).
 ## Build steps
 You may clone the repo with the following command:
 ```
-nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
+nix-shell -p git --run "https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
 ```
 This is preferably done in user's `home` folder.  
 Users can be created by making a folder in [`users`](modules/users) directory and adding an entry to [`hosts.nix`](modules/den/hosts.nix).  
@@ -74,22 +65,6 @@ My current user is provided as an example.
 * https://den.oeiuwq.com/tutorials/default (base)
 * https://github.com/AniviaFlome/nix-config ([fish][fish] and [zen-browser][zen-browser])
 * https://github.com/zerokqx/ZNix (some [nixvim][nixvim] plugins)
-
-## Caveats
-<details>
-  <summary><a href="https://gihub.com/0xc000022070/zen-browser-flake">zen-browser-flake</a></summary>  
-  Only setting `*` as the profile name seems to yield expected results for containers and workspaces, 
-  so I have resorted to that instead of `$username`. I cannot assert why at the moment.
-</details>
-
-<details>
-  <summary> <a href="https://fcitx-im.org/wiki/Fcitx_5">fcitx5</a> </summary>
-  I set up the `GTK_IM_MODULE` environment variable despite warnings since that seems to be  
-  the only way for fcitx5 to work within <a href=https://noctalia.dev>noctalia</a>.  
-  Details 
-  <a href=https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#TL;DR_Do_we_still_need_XMODIFIERS
-    ,_GTK_IM_MODULE_and_QT_IM_MODULE?>here</a>.
-</details>
 
 [kitty]: https://sw.kovidgoyal.net/kitty
 [neovim]: https://neovim.io

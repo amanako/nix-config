@@ -1,37 +1,62 @@
+{ den, ... }:
+
 {
-  den.aspects.nvidia = {
-    nixos =
-      { lib, config, ... }:
-      {
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
-        };
+  den.aspects.nvidia =
+    { host, ... }:
+    {
+      provides.to-users = {
+        includes = [
+          (den._.unfree [
+            "nvidia-x11"
+            "nvidia-settings"
+          ])
+        ];
+      };
 
-        services.xserver.videoDrivers = [ "nvidia" ];
+      nixos =
+        { lib, config, ... }:
+        let
+          tryFindBusId = gpuType: (lib.findFirst (gpu: gpu.type == gpuType) null host.gpus).busId or "";
+          nvidiaBusId = tryFindBusId "nvidia";
+          amdgpuBusId = tryFindBusId "amd";
+          intelBusId = tryFindBusId "intel";
+        in
+        {
+          services.xserver.videoDrivers = [
+            "nvidia"
+          ]
+          ++ lib.optional (amdgpuBusId != "") "amdgpu"
+          ++ lib.optional (intelBusId != "") "modesetting";
 
-        hardware.nvidia = {
-          # Turing and newer architectures must use open kernel modules
-          open = lib.mkDefault true;
-          package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
-          modesetting.enable = true;
+          hardware.nvidia = {
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-          # Enable experimental sleep features
-          powerManagement.enable = true;
-          powerManagement.finegrained = true;
+            # Turing and newer architectures must use open kernel modules
+            open = lib.mkDefault true;
 
-          prime = {
-            # Enable use of nvidia via "nvidia-offload {command}"
-            offload = {
-              enable = true;
-              enableOffloadCmd = true;
+            nvidiaSettings = true;
+            # Necessary for wayland compositors and generally recommended to reduce tearing
+            modesetting.enable = true;
+
+            # Enable experimental sleep features - these are incompatible with sync
+          }
+          // lib.optionalAttrs (host.deviceType == "laptop") {
+            # These are incompatible with sync
+            powerManagement.enable = true;
+            powerManagement.finegrained = true;
+
+            # Handle hybrid laptops
+            prime = {
+              inherit nvidiaBusId amdgpuBusId intelBusId;
+              offload = {
+                enable = true;
+                # Enable use of nvidia via "nvidia-offload {command}"
+                enableOffloadCmd = true;
+              };
+              # TODO: Add cases for sync and reverseSync mode
+              # sync.enable = true;
             };
-
-            # Hardware specific - https://nixos.wiki/wiki/Nvidia#Configuring_Optimus_PRIME:_Bus_ID_Values_.28Mandatory.29
-            amdgpuBusId = "PCI:0@5:0:0";
-            nvidiaBusId = "PCI:0@1:0:0";
           };
         };
-      };
-  };
+    };
 }

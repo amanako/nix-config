@@ -2,10 +2,7 @@
 
 {
   flake-file.inputs = {
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.url = "github:nix-community/nix-index-database";
   };
 
   den.aspects.utility = {
@@ -20,10 +17,6 @@
       { pkgs, lib, ... }:
       {
         home.sessionVariables = {
-          # This may collide with *fcitx5.waylandFrontend* option
-          # so you can try enabling one at a time
-          GTK_IM_MODULE = "fcitx";
-
           QT_IM_MODULE = "fcitx";
         };
 
@@ -64,6 +57,8 @@
             recolor = true;
             recolor-lightcolor = lib.mkDefault "#1e3a8a";
             recolor-darkcolor = lib.mkDefault "#e0f2fe";
+
+            selection-clipboard = "clipboard";
           };
         };
       };
