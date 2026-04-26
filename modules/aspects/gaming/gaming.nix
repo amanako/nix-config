@@ -16,7 +16,6 @@
     persysUser = {
       directories = [
         ".local/share/Steam"
-        ".local/share/lutris/runners"
       ];
     };
 
@@ -92,11 +91,5 @@
           ];
         };
       };
-
-    homeManager = {
-      programs.lutris = {
-        enable = true;
-      };
-    };
   };
 }
