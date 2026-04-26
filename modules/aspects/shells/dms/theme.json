@@ -1,0 +1,39 @@
+{
+  "id": "kittyGruvbox",
+  "name": "Kitty Gruvbox",
+  "version": "1.0.0",
+  "author": "abyssal-twilight",
+  "description": "Gruvbox with easier colors from kitty's MaterialGruvboxSoft theme",
+
+  "primary": "#a9b665",
+  "onPrimary": "#32302f",
+  "primaryContainer": "#555c34",
+  "onPrimaryContainer": "#ddc7a1",
+
+  "secondary": "#7daea3",
+  "onSecondary": "#32302f",
+  "secondaryContainer": "#6c5a2b",
+  "onSecondaryContainer": "#ddc7a1",
+
+  "background": "#282626",
+  "onBackground": "#ddc7a1",
+
+  "surface": "#32302f",
+  "onSurface": "#ddc7a1",
+  "surfaceVariant": "#504945",
+  "onSurfaceVariant": "#d4be98",
+
+  "outline": "#a89984",
+  "outlineVariant": "#665c54",
+
+  "error": "#ea6962",
+  "onError": "#32302f",
+
+  "warning": "#e78a4e",
+  "info": "#7daea3",
+
+  "success": "#89b482",
+
+  "inverseSurface": "#d4be98",
+  "inverseOnSurface": "#282626"
+}
