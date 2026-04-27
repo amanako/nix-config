@@ -16,9 +16,9 @@
         ];
         providers = {
           buffer.score_offset = -7;
-          lsp.fallbacks = [ ];
+          lsp.fallbacks = [];
         };
-        cmdline = [ ];
+        cmdline = [];
       };
 
       completion = {

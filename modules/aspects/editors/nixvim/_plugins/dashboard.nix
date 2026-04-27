@@ -30,7 +30,7 @@
             key = "q";
           }
         ];
-        footer = [ "Made with ❤️" ];
+        footer = ["Made with ❤️"];
       };
     };
   };

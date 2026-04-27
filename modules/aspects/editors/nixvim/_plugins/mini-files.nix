@@ -1,9 +1,6 @@
-{ lib, ... }:
-
-let
+{lib, ...}: let
   helpers = lib.nixvim;
-in
-{
+in {
   plugins.mini-files = {
     enable = true;
     settings = {
