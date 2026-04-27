@@ -2,20 +2,17 @@ when:
   - event: push
     branch: main
 
-environment:
-  NIX_CONFIG: "experimental-features = nix-command flakes"
-
 steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
-      - nix run .#write-flake --show-trace
-      - nix flake check -L
+      - nix run .#write-flake --show-trace --extra-experimental-features "nix-command flakes"
+      - nix flake check -L --extra-experimental-features "nix-command flakes"
 
   - name: setup-nix-and-cache
     image: nixos/nix:latest
     commands:
-      - nix profile add nixpkgs#cachix
+      - nix profile add nixpkgs#cachix --extra-experimental-features "nix-command"
       # posix-compliant list
       - |
         for cache in \
@@ -41,16 +38,16 @@ steps:
     image: nixos/nix:latest
     commands:
       - set -xeuo pipefail
-      - nix run .#write-flake --show-trace
-      - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
+      - nix run .#write-flake --show-trace --extra-experimental-features "nix-command flakes"
+      - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json --extra-experimental-features "nix-command flakes"
 
   - name: push-to-cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
-      NIX_CONFIG: "experimental-features = nix-command flakes"
     commands:
-      - nix run github:juspay/cachix-push -- \
+      - nix run --extra-experimental-features "nix-command" \
+          github:juspay/cachix-push -- \
           --cache amanako \
           --subflake ROOT \
           --prefix "$(git rev-parse --abbrev-ref HEAD)" < om.json
