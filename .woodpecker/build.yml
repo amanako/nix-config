@@ -7,17 +7,13 @@ steps:
     image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+      - echo "experimental-features = nix-command flakes" | tee -a /etc/nix/nix.conf
       - nix run .#write-flake --show-trace
       - nix flake check -L
 
   - name: setup-nix-and-cache
     image: nixos/nix:latest
-    environment:
-      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix profile add nixpkgs#cachix
       - |
         CACHES=(
@@ -31,8 +27,11 @@ steps:
           vic
           fzakaria
         )
+        for cache in ${CACHES[@]}; do
+          cachix use $cache
+        done
       - |
-        sudo tee -a /etc/nix/nix.conf <<'EOF'
+        tee -a /etc/nix/nix.conf <<'EOF'
         substituters = https://attic.xuyh0120.win/lantian
         trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
         EOF
@@ -40,8 +39,6 @@ steps:
   - name: build-flake
     image: nixos/nix:latest
     commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - set -xeuo pipefail
       - nix run .#write-flake --show-trace
       - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
@@ -51,8 +48,6 @@ steps:
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix run github:juspay/cachix-push -- \
           --cache amanako \
           --subflake ROOT \
