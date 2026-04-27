@@ -6,16 +6,13 @@ steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config \
-          run .#write-flake --show-trace 
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config \
-          flake check -L
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run .#write-flake --show-trace
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config flake check -L
 
   - name: setup-nix-and-cache
     image: nixos/nix:latest
     commands:
-      - nix --extra-experimental-features "nix-command" \
-          profile add nixpkgs#cachix
+      - nix --extra-experimental-features "nix-command flakes" profile add nixpkgs#cachix
       # posix-compliant list
       - |
         for cache in \
@@ -41,18 +38,16 @@ steps:
     image: nixos/nix:latest
     commands:
       - set -xeuo pipefail
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config \
-          run .#write-flake --show-trace
-      - nix  --extra-experimental-features "nix-command flakes" --accept-flake-config \
-          run github:juspay/omnix#default -- ci run --results=om.json
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run .#write-flake --show-trace
+      - nix  --extra-experimental-features "nix-command flakes" --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
 
   - name: push-to-cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
-      - nix --extra-experimental-features "nix-command" \
-          run github:juspay/cachix-push -- \
+      - nix --extra-experimental-features "nix-command flakes" run \
+          github:juspay/cachix-push -- \
           --cache amanako \
           --subflake ROOT \
           --prefix "$(git rev-parse --abbrev-ref HEAD)" < om.json
