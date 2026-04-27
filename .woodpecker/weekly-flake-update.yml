@@ -10,7 +10,6 @@ steps:
 
   - name: install-nix
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - curl -L https://nixos.org/nix/install | bash
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
@@ -20,14 +19,12 @@ steps:
 
   - name: update-flake
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix flake update
 
   - name: check-flake
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix run .#write-flake --show-trace

@@ -15,7 +15,6 @@ steps:
 
   - name: install-nix
     image: nixos/nix:unstable
-    privileged: true
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
@@ -28,7 +27,6 @@ steps:
 
   - name: setup-cachix
     image: nixos/nix:unstable
-    privileged: true
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
@@ -38,7 +36,6 @@ steps:
 
   - name: extra-substituters
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - |
         sudo tee -a /etc/nix/nix.conf <<'EOF'
@@ -48,7 +45,6 @@ steps:
 
   - name: flake-check
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix run .#write-flake --show-trace
@@ -61,7 +57,6 @@ steps:
 
   - name: build-flake
     image: nixos/nix:unstable
-    privileged: true
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - set -xeuo pipefail
@@ -70,7 +65,6 @@ steps:
 
   - name: push-to-cache
     image: nixos/nix:unstable
-    privileged: true
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
