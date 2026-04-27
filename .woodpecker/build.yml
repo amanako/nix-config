@@ -2,12 +2,13 @@ when:
   - event: push
     branch: main
 
+environment:
+  NIX_CONFIG: "experimental-features = nix-command flakes"
+
 steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | tee -a /etc/nix/nix.conf
       - nix run .#write-flake --show-trace
       - nix flake check -L
 
@@ -15,20 +16,20 @@ steps:
     image: nixos/nix:latest
     commands:
       - nix profile add nixpkgs#cachix
+      # posix-compliant list
       - |
-        CACHES=(
-          amanako
-          nix-community
-          yazi
-          niri
-          noctalia
-          helix
-          nix-gaming
-          vic
+        for cache in \
+          amanako \
+          nix-community \
+          yazi \
+          niri \
+          noctalia \
+          helix \
+          nix-gaming \
+          vic \
           fzakaria
-        )
-        for cache in ${CACHES[@]}; do
-          cachix use $cache
+        do
+          cachix use "$cache"
         done
       - |
         tee -a /etc/nix/nix.conf <<'EOF'
@@ -47,6 +48,7 @@ steps:
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
+      NIX_CONFIG: "experimental-features = nix-command flakes"
     commands:
       - nix run github:juspay/cachix-push -- \
           --cache amanako \
