@@ -6,7 +6,8 @@ steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
-      - tee -a /etc/nix/nix.conf <<'EOF'
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF'
         experimental-features = nix-command flakes
         accept-flake-config = true
         EOF
@@ -16,7 +17,8 @@ steps:
   - name: setup-nix-and-cache
     image: nixos/nix:latest
     commands: 
-      - tee -a /etc/nix/nix.conf <<'EOF'
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF'
         experimental-features = nix-command flakes
         accept-flake-config = true
         EOF
@@ -45,7 +47,8 @@ steps:
   - name: build-flake
     image: nixos/nix:latest
     commands: 
-      - tee -a /etc/nix/nix.conf <<'EOF'
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF'
         experimental-features = nix-command flakes
         accept-flake-config = true
         EOF
@@ -58,8 +61,10 @@ steps:
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands: 
-      - tee -a /etc/nix/nix.conf <<'EOF'
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF'
         experimental-features = nix-command flakes
+        accept-flake-config = true
         EOF
       - nix run github:juspay/cachix-push -- \
           --cache amanako \
