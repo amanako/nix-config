@@ -1,27 +1,21 @@
 when:
-  event: cron
-  cron: "40 3 * * 0"
+  - event: cron
+    cron: "40 3 * * 0"
 
 steps:
-  - name: install-nix
-    image: nixos/nix:latest
-    commands:
-      - curl -L https://nixos.org/nix/install | bash
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - |
-        sudo mkdir -p /etc/nix
-        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-
   - name: update-flake
     image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+      - nix run .#write-flake
       - nix flake update
 
   - name: check-flake
     image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix run .#write-flake --show-trace
       - nix flake check -L
 

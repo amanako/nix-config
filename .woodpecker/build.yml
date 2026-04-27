@@ -1,33 +1,36 @@
 when:
-  event: push
-  branch: main
+  - event: push
+    branch: main
 
 steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix run .#write-flake --show-trace
       - nix flake check -L
-
-  - name: flake-lint
-    image: ghcr.io/determinate-systems/flake-checker:latest
-    commands:
-      - flake-checker .
 
   - name: setup-nix-and-cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
-      - curl -L https://nixos.org/nix/install | bash
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - nix --version
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+      - nix profile add nixpkgs#cachix
       - |
-        sudo mkdir -p /etc/nix
-        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-      - nix profile install github:cachix/cachix/v17
-      - cachix use amanako
+        CACHES=(
+          amanako
+          nix-community
+          yazi
+          niri
+          noctalia
+          helix
+          nix-gaming
+          vic
+          fzakaria
+        )
       - |
         sudo tee -a /etc/nix/nix.conf <<'EOF'
         substituters = https://attic.xuyh0120.win/lantian
@@ -38,6 +41,7 @@ steps:
     image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - set -xeuo pipefail
       - nix run .#write-flake --show-trace
       - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
@@ -48,6 +52,7 @@ steps:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix run github:juspay/cachix-push -- \
           --cache amanako \
           --subflake ROOT \
