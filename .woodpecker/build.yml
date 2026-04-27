@@ -4,7 +4,7 @@ when:
 
 steps:
   - name: flake-check
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix run .#write-flake --show-trace
@@ -16,7 +16,7 @@ steps:
       - flake-checker .
 
   - name: setup-nix-and-cache
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:
@@ -35,7 +35,7 @@ steps:
         EOF
 
   - name: build-flake
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - set -xeuo pipefail
@@ -43,7 +43,7 @@ steps:
       - nix --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
 
   - name: push-to-cache
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
     commands:

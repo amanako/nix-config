@@ -4,7 +4,7 @@ when:
 
 steps:
   - name: install-nix
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     commands:
       - curl -L https://nixos.org/nix/install | bash
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
@@ -13,13 +13,13 @@ steps:
         echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
 
   - name: update-flake
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix flake update
 
   - name: check-flake
-    image: nixos/nix:unstable
+    image: nixos/nix:latest
     commands:
       - . $HOME/.nix-profile/etc/profile.d/nix.sh
       - nix run .#write-flake --show-trace
