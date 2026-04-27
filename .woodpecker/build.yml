@@ -6,13 +6,21 @@ steps:
   - name: flake-check
     image: nixos/nix:latest
     commands:
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run .#write-flake --show-trace
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config flake check -L
+      - tee -a /etc/nix/nix.conf <<'EOF'
+        experimental-features = nix-command flakes
+        accept-flake-config = true
+        EOF
+      - nix run .#write-flake --show-trace
+      - nix flake check -L
 
   - name: setup-nix-and-cache
     image: nixos/nix:latest
-    commands:
-      - nix --extra-experimental-features "nix-command flakes" profile add nixpkgs#cachix
+    commands: 
+      - tee -a /etc/nix/nix.conf <<'EOF'
+        experimental-features = nix-command flakes
+        accept-flake-config = true
+        EOF
+      - nix profile add nixpkgs#cachix
       # posix-compliant list
       - |
         for cache in \
@@ -36,18 +44,24 @@ steps:
 
   - name: build-flake
     image: nixos/nix:latest
-    commands:
+    commands: 
+      - tee -a /etc/nix/nix.conf <<'EOF'
+        experimental-features = nix-command flakes
+        accept-flake-config = true
+        EOF
+      - nix run .#write-flake --show-trace
       - set -xeuo pipefail
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run .#write-flake --show-trace
-      - nix  --extra-experimental-features "nix-command flakes" --accept-flake-config run github:juspay/omnix#default -- ci run --results=om.json
+      - nix run github:juspay/omnix#default -- ci run --results=om.json
 
   - name: push-to-cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
-    commands:
-      - nix --extra-experimental-features "nix-command flakes" run \
-          github:juspay/cachix-push -- \
+    commands: 
+      - tee -a /etc/nix/nix.conf <<'EOF'
+        experimental-features = nix-command flakes
+        EOF
+      - nix run github:juspay/cachix-push -- \
           --cache amanako \
           --subflake ROOT \
           --prefix "$(git rev-parse --abbrev-ref HEAD)" < om.json
