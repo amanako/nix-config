@@ -3,18 +3,7 @@ when:
     branch: main
 
 steps:
-  - name: flake-check
-    image: nixos/nix:latest
-    commands:
-      - |
-        tee -a /etc/nix/nix.conf <<'EOF'
-        experimental-features = nix-command flakes
-        accept-flake-config = true
-        EOF
-      - nix run .#write-flake --show-trace
-      - nix flake check -L
-
-  - name: setup-nix-and-cache
+  - name: Setup cache and build flake outputs
     image: nixos/nix:latest
     commands: 
       - |
@@ -43,20 +32,11 @@ steps:
         substituters = https://attic.xuyh0120.win/lantian
         trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
         EOF
-
-  - name: build-flake
-    image: nixos/nix:latest
-    commands: 
-      - |
-        tee -a /etc/nix/nix.conf <<'EOF'
-        experimental-features = nix-command flakes
-        accept-flake-config = true
-        EOF
       - nix run .#write-flake --show-trace
       - set -xeuo pipefail
       - nix run github:juspay/omnix#default -- ci run --results=om.json
 
-  - name: push-to-cache
+  - name: Push results to cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
