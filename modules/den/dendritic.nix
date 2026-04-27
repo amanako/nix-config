@@ -1,6 +1,8 @@
-{ inputs, lib, ... }:
-
 {
+  inputs,
+  lib,
+  ...
+}: {
   flake-file = {
     inputs = {
       flake-file.url = "github:vic/flake-file";
@@ -9,13 +11,13 @@
     };
 
     nixConfig = {
-      extra-substituters = [ "https://vic.cachix.org" ];
-      extra-trusted-public-keys = [ "vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII=" ];
+      extra-substituters = ["https://vic.cachix.org"];
+      extra-trusted-public-keys = ["vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII="];
     };
   };
 
   imports = [
-    (inputs.flake-file.flakeModules.dendritic or { })
-    (inputs.den.flakeModules.dendritic or { })
+    (inputs.flake-file.flakeModules.dendritic or {})
+    (inputs.den.flakeModules.dendritic or {})
   ];
 }

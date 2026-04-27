@@ -1,8 +1,10 @@
-{ inputs, lib, ... }:
-
 {
+  inputs,
+  lib,
+  ...
+}: {
   # Enable lock flattening: https://flake-file.oeiuwq.com/guides/lock-flattening/
-  imports = [ inputs.flake-file.flakeModules.nix-auto-follow ];
+  imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
   flake-file = {
     description = "Adorable flake";
@@ -15,7 +17,7 @@
     formatter = pkgs: pkgs.alejandra;
 
     # TODO: Look at possible workarounds for not removing checks completely
-    check-hooks = lib.mkForce [ ];
+    check-hooks = lib.mkForce [];
 
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

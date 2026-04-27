@@ -1,6 +1,4 @@
-{ den, ... }:
-
-{
+{den, ...}: {
   den.aspects.displayManagers = den.lib.parametric {
     provides.lemurs = {
       # TODO: Implement conditional for adding user to "seat" group
@@ -27,45 +25,43 @@
       };
     };
 
-    provides.ly =
-      { host, ... }:
-      {
-        nixos.services.displayManager.ly = {
-          enable = true;
-          settings = {
-            animation = "matrix";
-            animation_frame_delay = 5;
+    provides.ly = {host, ...}: {
+      nixos.services.displayManager.ly = {
+        enable = true;
+        settings = {
+          animation = "matrix";
+          animation_frame_delay = 5;
 
-            asterisk = "*";
-            blank_box = true;
-            hide_borders = false;
-            load = true;
+          asterisk = "*";
+          blank_box = true;
+          hide_borders = false;
+          load = true;
 
-            margin_box_h = 2;
-            margin_box_v = 4;
-            text_in_center = true;
-            full_color = true;
+          margin_box_h = 2;
+          margin_box_v = 4;
+          text_in_center = true;
+          full_color = true;
 
-            clear_password = true;
-            default_input = "password";
+          clear_password = true;
+          default_input = "password";
 
-            vi_mode = true;
-            vi_default_mode = "insert";
+          vi_mode = true;
+          vi_default_mode = "insert";
 
-            battery_id = host.batteryID;
-          };
+          battery_id = host.batteryID;
         };
-
-        # TODO: Implement warning check
-        #nixos.config = lib.optionals host.batteryID {
-        #    warnings = [
-        #     ''
-        #     nixos.services.displayManager.ly.settings.battery_id has not been set which will prevent ly from displaying battery
-        #     percentage. Please define it for host via den.hosts.${host.hostName}.${host.system}.batteryID option. You may run
-        #     `upower -b | grep -E 'vendor|model|native-path'`, passing native-path result for your current battery as a string.
-        #     ''
-        #   ];
-        # };
       };
+
+      # TODO: Implement warning check
+      #nixos.config = lib.optionals host.batteryID {
+      #    warnings = [
+      #     ''
+      #     nixos.services.displayManager.ly.settings.battery_id has not been set which will prevent ly from displaying battery
+      #     percentage. Please define it for host via den.hosts.${host.hostName}.${host.system}.batteryID option. You may run
+      #     `upower -b | grep -E 'vendor|model|native-path'`, passing native-path result for your current battery as a string.
+      #     ''
+      #   ];
+      # };
+    };
   };
 }

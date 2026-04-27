@@ -32,19 +32,17 @@
       nix.settings.auto-optimise-store = true;
     };
 
-    homeManager =
-      { pkgs, ... }:
-      {
-        programs.nh = {
-          enable = true;
-          clean.enable = true;
-          clean.extraArgs = "--keep 10 --keep-since 5d";
-        };
-
-        home.packages = with pkgs; [
-          statix
-          cachix
-        ];
+    homeManager = {pkgs, ...}: {
+      programs.nh = {
+        enable = true;
+        clean.enable = true;
+        clean.extraArgs = "--keep 10 --keep-since 5d";
       };
+
+      home.packages = with pkgs; [
+        statix
+        cachix
+      ];
+    };
   };
 }

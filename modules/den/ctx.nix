@@ -3,12 +3,8 @@
   den,
   lib,
   ...
-}:
-
-let
-  persys =
-    { host, ... }:
-    { aspect-chain, ... }:
+}: let
+  persys = {host, ...}: {aspect-chain, ...}:
     den._.forward {
       each = lib.singleton true;
       fromClass = _item: "persys";
@@ -19,17 +15,17 @@ let
         host.impermanence.persistenceDir
       ];
       fromAspect = _item: lib.head aspect-chain;
-      adaptArgs =
-        { config, ... }:
-        {
-          osConfig = config;
-        };
-      guard = { options, ... }: options ? environment.persistence;
+      adaptArgs = {config, ...}: {
+        osConfig = config;
+      };
+      guard = {options, ...}: options ? environment.persistence;
     };
 
-  persysUser =
-    { host, user, ... }:
-    { aspect-chain, ... }:
+  persysUser = {
+    host,
+    user,
+    ...
+  }: {aspect-chain, ...}:
     den._.forward {
       each = lib.singleton true;
       fromClass = _item: "persysUser";
@@ -42,53 +38,42 @@ let
         user.userName
       ];
       fromAspect = _item: lib.head aspect-chain;
-      adaptArgs =
-        { config, ... }:
-        {
-          osConfig = config;
-        };
-      guard = { options, ... }: options ? environment.persistence;
+      adaptArgs = {config, ...}: {
+        osConfig = config;
+      };
+      guard = {options, ...}: options ? environment.persistence;
     };
-in
-{
+in {
   flake-file.inputs = {
     disko.url = "github:nix-community/disko";
     impermanence.url = "github:nix-community/impermanence";
   };
 
-  den.aspects.disko =
-    { host, ... }:
-    {
-      nixos = {
-        imports = [ inputs.disko.nixosModules.disko ];
-        inherit (host) disko;
-      };
+  den.aspects.disko = {host, ...}: {
+    nixos = {
+      imports = [inputs.disko.nixosModules.disko];
+      inherit (host) disko;
     };
+  };
 
-  den.aspects.impermanence =
-    { host, ... }:
-    {
-      includes = [ persys ];
-      nixos = {
-        imports = [ inputs.impermanence.nixosModules.impermanence ];
-        # This should be minimal for a truly pure setup
-        fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
-      };
+  den.aspects.impermanence = {host, ...}: {
+    includes = [persys];
+    nixos = {
+      imports = [inputs.impermanence.nixosModules.impermanence];
+      # This should be minimal for a truly pure setup
+      fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
     };
+  };
 
-  den.aspects.filesystem =
-    { host, ... }:
-    {
-      includes =
-        lib.optionals (host.disko.devices != { }) [ den.aspects.disko ]
-        ++ lib.optionals (host.impermanence.enable) [ den.aspects.impermanence ];
-    };
+  den.aspects.filesystem = {host, ...}: {
+    includes =
+      lib.optionals (host.disko.devices != {}) [den.aspects.disko]
+      ++ lib.optionals (host.impermanence.enable) [den.aspects.impermanence];
+  };
 
-  den.aspects.timezone =
-    { host, ... }:
-    {
-      nixos.time.timeZone = host.timeZone or "UTC";
-    };
+  den.aspects.timezone = {host, ...}: {
+    nixos.time.timeZone = host.timeZone or "UTC";
+  };
 
   den.aspects.base-host = den.lib.parametric {
     includes = [

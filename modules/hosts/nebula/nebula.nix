@@ -1,6 +1,4 @@
-{ den, ... }:
-
-{
+{den, ...}: {
   den.aspects.nebula = {
     includes = with den.aspects; [
       nebula._.hardware

@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   force = true;
 
   packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [

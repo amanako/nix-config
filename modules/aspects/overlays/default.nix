@@ -1,6 +1,4 @@
-{ inputs, ... }:
-
-{
+{inputs, ...}: {
   flake-file = {
     # Release version is guaranteed to have binary cache
     inputs = {
@@ -9,22 +7,20 @@
     };
 
     nixConfig = {
-      extra-substituters = [ "https://attic.xuyh0120.win/lantian" ];
-      extra-trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+      extra-substituters = ["https://attic.xuyh0120.win/lantian"];
+      extra-trusted-public-keys = ["lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
     };
   };
 
-  den.aspects.overlays =
-    let
-      overlays = with inputs; [
-        nix-cachyos-kernel.overlays.pinned
-        yazi.overlays.default
-        neovim-nightly-overlay.overlays.default
-        helix.overlays.helix
-      ];
-    in
-    {
-      nixos.nixpkgs.overlays = overlays;
-      homeManager.nixpkgs.overlays = overlays;
-    };
+  den.aspects.overlays = let
+    overlays = with inputs; [
+      nix-cachyos-kernel.overlays.pinned
+      yazi.overlays.default
+      neovim-nightly-overlay.overlays.default
+      helix.overlays.helix
+    ];
+  in {
+    nixos.nixpkgs.overlays = overlays;
+    homeManager.nixpkgs.overlays = overlays;
+  };
 }

@@ -1,13 +1,16 @@
-{ den, ... }:
+{den, ...}: {
+  flake.den = den;
 
-{
   den.default = {
     includes = [
       # Using perHost avoids duplication.
       (den.lib.perHost (
-        { host, lib }:
+        {
+          host,
+          lib,
+        }:
         # TODO: Look into fix
-        lib.optional host.wantsNvidiaSupport den.aspects.nvidia
+          lib.optional host.wantsNvidiaSupport den.aspects.nvidia
       ))
     ];
 
@@ -27,24 +30,22 @@
       ];
     };
 
-    nixos =
-      { pkgs, ... }:
-      {
-        # Enable flakes and new nix command
-        nix.settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
+    nixos = {pkgs, ...}: {
+      # Enable flakes and new nix command
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
-        environment.systemPackages = with pkgs; [
-          # For flakes to work properly
-          git
-        ];
+      environment.systemPackages = with pkgs; [
+        # For flakes to work properly
+        git
+      ];
 
-        system.stateVersion = "25.11";
+      system.stateVersion = "25.11";
 
-        home-manager.backupFileExtension = "backup";
-      };
+      home-manager.backupFileExtension = "backup";
+    };
 
     homeManager = {
       # New behaviour since release 26.05

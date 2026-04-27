@@ -1,7 +1,4 @@
-{ defaultIcon, ... }:
-
-engines:
-
+{defaultIcon, ...}: engines:
 builtins.mapAttrs (_: engine: {
   inherit (engine) name;
   icon = engine.icon or defaultIcon;
@@ -13,4 +10,5 @@ builtins.mapAttrs (_: engine: {
   ];
 
   definedAliases = engine.aliases;
-}) engines
+})
+engines

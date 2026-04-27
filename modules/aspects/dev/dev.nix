@@ -12,18 +12,16 @@
       };
     };
 
-    homeManager =
-      { pkgs, ... }:
-      {
-        programs.gpg.enable = true;
-        programs.git.signing.signByDefault = true;
+    homeManager = {pkgs, ...}: {
+      programs.gpg.enable = true;
+      programs.git.signing.signByDefault = true;
 
-        services.gpg-agent = {
-          enable = true;
-          pinentry.package = pkgs.pinentry-curses;
-          enableFishIntegration = true;
-          enableSshSupport = true;
-        };
+      services.gpg-agent = {
+        enable = true;
+        pinentry.package = pkgs.pinentry-curses;
+        enableFishIntegration = true;
+        enableSshSupport = true;
       };
+    };
   };
 }

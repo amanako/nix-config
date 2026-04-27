@@ -1,6 +1,4 @@
-{ inputs, ... }:
-
-{
+{inputs, ...}: {
   flake-file.inputs = {
     dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
   };
@@ -76,5 +74,4 @@
     # };
     #};
   };
-
 }

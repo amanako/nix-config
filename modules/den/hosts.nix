@@ -19,7 +19,7 @@
     impermanence.persistenceDir = "/persist";
 
     users = {
-      lunar-scar.classes = [ "homeManager" ];
+      lunar-scar.classes = ["homeManager"];
     };
 
     disko.devices = {
@@ -41,14 +41,14 @@
                   type = "filesystem";
                   format = "vfat";
                   mountpoint = "/boot";
-                  mountOptions = [ "umask=0077" ];
+                  mountOptions = ["umask=0077"];
                 };
               };
               root = {
                 size = "100%";
                 content = {
                   type = "btrfs";
-                  extraArgs = [ "-f" ]; # Override existing partition
+                  extraArgs = ["-f"]; # Override existing partition
                   subvolumes = {
                     "/root" = {
                       mountpoint = "/";
@@ -75,7 +75,7 @@
                     "/swap" = {
                       mountpoint = "/swap";
                       swap.swapfile.size = "16G";
-                      mountOptions = [ "nodatacow" ];
+                      mountOptions = ["nodatacow"];
                     };
                   };
                 };

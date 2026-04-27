@@ -1,9 +1,6 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   containers = config.programs.zen-browser.profiles."*".containers;
-in
-{
+in {
   "Personal" = {
     id = "c6de089c-410d-4206-961d-ab11f988d40a";
     icon = "🧩";

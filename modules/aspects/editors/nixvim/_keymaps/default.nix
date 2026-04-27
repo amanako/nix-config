@@ -99,7 +99,15 @@
     {
       mode = "n";
       key = "<leader>n";
-      action = "<cmd>NoiceSnacks<cr>";
+      action = "<cmd>NoiceSnacks<CR>";
+      options = {
+        silent = true;
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>cc";
+      action = "<cmd>ClaudeCode<CR>";
       options = {
         silent = true;
       };
