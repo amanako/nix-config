@@ -3,46 +3,6 @@ when:
   branch: main
 
 steps:
-  - name: checkout
-    image: alpine/git:latest
-    commands:
-      - |
-        if [ -z "${CI_COMMIT_REF}" ]; then
-          git clone --depth 1 https://github.com/${CI_REPO}.git .
-        else
-          git clone --depth 1 --branch "${CI_COMMIT_REF}" https://github.com/${CI_REPO}.git .
-        fi
-
-  - name: install-nix
-    image: nixos/nix:unstable
-    environment:
-      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
-    commands:
-      - curl -L https://nixos.org/nix/install | bash
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - nix --version
-      - |
-        sudo mkdir -p /etc/nix
-        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-
-  - name: setup-cachix
-    image: nixos/nix:unstable
-    environment:
-      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
-    commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - nix profile install github:cachix/cachix/v17
-      - cachix use amanako
-
-  - name: extra-substituters
-    image: nixos/nix:unstable
-    commands:
-      - |
-        sudo tee -a /etc/nix/nix.conf <<'EOF'
-        substituters = https://attic.xuyh0120.win/lantian
-        trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
-        EOF
-
   - name: flake-check
     image: nixos/nix:unstable
     commands:
@@ -54,6 +14,25 @@ steps:
     image: ghcr.io/determinate-systems/flake-checker:latest
     commands:
       - flake-checker .
+
+  - name: setup-nix-and-cache
+    image: nixos/nix:unstable
+    environment:
+      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
+    commands:
+      - curl -L https://nixos.org/nix/install | bash
+      - . $HOME/.nix-profile/etc/profile.d/nix.sh
+      - nix --version
+      - |
+        sudo mkdir -p /etc/nix
+        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+      - nix profile install github:cachix/cachix/v17
+      - cachix use amanako
+      - |
+        sudo tee -a /etc/nix/nix.conf <<'EOF'
+        substituters = https://attic.xuyh0120.win/lantian
+        trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+        EOF
 
   - name: build-flake
     image: nixos/nix:unstable
