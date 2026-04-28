@@ -6,7 +6,8 @@ steps:
   - name: setup-and-push-to-cache
     image: nixos/nix:latest
     environment:
-      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
+      CACHIX_AUTH_TOKEN:
+        from_secret: CACHIX_AUTH_TOKEN
     commands:
       - |
         tee -a /etc/nix/nix.conf <<'EOF' 
@@ -31,5 +32,6 @@ steps:
         done
         nix profile add github:juspay/omnix#default
         om ci run --results=om.json 
+        cachix authtoken $${CACHIX_AUTH_TOKEN}
         nix profile add github:juspay/cachix-push#default
         cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git branch --show-current)" < om.json
