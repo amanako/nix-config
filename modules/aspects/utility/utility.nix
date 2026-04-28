@@ -40,29 +40,29 @@
 
         imports = [ inputs.nix-index-database.homeModules.default ];
 
-        programs.nix-index-database = {
-          comma.enable = true;
-        };
+        programs = {
+          nix-index-database.comma.enable = true;
 
-        programs.mpv = {
-          enable = true;
-          bindings = {
-            "h" = "seek -5";
-            "l" = "seek 5";
+          mpv = {
+            enable = true;
+            bindings = {
+              "h" = "seek -5";
+              "l" = "seek 5";
+            };
           };
-        };
 
-        programs.jq.enable = true;
+          jq.enable = true;
 
-        programs.zathura = {
-          enable = true;
-          options = {
-            # Evade blinding
-            recolor = true;
-            recolor-lightcolor = lib.mkDefault "#1e3a8a";
-            recolor-darkcolor = lib.mkDefault "#e0f2fe";
+          zathura = {
+            enable = true;
+            options = {
+              # Evade blinding
+              recolor = true;
+              recolor-lightcolor = lib.mkDefault "#1e3a8a";
+              recolor-darkcolor = lib.mkDefault "#e0f2fe";
 
-            selection-clipboard = "clipboard";
+              selection-clipboard = "clipboard";
+            };
           };
         };
       };
