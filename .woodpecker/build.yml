@@ -3,7 +3,7 @@ when:
     branch: main
 
 steps:
-  - name: Setup cache and build flake outputs
+  - name: setup-cache-and-build-flake
     image: nixos/nix:latest
     commands: 
       - |
@@ -36,7 +36,7 @@ steps:
       - set -xeuo pipefail
       - nix run github:juspay/omnix#default -- ci run --results=om.json
 
-  - name: Push results to cache
+  - name: push-to-cache
     image: nixos/nix:latest
     environment:
       CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}

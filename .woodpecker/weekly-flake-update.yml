@@ -3,19 +3,17 @@ when:
     cron: "40 3 * * 0"
 
 steps:
-  - name: update-flake
+  - name: update-and-check-flake
     image: nixos/nix:latest
-    commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-      - nix run .#write-flake
+    commands: 
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF'
+        experimental-features = nix-command flakes
+        accept-flake-config = true
+        EOF
+      - echo "experimental-features = nix-command flakes" | tee -a /etc/nix/nix.conf
+      - nix run .#write-flake --show-trace
       - nix flake update
-
-  - name: check-flake
-    image: nixos/nix:latest
-    commands:
-      - . $HOME/.nix-profile/etc/profile.d/nix.sh
-      - echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
       - nix run .#write-flake --show-trace
       - nix flake check -L
 
@@ -42,7 +40,6 @@ steps:
         git push https://x-access-token:${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
         
         echo "$BRANCH" > /tmp/branch_name
-
   - name: open-pr
     image: curlimages/curl:8
     environment:
