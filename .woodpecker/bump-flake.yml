@@ -1,7 +1,6 @@
 when:
-  event:
-    - cron
-  cron: "40 3 * * 0"
+  - event: cron
+    cron: "40 3 * * 0"  # Runs Sunday 03:40 UTC
 
 steps:
   - name: update-and-check-flake
@@ -76,21 +75,3 @@ steps:
           -d "$PAYLOAD" \
           "https://codeberg.org/api/v1/repos/${CI_REPO}/pulls" \
           | jq -r '.html_url // "PR creation failed"'
-
----
-when:
-  event:
-    - push
-    branch: main
-
-steps:
-  - name: check-flake
-    image: nixos/nix:latest
-    commands:
-      - |
-        tee -a /etc/nix/nix.conf <<EOF
-        experimental-features = nix-command flakes
-        accept-flake-config = true
-        EOF
-      - nix run .#write-flake --show-trace
-      - nix flake check -L

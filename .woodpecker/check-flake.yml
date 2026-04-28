@@ -1,0 +1,15 @@
+when:
+  - event: push
+    branch: main
+
+steps:
+  - name: check-flake
+    image: nixos/nix:latest
+    commands:
+      - |
+        tee -a /etc/nix/nix.conf <<EOF
+        experimental-features = nix-command flakes
+        accept-flake-config = true
+        EOF
+      - nix run .#write-flake --show-trace
+      - nix flake check -Lv
