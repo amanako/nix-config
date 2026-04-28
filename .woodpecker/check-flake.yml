@@ -3,13 +3,44 @@ when:
     branch: main
 
 steps:
-  - name: check-flake
+  - name: setup-cache-and-build-flake
     image: nixos/nix:latest
     commands:
       - |
-        tee -a /etc/nix/nix.conf <<EOF
-        experimental-features = nix-command flakes
-        accept-flake-config = true
+        tee -a /etc/nix/nix.conf <<'EOF' 
+          experimental-features = nix-command flakes
+          accept-flake-config = true
+          extra-substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss
+          extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
         EOF
-      - nix run .#write-flake --show-trace
-      - nix flake check -Lv
+        nix profile add nixpkgs#cachix
+        for cache in \
+          amanako \
+          nix-community \
+          yazi \
+          niri \
+          noctalia \
+          helix \
+          nix-gaming \
+          vic \
+          fzakaria
+        do
+          cachix use "$cache"
+        done
+        nix profile add github:juspay/omnix#default
+        om ci run --results=om.json
+
+  - name: push-to-cache
+    image: nixos/nix:latest
+    environment:
+      CACHIX_AUTH_TOKEN: ${CACHIX_AUTH_TOKEN}
+    commands:
+      - |
+        tee -a /etc/nix/nix.conf <<'EOF' 
+          experimental-features = nix-command flakes
+          accept-flake-config = true
+          extra-substituters = https://cache.nixos.asia/oss
+          extra-trusted-public-keys = oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
+        EOF
+        nix profile add github:juspay/cachix-push#default
+        cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git branch --show-current)" < om.json
