@@ -3,6 +3,8 @@
 <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=%23a89984&labelColor=%2332302f&color=%23a9b665" /></a>
 <a href="https://dendritic.oeiuwq.com"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b" /></a> 
 
+![Badge](https://ci.codeberg.org/api/badges/16923/status.svg)
+
 ## Design
 * [vic/den][den] framework with [SoC][SoC] in mind.
 * Code is documented with tips I learned along the way.
