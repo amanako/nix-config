@@ -53,6 +53,17 @@
           command = lib.getExe pkgs.alejandra;
         };
       };
+
+      default_format_opts = {
+        lsp_fallback = "never";
+      };
+
+      # Only format_after_save can be used asynchronously
+      format_after_save = ''
+        { async = true }, function(err, did_edit)
+          -- called after formatting
+        end
+      '';
     };
   };
 }
