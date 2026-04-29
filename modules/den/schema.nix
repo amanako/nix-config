@@ -117,6 +117,27 @@
         description = "Disko device configuration";
         default = {};
       };
+
+      keyboardLightScript = lib.mkOption {
+        type = lib.types.submodule {
+          options.device = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Keyboard light device name. Can be obtained via `nix run nixpkgs#brightnessctl -- -l`";
+            example = "asus::kbd_backlight";
+          };
+          options.step = lib.mkOption {
+            type = lib.types.int;
+            default = 1;
+            description = "Step to increase/decrease brightness on each script run";
+            example = 5;
+          };
+        };
+        description = ''
+          Options passed to script created as `keyboard-light` executable taking increment and decrement parameters,
+          tasked with changing keyboard backlight brightness on supported devices.
+        '';
+      };
     };
   };
 }
