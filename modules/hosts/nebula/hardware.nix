@@ -6,6 +6,7 @@
 
     nixos = {
       pkgs,
+      lib,
       modulesPath,
       ...
     }: let
@@ -115,14 +116,21 @@
           '';
         };
 
-        extraBin = {
-          "mkdir" = "${pkgs.coreutils}/bin/mkdir";
-          "date" = "${pkgs.coreutils}/bin/date";
-          "mv" = "${pkgs.coreutils}/bin/mv";
-          "find" = "${pkgs.findutils}/bin/find";
-          "btrfs" = "${pkgs.btrfs-progs}/bin/btrfs";
-          # mount & umount already exist
-        };
+        extraBin = let
+          # The binary names that come from coreutils
+          coreutils = [
+            "mkdir"
+            "date"
+            "mv"
+          ];
+
+          other = {
+            find = pkgs.findutils;
+            btrfs = pkgs.btrfs-progs;
+          };
+        in
+          lib.genAttrs coreutils (name: lib.getExe' pkgs.coreutils name)
+          // lib.mapAttrs (name: pkg: lib.getExe' pkg name) other;
       };
     };
   };

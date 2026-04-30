@@ -78,12 +78,14 @@
     }: let
       wallpapersPath = inputs.wallpapers.outPath;
       awwwPkg = pkgs.awww;
+      find = lib.getExe' pkgs.findutils "find";
+      shuf = lib.getExe' pkgs.coreutils "shuf";
 
       wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
         DIR="${wallpapersPath}"
-        img=$( ${pkgs.findutils}/bin/find "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${pkgs.coreutils}/bin/shuf -n 1)
+        img=$( ${find} "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${shuf} -n 1)
         if [ -n "$img" ]; then
-          ${awwwPkg}/bin/awww img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
+          ${lib.getExe awwwPkg} img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
         fi
       '';
     in {
@@ -115,7 +117,7 @@
         };
 
         Service = {
-          ExecStart = "${awwwPkg}/bin/awww-daemon";
+          ExecStart = "${lib.getExe awwwPkg}";
           Restart = "on-failure";
           RestartSec = 1;
         };
@@ -131,7 +133,7 @@
         };
 
         Service = {
-          ExecStart = "${wallpaperScript}/bin/awww-random";
+          ExecStart = "${lib.getExe wallpaperScript}";
           Restart = "on-failure";
           RestartSec = 2;
 
