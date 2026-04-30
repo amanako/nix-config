@@ -1,6 +1,7 @@
 when:
   - event: cron
     cron: "40 3 * * 0"  # Runs Sunday 03:40 UTC
+  - event: manual
 
 steps:
   - name: update-and-check-flake
