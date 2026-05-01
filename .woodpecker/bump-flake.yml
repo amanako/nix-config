@@ -11,11 +11,13 @@ steps:
         from_secret: GITHUB_TOKEN
     commands:
       - |
-        tee -a /etc/nix/nix.conf <<EOF
+        mkdir -p $HOME/.config/nix
+        cat > $HOME/.config/nix/nix.conf <<EOF
         experimental-features = nix-command flakes
-        access-tokens = github.com=$${GITHUB_TOKEN}
+        access-tokens = github.com=${GITHUB_TOKEN}
         accept-flake-config = true
         EOF
+
       - nix run .#write-flake --show-trace
       - nix flake update
       - nix run .#write-flake --show-trace
