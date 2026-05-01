@@ -51,7 +51,7 @@ steps:
     commands:
       - apk add --no-cache curl jq
       - |
-        BRANCH=$(cat /tmp/branch_name 2>/dev/null || echo "")
+        BRANCH=${CI_COMMIT_BRANCH}
         if [ -z "$BRANCH" ]; then
           echo "No branch to PR – exiting."
           exit 0
