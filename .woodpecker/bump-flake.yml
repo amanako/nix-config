@@ -6,10 +6,14 @@ when:
 steps:
   - name: update-and-check-flake
     image: nixos/nix:latest
+    environment:
+      GITHUB_TOKEN:
+        from_secret: GITHUB_TOKEN
     commands:
       - |
         tee -a /etc/nix/nix.conf <<EOF
         experimental-features = nix-command flakes
+        access-tokens = github.com=$${GITHUB_TOKEN}
         accept-flake-config = true
         EOF
       - nix run .#write-flake --show-trace
