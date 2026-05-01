@@ -8,11 +8,14 @@ steps:
     environment:
       CACHIX_AUTH_TOKEN:
         from_secret: CACHIX_AUTH_TOKEN
+      GITHUB_TOKEN:
+        from_secret: GITHUB_TOKEN
     commands:
       - |
-        tee -a /etc/nix/nix.conf <<'EOF' 
+        tee -a /etc/nix/nix.conf <<'EOF'
           experimental-features = nix-command flakes
           accept-flake-config = true
+          access-tokens = github.com=$${GITHUB_TOKEN}
           extra-substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss
           extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
         EOF
@@ -31,7 +34,7 @@ steps:
           cachix use "$cache"
         done
         nix profile add github:juspay/omnix#default
-        om ci run --results=om.json 
+        om ci run --results=om.json
         cachix authtoken $${CACHIX_AUTH_TOKEN}
         nix profile add github:juspay/cachix-push#default
         cachix-push-om-outputs -c amanako --subflake ROOT --prefix "$(git branch --show-current)" < om.json
