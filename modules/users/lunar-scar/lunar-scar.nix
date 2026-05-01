@@ -115,7 +115,7 @@ in {
         # This 4 variables should be configured because other components might use them
         EDITOR = "nvim";
         TERM = "kitty";
-        BROWSER = "zen-beta";
+        BROWSER = "zen-twilight";
         FILE_MANAGER = "yazi";
 
         # NH_FLAKE variable for rebuilding with nh without specyfing flake location

@@ -154,7 +154,7 @@
             {
               matches = [
                 {
-                  app-id = "^(zen-beta|mpv)$";
+                  app-id = "^(zen-twilight|mpv)$";
                 }
               ];
               default-column-width.proportion = 1.0;
