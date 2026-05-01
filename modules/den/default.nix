@@ -1,8 +1,7 @@
 {den, ...}: {
-  flake.den = den;
-
   den.default = {
     includes = [
+      den._.inputs'
       # Using perHost avoids duplication.
       (den.lib.perHost (
         {

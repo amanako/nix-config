@@ -1,12 +1,11 @@
 {
   zen-browser.extensions = {
-    inputs,
-    pkgs,
+    inputs',
     lib,
     ...
   }: {
     homeManager.programs.zen-browser.profiles."*".extensions = {
-      packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+      packages = with inputs'.firefox-addons.packages; [
         darkreader
         proton-pass
         vimium-c
