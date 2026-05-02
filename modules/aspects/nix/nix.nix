@@ -16,8 +16,11 @@
         # Number of logical cores to use in parallel
         # "auto" will use all available
         max-jobs = "auto";
+        # Based on quide from https://bmcgee.ie/posts/2023/12/til-how-to-optimise-substitutions-in-nix/
+        max-substitution-jobs = 128;
+        http-connections = 128;
+        # Use all available cores
         cores = 0;
-        http-connections = 50;
 
         trusted-users = [
           "@wheel"
