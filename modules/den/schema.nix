@@ -34,6 +34,14 @@
         '';
       };
 
+      enableStyling =
+        (lib.mkEnableOption "")
+        // {
+          default = true;
+          description = "Whether to enable auto-theming of applications via stylix - theming framework for NixOS: https://github.com/nix-community/stylix";
+          example = false;
+        };
+
       gpus = lib.mkOption {
         type = lib.types.listOf (
           lib.types.submodule {

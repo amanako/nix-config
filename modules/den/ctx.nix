@@ -43,10 +43,27 @@
       };
       guard = {options, ...}: options ? environment.persistence;
     };
+
+  stylix = {aspect-chain, ...}:
+    den._.forward {
+      each = [
+        "nixos"
+        "homeManager"
+      ];
+      fromClass = _item: "stylix";
+      intoClass = lib.id; # Use the item directly as the target class
+      intoPath = _item: ["stylix"];
+      fromAspect = _item: lib.head aspect-chain;
+      adaptArgs = {config, ...}: {
+        osConfig = config;
+      };
+      guard = {options, ...}: options ? stylix;
+    };
 in {
   flake-file.inputs = {
     disko.url = "github:nix-community/disko";
     impermanence.url = "github:nix-community/impermanence";
+    stylix.url = "github:nix-community/stylix";
   };
 
   den.aspects.disko = {host, ...}: {
@@ -71,6 +88,55 @@ in {
       ++ lib.optionals (host.impermanence.enable) [den.aspects.impermanence];
   };
 
+  den.aspects.stylix = {host, ...}:
+    lib.optionalAttrs host.enableStyling {
+      includes = [
+        stylix
+      ];
+      nixos = {
+        pkgs,
+        config,
+        ...
+      }: {
+        imports = [inputs.stylix.nixosModules.stylix];
+        stylix = {
+          enable = true;
+          base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
+          polarity = "dark";
+          opacity = {
+            applications = 0.87;
+            desktop = 0.85;
+            popups = 0.86;
+            terminal = 0.85;
+          };
+
+          icons = {
+            enable = true;
+            package = pkgs.papirus-icon-theme;
+            dark = "Papirus-Dark";
+            light = "Papirus-Light";
+          };
+
+          fonts = {
+            monospace = {
+              package = pkgs.nerd-fonts.victor-mono;
+              name = "Victor Mono Nerd Font";
+            };
+            sansSerif = {
+              package = pkgs.inter;
+              name = "Inter";
+            };
+            # Serif fonts can be bothersome
+            serif = config.stylix.fonts.sansSerif;
+            emoji = {
+              package = pkgs.twemoji-color-font;
+              name = "Twemoji";
+            };
+          };
+        };
+      };
+    };
+
   den.aspects.timezone = {host, ...}: {
     nixos.time.timeZone = host.timeZone or "UTC";
   };
@@ -86,6 +152,7 @@ in {
   den.ctx.host.includes = [
     den.aspects.base-host
     den.aspects.overlays
+    den.aspects.stylix
   ];
 
   den.ctx.user.includes = [
