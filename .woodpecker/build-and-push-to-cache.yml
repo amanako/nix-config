@@ -5,7 +5,6 @@ when:
 steps:
   - name: setup-and-push-to-cache
     image: nixos/nix:latest
-    timeout: 300m
     environment:
       CACHIX_AUTH_TOKEN:
         from_secret: CACHIX_AUTH_TOKEN
