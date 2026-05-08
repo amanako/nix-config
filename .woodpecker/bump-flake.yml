@@ -49,21 +49,37 @@ steps:
         echo "$BRANCH" > /tmp/branch_name
 
   - name: open-pr
-    image: woodpeckercommunity/gitea-pull-request-create-plugin:latest
-    pull: true
-    settings:
-      gitea_address: https://codeberg.org
-      gitea_token:
-        from_secret: GITEA_TOKEN
-      owner: ${CI_REPO_OWNER}
-      repo: ${CI_REPO_NAME}
-      branch: ${CI_COMMIT_BRANCH}
-      base_branch: main
-      pr_title: Weekly flake.lock update
-      pr_body: PR automatically created by Woodpecker CI
-      skip_on_missing_branch: true
-      skip_on_empty_branch: true
-      close_pr_if_empty: true
-      delete_branch_if_pr_empty: true
-      merge_when_checks_succeed: true
-      delete_branch_after_merge: true
+    image: alpine:3.19
+    environment:
+      GITEA_TOKEN: $${GITEA_TOKEN}
+    commands:
+      - apk add --no-cache curl jq
+      - |
+        BRANCH=${CI_COMMIT_BRANCH}
+        if [ -z "$BRANCH" ]; then
+          echo "No branch to PR – exiting."
+          exit 0
+        fi
+
+        # Dry-run for manual triggers
+        if [ "$CI_PIPELINE_EVENT" = "manual" ]; then
+          echo "[DRY RUN] Would open PR for branch: $BRANCH"
+          exit 0
+        fi
+
+        PAYLOAD=$(cat <<EOF
+        {
+          "title": "Weekly flake.lock update",
+          "head": "$BRANCH",
+          "base": "main",
+          "body": "Automated weekly flake.lock update.\n\n- Dependencies refreshed via nix flake update."
+        }
+        EOF
+        )
+
+        curl -sSL -X POST \
+          -H "Authorization: token $${GITEA_TOKEN}" \
+          -H "Content-Type: application/json" \
+          -d "$PAYLOAD" \
+          "https://codeberg.org/api/v1/repos/${CI_REPO}/pulls" \
+          | jq -r '.html_url // "PR creation failed"'
