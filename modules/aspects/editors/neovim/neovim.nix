@@ -12,6 +12,10 @@
       ];
     };
 
+    stylixHome = {lib, ...}: {
+      targets.neovim.enable = lib.mkForce false;
+    };
+
     homeManager = {
       pkgs,
       lib,
@@ -22,7 +26,6 @@
     in {
       xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
       # Fix for mkOutOfStoreSymlink to work
-      stylix.targets.neovim.enable = lib.mkForce false;
 
       programs.neovim = {
         enable = true;

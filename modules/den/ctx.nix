@@ -44,19 +44,14 @@
       guard = {options, ...}: options ? environment.persistence;
     };
 
-  stylix = {aspect-chain, ...}:
+  stylixClass = {aspect-chain, ...}:
     den._.forward {
-      each = [
-        "nixos"
-        "homeManager"
-      ];
-      fromClass = _item: "stylix";
-      intoClass = lib.id; # Use the item directly as the target class
-      intoPath = _item: ["stylix"];
-      fromAspect = _item: lib.head aspect-chain;
-      adaptArgs = {config, ...}: {
-        osConfig = config;
-      };
+      each = ["nixos" "homeManager"];
+      fromClass = target: "stylix${lib.optionalString (target == "homeManager") "Home"}";
+      intoClass = lib.id;
+      intoPath = _: ["stylix"];
+      fromAspect = _: lib.head aspect-chain;
+      adaptArgs = {config, ...}: {osConfig = config;};
       guard = {options, ...}: options ? stylix;
     };
 in {
@@ -84,20 +79,18 @@ in {
 
   den.aspects.filesystem = {host, ...}: {
     includes =
-      lib.optionals (host.disko.devices != {}) [den.aspects.disko]
-      ++ lib.optionals (host.impermanence.enable) [den.aspects.impermanence];
+      lib.optional (host.disko.devices != {}) den.aspects.disko
+      ++ lib.optional host.impermanence.enable den.aspects.impermanence;
   };
 
   den.aspects.stylix = {host, ...}:
     lib.optionalAttrs host.enableStyling {
-      includes = [
-        stylix
-      ];
       nixos = {
         pkgs,
         config,
         ...
       }: {
+        # Automatically enables stylix for home manager if detected
         imports = [inputs.stylix.nixosModules.stylix];
         stylix = {
           enable = true;
@@ -120,7 +113,7 @@ in {
           fonts = {
             monospace = {
               package = pkgs.nerd-fonts.victor-mono;
-              name = "Victor Mono Nerd Font";
+              name = "VictorMono Nerd Font";
             };
             sansSerif = {
               package = pkgs.inter;
@@ -137,6 +130,10 @@ in {
       };
     };
 
+  den.aspects.style = {host, ...}: {
+    includes = lib.optional host.enableStyling den.aspects.stylix;
+  };
+
   den.aspects.timezone = {host, ...}: {
     nixos.time.timeZone = host.timeZone or "UTC";
   };
@@ -146,13 +143,13 @@ in {
       den._.hostname
       den.aspects.filesystem
       den.aspects.timezone
+      den.aspects.style
     ];
   };
 
   den.ctx.host.includes = [
     den.aspects.base-host
     den.aspects.overlays
-    den.aspects.stylix
   ];
 
   den.ctx.user.includes = [
@@ -160,5 +157,6 @@ in {
     den._.mutual-provider
     # Currently this does nothing if host doesn't import impermanence
     persysUser
+    stylixClass
   ];
 }

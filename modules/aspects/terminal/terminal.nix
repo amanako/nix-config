@@ -11,6 +11,14 @@
   };
 
   den.aspects.terminal = {
+    stylixHome = {
+      targets = {
+        "starship".enable = false;
+        "yazi".enable = false;
+        "kitty".enable = false;
+      };
+    };
+
     homeManager = {
       pkgs,
       lib,
@@ -35,8 +43,6 @@
           ];
         };
       };
-
-      stylix.targetsToDisable = ["starship"];
 
       programs.starship = {
         enable = true;
@@ -111,7 +117,7 @@
 
         settings = {
           confirm_os_window_close = -1;
-          background_opacity = 0.95;
+          background_opacity = lib.mkDefault 0.95;
           background_blur = 10;
           window_padding_width = 4;
           hide_window_decorations = true;

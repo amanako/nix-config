@@ -13,6 +13,12 @@
       ];
     };
 
+    stylixHome = {
+      targets = {
+        "nixvim".enable = false;
+      };
+    };
+
     homeManager = {
       config,
       pkgs,

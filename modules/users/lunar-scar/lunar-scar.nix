@@ -58,11 +58,6 @@ in {
         inconsolata
         nerd-fonts.victor-mono
       ];
-
-      stylix.targetsToDisable = [
-        "fish"
-        "limine"
-      ];
     };
 
     homeManager = {pkgs, ...}: {
@@ -95,21 +90,11 @@ in {
 
       # Add personal config file for fcitx5
       # Recusrive is necessary when it's a folder
+      stylix.targets."fcitx5".enable = false;
       home.file.".config/fcitx5" = {
         source = ./fcitx5;
         recursive = true;
       };
-
-      stylix.targetsToDisable = [
-        "kitty"
-        "yazi"
-        "fcitx5"
-        "starship"
-        "nixvim"
-        "neovim"
-        "zen-browser"
-        "noctalia-shell"
-      ];
 
       home.sessionVariables = {
         # This 4 variables should be configured because other components might use them

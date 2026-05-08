@@ -7,33 +7,9 @@
   };
 
   den.aspects.appearance = {
-    nixos = {
-      lib,
-      config,
-      ...
-    }: {
-      # TODO: Implement as a den class with guard instead
-      options.stylix.targetsToDisable = with lib;
-        mkOption {
-          type = types.listOf types.str;
-          default = [];
-          example = [
-            "fish"
-          ];
-          description = "List of stylix targets which theming to disable.";
-        };
-
-      config.stylix = {
-        targets = lib.genAttrs config.stylix.targetsToDisable (_: {
-          enable = false;
-        });
-      };
-    };
-
     homeManager = {
       pkgs,
       lib,
-      config,
       ...
     }: let
       wallpapersPath = inputs.wallpapers.outPath;
@@ -49,27 +25,12 @@
         fi
       '';
     in {
-      options.stylix.targetsToDisable = with lib;
-        mkOption {
-          type = types.listOf types.str;
-          default = [];
-          example = [
-            "kitty"
-            "neovim"
-          ];
-          description = "List of stylix targets which theming to disable.";
-        };
-
-      config.stylix.targets = lib.genAttrs config.stylix.targetsToDisable (_: {
-        enable = false;
-      });
-
-      config.home.packages = [
+      home.packages = [
         awwwPkg
         wallpaperScript
       ];
 
-      config.systemd.user.services.awww-daemon = {
+      systemd.user.services.awww-daemon = {
         Unit = {
           Description = "awww Wallpaper daemon";
           After = ["graphical-session.target"];
@@ -87,7 +48,7 @@
         };
       };
 
-      config.systemd.user.services.awww-random = {
+      systemd.user.services.awww-random = {
         Unit = {
           Description = "Wallpaper rotator";
         };
@@ -101,7 +62,7 @@
         };
       };
 
-      config.systemd.user.timers.awww-random = {
+      systemd.user.timers.awww-random = {
         Unit = {
           Description = "Change wallpaper every 30 minutes";
           BindsTo = ["awww-daemon.service"];

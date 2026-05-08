@@ -15,6 +15,15 @@
       ];
     };
 
+    stylixHome = {
+      targets = {
+        "zen-browser" = {
+          enable = false;
+          profileNames = ["*"];
+        };
+      };
+    };
+
     includes = [
       zen-browser.containers
       zen-browser.extensions
@@ -26,8 +35,6 @@
 
     homeManager = {
       imports = [inputs.zen-browser.homeModules.twilight];
-
-      stylix.targets.zen-browser.profileNames = ["*"];
 
       programs.zen-browser = {
         enable = true;

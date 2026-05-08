@@ -12,6 +12,18 @@
       programs.fzf.fuzzyCompletion = true;
     };
 
+    stylix = {
+      targets = {
+        "fish".enable = false;
+      };
+    };
+
+    stylixHome = {
+      targets = {
+        "fzf".enable = false;
+      };
+    };
+
     persysUser = {
       directories = [
         {
@@ -44,8 +56,6 @@
     in {
       programs.ssh.enable = true;
       programs.git.enable = true;
-
-      stylix.targetsToDisable = ["fzf"];
 
       programs.fzf = {
         enable = true;

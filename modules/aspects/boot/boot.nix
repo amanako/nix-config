@@ -1,8 +1,12 @@
 {
   den.aspects.boot = {
-    nixos = {pkgs, ...}: {
-      stylix.targetsToDisable = ["plymouth"];
+    stylix = {
+      targets = {
+        "plymouth".enable = false;
+      };
+    };
 
+    nixos = {pkgs, ...}: {
       boot.plymouth = {
         enable = true;
         theme = "nixos-bgrt";

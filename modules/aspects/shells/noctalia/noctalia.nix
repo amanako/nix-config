@@ -13,6 +13,12 @@
   };
 
   den.aspects.shells._.noctalia = {user, ...}: {
+    stylixHome = {
+      targets = {
+        "noctalia-shell".enable = false;
+      };
+    };
+
     homeManager = {
       config,
       lib,
