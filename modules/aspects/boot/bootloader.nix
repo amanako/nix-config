@@ -1,6 +1,12 @@
 {
   den.aspects.bootloader = {
     provides.limine = {
+      stylix = {
+        targets = {
+          "limine".enable = false;
+        };
+      };
+
       nixos = {pkgs, ...}: {
         boot.loader.limine = {
           enable = true;
@@ -9,7 +15,6 @@
             interface = {
               resolution = "1920x1080";
               branding = "Paranoia";
-              brandingColor = 3;
             };
             wallpaperStyle = "stretched";
             wallpapers = [
