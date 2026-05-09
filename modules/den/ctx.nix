@@ -4,39 +4,25 @@
   lib,
   ...
 }: let
-  persys = {host, ...}: {aspect-chain, ...}:
-    den._.forward {
-      each = lib.singleton true;
-      fromClass = _item: "persys";
-      intoClass = _item: "nixos";
-      intoPath = _item: [
-        "environment"
-        "persistence"
-        host.impermanence.persistenceDir
-      ];
-      fromAspect = _item: lib.head aspect-chain;
-      adaptArgs = {config, ...}: {
-        osConfig = config;
-      };
-      guard = {options, ...}: options ? environment.persistence;
-    };
-
-  persysUser = {
+  persistClass = isUser: {
     host,
     user,
     ...
   }: {aspect-chain, ...}:
     den._.forward {
-      each = lib.singleton true;
-      fromClass = _item: "persysUser";
+      each = ["host" "user"];
+      fromClass = target: "persys${lib.optionalString (target == "user") "User"}";
       intoClass = _item: "nixos";
-      intoPath = _item: [
-        "environment"
-        "persistence"
-        host.impermanence.persistenceDir
-        "users"
-        user.userName
-      ];
+      intoPath = target:
+        [
+          "environment"
+          "persistence"
+          host.impermanence.persistenceDir
+        ]
+        ++ lib.optionals (target == "user") [
+          "users"
+          user.userName
+        ];
       fromAspect = _item: lib.head aspect-chain;
       adaptArgs = {config, ...}: {
         osConfig = config;
@@ -69,7 +55,7 @@ in {
   };
 
   den.aspects.impermanence = {host, ...}: {
-    includes = [persys];
+    includes = [persistClass];
     nixos = {
       imports = [inputs.impermanence.nixosModules.impermanence];
       # This should be minimal for a truly pure setup
@@ -156,7 +142,6 @@ in {
     den._.define-user
     den._.mutual-provider
     # Currently this does nothing if host doesn't import impermanence
-    persysUser
     stylixClass
   ];
 }
