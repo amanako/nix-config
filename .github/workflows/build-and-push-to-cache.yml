@@ -33,9 +33,6 @@ jobs:
           helix, nix-gaming, vic, fzakaria
         skipPush: true
 
-    - name: Print nix.conf contents
-      run: cat ~/.config/nix/nix.conf
-
     - name: Setup packages
       run: |
         nix --accept-flake-config profile add \
