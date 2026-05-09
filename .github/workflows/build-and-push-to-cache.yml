@@ -31,12 +31,8 @@ jobs:
           helix, nix-gaming, vic, fzakaria
         skipPush: true
 
-    - name: Setup extra substituters
-      run: |
-        tee -a ~/.config/nix/nix.conf <<EOF
-          substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss
-          trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
-        EOF
+    - name: Print nix.conf contents
+      run: cat ~/.config/nix/nix.conf
 
     - name: Setup packages
       run: |
