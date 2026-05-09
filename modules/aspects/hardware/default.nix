@@ -1,5 +1,17 @@
-{
+{den, ...}: {
   den.aspects.hardware = {
+    includes = [
+      # Using perHost avoids duplication.
+      (den.lib.perHost (
+        {
+          host,
+          lib,
+        }:
+        # TODO: Look into fix
+          lib.optional host.wantsNvidiaSupport den.aspects.nvidia
+      ))
+    ];
+
     nixos = {pkgs, ...}: {
       services.pipewire = {
         enable = true;

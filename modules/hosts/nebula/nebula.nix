@@ -6,7 +6,6 @@
 
       boot
       performance
-      nvidia
       displayManagers._.ly
       utility
     ];

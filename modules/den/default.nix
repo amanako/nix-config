@@ -1,16 +1,8 @@
 {den, ...}: {
   den.default = {
     includes = [
+      # Preprocessed inputs for host system
       den._.inputs'
-      # Using perHost avoids duplication.
-      (den.lib.perHost (
-        {
-          host,
-          lib,
-        }:
-        # TODO: Look into fix
-          lib.optional host.wantsNvidiaSupport den.aspects.nvidia
-      ))
     ];
 
     persys = {
