@@ -20,11 +20,22 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
         extra_nix_config: |
           experimental-features = nix-command flakes
+          extra-substituters = https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss
+          extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
           accept-flake-config = true
+
+    - name: Setup caches
+      uses: cachix/cachix-action@v17
+      with:
+        name: amanako
+        extraPullNames: >
+          nix-community, yazi, niri, noctalia,
+          helix, nix-gaming, vic, fzakaria
+        skipPush: true
 
     - name: Setup packages
       run: |
-        nix profile add \
+        nix --accept-flake-config profile add \
           github:juspay/omnix#default \
           github:juspay/cachix-push#default
 
