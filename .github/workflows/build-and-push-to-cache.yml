@@ -46,6 +46,7 @@ jobs:
       run: om ci run --results=om.json
 
     - name: Push to cache
-      run: cachix-push-om-outputs -c amanako \
-        --subflake ROOT \
-        --prefix "$(git branch --show-current)" < om.json
+      run: |
+        cachix-push-om-outputs -c amanako \
+          --subflake ROOT \
+          --prefix "$(git branch --show-current)" < om.json
