@@ -16,7 +16,7 @@
     overlays = with inputs; [
       nix-cachyos-kernel.overlays.pinned
       yazi.overlays.default
-      neovim-nightly-overlay.overlays.default
+      # neovim-nightly-overlay.overlays.default
       helix.overlays.helix
     ];
   in {
