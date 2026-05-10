@@ -44,11 +44,5 @@
 
       home.stateVersion = "25.11";
     };
-
-    user = {
-      includes = [
-        den._.define-user
-      ];
-    };
   };
 }
