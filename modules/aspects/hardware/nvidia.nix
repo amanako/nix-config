@@ -1,13 +1,11 @@
 {den, ...}: {
   den.aspects.nvidia = {host, ...}: {
-    provides.to-users = {
-      includes = [
-        (den._.unfree [
-          "nvidia-x11"
-          "nvidia-settings"
-        ])
-      ];
-    };
+    includes = [
+      (den._.unfree [
+        "nvidia-x11"
+        "nvidia-settings"
+      ])
+    ];
 
     nixos = {
       lib,

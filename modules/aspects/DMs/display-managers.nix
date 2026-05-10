@@ -1,5 +1,5 @@
-{den, ...}: {
-  den.aspects.displayManagers = den.lib.parametric {
+{
+  den.aspects.displayManagers = {
     provides.lemurs = {
       # TODO: Implement conditional for adding user to "seat" group
       # Required for Wayland and would work correctly
