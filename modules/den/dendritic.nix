@@ -1,12 +1,13 @@
-{
-  inputs,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
+  imports = [
+    (inputs.flake-file.flakeModules.dendritic or {})
+    (inputs.den.flakeModules.dendritic or {})
+  ];
+
   flake-file = {
     inputs = {
-      flake-file.url = "github:vic/flake-file";
-      den.url = lib.mkForce "github:denful/den";
+      flake-file.url = "github:denful/flake-file";
+      den.url = "github:denful/den";
       flake-parts.url = "github:hercules-ci/flake-parts";
     };
 
@@ -15,9 +16,4 @@
       extra-trusted-public-keys = ["vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII="];
     };
   };
-
-  imports = [
-    (inputs.flake-file.flakeModules.dendritic or {})
-    (inputs.den.flakeModules.dendritic or {})
-  ];
 }

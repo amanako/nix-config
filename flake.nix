@@ -16,12 +16,12 @@
       url = "gitlab:ntgn/ascii-art";
       flake = false;
     };
-    den.url = "github:vic/den";
+    den.url = "github:denful/den";
     disko.url = "github:nix-community/disko";
     dms.url = "github:AvengeMedia/DankMaterialShell/stable";
     dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    flake-file.url = "github:vic/flake-file";
+    flake-file.url = "github:denful/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
