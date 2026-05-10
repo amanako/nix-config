@@ -26,11 +26,13 @@ steps:
         chmod 700 "$GNUPGHOME"
 
       - |
+        # Pass contents to file to preserve format
+        echo "$${GPG_PRIVATE_KEY}" >> /tmp/key.txt
         echo "$${GPG_PASSPHRASE}" | \
-         gpg --batch --yes \
-         --pinentry-mode loopback \
-         --passphrase-fd 0 \
-         --import "$${GPG_PRIVATE_KEY}"
+          gpg --batch --yes \
+          --pinentry-mode loopback \
+          --passphrase-fd 0 \
+          --import /tmp/key.txt
 
       - |
         # Trust key (ultimate)
