@@ -43,13 +43,13 @@ steps:
         export GNUPGHOME=$(mktemp -d)
         chmod 700 "$GNUPGHOME"
 
-        gpg --batch --import <<EOF
-        $${GPG_PRIVATE_KEY}
-        EOF
-
-        if [ -n "$${GPG_PASSPHRASE}" ]; then
-          echo "$${GPG_PASSPHRASE}" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback --import-options import-reset --import
-        fi
+        echo "$${GPG_PRIVATE_KEY}" | gpg --batch --yes --import
+        echo "$${GPG_PASSPHRASE}" | \
+          gpg --batch --yes \
+          --pinentry-mode loopback \
+          --passphrase-fd 0 \
+          --edit-key "$(gpg --list-secret-keys --with-colons | cut -d: -f5 | head -n1)" \
+          trust quit
 
       - gpg --list-secret-keys "$${GPG_KEY_ID}"
 
