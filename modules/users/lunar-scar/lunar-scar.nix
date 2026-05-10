@@ -1,32 +1,31 @@
-{den, ...}: let
+{
+  den,
+  __findFile,
+  ...
+}: let
   u = "lunar-scar";
   h = "/home/${u}";
 in {
   den.aspects.${u} = {
-    includes =
-      [
-        den._.primary-user
-        (den._.user-shell "fish")
-      ]
-      ++ (with den.aspects; [
-        appearance
-        terminal
-        dev
-        nix
-        shell
+    includes = [
+      <den/primary-user>
+      (den._.user-shell "fish")
 
-        compositors._.niri
-        niri-binds
-        shells._.noctalia
-        shells._.noctalia._.niri
-        editors._.nixvim
-        # TODO: Look for failing to initiate init.lua out of $XDG_HOME
-        # editors._.neovim
-        editors._.helix
-        gaming
-        browsers._.zen-browser
-        utility
-      ]);
+      <appearance>
+      <terminal>
+      <dev>
+      <nix>
+      <shell>
+      <compositors/niri>
+      <niri-binds>
+      <shells/noctalia>
+      <shells/noctalia/niri>
+      <editors/nixvim>
+      <editors/helix>
+      <gaming>
+      <browsers/zen-browser>
+      <utility>
+    ];
 
     user = {
       initialPassword = "koko";
@@ -90,7 +89,6 @@ in {
 
       # Add personal config file for fcitx5
       # Recusrive is necessary when it's a folder
-      stylix.targets."fcitx5".enable = false;
       home.file.".config/fcitx5" = {
         source = ./fcitx5;
         recursive = true;
