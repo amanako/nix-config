@@ -4,24 +4,6 @@ when:
   - event: manual
 
 steps:
-  - name: update-and-check-flake
-    image: nixos/nix:latest
-    environment:
-      GITHUB_TOKEN:
-        from_secret: GITHUB_TOKEN
-    commands:
-      - |
-        tee -a /etc/nix/nix.conf <<EOF
-        experimental-features = nix-command flakes
-        access-tokens = github.com=$${GITHUB_TOKEN}
-        accept-flake-config = true
-        EOF
-      - nix run .#write-flake --show-trace
-      - nix flake update
-
-      - nix run .#write-flake --show-trace
-      - nix flake check -L
-
   - name: commit-and-push
     image: alpine/git:latest
     environment:
@@ -43,15 +25,20 @@ steps:
         export GNUPGHOME=$(mktemp -d)
         chmod 700 "$GNUPGHOME"
 
-        echo "$${GPG_PRIVATE_KEY}" | gpg --batch --yes --import
+      - |
         echo "$${GPG_PASSPHRASE}" | \
-          gpg --batch --yes \
-          --pinentry-mode loopback \
-          --passphrase-fd 0 \
-          --edit-key "$(gpg --list-secret-keys --with-colons | cut -d: -f5 | head -n1)" \
-          trust quit
+         gpg --batch --yes \
+         --pinentry-mode loopback \
+         --passphrase-fd 0 \
+         --import "$${GPG_PRIVATE_KEY}"
 
-      - gpg --list-secret-keys "$${GPG_KEY_ID}"
+      - |
+        # Trust key (ultimate)
+        KEY_FP=$(gpg --list-secret-keys --with-colons "$${GPG_KEY_ID}" \
+            | awk -F: '$1=="fpr"{print $10; exit}')
+
+        # Mark as ultimately trusted
+        printf "%s:6:\n" "$KEY_FP" | gpg --import-ownertrust
 
       - |
         # Setup git with signed commits
@@ -60,26 +47,21 @@ steps:
         git config --global user.signingKey "$${GPG_KEY_ID}"
         git config --global commit.gpgsign true
         git config --global gpg.program gpg
-
-      - |
-        # Prevent gpg from trying to use a tty
-        export GIT_TRACE=1 GIT_TRACE_SETUP=1
-        export GPG_TTY=$(tty || true)
-        export GPG_AGENT_INFO=
-        export GPGME_USE_STDIO=1
-          export PINENTRY_USER_DATA=
-        export GPG_OPTS="--pinentry-mode loopback --batch --yes"
+        git config --global gpg.format openpgp
+        git config --global gpg.openpgp.program "gpg --batch --yes --pinentry-mode loopback"
 
       - |
         BRANCH="weekly flake update $(date +%h-%d-%Y_%H:%M:%S)"
         git checkout -b "$BRANCH"
         git add flake.lock
 
+      - |
         if git diff --cached --quiet; then
           echo "flake.lock unchanged – nothing to do."
           exit 0
         fi
 
+      - |
         git commit -m "Weekly flake.lock update"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
 
