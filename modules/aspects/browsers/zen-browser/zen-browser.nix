@@ -1,6 +1,6 @@
 {
+  __findFile,
   inputs,
-  zen-browser,
   ...
 }: {
   flake-file.inputs = {
@@ -25,12 +25,12 @@
     };
 
     includes = [
-      zen-browser.containers
-      zen-browser.extensions
-      zen-browser.policies
-      zen-browser.settings
-      zen-browser.spaces
-      zen-browser.search
+      <zen-browser/containers>
+      <zen-browser/extensions>
+      <zen-browser/policies>
+      <zen-browser/settings>
+      <zen-browser/spaces>
+      <zen-browser/search>
     ];
 
     homeManager = {

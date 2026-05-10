@@ -1,6 +1,6 @@
 {
+  __findFile,
   inputs,
-  den,
   lib,
   ...
 }: {
@@ -21,22 +21,21 @@
   };
 
   den.aspects.base-host.includes = [
-    den._.hostname
-
-    den.aspects.disko
-    den.aspects.timezone
+    <den/hostname>
+    <disko>
+    <timezone>
   ];
 
   den.default.includes = [
-    den.aspects.overlays
+    <overlays>
   ];
 
   den.schema.host.includes = [
-    den.aspects.base-host
+    <base-host>
   ];
 
   den.schema.user.includes = [
-    den._.define-user
-    den._.mutual-provider
+    <den/define-user>
+    <den/mutual-provider>
   ];
 }

@@ -1,13 +1,16 @@
-{den, ...}: {
+{
+  __findFile,
+  den,
+  ...
+}: {
   den.aspects.nebula = {
-    includes = with den.aspects; [
-      nebula._.hardware
-      bootloader._.limine
-
-      boot
-      performance
-      displayManagers._.ly
-      utility
+    includes = [
+      <nebula/hardware>
+      <bootloader/limine>
+      <boot>
+      <performance>
+      <displayManagers/ly>
+      <utility>
     ];
   };
 }
