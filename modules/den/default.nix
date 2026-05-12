@@ -11,8 +11,18 @@
         # Without this dir all users/groups without specified
         # uids/gids will have them reassigned on reboot.
         "/var/lib/nixos"
-        # Preserve bluetooth device history
+
+        # Bluetooth device history
         "/var/lib/bluetooth"
+
+        # Wifi connections
+        "/etc/NetworkManager/system-connections"
+
+        # Popup lecturing on sudo usage
+        "/var/db/sudo/lectured"
+
+        # Time stamps for systemd tasks
+        "/var/lib/systemd/timers"
       ];
 
       files = [
@@ -21,8 +31,15 @@
       ];
     };
 
+    persysUser = {
+      directories = [
+        # Reduce buildtime by preserving git caches
+        ".cache/nix"
+      ];
+    };
+
     nixos = {pkgs, ...}: {
-      # Enable flakes and new nix command
+      # Enable flakes and nix command
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"
