@@ -21,7 +21,7 @@ in {
       <shells/noctalia>
       <shells/noctalia/niri>
       <editors/nixvim>
-      <editors/helix>
+      #<editors/helix>
       <gaming>
       <browsers/zen-browser>
       <utility>
@@ -30,7 +30,7 @@ in {
     user = {
       initialPassword = "koko";
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIt+pO+vGitCLBgAza007py6ze41xHFfMDSLfbd2K/ES codeberg"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPG5huz0B9qZ1gcuvMhCrc63piDJML/Hc/STMl55GWg awaremi"
       ];
     };
 
@@ -42,8 +42,10 @@ in {
         "Faks"
         "nix-config" # Main config
         "Pictures"
+        "keys"
 
         ".local/share/youtube-tui"
+        ".local/share/systemd/timers"
       ];
     };
 
@@ -59,7 +61,11 @@ in {
       ];
     };
 
-    homeManager = {pkgs, ...}: {
+    homeManager = {
+      pkgs,
+      config,
+      ...
+    }: {
       home.packages = with pkgs; [
         thunar
         youtube-tui
@@ -162,9 +168,9 @@ in {
         email = "codeberg@kairi6.anonaddy.com";
       };
 
-      programs.git.signing = {
-        key = "8AE5B72E5D17E0F5";
-      };
+      programs.git.signing.key = "5CB7F18E1B212DB2";
+
+      programs.gpg.homedir = "${config.home.homeDirectory}/keys/gnupg";
 
       programs.ssh = {
         enableDefaultConfig = false;
@@ -172,7 +178,7 @@ in {
           host = "codeberg.org";
           user = "git";
           port = 22;
-          identityFile = "~/.ssh/id_ed25519";
+          identityFile = "~/keys/ssh/id_ed25519";
         };
       };
     };
