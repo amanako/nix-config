@@ -42,7 +42,14 @@ in {
         "Faks"
         "nix-config" # Main config
         "Pictures"
-        "keys"
+        {
+          directory = "keys/ssh";
+          mode = "0700";
+        }
+        {
+          directory = "keys/gnupg";
+          mode = "0700";
+        }
 
         ".local/share/youtube-tui"
         ".local/share/systemd/timers"
