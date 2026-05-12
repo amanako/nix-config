@@ -1,25 +1,28 @@
 {
-  zen-browser.spaces = {
+  zen-browser.spaces = {user, ...}: {
     homeManager = {
-      programs.zen-browser.profiles."*" = {
+      programs.zen-browser.profiles."${user.userName}" = {
         spacesForce = true;
         spaces = {
           "Personal" = {
-            id = "c6de089c-410d-4206-961d-ab11f988d40a";
-            icon = "🧩";
+            id = "10000000-0000-4000-8000-000000000001";
+            icon = "☕";
             position = 1000;
+            container = 1;
           };
 
           "College" = {
-            id = "cdd10fab-4fc5-494b-9041-325e5759195b";
-            icon = "👜";
+            id = "10000000-0000-4000-8000-000000000002";
+            icon = "📚";
             position = 2000;
+            container = 2;
           };
 
           "JP" = {
-            id = "78aabdad-8aae-4fe0-8ff0-2a0c6c4ccc24";
+            id = "10000000-0000-4000-8000-000000000003";
             icon = "🈳";
             position = 3000;
+            container = 3;
           };
         };
       };
