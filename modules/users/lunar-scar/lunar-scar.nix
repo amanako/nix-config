@@ -183,9 +183,12 @@ in {
         enableDefaultConfig = false;
         matchBlocks."*" = {
           host = "codeberg.org";
+          hostname = "codeberg.org";
           user = "git";
           port = 22;
           identityFile = "~/keys/ssh/id_ed25519";
+          userKnownHostsFile = "~/keys/ssh/known_hosts";
+          hashKnownHosts = true;
         };
       };
     };
