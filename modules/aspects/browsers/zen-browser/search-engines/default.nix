@@ -1,11 +1,11 @@
 {
-  zen-browser.search = {
+  zen-browser.search = {user, ...}: {
     homeManager = {
       pkgs,
       lib,
       ...
     }: {
-      programs.zen-browser.profiles."*".search = let
+      programs.zen-browser.profiles."${user.userName}".search = let
         iconSize = "48"; # Possible values: 16, 22, 24, 32, 42, 48, 64, 84, 96
         iconBasePath = "${pkgs.papirus-icon-theme}/share/icons/Papirus/${iconSize}x${iconSize}";
         defaultIcon = "${iconBasePath}/apps/distributor-logo-nixos.svg"; # Fallback icon to use if none specified

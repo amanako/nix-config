@@ -1,24 +1,24 @@
 {
-  zen-browser.containers = {
-    homeManager.programs.zen-browser.profiles."*" = {
+  zen-browser.containers = {user, ...}: {
+    homeManager.programs.zen-browser.profiles."${user.userName}" = {
       containersForce = true;
       containers = {
-        Personal = {
+        "Personal" = {
+          id = 1;
           color = "purple";
           icon = "fingerprint";
-          id = 1;
         };
 
-        College = {
+        "College" = {
+          id = 2;
           color = "orange";
           icon = "briefcase";
-          id = 2;
         };
 
-        JP = {
+        "JP" = {
+          id = 3;
           color = "green";
           icon = "gift";
-          id = 3;
         };
       };
     };

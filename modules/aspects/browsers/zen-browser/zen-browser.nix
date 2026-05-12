@@ -8,10 +8,10 @@
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
   };
 
-  den.aspects.browsers._.zen-browser = {
+  den.aspects.browsers._.zen-browser = {user, ...}: {
     persysUser = {
       directories = [
-        ".config/zen/*"
+        ".config/zen/${user.userName}"
       ];
     };
 
@@ -19,7 +19,7 @@
       targets = {
         "zen-browser" = {
           enable = false;
-          profileNames = ["*"];
+          profileNames = ["${user.userName}"];
         };
       };
     };
