@@ -26,15 +26,6 @@
 
     persysUser = {
       directories = [
-        {
-          directory = ".ssh";
-          mode = "0600";
-        }
-        {
-          directory = ".gnupg";
-          mode = "0600";
-        }
-
         ".local/share/zoxide" # preserve zoxide database
       ];
 
