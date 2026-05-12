@@ -41,11 +41,8 @@
           };
 
           panicOnChecksumMismatch = true;
-          extraEntries = "/memtest86
-                              protocol: chainload
-                              path: boot():///efi/memtest86/memtest86.efi";
 
-          # Limine may fill up quickly
+          # Boot partition may fill up quickly
           maxGenerations = 10;
           efiSupport = true;
           enableEditor = true;
