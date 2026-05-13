@@ -58,7 +58,7 @@ steps:
     settings:
       gitea_address: https://codeberg.org
       gitea_token:
-        from_secret: $${GITEA_TOKEN}
+        from_secret: GITEA_TOKEN
       owner: ${CI_REPO_OWNER}
       repo: ${CI_REPO_NAME}
       branch: $(cat /tmp/branch_name)
