@@ -50,8 +50,6 @@ steps:
         git commit -m "Weekly flake.lock update"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
 
-      - echo "BRANCH=$BRANCH" >> $${WOODPECKER_ENV}
-
   - name: open-pr
     image: woodpeckercommunity/gitea-pull-request-create-plugin:latest
     pull: true
@@ -61,7 +59,7 @@ steps:
         from_secret: GITEA_TOKEN
       owner: ${CI_REPO_OWNER}
       repo: ${CI_REPO_NAME}
-      branch: ${BRANCH}
+      branch: ${CI_COMMIT_BRANCH}
       base_branch: main
       pr_title: Bump flake
       pr_body: |
