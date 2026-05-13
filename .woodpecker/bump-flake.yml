@@ -36,7 +36,7 @@ steps:
         git config --global user.email "$${GIT_AUTHOR_EMAIL}"
 
       - |
-        BRANCH="weekly-flake-update_$(date +%h/%d/%Y_%H-%M-%S)"
+        BRANCH="weekly-flake-update"
         git checkout -b "$BRANCH"
         git add flake.lock
 
@@ -59,7 +59,7 @@ steps:
         from_secret: GITEA_TOKEN
       owner: ${CI_REPO_OWNER}
       repo: ${CI_REPO_NAME}
-      branch: ${CI_COMMIT_BRANCH}
+      branch: weekly-flake-update
       base_branch: main
       pr_title: Bump flake
       pr_body: |
