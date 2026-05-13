@@ -31,51 +31,10 @@ steps:
         from_secret: GIT_AUTHOR_EMAIL
       GITEA_TOKEN:
         from_secret: GITEA_TOKEN
-      GPG_PRIVATE_KEY:
-        from_secret: GPG_PRIVATE_KEY
-      GPG_PASSPHRASE:
-        from_secret: GPG_PASSPHRASE
-      GPG_KEY_ID:
-        from_secret: GPG_KEY_ID
     commands:
       - |
-        apk add --no-cache gnupg pinentry
-        export GNUPGHOME=$(mktemp -d)
-        chmod 700 "$GNUPGHOME"
-
-      - |
-        # Pass contents to file to preserve format
-        echo "$${GPG_PRIVATE_KEY}" > /tmp/key.txt
-        echo "$${GPG_PASSPHRASE}" | \
-          gpg --batch --yes \
-          --pinentry-mode loopback \
-          --passphrase-fd 0 \
-          --import /tmp/key.txt
-
-      - |
-        # Trust key (ultimate)
-        KEY_FP=$(gpg --list-secret-keys --with-colons "$${GPG_KEY_ID}" \
-            | awk -F: '$1=="fpr"{print $10; exit}')
-
-        # Mark as ultimately trusted
-        printf "%s:6:\n" "$KEY_FP" | gpg --import-ownertrust
-
-      - |
-        cat > /usr/local/bin/gpg-wrapper <<'EOF'
-          #!/bin/sh
-          exec /usr/bin/gpg --batch --yes --pinentry-mode loopback "$@"
-        EOF
-        chmod +x /usr/local/bin/gpg-wrapper
-        git config --global gpg.program gpg-wrapper
-
-      - |
-        # Setup git with signed commits
-        export GPG_OPTS="--batch --yes --pinentry-mode loopback"
         git config --global user.name "$${GIT_AUTHOR_NAME}"
         git config --global user.email "$${GIT_AUTHOR_EMAIL}"
-        git config --global user.signingKey "$${GPG_KEY_ID}"
-        git config --global commit.gpgsign true
-        git config --global gpg.format openpgp
 
       - |
         BRANCH="weekly-flake-update_$(date +%h/%d/%Y_%H-%M-%S)"
