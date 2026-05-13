@@ -30,7 +30,12 @@
       ];
     };
 
-    nixos = {pkgs, ...}: {
+    nixos = {
+      pkgs,
+      lib,
+      config,
+      ...
+    }: {
       imports = with inputs.nix-gaming.nixosModules; [
         platformOptimizations
         pipewireLowLatency
@@ -52,44 +57,11 @@
 
       programs.steam = {
         enable = true;
+        protontricks.enable = true;
         platformOptimizations.enable = true;
 
-        remotePlay.openFirewall = true;
-        dedicatedServer.openFirewall = true;
-        gamescopeSession = {
-          enable = true;
-          env = {
-            # Requires hardware.nvidia.prime.offload.enable
-            __NV_PRIME_RENDER_OFFLOAD = "1";
-            __VK_LAYER_NV_optimus = "NVIDIA_only";
-            __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-          };
-          args = [
-            "-W"
-            "1920"
-            "-H"
-            "1080"
-            "-r"
-            "144"
-            # Fullscreen mode
-            "-f"
-            # Create 2 Xwayland instances (helps with certain games that need X11 support)
-            "--xwayland-count"
-            "2"
-            "--hdr-enabled"
-            "--hdr-debug-force-output"
-            "--hdr-itm-enabled"
-          ];
-          steamArgs = [
-            "pipewire-dmabuf"
-            "-steamdeck"
-            "-steamos3"
-          ];
-        };
-        fontPackages = with pkgs; [
-          biz-ud-gothic
-          hanazono
-        ];
+        fontPackages = builtins.filter lib.types.package.check config.fonts.packages;
+
         extraPackages = with pkgs; [
           gamescope
           gamescope-wsi
