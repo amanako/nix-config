@@ -170,9 +170,11 @@ in {
         location.name = "Serbia, Niš";
       };
 
-      programs.git.settings.user = {
+      programs.git.settings.user = let
         name = "abyssal-twilight";
-        email = "codeberg@kairi6.anonaddy.com";
+      in {
+        inherit name;
+        email = "${name}@noreply.codeberg.org";
       };
 
       programs.git.signing.key = "5CB7F18E1B212DB2";
