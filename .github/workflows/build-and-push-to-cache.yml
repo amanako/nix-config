@@ -23,6 +23,7 @@ jobs:
           substituters = https://cache.nixos.org https://attic.xuyh0120.win/lantian https://cache.nixos.asia/oss
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
           accept-flake-config = true
+          fallback = true
 
     - name: Setup caches
       uses: cachix/cachix-action@v17
