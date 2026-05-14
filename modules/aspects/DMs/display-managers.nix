@@ -1,8 +1,13 @@
 {
   den.aspects.displayManagers = {
     provides.lemurs = {
-      # TODO: Implement conditional for adding user to "seat" group
-      # Required for Wayland and would work correctly
+      host,
+      user,
+      ...
+    }: {
+      # Requirement for wayland
+      provides.to-users.user.extraGroups = ["seat"];
+
       nixos.services.displayManager.lemurs = {
         enable = true;
         settings = {
