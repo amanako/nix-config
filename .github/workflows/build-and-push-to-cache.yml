@@ -3,6 +3,11 @@ name: build-and-push
 on:
   push:
     branches: [main]
+    paths:
+      - modules/*
+      - .github/workflows/*
+      - flake.nix
+      - flake.lock
 
 env:
   CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
