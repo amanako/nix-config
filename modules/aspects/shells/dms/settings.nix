@@ -24,6 +24,7 @@
     };
 
     config.programs.dank-material-shell.settings =
+      lib.recursiveUpdate
       {
         currentThemeName = "Kitty Gruvbox";
         currentThemeCategory = "custom";
@@ -332,7 +333,6 @@
             name = browser;
           };
         };
-      }
-      config.programs.dank-material-shell.userSettings;
+      } (config.programs.dank-material-shell.userSettings);
   };
 }
