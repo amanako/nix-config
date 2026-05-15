@@ -12,7 +12,7 @@
 * https://github.com/zerokqx/ZNix (some [nixvim][nixvim] plugins)
 
 ## Design
-* [vic/den][den] framework with [SoC][SoC] in mind.
+* [denful/den][den] framework with [SoC][SoC] in mind.
 * Code is documented with tips I learned along the way.
 
 ## Goals
