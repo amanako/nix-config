@@ -118,11 +118,11 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1778354654,
-        "narHash": "sha256-f8aDZU0IZmwzPweimLgAaYTu8cj5VxVbGz3rL+mfWTY=",
+        "lastModified": 1778828450,
+        "narHash": "sha256-OU1lCuWTSNDFLfSTxrSxSpkkCD7rE1JJDtWpmZlhpb8=",
         "owner": "denful",
         "repo": "den",
-        "rev": "c2c23612f892f2e1c0d506c3af59f6f4d2122a9b",
+        "rev": "2c7f942907c062bbb8925cff79b72e5305e0f59a",
         "type": "github"
       },
       "original": {
