@@ -8,8 +8,8 @@
 in {
   den.aspects.${u} = {
     includes = [
-      <den/primary-user>
-      (den._.user-shell "fish")
+      <den.batteries.primary-user>
+      (den.batteries.user-shell "fish")
 
       <appearance>
       <terminal>

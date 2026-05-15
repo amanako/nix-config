@@ -21,7 +21,7 @@
   };
 
   den.aspects.base-host.includes = [
-    <den/hostname>
+    <den.batteries.hostname>
     <disko>
     <timezone>
   ];
@@ -35,7 +35,7 @@
   ];
 
   den.schema.user.includes = [
-    <den/define-user>
-    <den/mutual-provider>
+    <den.batteries.define-user>
+    <den.batteries.mutual-provider>
   ];
 }

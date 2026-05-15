@@ -18,7 +18,7 @@
 
   den.aspects.gaming = {
     includes = [
-      (den._.unfree [
+      (den.batteries.unfree [
         "steam"
         "steam-unwrapped"
       ])

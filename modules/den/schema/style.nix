@@ -5,7 +5,7 @@
   ...
 }: let
   stylixNixOSClass = {host, ...}:
-    den._.forward {
+    den.batteries.forward {
       each = lib.singleton true;
       fromClass = _: "stylix";
       intoClass = _: "nixos";
@@ -14,7 +14,7 @@
     };
 
   stylixHomeClass = {user, ...}:
-    den._.forward {
+    den.batteries.forward {
       each = lib.singleton true;
       fromClass = _: "stylixHome";
       intoClass = _: "homeManager";

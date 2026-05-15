@@ -2,7 +2,7 @@
   den.default = {
     includes = [
       # Preprocessed inputs for host system
-      den._.inputs'
+      den.batteries.inputs'
     ];
 
     persys = {

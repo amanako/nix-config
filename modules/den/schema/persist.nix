@@ -9,7 +9,7 @@
     user,
     ...
   }:
-    den._.forward {
+    den.batteries.forward {
       each = [
         "host"
         "user"
