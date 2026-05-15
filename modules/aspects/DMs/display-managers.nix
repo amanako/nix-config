@@ -30,8 +30,8 @@
       };
     };
 
-    provides.ly = {host, ...}: {
-      nixos.services.displayManager.ly = {
+    provides.ly.nixos = {host, ...}: {
+      services.displayManager.ly = {
         enable = true;
         settings = {
           animation = "matrix";

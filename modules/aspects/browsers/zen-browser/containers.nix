@@ -1,6 +1,6 @@
 {
-  zen-browser.containers = {user, ...}: {
-    homeManager.programs.zen-browser.profiles."${user.userName}" = {
+  zen-browser.containers.homeManager = {user, ...}: {
+    programs.zen-browser.profiles."${user.userName}" = {
       containersForce = true;
       containers = {
         "Personal" = {
