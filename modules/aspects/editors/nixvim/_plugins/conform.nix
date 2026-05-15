@@ -44,13 +44,11 @@
         lsp_fallback = "never";
       };
 
-      # TODO: Look into weird formatting bug
-      # Only format_after_save can be used asynchronously
-      # format_after_save = ''
-      #  { async = true }, function(err, did_edit)
-      #    -- called after formatting
-      #  end
-      #'';
+      format_after_save = ''
+        { async = true }, function(err, did_edit)
+          -- called after formatting
+        end
+      '';
     };
   };
 }

@@ -10,7 +10,7 @@
     ./gitsigns.nix
     ./lazygit.nix
     ./lint.nix
-    ./lsp-format.nix
+    #./lsp-format.nix
     ./lsp.nix
     ./lualine.nix
     ./mini.nix
