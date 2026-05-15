@@ -1,15 +1,11 @@
 {
-  den.aspects.bootloader = {
-    provides.limine = {
-      stylix = {
-        targets = {
-          "limine".enable = false;
-        };
-      };
+  den.aspects.bootloader.provides.limine = {
+    stylix.targets."limine".enable = false;
 
-      nixos = {pkgs, ...}: {
-        boot.loader.efi.canTouchEfiVariables = true;
-        boot.loader.limine = {
+    nixos = {pkgs, ...}: {
+      boot.loader = {
+        efi.canTouchEfiVariables = true;
+        limine = {
           enable = true;
           package = pkgs.limine-full;
           resolution = "1920x1080x32";
@@ -52,11 +48,7 @@
             verbose: yes
           '';
         };
-
-        # Setting to 0 will hide the OS choice for bootloaders.
-        # Any keypress will trigger it, but with limine causes a flash.
-        # I have decided to keep it at non-0, other bootloaders should be OK.
-        boot.loader.timeout = 5;
+        timeout = 5;
       };
     };
   };

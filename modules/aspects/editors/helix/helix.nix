@@ -1,8 +1,6 @@
 {
   flake-file = {
-    inputs = {
-      helix.url = "github:helix-editor/helix";
-    };
+    inputs.helix.url = "github:helix-editor/helix";
 
     nixConfig = {
       extra-substituters = ["https://helix.cachix.org"];
@@ -10,15 +8,11 @@
     };
   };
 
-  den.aspects.editors._.helix = {
-    homeManager = {
-      programs.helix = {
-        enable = true;
-        ignores = [
-          ".build/"
-          "!.gitignore"
-        ];
-      };
-    };
+  den.aspects.editors.provides.helix.homeManager.programs.helix = {
+    enable = true;
+    ignores = [
+      ".build/"
+      "!.gitignore"
+    ];
   };
 }

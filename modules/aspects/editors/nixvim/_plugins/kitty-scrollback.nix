@@ -1,5 +1,3 @@
 {
-  plugins.kitty-scrollback = {
-    enable = true;
-  };
+  plugins.kitty-scrollback.enable = true;
 }

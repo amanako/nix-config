@@ -10,11 +10,7 @@
           border = "rounded";
         };
       };
-      lsp = {
-        signature = {
-          enabled = false;
-        };
-      };
+      lsp.signature.enabled = false;
       default_mappings = false;
       presets = {
         command_palette = true;
@@ -89,9 +85,7 @@
               }
             ];
           };
-          filter_opts = {
-            count = 1;
-          };
+          filter_opts.count = 1;
           opts = {
             enter = true;
             format = "details";

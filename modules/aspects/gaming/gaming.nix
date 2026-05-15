@@ -4,9 +4,7 @@
   ...
 }: {
   flake-file = {
-    inputs = {
-      nix-gaming.url = "github:fufexan/nix-gaming";
-    };
+    inputs.nix-gaming.url = "github:fufexan/nix-gaming";
 
     nixConfig = {
       extra-substituters = ["https://nix-gaming.cachix.org"];
@@ -24,11 +22,9 @@
       ])
     ];
 
-    persysUser = {
-      directories = [
-        ".local/share/Steam"
-      ];
-    };
+    persysUser.directories = [
+      ".local/share/Steam"
+    ];
 
     nixos = {
       pkgs,

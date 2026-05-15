@@ -11,8 +11,8 @@
   };
 
   den.aspects.nix = {
-    nixos = {
-      nix.settings = {
+    nixos.nix = {
+      settings = {
         # Number of logical cores to use in parallel
         # "auto" will use all available
         max-jobs = "auto";
@@ -27,12 +27,12 @@
         ];
       };
 
-      nix.gc = {
+      gc = {
         automatic = true;
         dates = "weekly";
         options = "--delete-older-than 7d";
       };
-      nix.settings.auto-optimise-store = true;
+      settings.auto-optimise-store = true;
     };
 
     homeManager = {pkgs, ...}: {

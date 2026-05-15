@@ -1,22 +1,21 @@
 {inputs, ...}: {
-  flake-file = {
-    inputs = {
-      nixvim.url = "github:nix-community/nixvim";
-    };
-  };
+  flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
   den.aspects.editors.provides.nixvim = {
-    persysUser = {
-      directories = [
-        ".local/share/nvim"
-        ".local/state/nvim"
-      ];
-    };
+    persysUser.directories = [
+      ".local/share/nvim"
+      ".local/state/nvim"
+    ];
 
-    stylixHome = {
-      targets = {
-        "nixvim".enable = false;
-      };
+    stylixHome.targets."nixvim".enable = false;
+    nixos.xdg.mime.defaultApplications = {
+      "text/*" = "nvim.desktop";
+      "text/english" = "nvim.desktop";
+      "text/html" = "nvim.desktop";
+      "text/plain" = "nvim.desktop";
+      "inode/directory" = "thunar.desktop";
+      "x-scheme-handler/file" = "thunar.desktop";
+      "application/octet-stream" = "zen-twilight.desktop";
     };
 
     homeManager = {
@@ -94,9 +93,7 @@
         vimdiffAlias = true;
         wrapRc = true;
 
-        globals = {
-          mapleader = " ";
-        };
+        globals.mapleader = " ";
       };
     };
   };

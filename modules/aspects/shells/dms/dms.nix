@@ -1,7 +1,5 @@
 {inputs, ...}: {
-  flake-file.inputs = {
-    dms.url = "github:AvengeMedia/DankMaterialShell/stable";
-  };
+  flake-file.inputs.dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
   den.aspects.shells._.dms.homeManager = {
     lib,

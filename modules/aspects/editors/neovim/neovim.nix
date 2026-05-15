@@ -1,20 +1,15 @@
 {
   den.aspects.editors._.neovim = {
-    nixos = {
-      # Should fix binary problems with mason/tree-sitter for example
-      programs.nix-ld.enable = true;
-    };
+    persysUser.directories = [
+      ".local/share/nvim"
+      ".local/state/nvim"
+    ];
 
-    persysUser = {
-      directories = [
-        ".local/share/nvim"
-        ".local/state/nvim"
-      ];
-    };
+    # Fix for .config/init.lua out of home
+    stylixHome.targets."neovim".enable = false;
 
-    stylixHome = {lib, ...}: {
-      targets.neovim.enable = lib.mkForce false;
-    };
+    # Should fix binary problems with mason/tree-sitter for example
+    nixos.programs.nix-ld.enable = true;
 
     homeManager = {
       pkgs,
@@ -25,7 +20,6 @@
       configDir = "${config.home.homeDirectory}/nix-config/modules/aspects/editors/neovim/nvim";
     in {
       xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
-      # Fix for mkOutOfStoreSymlink to work
 
       programs.neovim = {
         enable = true;

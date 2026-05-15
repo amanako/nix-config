@@ -1,21 +1,13 @@
 {inputs, ...}: {
-  flake-file.inputs = {
-    nix-index-database.url = "github:nix-community/nix-index-database";
-  };
+  flake-file.inputs.nix-index-database.url = "github:nix-community/nix-index-database";
 
   den.aspects.utility = {
-    stylixHome = {
-      targets = {
-        # Required to avoid error: Conflicting managed target files: .config/fcitx5
-        "fcitx5".enable = false;
-      };
-    };
+    # Required to avoid error: Conflicting managed target files: .config/fcitx5
+    stylixHome.targets."fcitx5".enable = false;
 
-    nixos = {
-      programs.localsend = {
-        enable = true;
-        openFirewall = true;
-      };
+    nixos.programs.localsend = {
+      enable = true;
+      openFirewall = true;
     };
 
     homeManager = {

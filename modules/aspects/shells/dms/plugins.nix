@@ -1,9 +1,7 @@
 {inputs, ...}: {
-  flake-file.inputs = {
-    dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
-  };
+  flake-file.inputs.dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
 
-  den.aspects.shells._.dms.homeManager = {
+  den.aspects.shells.provides.dms.homeManager = {
     imports = [
       inputs.dms-plugin-registry.modules.default
     ];

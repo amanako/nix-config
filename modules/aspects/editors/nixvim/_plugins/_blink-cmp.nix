@@ -3,9 +3,7 @@
     enable = true;
     setupLspCapabilities = true;
     settings = {
-      keymap = {
-        preset = "default";
-      };
+      keymap.preset = "default";
 
       sources = {
         default = [
@@ -22,9 +20,7 @@
       };
 
       completion = {
-        keyword = {
-          range = "prefix"; # or "full"
-        };
+        keyword.range = "prefix";
         trigger = {
           prefetch_on_insert = false;
           show_in_snippet = true;

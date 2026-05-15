@@ -1,10 +1,6 @@
 {
   den.aspects.boot = {
-    stylix = {
-      targets = {
-        "plymouth".enable = false;
-      };
-    };
+    stylix.targets."plymouth".enable = false;
 
     nixos = {pkgs, ...}: {
       boot.plymouth = {

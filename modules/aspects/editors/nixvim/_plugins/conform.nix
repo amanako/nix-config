@@ -31,39 +31,26 @@
       notify_on_error = false;
       notify_no_formatters = false;
       formatters = {
-        stylua = {
-          command = lib.getExe pkgs.stylua;
-        };
-        shellcheck = {
-          command = lib.getExe pkgs.shellcheck;
-        };
-        shfmt = {
-          command = lib.getExe pkgs.shfmt;
-        };
-        shellharden = {
-          command = lib.getExe pkgs.shellharden;
-        };
-        prettier = {
-          command = lib.getExe pkgs.prettier;
-        };
-        prettier-d = {
-          command = lib.getExe pkgs.prettierd;
-        };
-        alejandra = {
-          command = lib.getExe pkgs.alejandra;
-        };
+        stylua.command = lib.getExe pkgs.stylua;
+        shellcheck.command = lib.getExe pkgs.shellcheck;
+        shfmt.command = lib.getExe pkgs.shfmt;
+        shellharden.command = lib.getExe pkgs.shellharden;
+        prettier.command = lib.getExe pkgs.prettier;
+        prettier-d.command = lib.getExe pkgs.prettierd;
+        alejandra.command = lib.getExe pkgs.alejandra;
       };
 
       default_format_opts = {
         lsp_fallback = "never";
       };
 
+      # TODO: Look into weird formatting bug
       # Only format_after_save can be used asynchronously
-      format_after_save = ''
-        { async = true }, function(err, did_edit)
-          -- called after formatting
-        end
-      '';
+      # format_after_save = ''
+      #  { async = true }, function(err, did_edit)
+      #    -- called after formatting
+      #  end
+      #'';
     };
   };
 }

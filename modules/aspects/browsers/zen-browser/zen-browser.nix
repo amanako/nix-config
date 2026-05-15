@@ -9,19 +9,13 @@
   };
 
   den.aspects.browsers._.zen-browser = {user, ...}: {
-    persysUser = {
-      directories = [
-        ".config/zen/${user.userName}"
-      ];
-    };
+    persysUser.directories = [
+      ".config/zen/${user.userName}"
+    ];
 
-    stylixHome = {
-      targets = {
-        "zen-browser" = {
-          enable = false;
-          profileNames = ["${user.userName}"];
-        };
-      };
+    stylixHome.targets."zen-browser" = {
+      enable = false;
+      profileNames = ["${user.userName}"];
     };
 
     includes = [

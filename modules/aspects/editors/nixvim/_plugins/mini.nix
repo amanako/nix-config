@@ -4,18 +4,10 @@
     mockDevIcons = true;
 
     modules = {
-      icons = {
-        enable = true;
-      };
-      starter = {
-        enable = true;
-      };
-      pairs = {
-        enable = true;
-      };
-      cmdline = {
-        enable = true;
-      };
+      icons.enable = true;
+      starter.enable = true;
+      pairs.enable = true;
+      cmdline.enable = true;
     };
   };
 }
