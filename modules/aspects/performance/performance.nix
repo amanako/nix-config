@@ -1,5 +1,5 @@
 {
-  den.aspects.performance.services = {
+  den.aspects.performance.nixos.services = {
     upower.enable = true;
     thermald.enable = true;
     auto-cpufreq = {
