@@ -4,38 +4,38 @@
   lib,
   ...
 }: {
-  flake-file.inputs = {
-    disko.url = "github:nix-community/disko";
-  };
+  flake-file.inputs.disko.url = "github:nix-community/disko";
 
-  den.aspects.disko = {host, ...}:
-    lib.optionalAttrs (host.disko.devices != {}) {
-      nixos = {
-        imports = [inputs.disko.nixosModules.disko];
-        inherit (host) disko;
+  den = {
+    aspects = {
+      disko = {host, ...}:
+        lib.optionalAttrs (host.disko.devices != {}) {
+          nixos = {
+            imports = [inputs.disko.nixosModules.disko];
+            inherit (host) disko;
+          };
+        };
+
+      timezone.nixos = {host, ...}: {
+        time.timeZone = host.timeZone or "UTC";
       };
+
+      base-host.includes = [
+        <den.batteries.hostname>
+        <disko>
+        <timezone>
+      ];
     };
 
-  den.aspects.timezone = {host, ...}: {
-    nixos.time.timeZone = host.timeZone or "UTC";
+    schema = {
+      host.includes = [
+        <base-host>
+      ];
+
+      user.includes = [
+        <den.batteries.define-user>
+        <den.batteries.mutual-provider>
+      ];
+    };
   };
-
-  den.aspects.base-host.includes = [
-    <den.batteries.hostname>
-    <disko>
-    <timezone>
-  ];
-
-  den.default.includes = [
-    <overlays>
-  ];
-
-  den.schema.host.includes = [
-    <base-host>
-  ];
-
-  den.schema.user.includes = [
-    <den.batteries.define-user>
-    <den.batteries.mutual-provider>
-  ];
 }

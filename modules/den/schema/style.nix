@@ -4,6 +4,7 @@
   den,
   ...
 }: let
+  # Activated on host context - always
   stylixNixOSClass = {host, ...}:
     den.batteries.forward {
       each = lib.singleton true;
@@ -13,6 +14,7 @@
       guard = {options, ...}: options ? stylix;
     };
 
+  # Activated only when user context present
   stylixHomeClass = {user, ...}:
     den.batteries.forward {
       each = lib.singleton true;
@@ -22,67 +24,65 @@
       guard = {options, ...}: options ? stylix;
     };
 in {
-  flake.den = den;
+  flake-file.inputs.stylix.url = "github:nix-community/stylix";
 
-  flake-file.inputs = {
-    stylix.url = "github:nix-community/stylix";
-  };
+  den = {
+    aspects.stylix = {host, ...}: {
+      includes = [stylixNixOSClass];
 
-  den.aspects.stylix = {host, ...}: {
-    includes = [stylixNixOSClass];
-
-    nixos = {
-      pkgs,
-      config,
-      ...
-    }:
-      lib.optionalAttrs host.enableStyling {
-        # Automatically enables stylix for home manager if detected
-        imports = [inputs.stylix.nixosModules.stylix];
-        stylix = {
-          enable = true;
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
-          polarity = "dark";
-          opacity = {
-            applications = 0.87;
-            desktop = 0.85;
-            popups = 0.86;
-            terminal = 0.85;
-          };
-
-          icons = {
+      nixos = {
+        pkgs,
+        config,
+        ...
+      }:
+        lib.optionalAttrs host.enableStyling {
+          # Automatically enables stylix for home manager if detected
+          imports = [inputs.stylix.nixosModules.stylix];
+          stylix = {
             enable = true;
-            package = pkgs.papirus-icon-theme;
-            dark = "Papirus-Dark";
-            light = "Papirus-Light";
-          };
+            base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
+            polarity = "dark";
+            opacity = {
+              applications = 0.87;
+              desktop = 0.85;
+              popups = 0.86;
+              terminal = 0.85;
+            };
 
-          fonts = {
-            monospace = {
-              package = pkgs.nerd-fonts.victor-mono;
-              name = "VictorMono Nerd Font";
+            icons = {
+              enable = true;
+              package = pkgs.papirus-icon-theme;
+              dark = "Papirus-Dark";
+              light = "Papirus-Light";
             };
-            sansSerif = {
-              package = pkgs.inter;
-              name = "Inter";
-            };
-            # Serif fonts can be bothersome
-            serif = config.stylix.fonts.sansSerif;
-            emoji = {
-              package = pkgs.twemoji-color-font;
-              name = "Twemoji";
+
+            fonts = {
+              monospace = {
+                package = pkgs.nerd-fonts.victor-mono;
+                name = "VictorMono Nerd Font";
+              };
+              sansSerif = {
+                package = pkgs.inter;
+                name = "Inter";
+              };
+              # Serif fonts can be bothersome
+              serif = config.stylix.fonts.sansSerif;
+              emoji = {
+                package = pkgs.twemoji-color-font;
+                name = "Twemoji";
+              };
             };
           };
         };
-      };
+    };
+
+    schema.host.includes = [
+      den.aspects.stylix
+    ];
+
+    schema.user.includes = [
+      # Allow users to modify stylix settings regarding home manager programs
+      stylixHomeClass
+    ];
   };
-
-  den.schema.host.includes = [
-    den.aspects.stylix
-  ];
-
-  den.schema.user.includes = [
-    # Allow users to modify stylix settings regarding home manager programs
-    stylixHomeClass
-  ];
 }

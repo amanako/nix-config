@@ -3,6 +3,7 @@
     includes = [
       # Preprocessed inputs for host system
       den.batteries.inputs'
+      den.aspects.overlays
     ];
 
     persys = {
@@ -31,12 +32,10 @@
       ];
     };
 
-    persysUser = {
-      directories = [
-        # Reduce buildtime by preserving git caches
-        ".cache/nix"
-      ];
-    };
+    persysUser.directories = [
+      # Reduce buildtime by preserving git caches
+      ".cache/nix"
+    ];
 
     nixos = {pkgs, ...}: {
       # Enable flakes and nix command
@@ -51,7 +50,6 @@
       ];
 
       system.stateVersion = "25.11";
-
       home-manager.backupFileExtension = "backup";
     };
 

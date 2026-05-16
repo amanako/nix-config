@@ -32,20 +32,20 @@
       guard = {options, ...}: options ? environment.persistence;
     };
 in {
-  flake-file.inputs = {
-    impermanence.url = "github:nix-community/impermanence";
-  };
+  flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
 
-  den.aspects.impermanence = {host, ...}: {
-    includes = [persistClass];
-    nixos = {
-      imports = [inputs.impermanence.nixosModules.impermanence];
-      # This should be minimal for a truly pure setup
-      fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
+  den = {
+    aspects.impermanence = {host, ...}: {
+      includes = [persistClass];
+      nixos = {
+        imports = [inputs.impermanence.nixosModules.impermanence];
+        # This should be minimal for a truly pure setup
+        fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
+      };
     };
-  };
 
-  den.schema.host.includes = [
-    den.aspects.impermanence
-  ];
+    schema.host.includes = [
+      den.aspects.impermanence
+    ];
+  };
 }
