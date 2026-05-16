@@ -170,15 +170,6 @@ in {
         location.name = "Serbia, Niš";
       };
 
-      programs.git.settings.user = let
-        name = "abyssal-twilight";
-      in {
-        inherit name;
-        email = "${name}@noreply.codeberg.org";
-      };
-
-      programs.git.signing.key = "5CB7F18E1B212DB2";
-
       programs.gpg.homedir = "${config.home.homeDirectory}/keys/gnupg";
 
       programs.ssh = {

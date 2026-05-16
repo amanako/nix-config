@@ -20,8 +20,14 @@
     # Changing default directory implicitly enables module
     impermanence.persistenceDir = "/persist";
 
-    users = {
-      lunar-scar.classes = ["homeManager"];
+    users.lunar-scar = {
+      git = let
+        username = "abyssal-twilight";
+      in {
+        inherit username;
+        email = "${username}@noreply.codeberg.org";
+        signingKey = "5CB7F18E1B212DB2";
+      };
     };
 
     disko.devices = {
