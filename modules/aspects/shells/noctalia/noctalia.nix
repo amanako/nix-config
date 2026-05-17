@@ -10,10 +10,14 @@
     };
   };
 
-  den.aspects.shells.provides.noctalia = {user, ...}: {
+  den.aspects.shells.provides.noctalia = {
     stylixHome.targets."noctalia-shell".enable = false;
 
+    # Only show start screen when changelog actually changes to a new commit
+    persysUser.files = [".cache/noctalia/shell-state.json"];
+
     homeManager = {
+      user,
       config,
       lib,
       ...
@@ -82,30 +86,32 @@
           # then selecting option "Copy settings" from "General" tab and in my
           # opinion most settings can be derived from there whereas only a few
           # where variables may come handy should abuse nix
-          settings = lib.recursiveUpdate (
-            lib.recursiveUpdate
-            (builtins.fromJSON (builtins.readFile ./settings.json))
-            {
-              general = {
-                # Should be easily identifyable in user section
-                avatarImage = "${config.home.sessionVariables.NH_FLAKE}/nix-config/modules/users/${user.userName}/.face";
-              };
+          settings =
+            lib.recursiveUpdate (
+              lib.recursiveUpdate
+              (builtins.fromJSON (builtins.readFile ./settings.json))
+              {
+                general = {
+                  # Should be easily identifyable in user section
+                  avatarImage = "${config.home.sessionVariables.NH_FLAKE}/nix-config/modules/users/${user.userName}/.face";
+                };
 
-              ui = {
-                fontDefault = "Mona Sans Display Light";
-                fontFixed = "VictorMono NF";
-              };
+                ui = {
+                  fontDefault = "Mona Sans Display Light";
+                  fontFixed = "VictorMono NF";
+                };
 
-              appLauncher = {
-                terminalCommand = "${term} -e";
-              };
+                appLauncher = {
+                  terminalCommand = "${term} -e";
+                };
 
-              colorSchemes = {
-                predefinedScheme = "Gruvbox";
-              };
-            }
-            # Users setting potentially override other two attrsets
-          ) (config.programs.noctalia-shell.userSettings);
+                colorSchemes = {
+                  predefinedScheme = "Gruvbox";
+                };
+              }
+              # Users setting potentially override other two attrsets
+            )
+            config.programs.noctalia-shell.userSettings;
         };
       };
     };
