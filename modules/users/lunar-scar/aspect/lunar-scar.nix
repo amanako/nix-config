@@ -98,12 +98,12 @@ in {
 
       # Add a custom fontconfig file from current directory
       fonts.fontconfig.enable = true;
-      home.file.".config/fontconfig/fonts.conf".source = ./fontconfig.conf;
+      home.file.".config/fontconfig/fonts.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.NH_FLAKE}/assets/users/${u}/fontconfig.conf";
 
       # Add personal config file for fcitx5
       # Recusrive is necessary when it's a folder
       home.file.".config/fcitx5" = {
-        source = ./fcitx5;
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.NH_FLAKE}/assets/users/${u}/fcitx5";
         recursive = true;
       };
 
