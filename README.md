@@ -79,8 +79,8 @@ nix-shell -p git --run "https://codeberg.org/abyssal-twilight/nix-config.git" &&
 ```
 This is preferably done in user's `home` folder.
 
-Users can be created by making a folder in [`users`](modules/users) directory and adding an entry to [`hosts.nix`](modules/den/hosts.nix).<br>
-My current user is provided as an example.
+Users can be created by making an entry in [`users`](modules/den/users) directory and adding an entry under [`hosts`](modules/den/hosts) folder.<br>
+My current user and host is provided as an example.
 
 [kitty]: https://sw.kovidgoyal.net/kitty
 [neovim]: https://neovim.io
