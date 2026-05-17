@@ -50,7 +50,6 @@
       ];
 
       system.stateVersion = "25.11";
-      home-manager.backupFileExtension = "backup";
     };
 
     homeManager = {

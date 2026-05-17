@@ -34,7 +34,32 @@
 in {
   flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
 
-  den = {
+  # Workaround for config.includes not working.
+  # From my experience it should be avoided since it fails.
+  # Using it causes error for this aspect:
+  # error: attribute 'persistence' missing
+  den = {config, ...}: {
+    schema.host.options.impermanence = let
+      defaultPersysDir = "/nix/persist/system";
+    in
+      lib.mkOption {
+        type = lib.types.submodule {
+          options.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = config.impermanence.persistenceDir != defaultPersysDir;
+            description = "Whether to enable impermanence module";
+          };
+
+          options.persistenceDir = lib.mkOption {
+            type = lib.types.str;
+            default = defaultPersysDir;
+            description = "Directory for impermanence persistent storage";
+          };
+        };
+      };
+
+    schema.host.includes = [den.aspects.impermanence];
+
     aspects.impermanence = {host, ...}: {
       includes = [persistClass];
       nixos = {
@@ -43,9 +68,5 @@ in {
         fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
       };
     };
-
-    schema.host.includes = [
-      den.aspects.impermanence
-    ];
   };
 }
