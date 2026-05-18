@@ -34,7 +34,7 @@
 | Functionality | Software |
 |:----------------:|:---------------------------------------------------------------------:|
 | Terminal | [kitty] |
-| File Editor | [neovim](native and [nixvim]) |
+| File Editor | [neovim][neovim](native and [nixvim]) |
 | File Manager | [yazi] / [thunar] |
 | Window Manager | [niri] |
 | Quickshell | [noctalia], with [dms] as another option |
@@ -198,7 +198,7 @@ but `rebuild` alias is provided if including `den.aspects.shell` for example.
 
 After rebuilding, extra steps are needed to enable secure boot.
 
-For [limine]:
+For [limine][limine]:
 
 - Boot to firmware and clear keys via _restart to setup mode_ or similar.
 - Run:
@@ -218,6 +218,22 @@ If anything fails try the following:
 
 - Secure boot failures in BIOS: Apply previously mentioned setup mode in bios. Retry.
 - Keys don't get recognized: Temporarily remove wantsSecureBootSupport host option, run 'sbctl reset', rebuild and remove `/var/lib/sbctl`(for non-ephemeral users). Reboot and retry.
+
+## Pulling remote changes
+
+Run following in case of updates on remote (weekly flake update workflows or similar):
+
+```
+# Grab latest commits
+git fetch origin
+# Preserve unstagged changes if present
+git stash
+# Rebase
+git rebase origin/main
+# Retrieve working directory
+git stash pop
+
+```
 
 ## Tips
 
@@ -247,9 +263,11 @@ Assets from third-party repositories(primarily flake-inputs, den included) are l
 Sometimes den will reject `lib` to be put into lambda scope of aspects like this:
 
 ```
+
 den.aspects.bootloader.provides.limine = {host, lib, ...}: {
 ...
 }
+
 ```
 
 remove lib or include it in file scope instead.<br>
