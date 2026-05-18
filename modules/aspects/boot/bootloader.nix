@@ -1,10 +1,50 @@
 {
+  den,
+  __findFile,
+  lib,
+  ...
+}: {
+  flake.den = den;
   den.aspects.bootloader.provides.limine = {
+    secureBoot = {host, ...}:
+      lib.optionalAttrs host.wantsSecureBootSupport {
+        provides.to-hosts.persys.directories = [
+          "/var/lib/sbctl"
+        ];
+
+        nixos = {pkgs, ...}: {
+          # Status can be verified via sbctl status
+          environment.systemPackages = with pkgs; [
+            sbctl
+          ];
+
+          boot.loader.limine = {
+            # Editor must be disabled for security reasons
+            enableEditor = lib.mkForce false;
+            secureBoot = {
+              enable = true;
+              #autoGenerateKeys = true;
+              #autoEnrollKeys = {
+              #  enable = true;
+              #  extraArgs = [
+              #    "--microsoft"
+              #   "--firmware-builtin"
+              #  ];
+              # };
+            };
+          };
+        };
+      };
+
+    includes = [
+      <bootloader/limine/secureBoot>
+    ];
     stylix.targets."limine".enable = false;
 
     nixos = {pkgs, ...}: {
       boot.loader = {
         efi.canTouchEfiVariables = true;
+        timeout = 5;
         limine = {
           enable = true;
           package = pkgs.limine-full;
@@ -35,20 +75,16 @@
               })
             ];
           };
-
           panicOnChecksumMismatch = true;
-
           # Boot partition may fill up quickly
           maxGenerations = 10;
           efiSupport = true;
           enableEditor = true;
-
           extraConfig = ''
             serial: yes
             verbose: yes
           '';
         };
-        timeout = 5;
       };
     };
   };

@@ -1,6 +1,8 @@
 {
   den.schema.host = {lib, ...}: {
     options = {
+      wantsSecureBootSupport = lib.mkEnableOption "secure boot support";
+
       batteryID = lib.mkOption {
         type = lib.types.str;
         default = "";
