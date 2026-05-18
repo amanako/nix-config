@@ -16,13 +16,13 @@ vim.opt.completeopt = "noselect"
 vim.diagnostic.config({ virtual_text = false })
 
 vim.opt.swapfile = false
-vim.opt.backup = false      -- disable backup files
-vim.opt.undofile = false    -- disable undo file persistence
+vim.opt.backup = false -- disable backup files
+vim.opt.undofile = false -- disable undo file persistence
 
 -- kitty: progressive enhancement key protocol
 if vim.env.TERM == "xterm-256color" then
-  vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])
-  vim.cmd([[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]])
+	vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])
+	vim.cmd([[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]])
 end
 
 -- undercurl support

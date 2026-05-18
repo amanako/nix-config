@@ -26,7 +26,7 @@ return {
 	},
 	opts = {
 		formatters_by_ft = {
-			cpp = { 'clang-format' },
+			cpp = { "clang-format" },
 			css = { "prettier" },
 			html = { "prettier" },
 			json = { "prettier" },
@@ -44,6 +44,6 @@ return {
 				require("conform").format({ bufnr = args.buf })
 			end,
 		})
-    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 	end,
 }
