@@ -7,8 +7,10 @@ steps:
     image: alpine:3.20
     commands:
       - apk add --no-cache curl gnupg xz
-      - curl -L https://nixos.org/nix/install | sh
-      - . /root/.nix-profile/etc/profile.d/nix.sh
+      - mkdir -p /tmp/nix
+      - export NIX_INSTALLER_ROOT=/tmp/nix
+      - curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --install-dir /tmp/nix
+      - . /tmp/nix/profile/etc/profile.d/nix.sh
       - nix-env -iA nixpkgs.alejandra
       - alejandra -c **/*.nix
 
