@@ -6,7 +6,7 @@ steps:
   - name: format nix with alejandra
     image: alpine:3.20
     commands:
-      - apk add --no-cache curl gnupg
+      - apk add --no-cache curl gnupg xz
       - curl -L https://nixos.org/nix/install | sh
       - . /root/.nix-profile/etc/profile.d/nix.sh
       - nix-env -iA nixpkgs.alejandra
