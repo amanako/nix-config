@@ -1,0 +1,10 @@
+when:
+  - event: push
+    branch: main
+
+steps:
+  - name: check flake
+    image: nixos/nix:latest
+    commands:
+      - echo "experimental-features = nix-commmand flakes" >> /etc/nix/nix.conf
+      - nix --accept-flake-config flake check -Lv
