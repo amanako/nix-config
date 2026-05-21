@@ -1,12 +1,6 @@
-layer-rule {
-  match namespace="^waybar$"
-  background-effect {
-    blur true
-    xray false
-  }
-}
-
 window-rule {
+    match app-id="^(nvidia-settings|thunar|kitty|zen-twilight|steam)$"
+    opacity 0.92
     background-effect {
         blur true
         xray false

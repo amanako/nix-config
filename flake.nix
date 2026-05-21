@@ -31,7 +31,8 @@
     impermanence.url = "github:nix-community/impermanence";
     import-tree.url = "github:vic/import-tree";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:sodiboo/niri-flake/very-refactor";
+    niri-pkgs.url = "github:sodiboo/niri-flake";
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
       inputs.nixpkgs.follows = "nixpkgs";

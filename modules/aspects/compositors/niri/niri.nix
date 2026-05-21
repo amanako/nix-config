@@ -4,9 +4,8 @@
   ...
 }: {
   flake-file = {
-    inputs = {
-      niri.url = "github:sodiboo/niri-flake";
-    };
+    inputs.niri.url = "github:sodiboo/niri-flake/very-refactor";
+    inputs.niri-pkgs.url = "github:sodiboo/niri-flake";
 
     nixConfig = {
       extra-substituters = ["https://niri.cachix.org"];
@@ -17,20 +16,20 @@
   den.aspects.compositors.provides.niri = {
     provides.binds = den.aspects.niri-binds;
 
-    nixos = {pkgs, ...}: {
+    nixos = {inputs', ...}: {
       systemd.user.services.niri-flake-polkit.enable = false;
-      nixpkgs.overlays = [inputs.niri.overlays.niri];
+      nixpkgs.overlays = [inputs.niri-pkgs.overlays.niri];
       # Necessary for niri to be enabled globally and then enabled per-user
       # This helps since it can be caught by display managers
       # We also want to match nixos and home-manager versions
       programs.niri = {
         enable = true;
-        package = pkgs.niri-unstable;
+        package = inputs'.niri-pkgs.packages.niri-unstable;
       };
     };
 
     homeManager = {
-      pkgs,
+      inputs',
       lib,
       config,
       ...
@@ -72,11 +71,16 @@
 
       config.nixpkgs.overlays = [inputs.niri.overlays.niri];
 
-      config.programs.niri = {
+      config.programs.niri = let
+        niriPkgs = inputs'.niri-pkgs.packages;
+      in {
         enable = true;
-        package = pkgs.niri-unstable;
+        package = niriPkgs.niri-unstable;
         # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
         settings = {
+          includes = lib.mkAfter [
+            ./blur.kdl
+          ];
           # Important variables to initialize wayland - will likely crash otherwise
           environment = {
             XDG_CURRENT_DESKTOP = "niri";
@@ -91,7 +95,7 @@
           };
 
           # For compatibility with various X11-based programs while running niri
-          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-unstable;
+          xwayland-satellite.path = lib.getExe niriPkgs.xwayland-satellite-unstable;
 
           layout = {
             gaps = 6;
