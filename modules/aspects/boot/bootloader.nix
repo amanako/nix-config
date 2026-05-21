@@ -1,10 +1,8 @@
 {
-  den,
   __findFile,
   lib,
   ...
 }: {
-  flake.den = den;
   den.aspects.bootloader.provides.limine = {
     secureBoot = {host, ...}:
       lib.optionalAttrs host.wantsSecureBootSupport {
