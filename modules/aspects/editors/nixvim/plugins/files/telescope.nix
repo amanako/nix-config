@@ -9,7 +9,11 @@
     };
     extensions = {
       ui-select.enable = true;
-      zf-native.enable = true;
+      fzf-native.enable = true;
+      media-files.enable = true;
+      manix.enable = true;
+      undo.enable = true;
+      frecency.enable = true;
     };
   };
 }
