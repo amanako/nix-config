@@ -1,5 +1,5 @@
 {
-  plugins.dashboard = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.dashboard = {
     enable = true;
     settings = {
       theme = "doom";

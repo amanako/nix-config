@@ -1,5 +1,5 @@
 {
-  plugins.telescope = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.telescope = {
     enable = true;
     keymaps = {
       "<leader><leader>" = "find_files";

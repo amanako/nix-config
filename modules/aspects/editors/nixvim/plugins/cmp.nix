@@ -1,5 +1,5 @@
 {
-  plugins.cmp = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.cmp = {
     enable = true;
     autoEnableSources = true;
     cmdline = {

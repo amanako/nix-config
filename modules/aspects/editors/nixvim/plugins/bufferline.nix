@@ -1,5 +1,5 @@
 {
-  plugins.bufferline = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.bufferline = {
     enable = true;
     settings.options = {
       diagnostics = "nvim_lsp";

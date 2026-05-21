@@ -1,10 +1,25 @@
-{inputs, ...}: {
+{
+  __findFile,
+  inputs,
+  ...
+}: {
+  imports = [(inputs.den.namespace "nixvim" false)];
+
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
-  den.aspects.editors.provides.nixvim = {
+  den.aspects.editors._.nixvim = {
     persysUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
+    ];
+
+    includes = [
+      <nixvim/colorschemes>
+      <nixvim/dependencies>
+      <nixvim/keymaps>
+      <nixvim/opts>
+      <nixvim/extra-config>
+      <nixvim/plugins>
     ];
 
     stylixHome.targets."nixvim".enable = false;
@@ -18,15 +33,8 @@
       "application/octet-stream" = "zen-twilight.desktop";
     };
 
-    homeManager = {
-      config,
-      pkgs,
-      lib,
-      ...
-    }: {
-      imports = [
-        inputs.nixvim.homeModules.nixvim
-      ];
+    homeManager = {config, ...}: {
+      imports = [inputs.nixvim.homeModules.nixvim];
 
       xdg.dataFile."applications/nvim.desktop".text = ''
         [Desktop Entry]
@@ -41,38 +49,12 @@
       '';
 
       programs.nixvim = {
-        imports = [
-          ./_colorschemes
-          ./_dependencies
-          ./_keymaps
-          ./_opts
-          ./_extraConfig
-          ./_plugins
-          {inherit pkgs lib;}
-        ];
-
         plugins.treesitter = {
           enable = true;
           nixGrammars = true;
-          grammarPackages = with config.programs.nixvim.plugins.treesitter.package.builtGrammars; [
-            bash
-            lua
-            markdown
-            nix
-            markdown_inline
-            rust
-            vim
-            vimdoc
-            yaml
-            cpp
-            c-sharp
-            html
-            css
-            javascript
-          ];
 
           settings = {
-            hightlight.enable = true;
+            highlight.enable = true;
             indent.enable = true;
             incremental_selection = {
               enable = true;

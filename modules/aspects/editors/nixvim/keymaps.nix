@@ -1,8 +1,8 @@
 {
-  keymaps = [
+  nixvim.keymaps.homeManager.programs.nixvim.keymaps = [
     {
       mode = "n";
-      key = "<C-s>";
+      key = "<leader>s";
       action = ":w<CR>";
       options = {
         desc = "Write file";
@@ -10,7 +10,7 @@
     }
     {
       mode = "n";
-      key = "<C-q>";
+      key = "<leader>q";
       action = ":q<CR>";
       options = {
         desc = "Close file";
@@ -43,9 +43,9 @@
     {
       mode = "n";
       key = "<leader>o";
-      action = "<cmd>lua MiniFiles.open()<CR>";
+      action = "<cmd>Yazi<CR>";
       options = {
-        desc = "Focus file tree";
+        desc = "Open Yazi";
       };
     }
     {

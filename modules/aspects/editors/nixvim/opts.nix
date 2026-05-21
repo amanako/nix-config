@@ -1,5 +1,5 @@
 {
-  opts = {
+  nixvim.opts.homeManager.programs.nixvim.opts = {
     # Numbers
     number = true;
     relativenumber = true;
@@ -12,8 +12,6 @@
     smartcase = true;
     incsearch = true;
     # hlsearch = true;
-
-    clipboard = "unnamedplus";
 
     # Tab/Shift
     shiftwidth = 2;

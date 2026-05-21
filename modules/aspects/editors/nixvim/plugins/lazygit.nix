@@ -1,5 +1,5 @@
 {
-  plugins.lazygit = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.lazygit = {
     enable = true;
     settings = {
       floating_window_winblend = 0;

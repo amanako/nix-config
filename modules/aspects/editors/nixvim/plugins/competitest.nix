@@ -1,5 +1,5 @@
 {
-  plugins.competitest = {
+  nixvim.plugins.homeManager.programs.nixvim.plugins.competitest = {
     enable = true;
     settings = {
       compile_command = {
