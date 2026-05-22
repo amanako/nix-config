@@ -34,14 +34,6 @@
     }
     {
       mode = "n";
-      key = "<leader>sf";
-      action = "<cmd>Telescope find_files<CR>";
-      options = {
-        desc = "Search files";
-      };
-    }
-    {
-      mode = "n";
       key = "<leader>o";
       action = "<cmd>Yazi<CR>";
       options = {
@@ -66,22 +58,6 @@
     }
     {
       mode = "n";
-      key = "<leader>zm";
-      action = "<cmd>ZenMode<CR>";
-      options = {
-        desc = "Go zen-mode";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>lf";
-      action = "<cmd>Format<CR>";
-      options = {
-        desc = "Format file";
-      };
-    }
-    {
-      mode = "n";
       key = "<leader>bn";
       action = "<cmd>BufferLineCycleNext<CR>";
       options = {
@@ -100,14 +76,6 @@
       mode = "n";
       key = "<leader>n";
       action = "<cmd>NoiceSnacks<CR>";
-      options = {
-        silent = true;
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>cc";
-      action = "<cmd>ClaudeCode<CR>";
       options = {
         silent = true;
       };

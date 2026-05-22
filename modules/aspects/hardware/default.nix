@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  den.aspects.hardware = {host}: {
+  den.aspects.hardware = {host, ...}: {
     includes =
       lib.optional
       host.wantsNvidiaSupport
@@ -22,13 +22,6 @@
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;
-        settings = {
-          General = {
-            Experimental = true;
-            Testing = true;
-            KernelExperimental = true;
-          };
-        };
       };
 
       networking.networkmanager.enable = true;
