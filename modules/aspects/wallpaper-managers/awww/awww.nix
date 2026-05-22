@@ -1,10 +1,6 @@
-{inputs, ...}: {
-  flake-file.inputs.wallpapers = {
-    url = "git+https://codeberg.org/voidptrx/wallpapers";
-    flake = false;
-  };
-
-  den.aspects.appearance = {
+{
+  den.aspects.wallpaper-managers._.awww = {
+    # Awww keeps cached actions so we preserving it should reduce load
     persysUser.directories = [".cache/awww"];
 
     homeManager = {
@@ -12,21 +8,8 @@
       lib,
       ...
     }: let
-      wallpapersPath = inputs.wallpapers.outPath;
-
-      awwwExe = lib.getExe' pkgs.awww "awww";
       awwwDaemon = lib.getExe' pkgs.awww "awww-daemon";
       systemctl = lib.getExe' pkgs.systemdMinimal "systemctl";
-      find = lib.getExe' pkgs.findutils "find";
-      shuf = lib.getExe' pkgs.coreutils "shuf";
-
-      wallpaperScript = pkgs.writeShellScriptBin "awww-random" ''
-        DIR="${wallpapersPath}"
-        img=$( ${find} "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${shuf} -n 1)
-        if [ -n "$img" ]; then
-          ${awwwExe} img --transition-fps 144 --transition-type wave --transition-angle 225 --resize=fit "$img"
-        fi
-      '';
     in {
       systemd.user = {
         services = {
@@ -46,19 +29,6 @@
             };
 
             Install.WantedBy = ["graphical-session.target"];
-          };
-
-          # Service to rotate wallpapers
-          awww-random = {
-            Unit.Description = "Wallpaper rotator";
-
-            Service = {
-              ExecStart = "${lib.getExe wallpaperScript}";
-              Restart = "on-failure";
-              RestartSec = 2;
-
-              Type = "oneshot";
-            };
           };
         };
 
