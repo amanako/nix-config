@@ -1,24 +1,33 @@
 {
   # Cache for this repo
   flake-file = {
-    inputs.determinate.url = "github:DeterminateSystems/nix-src";
     nixConfig = {
       extra-substituters = [
         "https://amanako.cachix.org"
-        "https://install.determinate.systems"
       ];
 
       extra-trusted-public-keys = [
         "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
-        "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       ];
     };
   };
 
   den.aspects.nix = {
-    nixos = {inputs', ...}: {
+    nixos = {pkgs, ...}: {
+      nixpkgs.overlays = [
+        (final: prev: {
+          inherit
+            (prev.lixPackageSets.latest)
+            nixpkgs-review
+            nix-eval-jobs
+            nix-fast-build
+            colmena
+            ;
+        })
+      ];
+
       nix = {
-        package = inputs'.determinate.packages.default;
+        package = pkgs.lixPackageSets.latest.lix;
         settings = {
           # Number of logical cores to use in parallel
           # "auto" will use all available
@@ -28,10 +37,6 @@
           http-connections = 128;
           # Use all available cores
           cores = 0;
-
-          # Features from determinate nix not present in vanilla version, should improve operations significantly
-          lazy-trees = true;
-          eval-cores = 0;
 
           trusted-users = [
             "@wheel"
