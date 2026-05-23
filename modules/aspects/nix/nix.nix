@@ -1,38 +1,50 @@
 {
   # Cache for this repo
-  flake-file.nixConfig = {
-    extra-substituters = [
-      "https://amanako.cachix.org"
-    ];
+  flake-file = {
+    inputs.determinate.url = "github:DeterminateSystems/nix-src";
+    nixConfig = {
+      extra-substituters = [
+        "https://amanako.cachix.org"
+        "https://install.determinate.systems"
+      ];
 
-    extra-trusted-public-keys = [
-      "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
-    ];
+      extra-trusted-public-keys = [
+        "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
+        "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
+      ];
+    };
   };
 
   den.aspects.nix = {
-    nixos.nix = {
-      settings = {
-        # Number of logical cores to use in parallel
-        # "auto" will use all available
-        max-jobs = "auto";
-        # Based on quide from https://bmcgee.ie/posts/2023/12/til-how-to-optimise-substitutions-in-nix/
-        max-substitution-jobs = 128;
-        http-connections = 128;
-        # Use all available cores
-        cores = 0;
+    nixos = {inputs', ...}: {
+      nix = {
+        package = inputs'.determinate.packages.default;
+        settings = {
+          # Number of logical cores to use in parallel
+          # "auto" will use all available
+          max-jobs = "auto";
+          # Based on quide from https://bmcgee.ie/posts/2023/12/til-how-to-optimise-substitutions-in-nix/
+          max-substitution-jobs = 128;
+          http-connections = 128;
+          # Use all available cores
+          cores = 0;
 
-        trusted-users = [
-          "@wheel"
-        ];
-      };
+          # Features from determinate nix not present in vanilla version, should improve operations significantly
+          lazy-trees = true;
+          eval-cores = 0;
 
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 7d";
+          trusted-users = [
+            "@wheel"
+          ];
+        };
+
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 7d";
+        };
+        settings.auto-optimise-store = true;
       };
-      settings.auto-optimise-store = true;
     };
 
     homeManager = {pkgs, ...}: {
