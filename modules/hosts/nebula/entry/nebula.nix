@@ -3,6 +3,7 @@
     deviceType = "laptop";
     timeZone = "Europe/Belgrade";
     batteryID = "BAT1";
+    wantsSecureBootSupport = true;
 
     gpus = [
       {

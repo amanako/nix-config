@@ -11,7 +11,7 @@ in {
       <den.batteries.primary-user>
       (den.batteries.user-shell "fish")
 
-      <appearance>
+      <wallpaper-managers/awww>
       <terminal>
       <dev>
       <nix>
@@ -20,6 +20,7 @@ in {
       <niri-binds>
       <shells/noctalia>
       <shells/noctalia/niri>
+      <utility/zellij>
       <editors/nixvim>
       #<editors/helix>
       <gaming>
