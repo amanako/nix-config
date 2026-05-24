@@ -11,18 +11,21 @@ steps:
         from_secret: GITHUB_TOKEN
     commands:
       - |
-        tee -a /etc/nix/nix.conf <<EOF
-        experimental-features = nix-command flakes
-        accept-flake-config = true
+        export NIX_CONFIG << EOF
+          extra-experimental-features = nix-command flakes
+          accept-flake-config = true
         EOF
-      - nix run .#write-flake --show-trace
-      - nix flake update
 
-      - nix run .#write-flake --show-trace
-      - nix flake check -L
+      - |
+        nix run .#write-flake --show-trace
+        nix flake update
+
+      - |
+        nix run .#write-flake --show-trace
+        nix flake check -L
 
   - name: commit-and-push
-    image: alpine/git:latest
+    image: nixos/nix:latest
     environment:
       GIT_AUTHOR_NAME:
         from_secret: GIT_AUTHOR_NAME
@@ -32,6 +35,17 @@ steps:
         from_secret: GITEA_TOKEN
     commands:
       - |
+        export NIX_CONFIG << EOF
+          extra-experimental-features = nix-command flakes
+          accept-flake-config = true
+        EOF
+
+      - |
+        nix profile add nixpkgs#direnv
+        direnv allow
+
+      - |
+        nix profile add nixpkgs#git
         git config --global user.name "$${GIT_AUTHOR_NAME}"
         git config --global user.email "$${GIT_AUTHOR_EMAIL}"
 

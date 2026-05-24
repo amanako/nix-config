@@ -6,5 +6,9 @@ steps:
   - name: check flake
     image: nixos/nix:latest
     commands:
-      - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
-      - nix --accept-flake-config flake check -Lv
+      - |
+        export NIX_CONFIG << EOF
+          extra-experimental-features = nix-command flakes
+          accept-flake-config = true
+        EOF
+      - nix flake check -L
