@@ -52,6 +52,8 @@ in {
           mode = "0700";
         }
 
+        # For direnv to remember allowed .envrc files
+        ".local/share/direnv/allow"
         ".local/share/youtube-tui"
         ".local/share/systemd/timers"
       ];
@@ -117,6 +119,12 @@ in {
 
         # NH_FLAKE variable for rebuilding with nh without specyfing flake location
         NH_FLAKE = "${h}/nix-config/";
+      };
+
+      programs.direnv = {
+        enable = true;
+        enableFishIntegration = true;
+        nix-direnv.enable = true;
       };
 
       # Tell niri to start with these programs
