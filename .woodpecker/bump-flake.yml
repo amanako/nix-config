@@ -1,6 +1,6 @@
 when:
   - event: cron
-    cron: "bump flake"  # Runs Sunday 03:40 UTC
+    cron: "bump flake" # Runs Sunday 03:40 UTC
   - event: manual
 
 steps:

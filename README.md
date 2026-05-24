@@ -15,6 +15,28 @@
 - https://github.com/zerokqx/ZNix (some [nixvim] plugins)
 - and redditors over at [r/NixOS](https://www.reddit.com/r/NixOS) for ideas and answers to my questions
 
+## Table of contents
+
+<!-- toc -->
+
+- [Design](#design)
+- [Goals](#goals)
+- [Included](#included)
+- [Screenshots](#screenshots)
+  - [Noctalia](#noctalia)
+  - [Dank Material Shell](#dank-material-shell)
+- [Binary cache](#binary-cache)
+- [Cloning repo](#cloning-repo)
+- [Making a config](#making-a-config)
+- [Build steps](#build-steps)
+- [Secure boot setup](#secure-boot-setup)
+- [Pulling remote changes](#pulling-remote-changes)
+- [Tips](#tips)
+- [Licence and word of warning](#licence-and-word-of-warning)
+- [Configuration mistakes](#configuration-mistakes)
+
+<!-- tocstop -->
+
 ## Design
 
 - [denful/den][den] framework with [SoC] in mind.
@@ -35,7 +57,7 @@
 | Functionality | Software |
 |:----------------:|:---------------------------------------------------------------------:|
 | Terminal | [kitty] |
-| File Editor | [neovim][neovim](native and [nixvim]) |
+| File Editor | [neovim](native and [nixvim]) |
 | File Manager | [yazi] / [thunar] |
 | Window Manager | [niri] |
 | Quickshell | [noctalia], with [dms] as another option |
@@ -89,7 +111,7 @@ You may clone the repo with the following command:
 
 ```
 # Grab git (supposing flakes are enabled)
-nix profile add nixpkgs#git
+nix profile install nixpkgs#git
 
 or with nix-shell (legacy)
 nix-shell -p git
@@ -199,7 +221,7 @@ but `rebuild` alias is provided if including `den.aspects.shell` for example.
 
 After rebuilding, extra steps are needed to enable secure boot.
 
-For [limine][limine]:
+For [limine]:
 
 - Boot to firmware and clear keys via _restart to setup mode_ or similar.
 - Run:
@@ -259,7 +281,7 @@ Having a backup of important data is absolutely recommended.<br>
 Den seems to be a niche spot in already niche Nix environment, so most of the time following their [github repo][den repo] updates and conversations will aid you best.<br>
 Assets from third-party repositories(primarily flake-inputs, den included) are licenced under their respective licences.
 
-## Possible pitfalls
+## Configuration mistakes
 
 Sometimes den will reject `lib` to be put into lambda scope of aspects like this:
 

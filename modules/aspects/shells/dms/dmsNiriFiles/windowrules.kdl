@@ -12,7 +12,7 @@ window-rule {
     clip-to-geometry true
 }
 
-window-rule {   
+window-rule {
     match app-id=r#"org.quickshell$"#
     open-floating true
 }

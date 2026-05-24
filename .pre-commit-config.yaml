@@ -1,0 +1,64 @@
+repos:
+  # ── General ────────────────────────────────────────────────
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # ── Woodpecker worflows (woodpecker-cli) ───────────────────
+  - repo: local
+    hooks:
+      - id: woodpecker-cli
+        name: lint woodpecker workflows with woodpecker-cli
+        entry: woodpecker-cli lint
+        language: system
+        files: ^.woodpecker/
+        stages: [pre-commit]
+        verbose: true
+
+  # ── Nix (alejandra) ────────────────────────────────────────
+  - repo: local
+    hooks:
+      - id: alejandra
+        name: format nix with alejandra
+        entry: alejandra
+        language: system
+        files: \.nix$
+        stages: [pre-commit]
+        verbose: true
+
+  # ── Lua ────────────────────────────────────────────────────
+  - repo: https://git.sr.ht/~ramon_ln/pre-commit-lua
+    rev: v1.0.0
+    hooks:
+      - id: stylua
+
+  # ── YAML (prettier) ────────────────────────────────────────
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        name: prettier – YAML formatter
+        files: \.(yml|yaml)$
+        additional_dependencies: [] # prettier already includes yaml support
+
+  # ── Update TOC in Markdown files ───────────────────────────
+  - repo: local
+    hooks:
+      - id: markdown-toc
+        name: markdown‑toc – update README TOC
+        entry: >-
+          bash -c '
+            # Do nothing for empty files
+            if [ -z "$1" ]; then
+              exit 0
+            fi
+
+            markdown-toc -i "$1"
+          '
+        language: system
+        files: \.md$
+        stages: [pre-commit]
+        always_run: false

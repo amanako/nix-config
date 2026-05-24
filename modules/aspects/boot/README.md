@@ -12,7 +12,7 @@
 ```
 systemctl --reboot --firmware-setup
 ```
-(It is also included in the config as an alias `bios`)  
+(It is also included in the config as an alias `bios`)
 2. Look for an option named _boot_ or alike in the menu and swipe the limine entry to top.
 </details>
 
