@@ -7,8 +7,9 @@ steps:
     image: nixos/nix:latest
     commands:
       - |
-        export NIX_CONFIG << EOF
-          extra-experimental-features = nix-command flakes
-          accept-flake-config = true
+        export NIX_CONFIG=$(cat <<-EOF
+        extra-experimental-features = nix-command flakes
+        accept-flake-config = true
         EOF
+        )
       - nix flake check -L
