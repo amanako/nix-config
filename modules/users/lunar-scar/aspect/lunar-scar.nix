@@ -11,7 +11,6 @@ in {
       <den.batteries.primary-user>
       (den.batteries.user-shell "fish")
 
-      <wallpaper-managers/awww>
       <terminal>
       <dev>
       <nix>
@@ -26,6 +25,7 @@ in {
       <gaming>
       <browsers/zen-browser>
       <utility>
+      <default-shell>
     ];
 
     user = {
@@ -53,7 +53,6 @@ in {
         }
 
         # For direnv to remember allowed .envrc files
-        ".local/share/direnv/allow"
         ".local/share/youtube-tui"
         ".local/share/systemd/timers"
       ];
@@ -119,12 +118,6 @@ in {
 
         # NH_FLAKE variable for rebuilding with nh without specyfing flake location
         NH_FLAKE = "${h}/nix-config/";
-      };
-
-      programs.direnv = {
-        enable = true;
-        enableFishIntegration = true;
-        nix-direnv.enable = true;
       };
 
       # Tell niri to start with these programs

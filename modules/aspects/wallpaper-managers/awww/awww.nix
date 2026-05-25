@@ -1,29 +1,32 @@
 {
   den.aspects.wallpaper-managers._.awww = {
-    # Awww keeps cached actions so we preserving it should reduce load
+    # Awww keeps cached actions so preserving directory should reduce load
     persysUser.directories = [".cache/awww"];
 
     homeManager = {
+      user,
       pkgs,
       lib,
       ...
     }: let
       awwwDaemon = lib.getExe' pkgs.awww "awww-daemon";
       systemctl = lib.getExe' pkgs.systemdMinimal "systemctl";
+
+      service = user.awww.service.label;
     in {
       systemd.user = {
         services = {
           # Service to start the daemon
           awww-daemon = {
             Unit = {
-              Description = "awww Wallpaper daemon";
+              Description = "Start awww daemon";
               After = ["graphical-session.target"];
-              Wants = ["awww-random.timer"];
+              Wants = ["${service}.timer"];
             };
 
             Service = {
               ExecStart = "${awwwDaemon}";
-              ExecStartPost = "${systemctl} --user start awww-random.service";
+              ExecStartPost = "${systemctl} --user start ${service}.service";
               Restart = "on-failure";
               RestartSec = 1;
             };
@@ -32,15 +35,22 @@
           };
         };
 
-        # Control unit - currently on :00 and :30 of every hour
-        timers.awww-random = {
+        timers.${service} = {
           Unit = {
-            Description = "Change wallpaper every 30 minutes";
+            Description = "Change wallpaper using awww";
             BindsTo = ["awww-daemon.service"];
             Wants = ["awww-daemon.service"];
           };
 
-          Timer.OnUnitActiveSec = "30min";
+          Timer = let
+            cfg = user.awww.service;
+          in
+            lib.optionalAttrs (cfg.interval != null) {
+              OnUnitActiveSec = cfg.interval;
+            }
+            // lib.optionalAttrs (cfg.calendar != null) {
+              OnCalendar = cfg.calendar;
+            };
         };
       };
     };
