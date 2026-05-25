@@ -2,7 +2,7 @@
   <h1>:snowflake: NixOS configuration :snowflake:</h1>
 </center>
 <h1> This is outdated config, kept as a comparison to showcase maturity and gap with den approach at main branch.
-    Please reference https://codeberg.org/abyssal-twilight/nix-config/src/branch/main up to date progress </h1>
+    Please reference https://codeberg.org/abyssal-twilight/nix-config/src/branch/main for up-to-date development progress.</h1>
 
 ## Goals
 
