@@ -6,6 +6,20 @@
   imports = [inputs.den.flakeModule];
 
   den.aspects.default-shell = {
+    persysUser.directories = [
+      # Direnv allow directory persistence
+      ".local/share/direnv/allow"
+      # Cache for installed hooks
+      ".cache/pre-commit"
+    ];
+
+    homeManager.programs.direnv = {
+      enable = true;
+      enableFishIntegration = true;
+      nix-direnv.enable = true;
+      silent = true;
+    };
+
     devShells = {pkgs, ...}: {
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
