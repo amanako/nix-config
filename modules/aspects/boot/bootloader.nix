@@ -11,25 +11,18 @@
         ];
 
         nixos = {pkgs, ...}: {
-          # Status can be verified via sbctl status
+          # Status can be verified via sbctl status, sbctl verify.
           environment.systemPackages = with pkgs; [
             sbctl
           ];
 
           boot.loader.limine = {
-            # Editor must be disabled for security reasons
+            # Editor must be disabled for security reasons.
             enableEditor = lib.mkForce false;
-            secureBoot = {
-              enable = true;
-              #autoGenerateKeys = true;
-              #autoEnrollKeys = {
-              #  enable = true;
-              #  extraArgs = [
-              #    "--microsoft"
-              #   "--firmware-builtin"
-              #  ];
-              # };
-            };
+
+            # While admitedly it is possible to use autoGenerateKeys and autoEnrollKey options,
+            # I only faced trouble and following guide from README should be a one-time setup anyway.
+            secureBoot.enable = true;
           };
         };
       };
@@ -37,9 +30,14 @@
     includes = [
       <bootloader/limine/secureBoot>
     ];
+
     stylix.targets."limine".enable = false;
 
-    nixos = {pkgs, ...}: {
+    nixos = {
+      host,
+      pkgs,
+      ...
+    }: {
       boot.loader = {
         efi.canTouchEfiVariables = true;
         timeout = 5;
@@ -65,13 +63,14 @@
               margin = 20;
               marginGradient = 10;
             };
-            wallpaperStyle = "stretched";
-            wallpapers = [
-              (pkgs.fetchurl {
-                url = "https://pic1.cdncl.net/game/user_upload/hssaole/36d351cc7ab10fadfb1953704de2b5d4.jpeg";
-                hash = "sha256-si07feEPfDcxfTUGrL7ThVRtp8pHxwtrff+DLOXqZpM=";
+            wallpapers = map ({
+              url,
+              hash,
+            }:
+              pkgs.fetchurl {
+                inherit url hash;
               })
-            ];
+            host.limine.wallpapers;
           };
           panicOnChecksumMismatch = true;
           # Boot partition may fill up quickly

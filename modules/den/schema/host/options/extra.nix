@@ -13,6 +13,35 @@
         '';
       };
 
+      limine.wallpapers = lib.mkOption {
+        type = lib.types.listOf (lib.types.submoduleWith {
+          modules = [
+            {
+              options.url = lib.mkOption {
+                type = lib.types.str;
+                default = "";
+                description = "Remote url to be used to fetch wallpapers.";
+              };
+
+              options.hash = lib.mkOption {
+                type = lib.types.str;
+                default = "";
+                description = ''
+                  Hash used to compute corresponding wallpaper.
+                  Can be obtained by running command once and looking at the error, copying it from there.
+                '';
+              };
+            }
+          ];
+        });
+
+        default = [];
+        description = ''
+          List of remote links of wallpapers to use for limine, Will be fetched and passed to
+          `boot.loader.limine.style.wallpapers`.
+        '';
+      };
+
       keyboardLightScript = lib.mkOption {
         type = lib.types.submodule {
           options.device = lib.mkOption {
