@@ -11,7 +11,7 @@
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
   };
 
-  den.aspects.browsers._.zen-browser = {user, ...}: {
+  den.aspects.browsers.zen-browser = {user, ...}: {
     persysUser.directories = [
       ".config/zen/${user.userName}"
     ];

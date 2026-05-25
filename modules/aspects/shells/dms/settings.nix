@@ -1,5 +1,5 @@
 {
-  den.aspects.shells._.dms.homeManager = {
+  den.aspects.shells.dms.homeManager = {
     config,
     lib,
     ...

@@ -13,12 +13,12 @@
     (
       {user, ...}:
         if user.awww.enable
-        then den.aspects.wallpaper-managers._.awww
+        then den.aspects.wallpaper-managers.awww
         else {}
     )
   ];
 
-  den.aspects.wallpaper-managers._.awww.homeManager = {
+  den.aspects.wallpaper-managers.awww.homeManager = {
     user,
     pkgs,
     lib,

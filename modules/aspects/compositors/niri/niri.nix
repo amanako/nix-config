@@ -13,8 +13,8 @@
     };
   };
 
-  den.aspects.compositors.provides.niri = {
-    provides.binds = den.aspects.niri-binds;
+  den.aspects.compositors.niri = {
+    binds = den.aspects.niri-binds;
 
     nixos = {inputs', ...}: {
       systemd.user.services.niri-flake-polkit.enable = false;

@@ -1,5 +1,5 @@
 {
-  den.aspects.wallpaper-managers._.awww = {
+  den.aspects.wallpaper-managers.awww = {
     # Awww keeps cached actions so preserving directory should reduce load
     persysUser.directories = [".cache/awww"];
 

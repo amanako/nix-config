@@ -10,7 +10,7 @@
     };
   };
 
-  den.aspects.shells.provides.noctalia = {
+  den.aspects.shells.noctalia = {
     stylixHome.targets."noctalia-shell".enable = false;
 
     # Only show start screen when changelog actually changes to a new commit

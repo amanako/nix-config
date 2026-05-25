@@ -1,5 +1,5 @@
 {
-  den.aspects.utility.provides.zellij = {
+  den.aspects.utility.zellij = {
     stylixHome.targets."zellij".enable = true;
     # Zellij uses cache folders to revive sessions on reboot or crashes
     persysUser.directories = [

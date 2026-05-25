@@ -8,7 +8,7 @@
     };
   };
 
-  den.aspects.editors.provides.helix.homeManager.programs.helix = {
+  den.aspects.editors.helix.homeManager.programs.helix = {
     enable = true;
     ignores = [
       ".build/"

@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  den.aspects.bootloader.provides.limine = {
+  den.aspects.bootloader.limine = {
     secureBoot = {host, ...}:
       lib.optionalAttrs host.wantsSecureBootSupport {
         provides.to-hosts.persys.directories = [

@@ -1,6 +1,6 @@
 # Sensible keybinds
 {lib, ...}: {
-  den.aspects.shells.provides.noctalia.provides.niri.homeManager = let
+  den.aspects.shells.noctalia.niri.homeManager = let
     noctalia = args: {
       action.spawn =
         [

@@ -1,6 +1,6 @@
 {
   den.aspects.displayManagers = {
-    provides.lemurs = {
+    lemurs = {
       host,
       user,
       ...
@@ -30,7 +30,7 @@
       };
     };
 
-    provides.ly.nixos = {host, ...}: {
+    ly.nixos = {host, ...}: {
       services.displayManager.ly = {
         enable = true;
         settings = {

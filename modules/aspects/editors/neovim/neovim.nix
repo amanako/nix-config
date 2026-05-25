@@ -1,5 +1,5 @@
 {
-  den.aspects.editors._.neovim = {
+  den.aspects.editors.neovim = {
     persysUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
