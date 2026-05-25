@@ -1,8 +1,4 @@
-{
-  __findFile,
-  den,
-  ...
-}: {
+{__findFile, ...}: {
   den.aspects.nebula = {
     includes = [
       <nebula/hardware>
@@ -12,5 +8,9 @@
       <displayManagers/ly>
       <utility>
     ];
+
+    nixos = {
+      boot.loader.limine.style.wallpaperStyle = "centered";
+    };
   };
 }

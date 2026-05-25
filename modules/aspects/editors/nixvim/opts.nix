@@ -35,5 +35,7 @@
 
     splitbelow = true;
     splitright = true;
+
+    clipboard = "unnamedplus";
   };
 }

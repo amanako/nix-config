@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  # Enable lock flattening: https://flake-file.oeiuwq.com/guides/lock-flattening/
+  # Enable lock flattening: https://flake-file.denful.dev/guides/lock-flattening
   imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
   flake-file = {
