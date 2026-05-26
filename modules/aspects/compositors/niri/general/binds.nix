@@ -1,5 +1,5 @@
 {
-  den.aspects.niri-binds.homeManager = {
+  niri.binds.homeManager = {
     host,
     pkgs,
     lib,
@@ -20,41 +20,37 @@
         pkgs.writeShellScriptBin "keyboard-light" ''
           CURR_BRIGHTNESS=$(${brightnessCmd} --device=${device} get)
 
-          case $1 in
-            increase)
-              NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS + ${toString step} ))
-              ;;
-            decrease)
-              NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS - ${toString step} ))
-              ;;
-          esac
+          if [ "$1" = increase ]; then
+            NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS + ${toString step} ))
+          elif [ "$1" = decrease ]; then
+            NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS - ${toString step} ))
+          else
+            echo "Usage:$1"
+          fi
 
           ${brightnessCmd} --device=${device} set "$NEW_BRIGHTNESS"
         ''
     );
   in {
-    programs.niri.settings.binds =
-      {
-        "Mod+1".action.focus-workspace = 1;
-        "Mod+2".action.focus-workspace = 2;
-        "Mod+3".action.focus-workspace = 3;
-        "Mod+4".action.focus-workspace = 4;
-        "Mod+5".action.focus-workspace = 5;
-        "Mod+6".action.focus-workspace = 6;
-        "Mod+7".action.focus-workspace = 7;
-        "Mod+8".action.focus-workspace = 8;
-        "Mod+9".action.focus-workspace = 9;
+    programs.niri.settings.binds = let
+      # Generate list with numbers from 1 to 9
+      workspaceNumsList = lib.genList (i: i + 1) 8;
 
-        "Mod+Ctrl+1".action.move-column-to-workspace = 1;
-        "Mod+Ctrl+2".action.move-column-to-workspace = 2;
-        "Mod+Ctrl+3".action.move-column-to-workspace = 3;
-        "Mod+Ctrl+4".action.move-column-to-workspace = 4;
-        "Mod+Ctrl+5".action.move-column-to-workspace = 5;
-        "Mod+Ctrl+6".action.move-column-to-workspace = 6;
-        "Mod+Ctrl+7".action.move-column-to-workspace = 7;
-        "Mod+Ctrl+8".action.move-column-to-workspace = 8;
-        "Mod+Ctrl+9".action.move-column-to-workspace = 9;
+      generatedFocusWorkspace = builtins.listToAttrs (map (val: {
+          name = "Mod+${toString val}";
+          value = {action.focus-workspace = val;};
+        })
+        workspaceNumsList);
 
+      generatedMoveColumn = builtins.listToAttrs (map (val: {
+          name = "Mod+Ctrl+${toString val}";
+          value = {action.move-column-to-workspace = val;};
+        })
+        workspaceNumsList);
+    in
+      generatedFocusWorkspace
+      // generatedMoveColumn
+      // {
         "Mod+BracketLeft".action.consume-or-expel-window-left = [];
         "Mod+BracketRight".action.consume-or-expel-window-right = [];
         "Mod+C".action.center-column = [];
@@ -75,22 +71,8 @@
 
         "Mod+T".action.spawn = term;
         "Mod+B".action.spawn = browser;
-        # Use shell wrapper "y" for greater flexibility if yazi is file manager
-        "Mod+Y" = let
-          shellExe = lib.getExe pkgs.fish;
-          fmCmd =
-            if fileManager == "yazi"
-            then
-              lib.escapeShellArgs [
-                shellExe
-                "-ic"
-                "y; exec ${shellExe}"
-              ]
-            else fileManager;
-        in
-          sh "${term} -e ${fmCmd}";
-
         "Mod+N" = sh "${term} -e ${editor}";
+        "Mod+Y" = sh "${term} -e ${fileManager}";
         # TODO: Fix script and call
         # "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
 

@@ -30,7 +30,7 @@
         "polkit-agent"
         "keybind-cheatsheet"
       ];
-      isAutoSpawned = config.programs.niri.autoSpawnShell == "noctalia";
+      isAutoSpawned = user.niri.autoSpawnShell == "noctalia";
     in {
       imports = [
         inputs.noctalia.homeModules.default

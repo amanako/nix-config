@@ -9,6 +9,8 @@
       signingKey = "5CB7F18E1B212DB2";
     };
 
+    niri.autoSpawnShell = "noctalia";
+
     awww = {
       script.args = [
         "--transition-fps 144"

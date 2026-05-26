@@ -16,7 +16,6 @@ in {
       <nix>
       <shell>
       <compositors/niri>
-      <niri-binds>
       <shells/noctalia>
       <shells/noctalia/niri>
       <utility/zellij>
@@ -126,8 +125,6 @@ in {
           command = ["fcitx5"];
         }
       ];
-
-      programs.niri.autoSpawnShell = "noctalia";
 
       # Example config for dms
       # programs.dank-material-shell = {

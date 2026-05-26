@@ -2,11 +2,12 @@
   flake-file.inputs.dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
   den.aspects.shells.dms.homeManager = {
+    user,
     lib,
     config,
     ...
   }: let
-    isAutoSpawned = config.programs.niri.autoSpawnShell == "dms";
+    isAutoSpawned = user.niri.autoSpawnShell == "dms";
     # This path needs to be updated each time folders are moved around or renamed
     # This remains pure but don't forget to change accordingly
     currentDir = "${config.home.homeDirectory}/nix-config/modules/aspects/shells/shells/dms";
