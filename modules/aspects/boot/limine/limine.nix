@@ -3,32 +3,14 @@
   lib,
   ...
 }: {
-  den.aspects.bootloader.limine = {
-    secureBoot = {host, ...}:
-      lib.optionalAttrs host.wantsSecureBootSupport {
-        provides.to-hosts.persys.directories = [
-          "/var/lib/sbctl"
-        ];
+  den.aspects.boot.loader.limine = {host, ...}: {
+    description = ''
+      From [description](https://github.com/Limine-Bootloader/Limine):
+      Modern, secure, portable, multiprotocol bootloader and boot manager.
+    '';
 
-        nixos = {pkgs, ...}: {
-          # Status can be verified via sbctl status, sbctl verify.
-          environment.systemPackages = with pkgs; [
-            sbctl
-          ];
-
-          boot.loader.limine = {
-            # Editor must be disabled for security reasons.
-            enableEditor = lib.mkForce false;
-
-            # While admitedly it is possible to use autoGenerateKeys and autoEnrollKey options,
-            # I only faced trouble and following guide from README should be a one-time setup anyway.
-            secureBoot.enable = true;
-          };
-        };
-      };
-
-    includes = [
-      <bootloader/limine/secureBoot>
+    includes = lib.optionals host.wantsSecureBootSupport [
+      <boot/loader/limine/secureBoot>
     ];
 
     stylix.targets."limine".enable = false;

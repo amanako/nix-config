@@ -67,7 +67,7 @@
 | Wallpaper Manager| [awww] |
 | Shell | [fish] |
 | Display Manager | [ly] |
-| Boot Loader | [limine], for setup check [README](./modules/aspects/boot) |
+| Boot Loader | [limine], for setup check [README](modules/aspects/boot/limine) |
 | Memory layout | btrfs (unencrypted) via [disko] + [impermanence] |
 
 and some secondary options.
