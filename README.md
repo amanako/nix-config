@@ -23,8 +23,8 @@
 - [Goals](#goals)
 - [Included](#included)
 - [Screenshots](#screenshots)
-  - [Noctalia](#noctalia)
-  - [Dank Material Shell](#dank-material-shell)
+  * [Noctalia](#noctalia)
+  * [Dank Material Shell](#dank-material-shell)
 - [Binary cache](#binary-cache)
 - [Cloning repo](#cloning-repo)
 - [Making a config](#making-a-config)
@@ -33,7 +33,6 @@
 - [Pulling remote changes](#pulling-remote-changes)
 - [Tips](#tips)
 - [Licence and word of warning](#licence-and-word-of-warning)
-- [Configuration mistakes](#configuration-mistakes)
 
 <!-- tocstop -->
 
@@ -166,7 +165,7 @@ When using impermanence: to persist configuration add directory containing confi
 
 ```
 persysUser.directories = [
-  # Example path - made at /home/${user}/nix-config
+  # Example path - made at $HOME/nix-config
   "nix-config"
   # It can be some uper path for example:
   "Documents"
@@ -178,7 +177,7 @@ or
 
 ```
 persys.directories = [
-  # Typical nix configuration path - if not using nh I would recommend using it
+  # Typical nix configuration path - if not using nh I would recommend this path
   "/etc/nixos"
 ;]
 ```
@@ -190,7 +189,6 @@ After completing previous section:
 1. Run nixos-install and follow instructions:
 
 ```
-# Dot refers to directory with flake.nix
 nixos-install --flake . --accept-flake-config
 ```
 
@@ -269,32 +267,17 @@ Following are some of tips from personal experience(pending update and subject t
 - Be sure to refer to [upstream documentation][docs] whenever met with difficulties.
 
 - Use `nix-repl` when not sure why something doesn't work as intended. For den-specific stuff,
-  reference [den's debug guide][den debug].
+  reference [den's debug guide][den's debug quide].
 
 ## Licence and word of warning
 
-Repository is licenced under [MIT](./LICENCE).<br>
+Repository is licenced under [MIT](LICENCE).<br>
 Even though it's just a bunch of config files, I mainly did this to evade law suits or similar and protect rights.<br>
 In general, to avoid unpleasant situations(deletion of partitions, emergency modes, kernel panics... all situations I have been through) you are highly advised to actually read through the code
 and understand it's purpose. For the most part I haven't documented it, but when I have some time to spare I will make advancements in that _aspect_.<br>
 Having a backup of important data is absolutely recommended.<br>
 Den seems to be a niche spot in already niche Nix environment, so most of the time following their [github repo][den repo] updates and conversations will aid you best.<br>
 Assets from third-party repositories(primarily flake-inputs, den included) are licenced under their respective licences.
-
-## Configuration mistakes
-
-Sometimes den will reject `lib` to be put into lambda scope of aspects like this:
-
-```
-
-den.aspects.bootloader.provides.limine = {host, lib, ...}: {
-...
-}
-
-```
-
-remove lib or include it in file scope instead.<br>
-Remember to inspect `nix repl` if necessary, exposing den as flake output with `flake.den = den` in any file.
 
 [awww]: https://codeberg.org/LGFae/awww
 [cache]: https://app.cachix.org/cache/amanako
@@ -303,6 +286,7 @@ Remember to inspect `nix repl` if necessary, exposing den as flake output with `
 [custom-classes]: https://den.denful.dev/guides/custom-classes
 [den]: https://den.denful.dev
 [den repo]: https://github.com/denful/den
+[den's debug guide]: https://den.denful.dev/guides/debug/
 [disko]: https://github.com/nix-community/disko
 [dms]: https://danklinux.com/
 [docs]: https://den.denful.dev/overview
@@ -313,7 +297,7 @@ Remember to inspect `nix repl` if necessary, exposing den as flake output with `
 [impermanence]: https://github.com/nix-community/impermanence
 [import-tree]: https://github.com/denful/import-tree
 [kitty]: https://sw.kovidgoyal.net/kitty
-[limine]: https://codeberg.org/Limine/Limine
+[limine]: https://github.com/Limine-Bootloader/Limine
 [ly]: https://codeberg.org/fairyglade/ly
 [neovim]: https://neovim.io
 [nh]: https://github.com/nix-community/nh
