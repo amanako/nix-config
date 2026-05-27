@@ -94,7 +94,7 @@ Build artifacts are cached and stored via [cachix] at [my cache][cache].<br>
 Public key is available there:
 
 ```
-amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=.
+amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=
 ```
 
 Relevant workflow file can be found [here](.github/workflows/build-and-push-to-cache.yml).
@@ -120,8 +120,8 @@ git clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
 ```
 
 No matter the choice, option repoRoot should be set for either host or user,
-where user preference may override hosts choice making both of them eligible.
-See [Making a config](#making-a-config)
+where user preference may override hosts choice making both of them eligible.<br>
+See [Making a config](#making-a-config).
 
 ## Making a config
 
@@ -212,7 +212,7 @@ After completing setup running(from repository root):
 
 ```
 # Use nh to build host
-nix run .${host}
+nix run .#${hostname}
 ```
 
 will build host using [nh],
@@ -242,7 +242,7 @@ reboot
 If anything fails try the following:
 
 - Secure boot failures in BIOS: Apply previously mentioned setup mode in bios. Retry.
-- Keys don't get recognized: Temporarily remove wantsSecureBootSupport host option, run 'sbctl reset', rebuild and remove `/var/lib/sbctl`(for non-ephemeral users). Reboot and retry.
+- Keys don't get recognized: Temporarily remove `wantsSecureBootSupport` host option, run `sbctl reset`, rebuild and remove `/var/lib/sbctl`(for non-ephemeral users). Reboot and retry.
 
 ## Pulling remote changes
 
