@@ -119,8 +119,9 @@ nix-shell -p git
 git clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
 ```
 
-This is preferably done in user's `home` folder.<br>
-TODO: Solve more gracefully in the future.<br>
+No matter the choice, option repoRoot should be set for either host or user,
+where user preference may override hosts choice making both of them eligible.
+See [Making a config](#making-a-config)
 
 ## Making a config
 
@@ -150,6 +151,9 @@ This explains the structure of attribute set:
 For such users I would suggest making multiple files within `entry` folder with this pattern for example: `${user}-${host}.nix`.<br>
 Furthermore, all files can be broken into easy-to-follow pieces which is displayed in the examples.<br>
 My current user and host are provided as a starting point. Please reference [`users`](modules/users) and [`hosts`](modules/hosts).
+
+There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is suppossed to represent directory of cloned repo, and should be set upfront.
+Other than that some other options which are a must likely have an assertion forcing repo users to make a declaration.
 
 For hosts using disko configuration packages are exposed when using `disko.devices` host schema option with the following format: `${host}-disko`,
 and can be easily run with:
