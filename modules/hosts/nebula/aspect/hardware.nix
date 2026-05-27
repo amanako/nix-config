@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.nebula._.hardware = {host, ...}: {
+  den.aspects.nebula.hardware = {host, ...}: {
     includes = [
       den.aspects.hardware
     ];

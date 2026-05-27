@@ -59,8 +59,9 @@
           then false
           else lib.any (gpu: gpu.type == "nvidia" && gpu.busId != "") host.gpus;
         description = ''
-          Whether to enable nvidia support.
-          Automatically enabled if a nvidia GPU is configured with a busId.
+          Whether to enable nvidia support. Can only be set manually by desktop hosts.
+          Automatically enabled if a nvidia GPU is configured with a busId. This is the only
+          way for hosts other than desktops.
         '';
         example = true;
       };
