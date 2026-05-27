@@ -4,11 +4,9 @@
   ...
 }: let
   u = "lunar-scar";
-  h = "/home/${u}";
 in {
-  den.aspects.${u} = {
+  den.aspects.lunar-scar = {
     includes = [
-      <den.batteries.primary-user>
       (den.batteries.user-shell "fish")
 
       <terminal>
@@ -70,6 +68,7 @@ in {
     };
 
     homeManager = {
+      user,
       pkgs,
       config,
       ...
@@ -85,38 +84,17 @@ in {
         pciutils
         usbutils
         ripgrep
-
-        # Must have
-        nixfmt
-
-        # Development
-        cmake
-        gnumake
-
-        bibata-cursors
-        wineWow64Packages.stable
       ];
 
       # Add a custom fontconfig file from current directory
       fonts.fontconfig.enable = true;
-      home.file.".config/fontconfig/fonts.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.NH_FLAKE}/assets/users/${u}/fontconfig.conf";
+      home.file.".config/fontconfig/fonts.conf".source = config.lib.file.mkOutOfStoreSymlink "${user.repoRoot}/assets/users/${u}/fontconfig.conf";
 
       # Add personal config file for fcitx5
       # Recusrive is necessary when it's a folder
       home.file.".config/fcitx5" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.sessionVariables.NH_FLAKE}/assets/users/${u}/fcitx5";
+        source = config.lib.file.mkOutOfStoreSymlink "${user.repoRoot}/assets/users/${u}/fcitx5";
         recursive = true;
-      };
-
-      home.sessionVariables = {
-        # This 4 variables should be configured because other components might use them
-        EDITOR = "nvim";
-        TERM = "kitty";
-        BROWSER = "zen-twilight";
-        FILE_MANAGER = "yazi";
-
-        # NH_FLAKE variable for rebuilding with nh without specyfing flake location
-        NH_FLAKE = "${h}/nix-config/";
       };
 
       # Tell niri to start with these programs

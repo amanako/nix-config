@@ -1,16 +1,11 @@
 {
   niri.binds.homeManager = {
     host,
+    user,
     pkgs,
     lib,
-    config,
     ...
   }: let
-    variables = config.home.sessionVariables;
-    editor = variables.EDITOR;
-    term = variables.TERM;
-    fileManager = variables.FILE_MANAGER;
-    browser = variables.BROWSER;
     sh = cmd: {action.spawn-sh = cmd;};
     keyboardLightScriptPath = lib.optionalAttrs (host.keyboardLightScript.device != null) (
       let
@@ -47,6 +42,8 @@
           value = {action.move-column-to-workspace = val;};
         })
         workspaceNumsList);
+
+      pref = user.preferences;
     in
       generatedFocusWorkspace
       // generatedMoveColumn
@@ -69,10 +66,10 @@
         "Mod+R".action.switch-preset-column-width-back = [];
         "Mod+Tab".action.toggle-overview = [];
 
-        "Mod+T".action.spawn = term;
-        "Mod+B".action.spawn = browser;
-        "Mod+N" = sh "${term} -e ${editor}";
-        "Mod+Y" = sh "${term} -e ${fileManager}";
+        "Mod+T".action.spawn = pref.term;
+        "Mod+B".action.spawn = pref.browser;
+        "Mod+N" = sh "${pref.term} -e ${pref.editor}";
+        "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
         # TODO: Fix script and call
         # "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
 

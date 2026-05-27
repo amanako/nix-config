@@ -33,13 +33,13 @@
       "application/octet-stream" = "zen-twilight.desktop";
     };
 
-    homeManager = {config, ...}: {
+    homeManager = {user, ...}: {
       imports = [inputs.nixvim.homeModules.nixvim];
 
       xdg.dataFile."applications/nvim.desktop".text = ''
         [Desktop Entry]
         Name=Neovim
-        Exec=${config.home.sessionVariables.TERM} -e nvim
+        Exec=${user.preferences.term} -e nvim
         Terminal=false
         Type=Application
         Keywords=Text;editor;

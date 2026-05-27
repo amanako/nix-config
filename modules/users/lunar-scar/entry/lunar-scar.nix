@@ -1,5 +1,8 @@
 {
   den.hosts.x86_64-linux.nebula.users.lunar-scar = {
+    isPrimaryUser = true;
+    repoRoot = "/home/lunar-scar/nix-config";
+
     git = let
       username = "abyssal-twilight";
     in {
@@ -7,6 +10,13 @@
       # Tip from: https://docs.codeberg.org/git/configuring-git
       email = "${username}@noreply.codeberg.org";
       signingKey = "5CB7F18E1B212DB2";
+    };
+
+    preferences = {
+      editor = "nvim";
+      fileManager = "yazi";
+      browser = "zen-twilight";
+      term = "kitty";
     };
 
     niri.autoSpawnShell = "noctalia";

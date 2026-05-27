@@ -1,10 +1,11 @@
 {
   den.aspects.shells.dms.homeManager = {
+    user,
     config,
     lib,
     ...
   }: let
-    browser = config.home.sessionVariables.BROWSER;
+    browser = user.preferences.browser;
   in {
     options.programs.dank-material-shell.userSettings = lib.mkOption {
       type = lib.types.attrs;

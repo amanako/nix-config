@@ -25,6 +25,7 @@
     };
 
     homeManager = {
+      user,
       pkgs,
       lib,
       config,
@@ -45,7 +46,7 @@
           # <C-r> = fzf history
           # Alt-c = fzf cd
           enableFishIntegration = true;
-          defaultCommand = defaultCommand;
+          inherit defaultCommand;
           fileWidgetCommand = defaultCommand;
           defaultOptions = [
             "--ansi"
@@ -124,8 +125,8 @@
             clean = "${nh} clean all --keep 5 --optimise";
             search = "${nh} search";
             # Updates all flake inputs by default, a single one can be passed as well
-            fup = "nix --accept-flake-config flake update --flake ${config.home.sessionVariables.NH_FLAKE}";
-            fcheck = "nix --accept-flake-config flake check -L ${config.home.sessionVariables.NH_FLAKE}";
+            fup = "nix --accept-flake-config flake update --flake ${user.repoRoot}";
+            fcheck = "nix --accept-flake-config flake check -L ${user.repoRoot}";
           };
           plugins = [
             {

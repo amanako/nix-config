@@ -22,7 +22,7 @@
       lib,
       ...
     }: let
-      term = config.home.sessionVariables.TERM;
+      term = user.preferences.term;
       noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";
       officialPlugins = [
         "battery-actions"
@@ -93,7 +93,7 @@
               {
                 general = {
                   # Should be easily identifyable in user section
-                  avatarImage = "${config.home.sessionVariables.NH_FLAKE}/nix-config/modules/users/${user.userName}/.face";
+                  avatarImage = "${user.repoRoot}/assets/users/${user.userName}/.face";
                 };
 
                 ui = {

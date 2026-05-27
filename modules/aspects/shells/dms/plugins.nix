@@ -1,7 +1,7 @@
 {inputs, ...}: {
   flake-file.inputs.dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
 
-  den.aspects.shells.dms.homeManager = {
+  den.aspects.shells.dms.homeManager = {user, ...}: {
     imports = [
       inputs.dms-plugin-registry.modules.default
     ];
@@ -36,7 +36,7 @@
     #      # Delegate task to pkexec since nixos-rebuild requires password
     #      "bash"
     #      "-c"
-    #      "TERM=${config.home.sessionVariables.TERM} pkexec nixos-rebuild switch --flake=${config.home.sessionVariables.NH_FLAKE} 2>&1"
+    #      "TERM=${user.preferences.term} pkexec nixos-rebuild switch --flake=${user.repoRoot} 2>&1"
     #    ];
     #
     #   gcCommand = [
