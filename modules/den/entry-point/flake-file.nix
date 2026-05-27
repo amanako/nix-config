@@ -16,7 +16,7 @@
 
     formatter = pkgs: pkgs.alejandra;
 
-    # TODO: Look at possible workarounds for not removing checks completely
+    # Required due to conflict with omnix cli
     check-hooks = lib.mkForce [];
 
     inputs = {
@@ -30,7 +30,7 @@
       rust-overlay.url = "github:oxalica/rust-overlay";
     };
 
-    # Community cache used by various tools
+    # Community cache used by various tools / cache for nix-auto-follow
     nixConfig = {
       extra-substituters = [
         "https://nix-community.cachix.org"

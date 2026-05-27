@@ -1,0 +1,14 @@
+ci:
+  default:
+    omnix:
+      dir: .
+      steps:
+        flake-check:
+          enable: true
+        lockfile:
+          enable: false
+
+health:
+  default:
+    direnv:
+      required: false

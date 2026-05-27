@@ -17,13 +17,8 @@ steps:
         EOF
         )
 
-      - |
-        nix run .#write-flake --show-trace
-        nix flake update
-
-      - |
-        nix run .#write-flake --show-trace
-        nix flake check -L
+      - nix flake update
+      - nix flake check -L
 
   - name: commit-and-push
     image: alpine/git:latest
