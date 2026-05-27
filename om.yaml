@@ -1,6 +1,6 @@
 ci:
   default:
-    omnix:
+    amanako:
       dir: .
       steps:
         flake-check:
