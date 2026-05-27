@@ -6,9 +6,6 @@
     ...
   }: {
     options = {
-      # Default values aren't included on purpose, because of a cool trick.
-      # This way "option was accessed but has no value defined" is emited.
-      # Error message contains exact option name which needs to be set.
       preferences = lib.mkOption {
         type = lib.types.submodule {
           options = let
