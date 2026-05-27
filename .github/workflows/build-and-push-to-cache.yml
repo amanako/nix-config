@@ -8,7 +8,6 @@ on:
       - .github/workflows/*
       - flake.nix
       - flake.lock
-      - om.yaml
 
 env:
   CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
@@ -63,5 +62,5 @@ jobs:
       - name: Push to cache
         run: |
           cachix-push-om-outputs -c amanako \
-            --subflake amanako \
+            --subflake ROOT \
             --prefix "$(git branch --show-current)" < om.json
