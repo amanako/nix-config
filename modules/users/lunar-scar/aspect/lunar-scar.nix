@@ -9,19 +9,25 @@ in {
     includes = [
       (den.batteries.user-shell "fish")
 
-      <terminal>
-      <dev>
-      <nix>
-      <shell>
-      <compositors/niri>
-      <shells/noctalia>
-      <shells/noctalia/niri>
-      <utility/zellij>
+      den.aspects.security._
+      den.aspects.utility._
+      den.aspects.shell._
+
+      <browsers/zen-browser-full>
+      <compositors/niri-full>
+      <shells/noctalia-full>
+
+      <terminal/zellij>
+      <terminal/kitty>
+      <terminal/yazi>
+
       <editors/nixvim>
-      #<editors/helix>
-      <gaming>
-      <browsers/zen-browser>
-      <utility>
+
+      <nix/nh>
+      <nixUtils/nixIndexDatabase>
+
+      <gaming/optimizations>
+      <gaming/software>
       <default-shell>
     ];
 
@@ -32,28 +38,26 @@ in {
       ];
     };
 
-    persysUser = {
-      directories = [
-        "Dev"
-        "Documents"
-        "Downloads"
-        "Faks"
-        "nix-config" # Main config
-        "Pictures"
-        {
-          directory = "keys/ssh";
-          mode = "0700";
-        }
-        {
-          directory = "keys/gnupg";
-          mode = "0700";
-        }
+    persysUser.directories = [
+      "Dev"
+      "Documents"
+      "Downloads"
+      "Faks"
+      "nix-config" # Main config
+      "Pictures"
+      {
+        directory = "keys/ssh";
+        mode = "0700";
+      }
+      {
+        directory = "keys/gnupg";
+        mode = "0700";
+      }
 
-        # For direnv to remember allowed .envrc files
-        ".local/share/youtube-tui"
-        ".local/share/systemd/timers"
-      ];
-    };
+      # For direnv to remember allowed .envrc files
+      ".local/share/youtube-tui"
+      ".local/share/systemd/timers"
+    ];
 
     nixos = {pkgs, ...}: {
       fonts.packages = with pkgs; [
@@ -104,62 +108,16 @@ in {
         }
       ];
 
-      # Example config for dms
-      # programs.dank-material-shell = {
-      #  userSettings = {
-      #    fontFamily = "Mona Sans Display Light";
-      #    monoFontFamily = "Victor Mono Nerd Font";
-      #    notepadFontFamily = "Noto Serif CJK JP";
-      #    powerMenuActions = [
-      #      "restart"
-      #      "logout"
-      #      "lock"
-      #      "suspend"
-      #      "poweroff"
-      #      "reboot"
-      #    ];
-
-      # Ensure you have installed the package first
-      #    iconTheme = "papirus";
-      #    networkPreference = "ethernet";
-
-      #    currentThemeName = "custom";
-      #    currentThemeCategory = "registry";
-      #    registryThemeVariants = {
-      #       gruvboxMaterial = "medium";
-      #   };
-      #    cursorSettings.size = 36;
-      #    cursorSettings.theme = "capitaine-cursors-white";
-      #  };
-
-      #   userSession = rec {
-      #    nightModeAutoEnabled = true;
-      #    nightModeAutoMode = "location";
-
-      #    latitude = 43.3333;
-      #    longitude = 21.9097;
-      #    weatherLocation = "Serbia, Niš";
-      #    weatherCoordinates = "${toString latitude},${toString longitude}";
-      #  };
-      #};
-
-      programs.noctalia-shell.userSettings = {
-        location.name = "Serbia, Niš";
-      };
-
       programs.gpg.homedir = "${config.home.homeDirectory}/keys/gnupg";
 
-      programs.ssh = {
-        enableDefaultConfig = false;
-        matchBlocks."*" = {
-          host = "codeberg.org";
-          hostname = "codeberg.org";
-          user = "git";
-          port = 22;
-          identityFile = "~/keys/ssh/id_ed25519";
-          userKnownHostsFile = "~/keys/ssh/known_hosts";
-          hashKnownHosts = true;
-        };
+      programs.ssh.settings."*" = {
+        host = "codeberg.org";
+        hostname = "codeberg.org";
+        user = "git";
+        port = 22;
+        identityFile = "~/keys/ssh/id_ed25519";
+        userKnownHostsFile = "~/keys/ssh/known_hosts";
+        hashKnownHosts = true;
       };
     };
   };

@@ -1,22 +1,23 @@
 {
+  den,
   lib,
   __findFile,
   ...
 }: {
+  flake.den = den;
   den.schema.user = {
     options.isPrimaryUser = lib.mkOption {
       example = true;
       type = lib.types.bool;
       description = ''
         Whether this user is a primary user of the system.
-        This option must be configured, instead error assertion fails.
+        This option must be configured, instead assertion fails.
       '';
     };
 
     includes = [
       <den.batteries.define-user>
       <homeBackup>
-      <repoSetup>
       <den.batteries.mutual-provider>
       (
         {user}:
@@ -41,13 +42,5 @@
       lib.optionalAttrs (lib.elem "homeManager" user.classes) {
         home-manager.backupFileExtension = "backup";
       };
-
-    repoSetup.homeManager = {
-      host,
-      user,
-      ...
-    }: {
-      home.sessionVariables.NH_FLAKE = user.repoRoot or host.repoRoot;
-    };
   };
 }

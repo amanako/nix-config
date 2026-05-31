@@ -19,7 +19,9 @@
       term = "kitty";
     };
 
-    niri.autoSpawnShell = "noctalia";
+    noctalia-shell.additionalSettings = {
+      location.name = "Serbia, Niš";
+    };
 
     awww = {
       script.args = [

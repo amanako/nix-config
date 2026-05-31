@@ -3,7 +3,6 @@
     includes = [
       # Preprocessed inputs for host system
       den.batteries.inputs'
-      den.aspects.overlays
     ];
 
     persys = {
@@ -13,16 +12,10 @@
         # uids/gids will have them reassigned on reboot.
         "/var/lib/nixos"
 
-        # Bluetooth device history
-        "/var/lib/bluetooth"
-
-        # Wifi connections
-        "/etc/NetworkManager/system-connections"
-
         # Popup lecturing on sudo usage
         "/var/db/sudo/lectured"
 
-        # Time stamps for systemd tasks
+        # Time stamps for systemd tasks which should help with remembering timers countdown
         "/var/lib/systemd/timers"
       ];
 
@@ -31,11 +24,6 @@
         "/etc/machine-id"
       ];
     };
-
-    persysUser.directories = [
-      # Reduce buildtime by preserving git caches
-      ".cache/nix"
-    ];
 
     nixos = {pkgs, ...}: {
       # Enable flakes and nix command

@@ -29,6 +29,8 @@
       adaptArgs = {config, ...}: {
         osConfig = config;
       };
+      # TODO: Implement check for fileSystems."/home".neededForBoot == true
+      # And disable class via guard if user doesn't have ephemeral home
       guard = {options, ...}: options ? environment.persistence;
     };
 in {

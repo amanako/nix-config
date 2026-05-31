@@ -1,13 +1,17 @@
-{__findFile, ...}: {
+{
+  den,
+  __findFile,
+  ...
+}: {
   den.aspects.nebula = {
     includes = [
-      <nebula/hardware>
-      <boot/loader/limine>
-      <boot/optional/plymouth>
-      <boot>
-      <performance>
+      den.aspects.nebula._
+      den.aspects.boot.optional._
+      den.aspects.performance._
       <displayManagers/ly>
-      <utility>
+      <boot/loader/limine>
+      <nix>
+      <nix/lix>
     ];
 
     nixos.boot.loader.limine.style.wallpaperStyle = "centered";
