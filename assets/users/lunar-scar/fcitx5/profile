@@ -28,7 +28,7 @@ Layout=
 
 [Groups/2]
 # Group Name
-Name="JP"
+Name=JP
 # Layout
 Default Layout=us
 # Default Input Method
@@ -42,7 +42,7 @@ Layout=
 
 [Groups/3]
 # Group Name
-Name="Default"
+Name=Default
 # Layout
 Default Layout=us
 # Default Input Method
@@ -55,7 +55,7 @@ Name=keyboard-us
 Layout=
 
 [GroupOrder]
-0="Default"
-1="SR - Cyrilic"
-2="JP"
+0=Default
+1=JP
+2="SR - Cyrilic"
 3="SR - Latin"
