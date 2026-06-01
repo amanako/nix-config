@@ -4,11 +4,13 @@
   ...
 }: let
   u = "lunar-scar";
+  h = "/home/${u}";
 in {
   den.aspects.lunar-scar = {
     includes = [
       (den.batteries.user-shell "fish")
 
+      den.aspects.lunar-scar._
       den.aspects.security._
       den.aspects.utility._
       den.aspects.shell._
@@ -94,13 +96,6 @@ in {
       fonts.fontconfig.enable = true;
       home.file.".config/fontconfig/fonts.conf".source = config.lib.file.mkOutOfStoreSymlink "${user.repoRoot}/assets/users/${u}/fontconfig.conf";
 
-      # Add personal config file for fcitx5
-      # Recusrive is necessary when it's a folder
-      home.file.".config/fcitx5" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${user.repoRoot}/assets/users/${u}/fcitx5";
-        recursive = true;
-      };
-
       # Tell niri to start with these programs
       programs.niri.settings.spawn-at-startup = [
         {
@@ -108,7 +103,7 @@ in {
         }
       ];
 
-      programs.gpg.homedir = "${config.home.homeDirectory}/keys/gnupg";
+      programs.gpg.homedir = "${h}/keys/gnupg";
 
       programs.ssh.settings."*" = {
         host = "codeberg.org";
