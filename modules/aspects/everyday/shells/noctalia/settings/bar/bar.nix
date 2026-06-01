@@ -1,6 +1,6 @@
 {noctalia, ...}: {
   noctalia.settings.bar = {
-    include = [
+    includes = [
       noctalia.settings.bar.widgets
     ];
 
@@ -39,13 +39,9 @@
 
       middleClickAction = "settings";
       middleClickFollowMouse = false;
-      middleClickCommand = "";
 
       rightClickAction = "controlCenter";
       rightClickFollowMouse = true;
-      rightClickCommand = "";
-
-      screenOverrides = [];
     };
   };
 }

@@ -3,76 +3,108 @@
     homeManager.programs.noctalia-shell.settings.bar.widgets = {
       left = [
         {
-          colorName = "primary";
-          hideWhenIdle = true;
-          id = "AudioVisualizer";
-          width = 200;
-        }
-        {
-          displayMode = "onhover";
-          iconColor = "primary";
           id = "Network";
-          textColor = "none";
-        }
-        {
           displayMode = "onhover";
           iconColor = "primary";
-          id = "Bluetooth";
           textColor = "none";
         }
         {
-          clockColor = "primary";
-          customFont = "Mona Sans Display";
-          formatHorizontal = "HH:mm ddd, MMM dd";
-          formatVertical = "HH mm";
-          id = "Clock";
-          tooltipFormat = "HH:mm ddd, MMM dd";
-          useCustomFont = true;
+          id = "Bluetooth";
+          displayMode = "onhover";
+          iconColor = "primary";
+          textColor = "none";
         }
         {
-          displayMode = "graphic-clean";
+          id = "Clock";
+          clockColor = "primary";
+          formatHorizontal = "HH:mm ddd, MMM dd";
+          formatVertical = "HH mm ddd";
+          tooltipFormat = "HH:mm ddd, MMM dd";
+        }
+        {
           id = "Battery";
-          showNoctaliaPerformance = false;
-          showPowerProfiles = false;
+          displayMode = "icon-hover";
+          hideIfNotDetected = true;
+          showNoctaliaPerformance = true;
+        }
+        {
+          id = "NotificationHistory";
+          hideWhenZero = true;
+          hideWhenZeroUnread = false;
+          iconColor = "primary";
+          showUnreadBadge = true;
+          unreadBadgeColor = "secondary";
         }
       ];
+
       center = [
         {
-          id = "plugin:pomodoro";
-        }
-        {
-          id = "plugin:clipper";
+          id = "Volume";
+          displayMode = "onhover";
+          iconColor = "primary";
+          textColor = "none";
         }
         {
           compactMode = true;
-          iconColor = "primary";
-          id = "SystemMonitor";
+          hideMode = "visible";
+          hideWhenIdle = false;
+          id = "MediaMini";
+          maxWidth = 145;
+          panelShowAlbumArt = true;
+          scrollingMode = "hover";
+          showAlbumArt = false;
+          showArtistFirst = false;
+          showProgressRing = true;
+          showVisualizer = true;
           textColor = "primary";
+          useFixedWidth = false;
+          visualizerType = "wave";
+        }
+        {
+          id = "SystemMonitor";
+          compactMode = true;
+          iconColor = "primary";
+          showDiskUsage = true;
+          showMemoryUsage = true;
+          textColor = "none";
+          useMonospaceFont = true;
         }
       ];
+
       right = [
         {
-          characterCount = 2;
-          colorizeIcons = true;
-          focusedColor = "primary";
-          fontWeight = "regular";
-          groupedBorderOpacity = 0.7;
-          hideUnoccupied = true;
-          iconScale = 0.9;
           id = "Workspace";
-          labelMode = "index";
-          occupiedColor = "tertiary";
+          labelMode = "name";
+          focusedColor = "primary";
+          fontWeight = "medium";
+          groupedBorderOpacity = 0.85;
+          hideUnoccupied = true;
+          iconScale = 0.8;
+          occupiedColor = "secondary";
           pillSize = 0.6;
+          showApplications = true;
+          showBadge = true;
+          showLabelsOnlyWhenOccupied = true;
+          unfocusedIconsOpacity = 0.5;
         }
         {
-          colorizeDistroLogo = true;
-          colorizeSystemIcon = "primary";
-          colorizeSystemText = "none";
-          customIconPath = "";
-          enableColorization = true;
-          icon = "noctalia";
+          id = "Tray";
+          drawerEnabled = false;
+          hidePassive = false;
+          pinned = [];
+        }
+        {
           id = "ControlCenter";
+          enableColorization = true;
+          colorizeSystemIcon = "tertiary";
+          icon = "noctalia";
+          useDistroLogo = false;
+        }
+        {
+          id = "Launcher";
+          icon = "rocket";
           useDistroLogo = true;
+          enableColorization = false;
         }
       ];
     };
