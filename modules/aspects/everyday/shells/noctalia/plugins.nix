@@ -1,5 +1,12 @@
 {
   noctalia.plugins.official = {
+    # This should prevent plugins appearing in bar every time when restarting.
+    # Unfortunately for the first time this is inescapable.
+    # Rebooting should persisting the directory, stopping the issue.
+    persysUser.directories = [
+      ".config/noctalia/plugins"
+    ];
+
     homeManager = {lib, ...}: {
       programs.noctalia-shell = {
         plugins = let
