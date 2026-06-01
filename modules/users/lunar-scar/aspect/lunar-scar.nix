@@ -10,6 +10,7 @@ in {
     includes = [
       (den.batteries.user-shell "fish")
 
+      # Include all direct subaspects
       den.aspects.lunar-scar._
       den.aspects.security._
       den.aspects.utility._
@@ -61,24 +62,7 @@ in {
       ".local/share/systemd/timers"
     ];
 
-    nixos = {pkgs, ...}: {
-      fonts.packages = with pkgs; [
-        mona-sans
-
-        noto-fonts-cjk-serif
-        ipafont
-        biz-ud-gothic
-        inconsolata
-        nerd-fonts.victor-mono
-      ];
-    };
-
-    homeManager = {
-      user,
-      pkgs,
-      config,
-      ...
-    }: {
+    homeManager = {pkgs, ...}: {
       home.packages = with pkgs; [
         thunar
         youtube-tui
@@ -91,10 +75,6 @@ in {
         usbutils
         ripgrep
       ];
-
-      # Add a custom fontconfig file from current directory
-      fonts.fontconfig.enable = true;
-      home.file.".config/fontconfig/fonts.conf".source = config.lib.file.mkOutOfStoreSymlink "${user.repoRoot}/assets/users/${u}/fontconfig.conf";
 
       # Tell niri to start with these programs
       programs.niri.settings.spawn-at-startup = [
