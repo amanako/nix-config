@@ -39,13 +39,16 @@
 ## Design
 
 - [denful/den][den] framework with [SoC] in mind.
-- Code is documented with tips I learned along the way.
+- Files not overwhelmingly long (ideally ~80 lines), splitting to composable parts if crossing the line or causing severe mental load
+- Documented with tips and tricks I learned along the way to hopefully make it easier to understand for fellow nix users (likely pending improvements)
+- Using most of den capabilities - thorough thinking of which tool is best for the job at hand
+- Creating declarations, [flake-file] inputs, [custom classes] etc. near to actual place of usage to allow for easy removal<br>
+Other specifics can be figured out by comparing individual files.
 
 ## Goals
 
 - [TUI] experience
 - Keyboard-driven
-- [Neovim] as an **all-encompassing text editor**
 - Uniformness with **[gruvbox]** theme
 - **Light gaming** , I use it primarily for [VNs][vn]
 
@@ -294,6 +297,7 @@ Assets from third-party repositories(primarily flake-inputs, den included) are l
 [disko]: https://github.com/nix-community/disko
 [dms]: https://danklinux.com/
 [docs]: https://den.denful.dev/overview
+[flake-file]: https://github.com/denful/flake-file
 [fcitx5]: https://fcitx-im.org/wiki/Fcitx_5
 [fish]: https://fishshell.com
 [gruvbox]: https://duckduckgo.com/?q=gruvbox&iar=images&t=ffab
