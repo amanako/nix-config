@@ -31,6 +31,10 @@ in {
   in {
     includes = [fcitx5Class];
 
+    niriSpawnAtStartup = {
+      command = ["fcitx5"];
+    };
+
     # Required to avoid error: Conflicting managed target files: .config/fcitx5
     stylixHome.targets."fcitx5".enable = false;
 

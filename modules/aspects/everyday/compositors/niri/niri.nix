@@ -18,58 +18,68 @@
     };
   };
 
-  den.aspects.compositors.niri-full.includes = [
-    <compositors/niri>
-    <niri/binds>
-    <niri/important>
-    <niri/input>
-    <niri/layout>
-    <niri/windowRules>
-    <niri/workspaces>
-    <niri/animations/other>
-    <niri/animations/window>
-    <niri/other>
-  ];
-
-  den.aspects.compositors.niri = {
+  den.quirks.niriSpawnAtStartup = {
     description = ''
-      From [description](https://github.com/niri-wm/niri):
-      A scrollable-tiling Wayland compositor.
-
-      This is aspect using flake for nix-native setup of niri.
-      Reference: https://github.com/sodiboo/niri-flake
+      Programs to spawn alongside niri.
     '';
+  };
 
-    nixos = {inputs', ...}: {
-      systemd.user.services.niri-flake-polkit.enable = false;
-      nixpkgs.overlays = [inputs.niri-pkgs.overlays.niri];
-      # Necessary for niri to be enabled via nixos class.
-      # This helps since it can be caught by display managers.
-      # Also match nixos and home-manager versions.
-      programs.niri = {
-        enable = true;
-        package = inputs'.niri-pkgs.packages.niri-unstable;
+  den.aspects.compositors = {
+    niri-full.includes = [
+      <compositors/niri>
+      <niri/binds>
+      <niri/important>
+      <niri/input>
+      <niri/layout>
+      <niri/windowRules>
+      <niri/workspaces>
+      <niri/animations/other>
+      <niri/animations/window>
+      <niri/other>
+    ];
+
+    niri = {
+      description = ''
+        From [description](https://github.com/niri-wm/niri):
+        A scrollable-tiling Wayland compositor.
+
+        This is aspect using flake for nix-native setup of niri.
+        Reference: https://github.com/sodiboo/niri-flake
+      '';
+
+      nixos = {inputs', ...}: {
+        systemd.user.services.niri-flake-polkit.enable = false;
+        nixpkgs.overlays = [inputs.niri-pkgs.overlays.niri];
+        # Necessary for niri to be enabled via nixos class.
+        # This helps since it can be caught by display managers.
+        # Also match nixos and home-manager versions.
+        programs.niri = {
+          enable = true;
+          package = inputs'.niri-pkgs.packages.niri-unstable;
+        };
       };
-    };
 
-    homeManager = {
-      inputs',
-      lib,
-      ...
-    }: {
-      imports = [inputs.niri.homeModules.niri];
-      nixpkgs.overlays = [inputs.niri.overlays.niri];
+      homeManager = {
+        niriSpawnAtStartup,
+        inputs',
+        lib,
+        ...
+      }: {
+        imports = [inputs.niri.homeModules.niri];
+        nixpkgs.overlays = [inputs.niri.overlays.niri];
 
-      programs.niri = {
-        enable = true;
-        package = inputs'.niri-pkgs.packages.niri-unstable;
-        # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
-        settings = {
-          includes = lib.mkAfter [
-            ./blur.kdl
-          ];
+        programs.niri = {
+          enable = true;
+          package = inputs'.niri-pkgs.packages.niri-unstable;
+          # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
+          settings = {
+            includes = lib.mkAfter [
+              ./blur.kdl
+            ];
 
-          animations.slowdown = 1.5;
+            spawn-at-startup = niriSpawnAtStartup;
+            animations.slowdown = 1.5;
+          };
         };
       };
     };

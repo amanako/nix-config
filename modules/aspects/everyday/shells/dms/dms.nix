@@ -7,25 +7,12 @@
     homeManager = {
       imports = [
         inputs.dms.homeModules.dank-material-shell
-        inputs.dms.homeModules.niri
       ];
 
       programs.dank-material-shell = {
         enable = true;
         # Systemd service provides better integration and 'dms restart' works
         systemd.enable = true;
-
-        niri = {
-          # Don't use preset keybinds because of low coverage
-          enableKeybinds = false;
-          includes = {
-            enable = true;
-            # Change name to something different for easier recognition
-            originalFileName = "dank";
-            # We won't be using kdl files instead relying completely on nix
-            filesToInclude = [];
-          };
-        };
 
         enableSystemMonitoring = true;
         enableVPN = false;

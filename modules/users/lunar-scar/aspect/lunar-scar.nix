@@ -76,13 +76,6 @@ in {
         ripgrep
       ];
 
-      # Tell niri to start with these programs
-      programs.niri.settings.spawn-at-startup = [
-        {
-          command = ["fcitx5"];
-        }
-      ];
-
       programs.gpg.homedir = "${h}/keys/gnupg";
 
       programs.ssh.settings."*" = {

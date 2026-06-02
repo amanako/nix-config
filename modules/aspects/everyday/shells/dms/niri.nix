@@ -1,4 +1,4 @@
-{
+{inputs, ...}: {
   dms.niri = {
     description = ''
       DMS aspect providing configuration for Niri when niri is set as compositor and
@@ -6,6 +6,21 @@
     '';
 
     homeManager = {lib, ...}: {
+      imports = [
+        inputs.dms.homeModules.niri
+      ];
+
+      programs.dank-material-shell.niri = {
+        # Don't use preset keybinds because of low coverage
+        enableKeybinds = false;
+        includes = {
+          # We won't be using kdl files instead relying completely on nix-native config
+          enable = false;
+          # Change name to something different for easier recognition
+          originalFileName = "dank";
+        };
+      };
+
       programs.niri.settings = {
         windows.recent-windows.highlight.corner-radius = 12;
         layout = {
