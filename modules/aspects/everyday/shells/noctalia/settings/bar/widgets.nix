@@ -30,7 +30,7 @@
         {
           id = "NotificationHistory";
           hideWhenZero = true;
-          hideWhenZeroUnread = false;
+          hideWhenZeroUnread = true;
           iconColor = "primary";
           showUnreadBadge = true;
           unreadBadgeColor = "secondary";

@@ -10,7 +10,7 @@
         {
           general = {
             # Should be easily identifyable in user section
-            avatarImage = "${user.repoRoot}/assets/users/${user.userName}/.face";
+            avatarImage = "${user.repoRoot}/assets/users/${user.userName}/${user.noctalia-shell.pfpName}";
           };
 
           ui = {

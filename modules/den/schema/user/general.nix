@@ -1,10 +1,8 @@
 {
-  den,
   lib,
   __findFile,
   ...
 }: {
-  flake.den = den;
   den.schema.user = {
     options.isPrimaryUser = lib.mkOption {
       example = true;
