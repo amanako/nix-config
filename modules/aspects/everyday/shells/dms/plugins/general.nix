@@ -1,10 +1,10 @@
-{inputs, ...}: {
+{
   flake-file.inputs.dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
 
   dms.plugins.general = {
-    homeManager = {
+    homeManager = {inputs', ...}: {
       imports = [
-        inputs.dms-plugin-registry.modules.default
+        inputs'.dms-plugin-registry.modules.default
       ];
 
       programs.dank-material-shell = {

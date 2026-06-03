@@ -1,5 +1,5 @@
 {
-  den.aspects.boot.optional.silence = {
+  den.aspects.boot.optional.silence = {host}: {
     nixos.boot = {
       # Remove verbosity
       consoleLogLevel = 3;

@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.gaming.software = {
+  den.aspects.gaming.software = {user, ...}: {
     description = ''
       Handpicked software used to leverage gaming experience.
     '';

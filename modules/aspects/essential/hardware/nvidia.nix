@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.hardware.graphics.nvidia = {host, ...}: {
+  den.aspects.hardware.graphics.nvidia = {host}: {
     includes = [
       (den.batteries.unfree [
         "nvidia-x11"

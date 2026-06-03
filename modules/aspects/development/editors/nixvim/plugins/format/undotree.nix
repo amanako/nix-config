@@ -1,5 +1,7 @@
 {
-  nixvim.plugins.homeManager.programs.nixvim.plugins.undotree = {
-    enable = true;
+  nixvim.plugins.undotree = {user, ...}: {
+    homeManager.programs.nixvim.plugins.undotree = {
+      enable = true;
+    };
   };
 }

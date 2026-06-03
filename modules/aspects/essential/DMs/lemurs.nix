@@ -1,5 +1,5 @@
 {
-  den.aspects.displayManagers.lemurs = {
+  den.aspects.displayManagers.lemurs = {host}: {
     # Requirement for wayland
     provides.to-users.user.extraGroups = ["seat"];
 

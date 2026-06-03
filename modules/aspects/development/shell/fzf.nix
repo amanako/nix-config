@@ -1,5 +1,5 @@
 {
-  den.aspects.shell.fzf = {
+  den.aspects.shell.fzf = {user, ...}: {
     # Stylix colors for fzf aren't really appealing
     stylixHome.targets."fzf".enable = false;
 

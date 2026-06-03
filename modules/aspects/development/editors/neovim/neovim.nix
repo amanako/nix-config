@@ -1,7 +1,7 @@
 {inputs, ...}: {
   flake-file.inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-  den.aspects.editors.neovim = {
+  den.aspects.editors.neovim = {user, ...}: {
     persysUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"

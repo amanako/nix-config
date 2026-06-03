@@ -9,7 +9,7 @@
     };
   };
 
-  den.aspects.performance.cachyos-kernel = {
+  den.aspects.performance.cachyos-kernel = {host}: {
     nixos.nixpkgs.overlays = [
       inputs.nix-cachyos-kernel.overlays.pinned
     ];

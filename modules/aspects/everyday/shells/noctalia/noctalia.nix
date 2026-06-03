@@ -36,7 +36,7 @@
     <noctalia/settings/ui>
   ];
 
-  den.aspects.shells.noctalia = {
+  den.aspects.shells.noctalia = {user, ...}: {
     stylixHome.targets."noctalia-shell".enable = false;
 
     # TODO: Look into reason why this only works for the first time

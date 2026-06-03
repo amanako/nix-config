@@ -1,96 +1,98 @@
 {
-  nixvim.plugins.homeManager.programs.nixvim.plugins.noice = {
-    enable = true;
-    settings = {
-      views = {
-        hover = {
-          winoptions = {
-            winblend = 0;
+  nixvim.plugins.noice = {user, ...}: {
+    homeManager.programs.nixvim.plugins.noice = {
+      enable = true;
+      settings = {
+        views = {
+          hover = {
+            winoptions = {
+              winblend = 0;
+            };
+            border = "rounded";
           };
-          border = "rounded";
         };
-      };
-      lsp.signature.enabled = false;
-      default_mappings = false;
-      presets = {
-        command_palette = true;
-        long_message_to_split = true;
-        bottom_search = true;
-      };
-      commands = {
-        errors = {
-          filter = {
-            error = true;
-          };
-          filter_opts = {
-            reverse = true;
-          };
-          opts = {
-            enter = true;
-            format = "details";
-          };
-          view = "popup";
+        lsp.signature.enabled = false;
+        default_mappings = false;
+        presets = {
+          command_palette = true;
+          long_message_to_split = true;
+          bottom_search = true;
         };
-        history = {
-          filter = {
-            any = [
-              {
-                event = "notify";
-              }
-              {
-                error = true;
-              }
-              {
-                warning = true;
-              }
-              {
-                event = "msg_show";
-                kind = [
-                  ""
-                ];
-              }
-              {
-                event = "lsp";
-                kind = "message";
-              }
-            ];
+        commands = {
+          errors = {
+            filter = {
+              error = true;
+            };
+            filter_opts = {
+              reverse = true;
+            };
+            opts = {
+              enter = true;
+              format = "details";
+            };
+            view = "popup";
           };
-          opts = {
-            enter = true;
-            format = "details";
+          history = {
+            filter = {
+              any = [
+                {
+                  event = "notify";
+                }
+                {
+                  error = true;
+                }
+                {
+                  warning = true;
+                }
+                {
+                  event = "msg_show";
+                  kind = [
+                    ""
+                  ];
+                }
+                {
+                  event = "lsp";
+                  kind = "message";
+                }
+              ];
+            };
+            opts = {
+              enter = true;
+              format = "details";
+            };
+            view = "split";
           };
-          view = "split";
-        };
-        last = {
-          filter = {
-            any = [
-              {
-                event = "notify";
-              }
-              {
-                error = true;
-              }
-              {
-                warning = true;
-              }
-              {
-                event = "msg_show";
-                kind = [
-                  ""
-                ];
-              }
-              {
-                event = "lsp";
-                kind = "message";
-              }
-            ];
+          last = {
+            filter = {
+              any = [
+                {
+                  event = "notify";
+                }
+                {
+                  error = true;
+                }
+                {
+                  warning = true;
+                }
+                {
+                  event = "msg_show";
+                  kind = [
+                    ""
+                  ];
+                }
+                {
+                  event = "lsp";
+                  kind = "message";
+                }
+              ];
+            };
+            filter_opts.count = 1;
+            opts = {
+              enter = true;
+              format = "details";
+            };
+            view = "popup";
           };
-          filter_opts.count = 1;
-          opts = {
-            enter = true;
-            format = "details";
-          };
-          view = "popup";
         };
       };
     };

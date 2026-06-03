@@ -1,6 +1,9 @@
 {
-  den.aspects.lunar-scar.fcitx5 = {
-    # Addons require access to pkgs instance but fcitx5 is a static class
+  # Aspect should respect fcitx5 forwarging battery and accept user as lambda parameter.
+  # For naming of direct aspect, anything other that fcitx5 should suffice and help avoid confusion.
+  den.aspects.lunar-scar.fcitx5-config = {user, ...}: {
+    # Addons require access to pkgs instance but fcitx5 is a static class.
+    # Therefore, define a homeManager(or nixos) class to append addons
     homeManager = {pkgs, ...}: {
       i18n.inputMethod.fcitx5.addons = with pkgs; [
         # Basic GUI for configuration

@@ -1,10 +1,9 @@
 {
   __findFile,
-  den,
   lib,
   ...
 }: {
-  den.aspects.hardware = {host, ...}: {
+  den.aspects.hardware = {host}: {
     includes =
       [
         <hardware/audio>

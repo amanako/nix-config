@@ -1,7 +1,23 @@
 {
+  den,
+  __findFile,
+  ...
+}: {
+  den.schema.user.includes = [
+    (
+      {user}:
+        if user.awww.enable
+        then den.aspects.wallpaper-managers.awww
+        else {}
+    )
+  ];
+
+  # Using parametric aspect capturing user is impossible here since schema is including it.
+  # Schemas don't have access to aspect parameters.
   den.aspects.wallpaper-managers.awww = {
-    # Awww keeps cached actions so preserving directory should reduce load
-    persysUser.directories = [".cache/awww"];
+    includes = [
+      <wallpaper-managers/awww/script>
+    ];
 
     homeManager = {
       user,

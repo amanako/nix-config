@@ -1,65 +1,56 @@
-{
-  inputs,
-  den,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
   flake-file.inputs.wallpapers = {
     url = "git+https://codeberg.org/voidptrx/wallpapers";
     flake = false;
   };
 
-  den.schema.user.includes = [
-    (
-      {user, ...}:
-        if user.awww.enable
-        then den.aspects.wallpaper-managers.awww
-        else {}
-    )
-  ];
+  den.aspects.wallpaper-managers.awww.script = {
+    # Awww keeps cached actions so preserving directory should reduce load
+    persysUser.directories = [".cache/awww"];
 
-  den.aspects.wallpaper-managers.awww.homeManager = {
-    user,
-    pkgs,
-    lib,
-    ...
-  }: let
-    wallpapersPath = inputs.wallpapers.outPath;
+    homeManager = {
+      user,
+      pkgs,
+      lib,
+      ...
+    }: let
+      wallpapersPath = inputs.wallpapers.outPath;
 
-    # Since systemd services run in minimal environment many core linux utilies are not available
-    awwwExe = lib.getExe' pkgs.awww "awww";
-    find = lib.getExe' pkgs.findutils "find";
-    shuf = lib.getExe' pkgs.coreutils "shuf";
+      # Since systemd services run in minimal environment many core linux utilies are not available
+      awwwExe = lib.getExe' pkgs.awww "awww";
+      find = lib.getExe' pkgs.findutils "find";
+      shuf = lib.getExe' pkgs.coreutils "shuf";
 
-    joinedScriptArgs = lib.join " " user.awww.script.args;
+      joinedScriptArgs = lib.join " " user.awww.script.args;
 
-    scriptPkg = pkgs.writeShellScriptBin "${user.awww.script.label}" ''
-      DIR="${wallpapersPath}"
-      img=$( ${find} "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${shuf} -n 1)
-      if [ -n "$img" ]; then
-        ${awwwExe} img ${joinedScriptArgs} "$img"
-      fi
-    '';
+      scriptPkg = pkgs.writeShellScriptBin "${user.awww.script.label}" ''
+        DIR="${wallpapersPath}"
+        img=$( ${find} "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${shuf} -n 1)
+        if [ -n "$img" ]; then
+          ${awwwExe} img ${joinedScriptArgs} "$img"
+        fi
+      '';
 
-    service = user.awww.service.label;
-  in {
-    systemd.user.services.${service} = {
-      Unit.Description = "Wallpaper rotator";
+      service = user.awww.service.label;
+    in {
+      systemd.user.services.${service} = {
+        Unit.Description = "Wallpaper rotator";
 
-      Service = {
-        ExecStart = "${lib.getExe scriptPkg}";
-        Restart = "on-failure";
-        RestartSec = 2;
+        Service = {
+          ExecStart = "${lib.getExe scriptPkg}";
+          Restart = "on-failure";
+          RestartSec = 2;
 
-        Type = "oneshot";
+          Type = "oneshot";
+        };
       };
-    };
 
-    home.packages =
-      lib.optional user.awww.script.exposePackage scriptPkg
-      ++ [
-        # To test functionality
-        pkgs.awww
-      ];
+      home.packages =
+        lib.optional user.awww.script.exposePackage scriptPkg
+        ++ [
+          # To test functionality
+          pkgs.awww
+        ];
+    };
   };
 }

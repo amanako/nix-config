@@ -1,5 +1,6 @@
 {
   den,
+  nixvim,
   __findFile,
   ...
 }: let
@@ -20,11 +21,13 @@ in {
       <compositors/niri-full>
       <shells/noctalia-full>
 
+      <editors/nixvim>
+      nixvim._
+      nixvim.plugins._
+
       <terminal/zellij>
       <terminal/kitty>
       <terminal/yazi>
-
-      <editors/nixvim>
 
       <nix/nh>
       <nixUtils/nixIndexDatabase>

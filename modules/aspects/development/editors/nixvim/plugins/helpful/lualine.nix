@@ -1,3 +1,5 @@
 {
-  nixvim.plugins.homeManager.programs.nixvim.plugins.lualine.enable = true;
+  nixvim.plugins.lualine = {user, ...}: {
+    homeManager.programs.nixvim.plugins.lualine.enable = true;
+  };
 }

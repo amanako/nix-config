@@ -1,5 +1,5 @@
 {
-  nixvim.opts = {
+  nixvim.opts = {user, ...}: {
     homeManager.programs.nixvim.opts = {
       # Numbers
       number = true;

@@ -1,5 +1,5 @@
 {
-  nixvim.extra-config = {
+  nixvim.extra-config = {user, ...}: {
     homeManager.programs.nixvim.extraConfigLua = ''
       local _border = "rounded"
 

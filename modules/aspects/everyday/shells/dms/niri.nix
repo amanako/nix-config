@@ -1,13 +1,17 @@
-{inputs, ...}: {
-  dms.niri = {
+{
+  dms.niri = {user, ...}: {
     description = ''
       DMS aspect providing configuration for Niri when niri is set as compositor and
       dms aspect is included.
     '';
 
-    homeManager = {lib, ...}: {
+    homeManager = {
+      inputs',
+      lib,
+      ...
+    }: {
       imports = [
-        inputs.dms.homeModules.niri
+        inputs'.dms.homeModules.niri
       ];
 
       programs.dank-material-shell.niri = {

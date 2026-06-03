@@ -1,5 +1,5 @@
 {
-  den.aspects.performance.services = {
+  den.aspects.performance.services = {host}: {
     nixos.services = {
       upower.enable = true;
       thermald.enable = true;

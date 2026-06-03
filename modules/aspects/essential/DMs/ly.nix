@@ -1,5 +1,5 @@
 {
-  den.aspects.displayManagers.ly.nixos = {host, ...}: {
+  den.aspects.displayManagers.ly.nixos = {host}: {
     services.displayManager.ly = {
       enable = true;
       settings = {

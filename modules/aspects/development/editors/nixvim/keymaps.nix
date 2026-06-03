@@ -1,5 +1,5 @@
 {
-  nixvim.keymaps = {
+  nixvim.keymaps = {user, ...}: {
     homeManager.programs.nixvim.keymaps = [
       {
         mode = "n";

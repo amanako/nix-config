@@ -1,5 +1,5 @@
 {
-  den.aspects.shell.starship = {
+  den.aspects.shell.starship = {user, ...}: {
     stylixHome.targets."starship".enable = false;
 
     homeManager = {lib, ...}: {

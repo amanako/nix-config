@@ -1,5 +1,5 @@
 {
-  den.aspects.shell.zoxide = {
+  den.aspects.shell.zoxide = {user, ...}: {
     persysUser.directories = [
       ".local/share/zoxide" # database for previos entries
     ];

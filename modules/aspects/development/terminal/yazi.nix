@@ -8,7 +8,7 @@
     };
   };
 
-  den.aspects.terminal.yazi = {
+  den.aspects.terminal.yazi = {user, ...}: {
     stylixHome.targets."yazi".enable = false;
 
     homeManager = {

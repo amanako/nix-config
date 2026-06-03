@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  den.aspects.boot.loader.limine = {host, ...}: {
+  den.aspects.boot.loader.limine = {host}: {
     description = ''
       From [description](https://github.com/Limine-Bootloader/Limine):
       Modern, secure, portable, multiprotocol bootloader and boot manager.
@@ -15,11 +15,7 @@
 
     stylix.targets."limine".enable = false;
 
-    nixos = {
-      host,
-      pkgs,
-      ...
-    }: {
+    nixos = {pkgs, ...}: {
       boot.loader = {
         efi.canTouchEfiVariables = true;
         timeout = 5;

@@ -1,13 +1,15 @@
 {
-  nixvim.plugins.homeManager.programs.nixvim.plugins.mini = {
-    enable = true;
-    mockDevIcons = true;
+  nixvim.plugins.mini = {user, ...}: {
+    homeManager.programs.nixvim.plugins.mini = {
+      enable = true;
+      mockDevIcons = true;
 
-    modules = {
-      icons.enable = true;
-      starter.enable = true;
-      pairs.enable = true;
-      cmdline.enable = true;
+      modules = {
+        icons.enable = true;
+        starter.enable = true;
+        pairs.enable = true;
+        cmdline.enable = true;
+      };
     };
   };
 }

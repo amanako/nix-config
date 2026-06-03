@@ -8,7 +8,7 @@
     };
   };
 
-  den.aspects.editors.helix = {
+  den.aspects.editors.helix = {user, ...}: {
     homeManager = {
       nixpkgs.overlays = [
         inputs.helix.overlays.helix
