@@ -1,12 +1,8 @@
 {
   flake-file.inputs.firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
-  zen-browser.extensions = {
-    homeManager = {
-      user,
-      inputs',
-      ...
-    }: {
+  zen-browser.extensions = {user, ...}: {
+    homeManager = {inputs', ...}: {
       programs.zen-browser.profiles."${user.userName}".extensions = {
         force = true;
 

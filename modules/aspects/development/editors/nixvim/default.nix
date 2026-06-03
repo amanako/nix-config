@@ -7,19 +7,10 @@
 
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
-  den.aspects.editors.nixvim = {user, ...}: {
+  nixvim.entry = {user, ...}: {
     persysUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
-    ];
-
-    includes = [
-      <nixvim/colorschemes>
-      <nixvim/dependencies>
-      <nixvim/keymaps>
-      <nixvim/opts>
-      <nixvim/extra-config>
-      <nixvim/plugins>
     ];
 
     stylixHome.targets."nixvim".enable = false;

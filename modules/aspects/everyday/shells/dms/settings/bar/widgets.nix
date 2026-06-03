@@ -18,13 +18,16 @@
               enabled = true;
               clockCompactMode = true;
             }
-            "weather"
-          ]
-          ++ lib.optionals config.programs.dank-material-shell.plugins.nixMonitor.enable [
             {
-              id = "nixMonitor";
+              id = "weather";
+              enabled = true;
             }
-          ];
+          ]
+          ++ lib.optional
+          (lib.hasAttr "nix-monitor" config.programs && config.programs.nix-monitor.enable)
+          {
+            id = "nixMonitor";
+          };
         centerWidgets = [
           "systemTray"
           "battery"

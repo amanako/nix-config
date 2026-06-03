@@ -5,7 +5,7 @@
       command = ["noctalia-shell"];
     };
 
-    homeManager.programs.niri.settings = {
+    niriSettings = {
       binds = let
         spawnNoctaliaCommand = args: {
           action.spawn =

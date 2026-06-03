@@ -1,5 +1,4 @@
 {
-  __findFile,
   inputs,
   lib,
   ...
@@ -9,17 +8,7 @@
 
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
-  den.aspects.browsers.zen-browser-full.includes = [
-    <browsers/zen-browser>
-    <zen-browser/containers>
-    <zen-browser/extensions>
-    <zen-browser/policies>
-    <zen-browser/settings>
-    <zen-browser/spaces>
-    <zen-browser/search>
-  ];
-
-  den.aspects.browsers.zen-browser = {user, ...}: let
+  zen-browser.entry = {user, ...}: let
     browser = user.preferences.browser;
     isZen = lib.hasPrefix "zen" browser;
 

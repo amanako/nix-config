@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.telecope = {user, ...}: {
+  nixvim.plugins.telescope = {user, ...}: {
     homeManager.programs.nixvim.plugins.telescope = {
       enable = true;
       keymaps = {

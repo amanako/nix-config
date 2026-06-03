@@ -3,7 +3,9 @@
 
   flake-file.inputs.dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
-  den.aspects.shells.dms = {user, ...}: {
+  dms.entry = {user, ...}: {
+    stylixHome.targets."dank-material-shell".enable = false;
+
     homeManager = {
       imports = [
         inputs.dms.homeModules.dank-material-shell

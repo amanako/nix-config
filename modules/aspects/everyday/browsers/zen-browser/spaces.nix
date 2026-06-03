@@ -1,6 +1,6 @@
 {
-  zen-browser.spaces.homeManager = {user, ...}: {
-    programs.zen-browser.profiles."${user.userName}" = {
+  zen-browser.spaces = {user, ...}: {
+    homeManager.programs.zen-browser.profiles."${user.userName}" = {
       spacesForce = true;
       spaces = {
         "Personal" = {

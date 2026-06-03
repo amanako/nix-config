@@ -21,7 +21,7 @@
 
           showThirdPartyPlugins = true;
         }
-        user.dank-material-shell.sessionSettings;
+        user.dank-material-shell.additionalSessionSettings;
     };
   };
 }

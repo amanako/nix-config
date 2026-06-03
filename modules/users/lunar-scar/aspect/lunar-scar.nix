@@ -1,41 +1,71 @@
 {
   den,
   nixvim,
+  zen-browser,
+  niri,
+  noctalia,
   __findFile,
   ...
 }: let
   u = "lunar-scar";
   h = "/home/${u}";
 in {
+  flake.den = den;
   den.aspects.lunar-scar = {
-    includes = [
-      (den.batteries.user-shell "fish")
+    # Temporary workaround for namespaced aspects not importing all direct children children
+    includes = with nixvim.plugins;
+      [
+        yazi
+        treesitter
+        trouble
+        telescope
+        conform
+        lsp
+        blink-cmp
+        lint
+        competitest
+        kitty-scrollback
+        lazygit
+        lualine
+        luasnip
+        lsplines
+        undotree
+        bufferline
+        noice
+        rainbow-delimiters
+        which-key
+      ]
+      ++ [
+        (den.batteries.user-shell "fish")
 
-      # Include all direct subaspects
-      den.aspects.lunar-scar._
-      den.aspects.security._
-      den.aspects.utility._
-      den.aspects.shell._
+        # Include all direct subaspects created under my user and other ones
+        den.aspects.lunar-scar._
+        den.aspects.security._
+        den.aspects.utility._
+        den.aspects.shell._
 
-      <browsers/zen-browser-full>
-      <compositors/niri-full>
-      <shells/noctalia-full>
+        # Works for namespaces as well
+        zen-browser._
+        noctalia._
+        noctalia.plugins._
+        niri._
+        niri.animations.window
+        niri.animations.other
 
-      <editors/nixvim>
-      nixvim._
-      nixvim.plugins._
+        nixvim._
+        # Additionaly import all plugins
 
-      <terminal/zellij>
-      <terminal/kitty>
-      <terminal/yazi>
+        <terminal/zellij>
+        <terminal/kitty>
+        <terminal/yazi>
 
-      <nix/nh>
-      <nixUtils/nixIndexDatabase>
+        <nix/nh>
+        <nixUtils/nixIndexDatabase>
 
-      <gaming/optimizations>
-      <gaming/software>
-      <default-shell>
-    ];
+        <gaming/optimizations>
+        <gaming/software>
+        <default-shell>
+      ];
 
     user = {
       initialPassword = "koko";
