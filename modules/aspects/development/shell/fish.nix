@@ -1,11 +1,15 @@
-{
-  den.aspects.shell.fish = {user, ...}: {
+{den, ...}: {
+  den.aspects.shell.interpreters.fish = {user, ...}: {
     stylix.targets."fish".enable = false;
     stylixHome.targets."fish".enable = false;
-    nixos.programs.fish.enable = true;
 
     persysUser.files = [
       ".local/share/fish/fish_history"
+    ];
+
+    # Sets fish for both nixos and homeManager
+    includes = [
+      (den.batteries.user-shell "fish")
     ];
 
     homeManager = {
@@ -18,7 +22,6 @@
       nh = lib.getExe pkgs.nh;
     in {
       programs.fish = {
-        enable = true;
         interactiveShellInit = ''
           set -U fish_greeting
           # Shell remains same when running "nix run" or "nix-shell"

@@ -1,71 +1,47 @@
 {
+  __findFile,
   den,
+  # Bring namespace aspects into scope when __findFile lookup won't suffice
   nixvim,
   zen-browser,
   niri,
   noctalia,
-  __findFile,
   ...
 }: let
   u = "lunar-scar";
   h = "/home/${u}";
 in {
-  flake.den = den;
   den.aspects.lunar-scar = {
-    # Temporary workaround for namespaced aspects not importing all direct children children
-    includes = with nixvim.plugins;
-      [
-        yazi
-        treesitter
-        trouble
-        telescope
-        conform
-        lsp
-        blink-cmp
-        lint
-        competitest
-        kitty-scrollback
-        lazygit
-        lualine
-        luasnip
-        lsplines
-        undotree
-        bufferline
-        noice
-        rainbow-delimiters
-        which-key
-      ]
-      ++ [
-        (den.batteries.user-shell "fish")
+    includes = [
+      # Include all direct subaspects created under my user and other ones
+      den.aspects.lunar-scar._
+      den.aspects.security._
+      den.aspects.utility._
+      den.aspects.shell._
+      den.aspects.shell.interpreters.fish
 
-        # Include all direct subaspects created under my user and other ones
-        den.aspects.lunar-scar._
-        den.aspects.security._
-        den.aspects.utility._
-        den.aspects.shell._
+      <terminal/zellij>
+      <terminal/kitty>
+      <terminal/yazi>
 
-        # Works for namespaces as well
-        zen-browser._
-        noctalia._
-        noctalia.plugins._
-        niri._
-        niri.animations.window
-        niri.animations.other
+      <nix/nh>
+      <nixUtils/nixIndexDatabase>
 
-        nixvim._
-        # Additionaly import all plugins
+      <gaming/optimizations>
+      <gaming/software>
+      <default-shell>
 
-        <terminal/zellij>
-        <terminal/kitty>
-        <terminal/yazi>
+      # Works for namespaces as well
+      zen-browser._
+      noctalia._
+      noctalia.settings._
+      noctalia.nplugins._
+      niri._
+      niri.animations._
 
-        <nix/nh>
-        <nixUtils/nixIndexDatabase>
-
-        <gaming/optimizations>
-        <gaming/software>
-        <default-shell>
-      ];
+      nixvim._
+      nixvim.plugins._
+    ];
 
     user = {
       initialPassword = "koko";
