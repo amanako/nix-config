@@ -2,10 +2,10 @@
   den.aspects.boot.loader.limine.secureBoot = {host}: {
     description = ''
       Secure boot functionality for limine. Automatically enabled when host opts in
-      for via wantsSecureBootSupport option. Should not be include directly.
+      via wantsSecureBootSupport option.
     '';
 
-    provides.to-hosts.persys.directories = [
+    persys.directories = [
       "/var/lib/sbctl"
     ];
 

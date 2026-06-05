@@ -1,13 +1,12 @@
 {
-  den.aspects.hardware.bluetooth = {host, ...}: {
-    provides.to-hosts.persys.directories = [
+  den.aspects.hardware.bluetooth = {host}: {
+    persys.directories = [
       # Bluetooth device history
       "/var/lib/bluetooth"
     ];
 
     nixos.hardware.bluetooth = {
       enable = true;
-      # package = pkgs-stable.bluez;
       powerOnBoot = true;
 
       settings.General = {

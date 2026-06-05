@@ -70,8 +70,6 @@
         "Mod+B".action.spawn = pref.browser;
         "Mod+N" = sh "${pref.term} -e ${pref.editor}";
         "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
-        # TODO: Fix script and call
-        # "Mod+Ctrl+C" = sh "${config.home.homeDirectory}/nix-config/scripts/cursor-switch";
 
         "Mod+Shift+C".action.center-visible-columns = [];
         "Mod+Shift+F".action.fullscreen-window = [];
