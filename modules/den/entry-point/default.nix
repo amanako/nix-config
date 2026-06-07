@@ -41,9 +41,6 @@
     };
 
     homeManager = {
-      # New behaviour since release 26.05
-      gtk.gtk4.theme = null;
-
       home.stateVersion = "25.11";
     };
   };
