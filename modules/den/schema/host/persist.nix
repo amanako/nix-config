@@ -1,73 +1,36 @@
-{
-  inputs,
-  den,
-  lib,
-  ...
-}: let
-  persistClass = {
-    host,
-    user,
-    ...
-  }:
-    den.batteries.forward {
-      each = [
-        "host"
-        "user"
-      ];
-      fromClass = target: "persys${lib.optionalString (target == "user") "User"}";
-      intoClass = _item: "nixos";
-      intoPath = target:
-        [
-          "environment"
-          "persistence"
-          host.impermanence.persistenceDir
-        ]
-        ++ lib.optionals (target == "user") [
-          "users"
-          user.userName
-        ];
-      adaptArgs = {config, ...}: {
-        osConfig = config;
-      };
-      # TODO: Implement check for fileSystems."/home".neededForBoot == true
-      # And disable class via guard if user doesn't have ephemeral home
-      guard = {options, ...}: options ? environment.persistence;
-    };
-in {
-  flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
-
-  # Workaround for config.includes not working.
-  # From my experience it should be avoided since it fails.
-  # Using it causes error for this aspect:
-  # error: attribute 'persistence' missing
-  den = {config, ...}: {
-    schema.host.options.impermanence = let
-      defaultPersysDir = "/nix/persist/system";
-    in
-      lib.mkOption {
-        type = lib.types.submodule {
-          options.enable = lib.mkOption {
+{lib, ...}: {
+  den.schema.host = {host, ...}: {
+    options.impermanence = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enableSystem = lib.mkOption {
+            default = host.impermanence.persistenceDir != null;
+            example = true;
             type = lib.types.bool;
-            default = config.impermanence.persistenceDir != defaultPersysDir;
-            description = "Whether to enable impermanence module";
+            description = ''
+              Whether to enable impermanence module for the host system.
+              This option is implicitly enabled when persistenceDir is set.
+            '';
           };
 
-          options.persistenceDir = lib.mkOption {
-            type = lib.types.str;
-            default = defaultPersysDir;
+          enableHome = lib.mkOption {
+            default = false;
+            example = true;
+            type = lib.types.bool;
+            description = ''
+              Whether to enable impermanence module for users, that is in /home directory.
+              Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
+              which is done automatically.
+            '';
+          };
+
+          persistenceDir = lib.mkOption {
+            default = null;
+            example = "/nix/persist/system";
+            type = lib.types.nullOr lib.types.path;
             description = "Directory for impermanence persistent storage";
           };
         };
-      };
-
-    schema.host.includes = [den.aspects.impermanence];
-
-    aspects.impermanence = {host, ...}: {
-      includes = [persistClass];
-      nixos = {
-        imports = [inputs.impermanence.nixosModules.impermanence];
-        # This should be minimal for a truly pure setup
-        fileSystems."${host.impermanence.persistenceDir}".neededForBoot = true;
       };
     };
   };
