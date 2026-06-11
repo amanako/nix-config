@@ -1,7 +1,6 @@
 {
-  den.aspects.boot.optional.silence = {host}: {
+  den.aspects.boot.optional.silent = {host}: {
     nixos.boot = {
-      # Remove verbosity
       consoleLogLevel = 3;
       initrd.verbose = false;
       kernelParams = [

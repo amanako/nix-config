@@ -10,7 +10,7 @@
         }
         {
           id = "Bluetooth";
-          displayMode = "onhover";
+          displayMode = "graphic-clean";
           iconColor = "primary";
           textColor = "none";
         }
@@ -95,14 +95,13 @@
         }
         {
           id = "ControlCenter";
+          useDistroLogo = false;
           enableColorization = true;
           colorizeSystemIcon = "tertiary";
           icon = "noctalia";
-          useDistroLogo = false;
         }
         {
           id = "Launcher";
-          icon = "rocket";
           useDistroLogo = true;
           enableColorization = false;
         }
