@@ -18,8 +18,10 @@
 
     keyboardLightScript.device = "asus::kbd_backlight";
 
-    # Changing default directory implicitly enables module
-    impermanence.persistenceDir = "/persist";
+    impermanence = {
+      persistenceDir = "/persist";
+      enableHome = true;
+    };
 
     limine.wallpapers = [
       {

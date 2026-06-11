@@ -1,6 +1,4 @@
 {
-  # Den will merge all host definitions so splitting disko configuration
-  # can aid reduce mental load and immediatelly help understand file purpose
   den.hosts.x86_64-linux.nebula.disko.devices = {
     disk.main = {
       type = "disk";
@@ -12,7 +10,6 @@
             priority = 1;
             name = "ESP";
             start = "1M";
-            # Better to be generous in case
             end = "2G";
             type = "EF00";
             content = {
