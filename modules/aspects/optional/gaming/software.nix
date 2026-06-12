@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.gaming.software = {user, ...}: {
+  den.aspects.gaming.software = {
     description = ''
       Handpicked software used to leverage gaming experience.
     '';
@@ -9,6 +9,8 @@
         "steam"
         "steam-unwrapped"
       ])
+
+      den.aspects.gaming.chaotic-integration
     ];
 
     persysUser.directories = [

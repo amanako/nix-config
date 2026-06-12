@@ -29,6 +29,7 @@ in {
 
       <gaming/optimizations>
       <gaming/software>
+      <optional/bleeding-edge/chaotic>
       <default-shell>
 
       # Works for namespaces as well
