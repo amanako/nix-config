@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.lsp = {user, ...}: {
+  nixvim.plugins.lsp = {
     homeManager.programs.nixvim.plugins = {
       lspkind.enable = true;
       lsp-signature.enable = true;
@@ -13,6 +13,7 @@
           clangd.enable = true;
           cmake.enable = true;
           html.enable = true;
+          just.enable = true;
         };
 
         keymaps = {

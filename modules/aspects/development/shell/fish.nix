@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.shell.interpreters.fish = {user, ...}: {
+  den.aspects.shell.interpreters.fish = {
     stylix.targets."fish".enable = false;
     stylixHome.targets."fish".enable = false;
 
@@ -13,14 +13,11 @@
     ];
 
     homeManager = {
-      user,
       pkgs,
       lib,
       config,
       ...
-    }: let
-      nh = lib.getExe pkgs.nh;
-    in {
+    }: {
       programs.fish = {
         interactiveShellInit = ''
           set -U fish_greeting
@@ -36,12 +33,6 @@
           ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
           man = "${lib.getExe pkgs.bat-extras.batman}";
           rm = "rm -I";
-          rebuild = "${nh} os switch --accept-flake-config --ask --diff always --show-trace";
-          clean = "${nh} clean all --keep 5 --optimise";
-          search = "${nh} search";
-          # Updates all flake inputs by default, a single one can be passed as well
-          fup = "nix --accept-flake-config flake update --flake ${user.repoRoot}";
-          fcheck = "nix --accept-flake-config flake check -L ${user.repoRoot}";
         };
         plugins = [
           {

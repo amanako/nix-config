@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.conform = {user, ...}: {
+  nixvim.plugins.conform = {
     homeManager = {
       pkgs,
       lib,
@@ -21,9 +21,9 @@
             javascript = {
               __unkeyed-1 = "prettierd";
               __unkeyed-2 = "prettier";
-              timeout_ms = 2000;
               stop_after_first = true;
             };
+            just = ["just-formatter"];
             "_" = [
               "trim_whitespace"
               "trim_newlines"
@@ -38,9 +38,10 @@
             shellcheck.command = lib.getExe pkgs.shellcheck;
             shfmt.command = lib.getExe pkgs.shfmt;
             shellharden.command = lib.getExe pkgs.shellharden;
+            prettierd.command = lib.getExe pkgs.prettierd;
             prettier.command = lib.getExe pkgs.prettier;
-            prettier-d.command = lib.getExe pkgs.prettierd;
             alejandra.command = lib.getExe pkgs.alejandra;
+            just-formatter.command = lib.getExe pkgs.just-formatter;
           };
 
           default_format_opts = {

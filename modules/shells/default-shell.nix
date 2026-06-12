@@ -13,11 +13,17 @@
       ".cache/pre-commit"
     ];
 
-    homeManager.programs.direnv = {
-      enable = true;
-      enableFishIntegration = true;
-      nix-direnv.enable = true;
-      silent = true;
+    homeManager = {pkgs, ...}: {
+      home.packages = with pkgs; [
+        just
+      ];
+
+      programs.direnv = {
+        enable = true;
+        enableFishIntegration = true;
+        nix-direnv.enable = true;
+        silent = true;
+      };
     };
 
     devShells = {pkgs, ...}: {
