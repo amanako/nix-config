@@ -10,3 +10,6 @@ result-*
 
 # Trash files
 .Trash-*/
+
+# Ignore textual files containing temporary ideas and observations
+*.txt
