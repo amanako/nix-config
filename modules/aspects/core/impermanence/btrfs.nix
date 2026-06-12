@@ -1,7 +1,8 @@
 {
   # Script included for impermanence functionality on btrfs filesystems
   den.aspects.core.impermanence.btrfs = {host, ...}: let
-    partition = "/dev/disk/by-id/${host.disko.devices.disk.main.device}-part-2";
+    # TODO: Remove hardcoding, LUKS seems like only viable option
+    partition = "${host.disko.devices.disk.main.device}-part2";
   in {
     nixos = {
       pkgs,
@@ -37,7 +38,7 @@
           ];
 
           script = ''
-            mkdir /btrfs_tmp
+            mkdir -p /btrfs_tmp
             mount ${partition} /btrfs_tmp
             if [[ -e /btrfs_tmp/root ]]; then
               mkdir -p /btrfs_tmp/persist/old_roots
@@ -55,7 +56,7 @@
             }
 
             max_age=7 #days
-            for i in $(find /btrfs_tmp/persist/old_roots/ -mindepth 1 -maxdepth 1 -mtime $max_age); do
+            for i in $(find /btrfs_tmp/persist/old_roots/ -mindepth 1 -maxdepth 1 -mtime +$max_age); do
               delete_subvolume_recursively "$i"
             done
 
