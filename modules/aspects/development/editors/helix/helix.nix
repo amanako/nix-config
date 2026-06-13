@@ -1,21 +1,17 @@
-{inputs, ...}: {
-  flake-file = {
-    inputs.helix.url = "github:helix-editor/helix";
-
-    nixConfig = {
-      extra-substituters = ["https://helix.cachix.org"];
-      extra-trusted-public-keys = ["helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="];
-    };
-  };
-
-  den.aspects.editors.helix = {user, ...}: {
+{den, ...}: {
+  den.aspects.editors.helix = {
     homeManager = {
-      nixpkgs.overlays = [
-        inputs.helix.overlays.helix
-      ];
-
+      user,
+      pkgs,
+      lib,
+      ...
+    }: {
       programs.helix = {
         enable = true;
+        defaultEditor = user.preferences.editor == "hx";
+        package =
+          lib.mkIf (user.hasAspect den.aspects.optional.bleeding-edge.chaotic)
+          pkgs.helix_git;
         ignores = [
           ".build/"
           "!.gitignore"

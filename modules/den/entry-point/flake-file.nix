@@ -26,8 +26,6 @@
       # Dependencies to flatten:
       # For flake-utils / noctalia-qs
       systems.url = "github:nix-systems/default-linux";
-      # For helix / yazi
-      rust-overlay.url = "github:oxalica/rust-overlay";
     };
 
     # Community cache used by various tools / cache for nix-auto-follow

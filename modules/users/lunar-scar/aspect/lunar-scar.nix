@@ -30,6 +30,7 @@ in {
       <gaming/optimizations>
       <gaming/software>
       <optional/bleeding-edge/chaotic>
+      <editors/helix>
 
       # Works for namespaces as well
       zen-browser._
