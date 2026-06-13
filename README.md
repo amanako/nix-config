@@ -30,7 +30,9 @@
 - [Making a config](#making-a-config)
 - [Build steps](#build-steps)
 - [Secure boot setup](#secure-boot-setup)
-- [Pulling remote changes](#pulling-remote-changes)
+- [Development](#development)
+  * [Just commands](#just-commands)
+  * [Pulling remote changes](#pulling-remote-changes)
 - [Tips](#tips)
 - [Licence and word of warning](#licence-and-word-of-warning)
 
@@ -93,7 +95,7 @@ Wallpapers can be found [here](https://codeberg.org/voidptrx/wallpapers).<br>
 
 ## Binary cache
 
-Build artifacts are cached and stored via [cachix] at [my cache][cache].<br>
+Build artifacts are cached and stored via [cachix] at [cache].<br>
 Public key is available there:
 
 ```
@@ -102,7 +104,7 @@ amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=
 
 Relevant workflow file can be found [here](.github/workflows/build-and-push-to-cache.yml).
 
-It is using amazing [omnix] to create a om.json file with all flake outputs,
+It is using [omnix] to create a om.json file with all flake outputs,
 which is then consumed by [cachix-push] tool and pushed to cache.
 This way outputs are also pinned and easier to maintain.<br>
 To avoid duplication and reduce cache size, store paths already present at upstream caches are avoided.
@@ -155,7 +157,7 @@ For such users I would suggest making multiple files within `entry` folder with 
 Furthermore, all files can be broken into easy-to-follow pieces which is displayed in the examples.<br>
 My current user and host are provided as a starting point. Please reference [`users`](modules/users) and [`hosts`](modules/hosts).
 
-There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is suppossed to represent directory of cloned repo, and should be set upfront.
+There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is supposed to represent directory of cloned repo, and should be set upfront.
 Other than that some other options which are a must likely have an assertion forcing repo users to make a declaration.
 
 For hosts using disko configuration packages are exposed when using `disko.devices` host schema option with the following format: `${host}-disko`,
@@ -163,7 +165,7 @@ and can be easily run with:
 
 ```
 # Run script to format disks of all declared devices on host
-nix run .${host}-disko
+just disko
 ```
 
 If this is not the case, manual partitioning is required, I can recommend taking a look at this [video].
@@ -174,7 +176,7 @@ When using impermanence: to persist configuration add directory containing confi
 persysUser.directories = [
   # Example path - made at $HOME/nix-config
   "nix-config"
-  # It can be some uper path for example:
+  # It can be some upper path for example:
   "Documents"
   # and then copied as a subfolder
 ];
@@ -184,7 +186,7 @@ or
 
 ```
 persys.directories = [
-  # Typical nix configuration path - if not using nh I would recommend this path
+  # Typical nixos configuration path
   "/etc/nixos"
 ;]
 ```
@@ -196,7 +198,7 @@ After completing previous section:
 1. Run nixos-install and follow instructions:
 
 ```
-nixos-install --flake . --accept-flake-config
+nixos-install --flake $REPO_DIR
 ```
 
 2. And then copy configuration over to desired (or persisted) folder.
@@ -211,16 +213,14 @@ cp -r $CONFIG_DIRECTORY $PATH_TO_FOLDER
 reboot
 ```
 
-After completing setup running(from repository root):
+After completing setup running:
 
 ```
-# Use nh to build host
-nix run .#${hostname}
+# Configuration activates after reboot
+just rb
 ```
 
-will build host using [nh],
-
-but `rebuild` alias is provided if including `den.aspects.shell` for example.
+will build host using [nh].
 
 ## Secure boot setup
 
@@ -247,21 +247,41 @@ If anything fails try the following:
 - Secure boot failures in BIOS: Apply previously mentioned setup mode in bios. Retry.
 - Keys don't get recognized: Temporarily remove `wantsSecureBootSupport` host option, run `sbctl reset`, rebuild and remove `/var/lib/sbctl`(for non-ephemeral users). Reboot and retry.
 
-## Pulling remote changes
+## Development
 
-Run following in case of updates on remote (weekly flake update workflows or similar):
+[nix-direnv] is automatically enabled for all users.
+To begin with development you are advised to use `direnv allow .` in repo root.
+This enables automatic loading of environment and all packages each time you `cd` into directory,
+all while caching results for great responsiviness.
+If that doesn't fit you(possibility of running arbitrary dangerous commands)
+simply run `nix develop` to enter shell with all dependencies.
+
+### Just commands
+All supported just commands can be displayed by running `just`.
+This is the recommended way of interacting with repo since it's simple and focused.
+Descriptions are provided.
 
 ```
-# Grab latest commits
-git fetch origin
-# Preserve unstagged changes if present
-git stash
-# Rebase
-git rebase origin/main
-# Retrieve working directory
-git stash pop
-
+  just
+just --list
+Available recipes:
+    disko                    # Run disko configuration for current host [alias: d]
+    fcheck                   # Check configuration of flake.nix from repo root [alias: fc]
+    fupdate *inputs          # Update one or more flake inputs, all when no inputs specified [alias: fu]
+    fwrite                   # Update flake inputs using "write-flake" app of flake-file [alias: fw]
+    help                     # Display all recipes [alias: h]
+    pull-flake branch="main" # Pull in changes from remote [alias: pf]
+    rebuild-boot             # Rebuild config with nh and make it the default boot entry, activated after reboot [alias: rb]
+    rebuild-switch           # Rebuild and activate config with nh and make it the default boot entry [alias: rs]
+    repl                     # Enter nix repl with flake.nix from repo root [alias: r]
+    vm                       # Spin up a virtual machine for current host
 ```
+
+### Pulling remote changes
+
+In case of remote updates, run `just pull-flake` to grab latest `flake.nix` and `flake.lock` files.
+Works if no changes were made to local flake files. Otherwise manual intervention with `git rebase`
+is required.
 
 ## Tips
 
@@ -269,7 +289,7 @@ Following are some of tips from personal experience(pending update and subject t
 
 - If faced with choice, **prefer using [home manager as a NixOS module over standalone homes][hm]**.<br>
   Den allows declaring `den.homes` to achieve functionality for standalone home
-  but I have deliberately omited using it in configuration for convenience of rebuilding.
+  but I have deliberately omitted using it in configuration for convenience of rebuilding.
 
 - Be sure to refer to [upstream documentation][docs] whenever met with difficulties.
 
@@ -321,3 +341,4 @@ Assets from third-party repositories(primarily flake-inputs, den included) are l
 [yazi]: https://yazi-rs.github.io
 [zathura]: https://pwmt.org/projects/zathura
 [zen-browser]: https://github.com/0xc000022070/zen-browser-flake
+[nix-direnv]: https://github.com/nix-community/nix-direnv

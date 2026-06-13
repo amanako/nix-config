@@ -7,7 +7,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
-  # ── Woodpecker worflows (woodpecker-cli) ───────────────────
+  # ── Woodpecker workflows (woodpecker-cli) ───────────────────
   - repo: local
     hooks:
       - id: woodpecker-cli
@@ -61,4 +61,3 @@ repos:
         language: system
         files: \.md$
         stages: [pre-commit]
-        always_run: false

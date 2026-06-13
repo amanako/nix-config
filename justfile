@@ -1,10 +1,18 @@
+# Display all recipes
+help:
+    just --list
+
+# Update flake inputs using "write-flake" app of flake-file
+fwrite:
+    nix --accept-flake-config run {{ repo-root }}#write-flake
+
 # Check configuration of flake.nix from repo root
 fcheck:
     nix --accept-flake-config flake check -L {{ repo-root }}
 
-# Display all recipes
-help:
-    just --list
+# Update one or more flake inputs, all when no inputs specified
+fupdate *inputs:
+    nix --accept-flake-config flake update -L {{ inputs }} --flake {{ repo-root }}
 
 # Rebuild and activate config with nh and make it the default boot entry
 rebuild-switch:
@@ -14,25 +22,36 @@ rebuild-switch:
 rebuild-boot:
     nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ hostname }}
 
-# Search for packages with nh via https://search.nixos.org/ (limited to 10 matches)
-search pkg:
-    nh search --limit 10 {{ pkg }}
+# Run disko configuration for current host
+disko:
+    nix --accept-flake-config run {{ repo-root }}#{{ hostname }}-disko
 
-# Clean with nh
-clean:
-    nh clean all --keep 5 --optimise
+# Spin up a virtual machine for current host
+vm:
+    nix --accept-flake-config run {{ repo-root }}#{{ hostname }}-vm
 
-# Break into nix repl with flake.nix from repo root
+# Enter nix repl with flake.nix from repo root
 repl:
-    nix repl {{ repo-root }}# --accept-flake-config
+    nix --accept-flake-config repl {{ repo-root }}#
+
+# Pull in changes from remote
+[arg("branch", help="Branch to restore flake.nix and flake.lock files from")]
+pull-flake branch="main":
+    # Fetch latest commits
+    git fetch origin
+
+    # Fetch flake.lock
+    git restore --source=origin/{{ branch }} -- flake.nix flake.lock
 
 hostname := `uname -n`
 repo-root := `git rev-parse --show-toplevel`
 
-alias fc := fcheck
 alias h := help
+alias fw := fwrite
+alias fc := fcheck
+alias fu := fupdate
 alias rs := rebuild-switch
 alias rb := rebuild-boot
-alias s := search
-alias c := clean
+alias d := disko
 alias r := repl
+alias pf := pull-flake
