@@ -4,30 +4,15 @@
   ...
 }: {
   imports = [inputs.den.flakeModule];
+  den.schema.flake-system.includes = [den.aspects.default-shell];
 
   den.aspects.default-shell = {
-    persysUser.directories = [
-      # Direnv allow directory persistence
-      ".local/share/direnv/allow"
-      # Cache for installed hooks
-      ".cache/pre-commit"
-    ];
-
-    homeManager = {pkgs, ...}: {
-      home.packages = with pkgs; [
-        just
-      ];
-
-      programs.direnv = {
-        enable = true;
-        enableFishIntegration = true;
-        nix-direnv.enable = true;
-        silent = true;
-      };
-    };
-
     devShells = {pkgs, ...}: {
       default = pkgs.mkShell {
+        packages = [
+          pkgs.just
+        ];
+
         buildInputs = with pkgs; [
           pre-commit
           woodpecker-cli
@@ -49,6 +34,4 @@
       };
     };
   };
-
-  den.schema.flake-system.includes = [den.aspects.default-shell];
 }
