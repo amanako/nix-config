@@ -1,5 +1,5 @@
 {
-  nixvim.extra-config = {user, ...}: {
+  nixvim.extra-config = {
     homeManager.programs.nixvim.extraConfigLua = ''
       local _border = "rounded"
 
@@ -9,26 +9,10 @@
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
         vim.lsp.handlers.signature_help, { border = _border }
       )
-      vim.diagnostic.config {
-        float = { border = _border },
-        underline = true,
-        virtual_text = { spacing = 5, severity_limit = "warning" },
-        update_in_insert = false,
-      }
 
       require("lspconfig.ui.windows").default_options = {
         border = _border,
       }
-
-      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        {
-          underline = true,
-          virtual_text = {
-            spacing = 5, severity_limit = "warning", },
-          update_in_insert = true,
-        }
-      )
 
       local function nixvim_on_attach(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
