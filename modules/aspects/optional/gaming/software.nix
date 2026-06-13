@@ -18,6 +18,7 @@
     ];
 
     nixos = {
+      user,
       pkgs,
       lib,
       config,
@@ -46,8 +47,13 @@
             gamescope-wsi
           ];
 
-          extraCompatPackages = with pkgs; [
-            proton-ge-bin
+          extraCompatPackages = let
+            pkg =
+              if (user.hasAspect den.aspects.optional.bleeding-edge.chaotic)
+              then pkgs.proton-cachyos
+              else pkgs.proton-ge-bin;
+          in [
+            pkg
           ];
         };
       };
