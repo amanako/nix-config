@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.nebula.hardware = {host, ...}: {
+  den.aspects.nebula.hardware = {
     includes = [
       den.aspects.hardware
     ];
@@ -17,7 +17,7 @@
       ];
 
       boot = {
-        kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
+        kernelPackages = pkgs.linuxPackages_cachyos-lto;
 
         kernelModules = [
           "kvm-amd"

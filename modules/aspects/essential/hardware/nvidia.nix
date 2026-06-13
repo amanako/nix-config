@@ -1,5 +1,5 @@
 {den, ...}: {
-  den.aspects.hardware.graphics.nvidia = {host}: {
+  den.aspects.hardware.graphics.nvidia = {
     includes = [
       (den.batteries.unfree [
         "nvidia-x11"
@@ -8,6 +8,7 @@
     ];
 
     nixos = {
+      host,
       lib,
       config,
       ...
@@ -17,6 +18,11 @@
       amdgpuBusId = tryFindBusId "amd";
       intelBusId = tryFindBusId "intel";
     in {
+      nixpkgs.config = {
+        # Cups 2.4.19 is broken so ignore it
+        problems.handlers.cups.broken = "ignore";
+      };
+
       services.xserver.videoDrivers =
         [
           "nvidia"
@@ -26,7 +32,12 @@
 
       hardware.nvidia =
         {
-          package = config.boot.kernelPackages.nvidiaPackages.stable;
+          package = let
+            inherit (config.boot.kernelPackages) nvidiaPackages;
+          in
+            if host.hasAspect den.aspects.optional.bleeding-edge.chaotic
+            then nvidiaPackages.bleeding_edge
+            else nvidiaPackages.stable;
 
           # Turing and newer architectures must use open kernel modules
           open = lib.mkDefault true;
