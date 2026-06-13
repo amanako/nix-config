@@ -24,6 +24,7 @@
               stop_after_first = true;
             };
             just = ["just-formatter"];
+            "*" = ["codespell"];
             "_" = [
               "trim_whitespace"
               "trim_newlines"
@@ -41,6 +42,7 @@
             prettierd.command = lib.getExe pkgs.prettierd;
             prettier.command = lib.getExe pkgs.prettier;
             alejandra.command = lib.getExe pkgs.alejandra;
+            codespell.command = lib.getExe pkgs.codespell;
             just-formatter.command = lib.getExe pkgs.just-formatter;
           };
 
