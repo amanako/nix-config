@@ -111,17 +111,14 @@ To avoid duplication and reduce cache size, store paths already present at upstr
 
 ## Cloning repo
 
-You may clone the repo with the following command:
+Clone and enter the repo with the following command:
 
 ```
-# Grab git (supposing flakes are enabled)
-nix profile install nixpkgs#git
+# For enabled flakes and nix-command
+nix run nixpkgs#git -- clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
 
-or with nix-shell (legacy)
-nix-shell -p git
-
-# Clone and enter repo
-git clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
+# For other users (after running installation flakes are used by default so this is temporary workaround)
+nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
 ```
 
 No matter the choice, option repoRoot should be set for either host or user,
@@ -252,7 +249,7 @@ If anything fails try the following:
 [nix-direnv] is automatically enabled for all users.
 To begin with development you are advised to use `direnv allow .` in repo root.
 This enables automatic loading of environment and all packages each time you `cd` into directory,
-all while caching results for great responsiviness.
+all while caching results for great responsiveness.
 If that doesn't fit you(possibility of running arbitrary dangerous commands)
 simply run `nix develop` to enter shell with all dependencies.
 
