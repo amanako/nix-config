@@ -1,5 +1,4 @@
 {den, ...}: {
-  flake.den = den;
   den.aspects.gaming.chaotic-integration = {
     nixos = {
       user,

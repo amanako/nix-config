@@ -13,7 +13,7 @@
       den.aspects.gaming.chaotic-integration
     ];
 
-    persysUser.directories = [
+    provides.to-users.persysUser.directories = [
       ".local/share/Steam"
     ];
 
