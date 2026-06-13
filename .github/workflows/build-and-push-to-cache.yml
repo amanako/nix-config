@@ -14,10 +14,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: wimpysworld/nothing-but-nix@main
+
       - uses: cachix/install-nix-action@v31
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            substituters = https://cache.nixos.org https://nyx-cache.chaotic.cx https://cache.nixos.asia/oss
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
+            accept-flake-config = true
+            fallback = true
+
+      - name: Setup caches
+        uses: cachix/cachix-action@v17
+        with:
+          name: amanako
+          extraPullNames: >
+            nix-community, yazi, niri, noctalia,
+            nix-gaming, vic, fzakaria
 
       - name: Setup packages
         run: |
@@ -26,7 +40,7 @@ jobs:
             github:juspay/cachix-push#default
 
       - name: Build flake outputs
-        run: om ci run --results=om.json -- --accept-flake-config
+        run: om ci run --results=om.json
 
       - name: Push to cache
         env:
