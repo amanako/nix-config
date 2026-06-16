@@ -1,8 +1,9 @@
 {
-  noctalia.settings.ui = {
-    homeManager.programs.noctalia.settings.ui = {
+  noctalia-shell.settings.ui = {
+    homeManager.programs.noctalia-shell.settings.ui = {
       fontDefaultScale = 1;
       fontFixedScale = 1;
+
       tooltipsEnabled = true;
       scrollbarAlwaysVisible = true;
       boxBorderEnabled = true;

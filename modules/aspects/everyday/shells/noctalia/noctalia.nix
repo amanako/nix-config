@@ -1,8 +1,12 @@
-{inputs, ...}: {
+{
+  inputs,
+  noctalia,
+  ...
+}: {
   imports = [(inputs.den.namespace "noctalia" false)];
 
   flake-file = {
-    inputs.noctalia.url = "github:noctalia-dev/noctalia-shell";
+    inputs.noctalia.url = "github:noctalia-dev/noctalia";
 
     nixConfig = {
       extra-substituters = ["https://noctalia.cachix.org"];
@@ -12,18 +16,41 @@
     };
   };
 
-  noctalia.entry = {user, ...}: {
+  noctalia.full = {
+    includes = [
+      noctalia._
+      noctalia.settings._
+    ];
+  };
+
+  noctalia.entry = {
     stylixHome.targets."noctalia-shell".enable = false;
 
-    # TODO: Look into reason why this only works for the first time
-    persysUser.files = [".cache/noctalia/shell-state.json"];
+    persysUser = {
+      directories = [
+        ".local/state/noctalia/clipboard"
+      ];
+
+      files = [
+        ".local/state/noctalia/.setup-complete"
+        ".local/state/noctalia/screen_time.json"
+
+        ".cache/noctalia/location.json"
+        ".cache/noctalia/shell-state.json"
+        ".cache/noctalia/weather.json"
+      ];
+    };
+
+    niriSpawnAtStartup = {
+      command = ["noctalia"];
+    };
 
     homeManager = {
       imports = [
         inputs.noctalia.homeModules.default
       ];
 
-      programs.noctalia-shell.enable = true;
+      programs.noctalia.enable = true;
     };
   };
 }

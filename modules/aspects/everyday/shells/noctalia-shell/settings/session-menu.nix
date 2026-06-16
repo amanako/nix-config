@@ -1,14 +1,13 @@
 {
-  noctalia.settings.sessionMenu = {
-    homeManager.programs.noctalia.settings.sessionMenu = {
-      countdownDuration = 10000;
+  noctalia-shell.settings.sessionMenu = {
+    homeManager.programs.noctalia-shell.settings.sessionMenu = {
       enableCountdown = true;
-      largeButtonsLayout = "grid";
-      largeButtonsStyle = true;
+      countdownDuration = 10000;
       position = "center";
       showHeader = true;
       showKeybinds = true;
-
+      largeButtonsStyle = true;
+      largeButtonsLayout = "grid";
       powerOptions = [
         {
           action = "lock";

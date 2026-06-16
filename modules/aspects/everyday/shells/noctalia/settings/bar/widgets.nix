@@ -1,6 +1,71 @@
 {
   noctalia.settings.bar.widgets = {
-    homeManager.programs.noctalia-shell.settings.bar.widgets = {
+    homeManager.programs.noctalia.settings.bar.widgets = {
+      background_opacity = 0.65;
+      border = "hover";
+      border_width = 0.5;
+      capsule = true;
+      capsule_border = "outline";
+      capsule_fill = "outline";
+      capsule_opacity = 0.4;
+      capsule_padding = 7.0;
+      center = ["clock" "audio_visualizer" "group:g5" "notifications"];
+      color = "primary";
+      contact_shadow = true;
+      end = ["group:g3" "group:g1" "group:g2"];
+      icon_color = "tertiary";
+      layer = "overlay";
+      margin_edge = 4;
+      margin_ends = 60;
+      panel_overlap = 2;
+      position = "left";
+      radius = 20;
+      start = ["group:g4" "battery"];
+      thickness = 30;
+
+      capsule_group = [
+        {
+          border = "outline";
+          fill = "outline";
+          id = "g1";
+          members = ["network" "bluetooth"];
+          opacity = 0.4;
+          padding = 7.0;
+        }
+        {
+          border = "outline";
+          fill = "outline";
+          id = "g2";
+          members = ["session" "control-center"];
+          opacity = 0.4;
+          padding = 7.0;
+        }
+        {
+          border = "outline";
+          fill = "outline";
+          id = "g3";
+          members = ["tray" "clipboard" "media"];
+          opacity = 0.4;
+          padding = 7.0;
+        }
+        {
+          border = "outline";
+          fill = "outline";
+          id = "g4";
+          members = ["launcher" "workspaces"];
+          opacity = 0.4;
+          padding = 7.0;
+        }
+        {
+          border = "outline";
+          fill = "outline";
+          id = "g5";
+          members = ["cpu" "ram" "temp"];
+          opacity = 0.4;
+          padding = 7.0;
+        }
+      ];
+
       left = [
         {
           id = "Network";
@@ -37,49 +102,15 @@
         }
       ];
 
-      center = [
-        {
-          id = "Volume";
-          displayMode = "onhover";
-          iconColor = "primary";
-          textColor = "none";
-        }
-        {
-          compactMode = true;
-          hideMode = "visible";
-          hideWhenIdle = false;
-          id = "MediaMini";
-          maxWidth = 145;
-          panelShowAlbumArt = true;
-          scrollingMode = "hover";
-          showAlbumArt = false;
-          showArtistFirst = false;
-          showProgressRing = true;
-          showVisualizer = true;
-          textColor = "primary";
-          useFixedWidth = false;
-          visualizerType = "wave";
-        }
-        {
-          id = "SystemMonitor";
-          compactMode = true;
-          iconColor = "primary";
-          showDiskUsage = true;
-          showMemoryUsage = true;
-          textColor = "none";
-          useMonospaceFont = true;
-        }
-      ];
-
       right = [
         {
           id = "Workspace";
-          labelMode = "name";
           focusedColor = "primary";
           fontWeight = "medium";
           groupedBorderOpacity = 0.85;
           hideUnoccupied = true;
           iconScale = 0.8;
+          labelMode = "name";
           occupiedColor = "secondary";
           pillSize = 0.6;
           showApplications = true;
@@ -95,15 +126,15 @@
         }
         {
           id = "ControlCenter";
-          useDistroLogo = false;
-          enableColorization = true;
           colorizeSystemIcon = "tertiary";
+          enableColorization = true;
           icon = "noctalia";
+          useDistroLogo = false;
         }
         {
           id = "Launcher";
-          useDistroLogo = true;
           enableColorization = false;
+          useDistroLogo = true;
         }
       ];
     };

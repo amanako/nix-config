@@ -1,6 +1,6 @@
 {
-  noctalia.settings.general = {
-    homeManager.programs.noctalia.settings.general = {
+  noctalia-shell.settings.general = {
+    homeManager.programs.noctalia-shell.settings.general = {
       dimmerOpacity = 0.5;
       showScreenCorners = false;
       forceBlackScreenCorners = false;
@@ -38,12 +38,6 @@
       lockScreenTint = 0.6;
       reverseScroll = false;
       smoothScrollEnabled = true;
-    };
-  };
-
-  noctalia.settings.backdrop = {
-    homeManager.programs.noctalia.settings.backdrop = {
-      tint_intensity = 0.2;
     };
   };
 }

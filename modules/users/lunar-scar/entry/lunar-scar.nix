@@ -19,12 +19,10 @@
       term = "kitty";
     };
 
-    noctalia-shell = {
-      additionalSettings = {
-        location.name = "Serbia, Niš";
-      };
+    noctalia = {
+      additionalSettings.location.address = "Niš, Serbia";
 
-      pfpName = "bear";
+      avatarFilename = "bear.png";
     };
 
     awww = {

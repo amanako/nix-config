@@ -1,37 +1,23 @@
 {
   noctalia.settings.controlCenter = {
-    homeManager.programs.noctalia-shell.settings.controlCenter = {
+    homeManager.programs.noctalia.settings.controlCenter = {
       position = "top_center";
+
       shortcuts = {
         left = [
-          {
-            id = "Network";
-          }
-          {
-            id = "Bluetooth";
-          }
-          {
-            id = "WallpaperSelector";
-          }
-          {
-            id = "NoctaliaPerformance";
-          }
+          {id = "Network";}
+          {id = "Bluetooth";}
+          {id = "WallpaperSelector";}
+          {id = "NoctaliaPerformance";}
         ];
         right = [
-          {
-            id = "Notifications";
-          }
-          {
-            id = "PowerProfile";
-          }
-          {
-            id = "KeepAwake";
-          }
-          {
-            id = "NightLight";
-          }
+          {id = "Notifications";}
+          {id = "PowerProfile";}
+          {id = "KeepAwake";}
+          {id = "NightLight";}
         ];
       };
+
       cards = [
         {
           enabled = true;
@@ -57,6 +43,22 @@
           enabled = true;
           id = "media-sysmon-card";
         }
+      ];
+    };
+  };
+
+  noctalia.settings.control_center = {
+    homeManager.programs.noctalia.settings.control_center = {
+      sidebar = "full";
+      sidebar_section = "full";
+
+      shortcuts = [
+        {type = "wifi";}
+        {type = "bluetooth";}
+        {type = "nightlight";}
+        {type = "notification";}
+        {type = "caffeine";}
+        {type = "power_profile";}
       ];
     };
   };

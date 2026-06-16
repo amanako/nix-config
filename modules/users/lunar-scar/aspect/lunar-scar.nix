@@ -34,9 +34,7 @@ in {
 
       # Works for namespaces as well
       zen-browser._
-      noctalia._
-      noctalia.settings._
-      noctalia.nplugins._
+      noctalia.full
       niri._
       niri.animations._
 

@@ -1,18 +1,18 @@
 {
   noctalia.settings.location = {
-    homeManager.programs.noctalia-shell.settings.location = {
+    homeManager.programs.noctalia.settings.location = {
+      analogClockInCalendar = false;
+      autoLocate = false;
+      hideWeatherCityName = false;
+      hidedeWeatherTimezone = false;
+      showCalendarEvents = true;
+      showCalendarWeather = true;
+      showWeekNumberInCalendar = false;
+      use12hourFormat = false;
+      useFahrenheit = false;
       weatherEnabled = true;
       weatherShowEffects = true;
       weatherTaliaMascotAlways = false;
-      useFahrenheit = false;
-      use12hourFormat = false;
-      showWeekNumberInCalendar = false;
-      showCalendarEvents = true;
-      showCalendarWeather = true;
-      analogClockInCalendar = false;
-      hidedeWeatherTimezone = false;
-      hideWeatherCityName = false;
-      autoLocate = false;
     };
   };
 }
