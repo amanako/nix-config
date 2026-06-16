@@ -8,7 +8,7 @@
     fromClass = _: "niriSettings";
     intoClass = _: "homeManager";
     intoPath = _: ["programs" "niri" "settings"];
-    guard = {options, ...}: options ? programs.niri;
+    guard = {options, ...}: _item: lib.optionalAttrs (options ? programs.niri);
   };
 in {
   niri.entry.includes = [niriSettingsClass];

@@ -1,5 +1,6 @@
 {
   niri.animations.window.homeManager.programs.niri.settings.animations = {
+    enable = true;
     window-open = {
       kind.easing = {
         curve = "cubic-bezier";

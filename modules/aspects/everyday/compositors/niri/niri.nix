@@ -33,6 +33,8 @@
       Reference: https://github.com/sodiboo/niri-flake
     '';
 
+    niriSettings = {};
+
     nixos = {inputs', ...}: {
       systemd.user.services.niri-flake-polkit.enable = false;
       nixpkgs.overlays = [inputs.niri-pkgs.overlays.niri];
