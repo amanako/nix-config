@@ -1,14 +1,15 @@
 # This file was auto-generated using flake-file.
-# It should NOT be edited manually.
-# Run `nix run .#write-flake` to revalidate it.
+# Run `just fw` if just is installed or `nix run .#write-flake` to revalidate it.
+# It should NOT be edited manually, unless you have mistyped an input(branch name for example).
+# If that is the case edit that typo here to point to valid link, then run the command above.
 {
   description = "Adorable flake";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
   nixConfig = {
-    extra-substituters = ["https://nix-community.cachix.org" "https://fzakaria.cachix.org" "https://vic.cachix.org" "https://nix-gaming.cachix.org" "https://nyx-cache.chaotic.cx" "https://noctalia.cachix.org" "https://niri.cachix.org" "https://amanako.cachix.org" "https://yazi.cachix.org"];
-    extra-trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng=" "vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=" "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="];
+    extra-substituters = ["https://nix-community.cachix.org" "https://fzakaria.cachix.org" "https://vic.cachix.org" "https://nix-gaming.cachix.org" "https://nyx-cache.chaotic.cx" "https://noctalia.cachix.org" "https://noctalia.cachix.org" "https://niri.cachix.org" "https://amanako.cachix.org" "https://yazi.cachix.org"];
+    extra-trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng=" "vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=" "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="];
   };
 
   inputs = {
@@ -42,7 +43,8 @@
     nix-monitor.url = "github:antonjah/nix-monitor";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
+    noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia-shell.url = "github:noctalia-dev/noctalia/legacy-v4";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";
     wallpapers = {

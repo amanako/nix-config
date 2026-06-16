@@ -10,8 +10,9 @@
     description = "Adorable flake";
     do-not-edit = ''
       # This file was auto-generated using flake-file.
-      # It should NOT be edited manually.
-      # Run `nix run .#write-flake` to revalidate it.
+      # Run `just fw` if just is installed or `nix run .#write-flake` to revalidate it.
+      # It should NOT be edited manually, unless you have mistyped an input(branch name for example).
+      # If that is the case edit that typo here to point to valid link, then run the command above.
     '';
 
     formatter = pkgs: pkgs.alejandra;
