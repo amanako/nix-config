@@ -10,21 +10,35 @@
     keyboardLightScriptPath = lib.optionalAttrs (host.keyboardLightScript.device != null) (
       let
         brightnessCmd = lib.getExe pkgs.brightnessctl;
-        inherit (host.keyboardLightScript) device step;
+        inherit (host.keyboardLightScript) device;
       in
-        pkgs.writeShellScriptBin "keyboard-light" ''
-          CURR_BRIGHTNESS=$(${brightnessCmd} --device=${device} get)
+        pkgs.writeTextFile rec {
+          name = "keyboard-light";
+          executable = true;
+          destination = "/bin/${name}";
+          text = ''
+            #!${lib.getExe pkgs.nushell}
+            def update_brightness [command: string, percent = 0.10] {
+                let max_brightness = ^brightnessctl --device ${device} max | into int;
+                let step = [(($max_brightness | into float) * $percent | into int), 1] | math max;
+                let curr = ^${brightnessCmd} --device ${device} get | into int
 
-          if [ "$1" = increase ]; then
-            NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS + ${toString step} ))
-          elif [ "$1" = decrease ]; then
-            NEW_BRIGHTNESS=$(( CURR_BRIGHTNESS - ${toString step} ))
-          else
-            echo "Usage:$1"
-          fi
+                match $command {
+                    "increase" => ($curr + $step)
+                    # Ensure command doesn't fail for negative values
+                    "decrease" => ([ 0, ($curr - $step) ] | math max)
+                    _ => {
+                        print "Usage: $scriptname <increase|decrease>"
+                        exit 1
+                    }
+                }
+            }
 
-          ${brightnessCmd} --device=${device} set "$NEW_BRIGHTNESS"
-        ''
+            def main [command: string, percent = 0.10] {
+              update_brightness $command $percent | ^brightnessctl --device "asus::kbd_backlight" set $in
+            }
+          '';
+        }
     );
   in {
     programs.niri.settings.binds = let
