@@ -2,6 +2,7 @@
   den.aspects.nebula.hardware = {
     includes = [
       den.aspects.hardware
+      den.aspects.core.nix-cachyos-kernel
     ];
 
     nixos = {
@@ -17,7 +18,7 @@
       ];
 
       boot = {
-        kernelPackages = pkgs.linuxPackages_cachyos-lto;
+        kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-zen4;
 
         kernelModules = [
           "kvm-amd"
