@@ -32,12 +32,7 @@
 
       hardware.nvidia =
         {
-          package = let
-            inherit (config.boot.kernelPackages) nvidiaPackages;
-          in
-            if host.hasAspect den.aspects.optional.bleeding-edge.chaotic
-            then nvidiaPackages.bleeding_edge
-            else nvidiaPackages.stable;
+          package = config.boot.kernelPackages.nvidiaPackages.stable;
 
           # Turing and newer architectures must use open kernel modules
           open = lib.mkDefault true;

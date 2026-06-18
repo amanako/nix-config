@@ -35,8 +35,7 @@ in {
       # Works for namespaces as well
       zen-browser._
       noctalia.full
-      niri._
-      niri.animations._
+      niri.full
 
       nixvim._
       nixvim.plugins._
@@ -72,7 +71,7 @@ in {
 
     homeManager = {pkgs, ...}: {
       home.packages = with pkgs; [
-        thunar
+        nemo
         youtube-tui
         abiword
 

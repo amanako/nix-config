@@ -35,7 +35,7 @@
     ];
 
     stylixHome.targets."zen-browser" = {
-      enable = false;
+      enable = true;
       profileNames = ["${user.userName}"];
     };
 
