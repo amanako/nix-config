@@ -1,15 +1,13 @@
 # Sensible keybinds
-{
-  lib,
-  niri,
-  ...
-}: {
-  noctalia.niri = {user, ...}: {
-    niriSpawnAtStartup = {
-      command = ["noctalia"];
-    };
+{lib, ...}: {
+  noctalia.niri = {
+    niriSettings = {
+      spawn-at-startup = [
+        {
+          command = "noctalia";
+        }
+      ];
 
-    niriSettings = lib.mkIf (user.hasAspect niri.entry) {
       binds = let
         spawnNoctaliaCommand = args: {
           action.spawn =

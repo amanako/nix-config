@@ -14,7 +14,7 @@
       contact_shadow = true;
       end = ["group:g3" "group:g1" "group:g2"];
       icon_color = "tertiary";
-      layer = "overlay";
+      layer = "top";
       margin_edge = 4;
       margin_ends = 60;
       panel_overlap = 2;

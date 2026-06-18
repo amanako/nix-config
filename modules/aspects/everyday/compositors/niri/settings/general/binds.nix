@@ -1,119 +1,81 @@
 {
-  niri.binds.homeManager = {
-    host,
-    user,
-    pkgs,
-    lib,
-    ...
-  }: let
-    sh = cmd: {action.spawn-sh = cmd;};
-    keyboardLightScriptPath = lib.optionalAttrs (host.keyboardLightScript.device != null) (
-      let
-        brightnessCmd = lib.getExe pkgs.brightnessctl;
-        inherit (host.keyboardLightScript) device;
+  niri.binds = {
+    niriSettings = {
+      user,
+      lib,
+      ...
+    }: {
+      binds = let
+        sh = cmd: {action.spawn-sh = cmd;};
+        # Generate list with numbers from 1 to 9
+        workspaceNumsList = lib.genList (i: i + 1) 8;
+
+        generatedFocusWorkspace = builtins.listToAttrs (map (val: {
+            name = "Mod+${toString val}";
+            value = {action.focus-workspace = val;};
+          })
+          workspaceNumsList);
+
+        generatedMoveColumn = builtins.listToAttrs (map (val: {
+            name = "Mod+Ctrl+${toString val}";
+            value = {action.move-column-to-workspace = val;};
+          })
+          workspaceNumsList);
+
+        pref = user.preferences;
       in
-        pkgs.writeTextFile rec {
-          name = "keyboard-light";
-          executable = true;
-          destination = "/bin/${name}";
-          text = ''
-            #!${lib.getExe pkgs.nushell}
-            def update_brightness [command: string, percent = 0.10] {
-                let max_brightness = ^brightnessctl --device ${device} max | into int;
-                let step = [(($max_brightness | into float) * $percent | into int), 1] | math max;
-                let curr = ^${brightnessCmd} --device ${device} get | into int
+        generatedFocusWorkspace
+        // generatedMoveColumn
+        // {
+          "Mod+BracketLeft".action.consume-or-expel-window-left = [];
+          "Mod+BracketRight".action.consume-or-expel-window-right = [];
+          "Mod+C".action.center-column = [];
+          "Mod+F".action.maximize-column = [];
 
-                match $command {
-                    "increase" => ($curr + $step)
-                    # Ensure command doesn't fail for negative values
-                    "decrease" => ([ 0, ($curr - $step) ] | math max)
-                    _ => {
-                        print "Usage: $scriptname <increase|decrease>"
-                        exit 1
-                    }
-                }
-            }
+          "Mod+K".action.focus-window-or-workspace-up = [];
+          "Mod+J".action.focus-window-or-workspace-down = [];
+          "Mod+H".action.focus-column-left = [];
+          "Mod+L".action.focus-column-right = [];
 
-            def main [command: string, percent = 0.10] {
-              update_brightness $command $percent | ^brightnessctl --device "asus::kbd_backlight" set $in
-            }
-          '';
-        }
-    );
-  in {
-    programs.niri.settings.binds = let
-      # Generate list with numbers from 1 to 9
-      workspaceNumsList = lib.genList (i: i + 1) 8;
+          "Mod+Up".action.focus-window-or-workspace-up = [];
+          "Mod+Down".action.focus-window-or-workspace-down = [];
+          "Mod+Left".action.focus-column-left = [];
+          "Mod+Right".action.focus-column-right = [];
 
-      generatedFocusWorkspace = builtins.listToAttrs (map (val: {
-          name = "Mod+${toString val}";
-          value = {action.focus-workspace = val;};
-        })
-        workspaceNumsList);
+          "Mod+R".action.switch-preset-column-width-back = [];
+          "Mod+Tab".action.toggle-overview = [];
 
-      generatedMoveColumn = builtins.listToAttrs (map (val: {
-          name = "Mod+Ctrl+${toString val}";
-          value = {action.move-column-to-workspace = val;};
-        })
-        workspaceNumsList);
+          "Mod+T".action.spawn = pref.term;
+          "Mod+B".action.spawn = pref.browser;
+          "Mod+N" = sh "${pref.term} -e ${pref.editor}";
+          "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
 
-      pref = user.preferences;
-    in
-      generatedFocusWorkspace
-      // generatedMoveColumn
-      // {
-        "Mod+BracketLeft".action.consume-or-expel-window-left = [];
-        "Mod+BracketRight".action.consume-or-expel-window-right = [];
-        "Mod+C".action.center-column = [];
-        "Mod+F".action.maximize-column = [];
+          "Mod+Shift+C".action.center-visible-columns = [];
+          "Mod+Shift+F".action.fullscreen-window = [];
+          "Mod+Shift+H".action.move-column-left = [];
+          "Mod+Shift+J".action.move-column-to-workspace-down = [];
+          "Mod+Shift+K".action.move-column-to-workspace-up = [];
+          "Mod+Shift+L".action.move-column-right = [];
+          "Mod+Shift+R".action.switch-preset-column-width = [];
 
-        "Mod+K".action.focus-window-or-workspace-up = [];
-        "Mod+J".action.focus-window-or-workspace-down = [];
-        "Mod+H".action.focus-column-left = [];
-        "Mod+L".action.focus-column-right = [];
+          "Mod+Home".action.focus-column-first = [];
+          "Mod+End".action.focus-column-last = [];
+          "Mod+Ctrl+Home".action.move-column-to-first = [];
+          "Mod+Ctrl+End".action.move-column-to-last = [];
 
-        "Mod+Up".action.focus-window-or-workspace-up = [];
-        "Mod+Down".action.focus-window-or-workspace-down = [];
-        "Mod+Left".action.focus-column-left = [];
-        "Mod+Right".action.focus-column-right = [];
+          "Mod+Shift+E".action.quit = [];
+          "Mod+Shift+Slash".action.show-hotkey-overlay = [];
 
-        "Mod+R".action.switch-preset-column-width-back = [];
-        "Mod+Tab".action.toggle-overview = [];
+          "Mod+V".action.toggle-window-floating = [];
+          "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
 
-        "Mod+T".action.spawn = pref.term;
-        "Mod+B".action.spawn = pref.browser;
-        "Mod+N" = sh "${pref.term} -e ${pref.editor}";
-        "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
+          "Print".action.screenshot = [];
+          "Ctrl+Print".action.screenshot-screen = [];
+          "Alt+Print".action.screenshot-window = [];
 
-        "Mod+Shift+C".action.center-visible-columns = [];
-        "Mod+Shift+F".action.fullscreen-window = [];
-        "Mod+Shift+H".action.move-column-left = [];
-        "Mod+Shift+J".action.move-column-to-workspace-down = [];
-        "Mod+Shift+K".action.move-column-to-workspace-up = [];
-        "Mod+Shift+L".action.move-column-right = [];
-        "Mod+Shift+R".action.switch-preset-column-width = [];
-
-        "Mod+Home".action.focus-column-first = [];
-        "Mod+End".action.focus-column-last = [];
-        "Mod+Ctrl+Home".action.move-column-to-first = [];
-        "Mod+Ctrl+End".action.move-column-to-last = [];
-
-        "Mod+Shift+E".action.quit = [];
-        "Mod+Shift+Slash".action.show-hotkey-overlay = [];
-
-        "Mod+V".action.toggle-window-floating = [];
-        "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
-
-        "Print".action.screenshot = [];
-        "Ctrl+Print".action.screenshot-screen = [];
-        "Alt+Print".action.screenshot-window = [];
-
-        "Mod+Shift+P".action.power-off-monitors = [];
-        "Mod+Q".action.close-window = [];
-      }
-      // lib.optionalAttrs (host.keyboardLightScript.device != null) {
-        "Alt+Up" = sh "${lib.getExe keyboardLightScriptPath} increase";
-        "Alt+Down" = sh "${lib.getExe keyboardLightScriptPath} decrease";
-      };
+          "Mod+Shift+P".action.power-off-monitors = [];
+          "Mod+Q".action.close-window = [];
+        };
+    };
   };
 }

@@ -22,8 +22,12 @@
       else "";
     stripOfficial = lib.removeSuffix "-official" browser;
   in {
-    niriSpawnAtStartup = lib.optionalAttrs isZen {
-      command = [stripOfficial];
+    niriSettings = lib.optionalAttrs isZen {
+      spawn-at-startup = [
+        {
+          command = stripOfficial;
+        }
+      ];
     };
 
     persysUser.directories = [

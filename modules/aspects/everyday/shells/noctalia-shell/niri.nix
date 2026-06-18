@@ -1,8 +1,12 @@
 # Sensible keybinds
 {lib, ...}: {
   noctalia-shell.niri = {user, ...}: {
-    niriSpawnAtStartup = {
-      command = ["noctalia-shell"];
+    niriSettings = {
+      spawn-at-startup = [
+        {
+          command = "noctalia-shell";
+        }
+      ];
     };
 
     niriSettings = {

@@ -16,8 +16,12 @@ in {
   den.aspects.utility.fcitx5 = {
     includes = [fcitx5Class];
 
-    niriSpawnAtStartup = {
-      command = ["fcitx5"];
+    niriSettings = {
+      spawn-at-startup = [
+        {
+          command = ["fcitx5"];
+        }
+      ];
     };
 
     stylixHome.targets."fcitx5".enable = true;

@@ -1,6 +1,8 @@
 {
-  niri.workspaces.homeManager.programs.niri.settings.workspaces = {
-    "dev" = {};
-    "gaming" = {};
+  niri.workspaces = {
+    niriSettings.workspaces = {
+      "dev" = {};
+      "gaming" = {};
+    };
   };
 }

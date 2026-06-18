@@ -1,4 +1,5 @@
 {
+  niri,
   inputs,
   __findFile,
   ...
@@ -18,10 +19,11 @@
     };
   };
 
-  den.quirks.niriSpawnAtStartup = {
-    description = ''
-      Programs to spawn alongside niri.
-    '';
+  niri.full = {
+    includes = [
+      niri.entry
+      niri.animations._
+    ];
   };
 
   niri.entry = {
@@ -32,8 +34,6 @@
       This is aspect using flake for nix-native setup of niri.
       Reference: https://github.com/sodiboo/niri-flake
     '';
-
-    niriSettings = {};
 
     nixos = {inputs', ...}: {
       systemd.user.services.niri-flake-polkit.enable = false;
@@ -48,7 +48,7 @@
     };
 
     homeManager = {
-      niriSpawnAtStartup,
+      niriSettings,
       inputs',
       lib,
       ...
@@ -60,14 +60,17 @@
         enable = true;
         package = inputs'.niri-pkgs.packages.niri-unstable;
         # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
-        settings = {
-          includes = lib.mkAfter [
-            ./blur.kdl
-          ];
+        settings =
+          lib.foldl lib.recursiveUpdate
+          {
+            includes = lib.mkAfter [
+              ./blur.kdl
+            ];
+            xwayland-satellite.path = lib.getExe inputs'.niri-pkgs.packages.xwayland-satellite-unstable;
 
-          spawn-at-startup = niriSpawnAtStartup;
-          animations.slowdown = 1.5;
-        };
+            animations.slowdown = 1.5;
+          }
+          niriSettings;
       };
     };
   };
