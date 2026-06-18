@@ -1,5 +1,5 @@
 {
-  den.aspects.boot.optional.plymouth = {host}: {
+  den.aspects.core.boot.optional.plymouth = {
     description = ''
       From [ArchWiki](https://wiki.archlinux.org/title/Plymouth):
       Plymouth is a project from Fedora and now listed among the freedesktop.org's

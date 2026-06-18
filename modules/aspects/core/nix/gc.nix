@@ -1,5 +1,5 @@
 {
-  den.aspects.nix.gc = let
+  den.aspects.core.nix.gc = let
     gc = {
       automatic = true;
       dates = "weekly";

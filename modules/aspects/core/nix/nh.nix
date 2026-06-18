@@ -1,5 +1,5 @@
 {
-  den.aspects.nix.nh = let
+  den.aspects.core.nix.nh = let
     args = {
       enable = true;
 

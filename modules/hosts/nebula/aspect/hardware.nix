@@ -1,7 +1,7 @@
 {den, ...}: {
   den.aspects.nebula.hardware = {
     includes = [
-      den.aspects.hardware
+      den.aspects.core.hardware
       den.aspects.core.nix-cachyos-kernel
     ];
 

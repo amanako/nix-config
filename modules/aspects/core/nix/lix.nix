@@ -1,5 +1,5 @@
 {
-  den.aspects.nix.lix = {
+  den.aspects.core.nix.lix = {
     description = ''
       From [official site](https://lix.systems):
       Lix is a modern, delicious implementation of the Nix package manager,

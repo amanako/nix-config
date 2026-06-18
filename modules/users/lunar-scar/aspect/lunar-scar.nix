@@ -24,7 +24,7 @@ in {
       <terminal/kitty>
       <terminal/yazi>
 
-      <nix/nh>
+      den.aspects.core.nix.nh
       <nixUtils/nixIndexDatabase>
 
       <gaming/optimizations>

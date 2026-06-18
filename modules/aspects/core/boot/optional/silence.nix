@@ -1,5 +1,5 @@
 {
-  den.aspects.boot.optional.silent = {host}: {
+  den.aspects.core.boot.optional.silent = {
     nixos.boot = {
       consoleLogLevel = 3;
       initrd.verbose = false;

@@ -1,5 +1,5 @@
 {
-  den.aspects.hardware.network = {host}: {
+  den.aspects.core.hardware.network = {
     persys.directories = [
       # Remember connected networks
       "/etc/NetworkManager/system-connections"

@@ -1,5 +1,5 @@
 {
-  den.aspects.hardware.audio = {host}: {
+  den.aspects.core.hardware.audio = {
     nixos.services.pipewire = {
       enable = true;
       alsa = {

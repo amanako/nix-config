@@ -10,7 +10,7 @@
     ];
   };
 
-  den.aspects.nix = {host}: {
+  den.aspects.core.nix = {
     # Reduce build time by preserving git caches
     provides.to-users.persysUser.directories = [
       ".cache/nix"

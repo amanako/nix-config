@@ -1,6 +1,6 @@
 {
-  den.aspects.displayManagers.ly.nixos = {host}: {
-    services.displayManager.ly = {
+  den.aspects.core.displayManagers.ly = {host}: {
+    nixos.services.displayManager.ly = {
       enable = true;
       settings = {
         animation = "matrix";

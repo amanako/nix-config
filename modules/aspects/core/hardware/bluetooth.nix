@@ -1,5 +1,5 @@
 {
-  den.aspects.hardware.bluetooth = {host}: {
+  den.aspects.core.hardware.bluetooth = {
     persys.directories = [
       # Bluetooth device history
       "/var/lib/bluetooth"

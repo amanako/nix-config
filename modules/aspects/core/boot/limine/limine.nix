@@ -1,16 +1,12 @@
-{
-  __findFile,
-  lib,
-  ...
-}: {
-  den.aspects.boot.loader.limine = {host}: {
+{den, ...}: {
+  den.aspects.core.boot.limine = {host}: {
     description = ''
       From [description](https://github.com/Limine-Bootloader/Limine):
       Modern, secure, portable, multiprotocol bootloader and boot manager.
     '';
 
-    includes = lib.optionals host.wantsSecureBootSupport [
-      <boot/loader/limine/secureBoot>
+    includes = [
+      den.aspects.core.boot.limine.secureBoot
     ];
 
     stylix.targets."limine".enable = false;
