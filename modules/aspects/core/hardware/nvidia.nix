@@ -1,9 +1,9 @@
-{den, ...}: {
-  den.aspects.core.hardware.nvidia = {
-    host,
-    lib,
-    ...
-  }:
+{
+  den,
+  lib,
+  ...
+}: {
+  den.aspects.core.hardware.nvidia = {host}:
     lib.optionalAttrs host.wantsNvidiaSupport {
       includes = [
         (den.batteries.unfree [
