@@ -1,21 +1,5 @@
 {
-  den,
-  lib,
-  ...
-}: let
-  fcitx5Class = {user, ...}:
-    den.batteries.forward {
-      each = lib.singleton true;
-      fromClass = _: "fcitx5";
-      intoClass = _: "homeManager";
-      intoPath = _: ["i18n" "inputMethod" "fcitx5"];
-      fromAspect = _: user.aspect;
-      guard = _: user.aspect ? "fcitx5";
-    };
-in {
   den.aspects.utility.fcitx5 = {
-    includes = [fcitx5Class];
-
     niriSettings = {
       spawn-at-startup = [
         {
@@ -27,6 +11,10 @@ in {
     stylixHMSettings.targets."fcitx5".enable = true;
 
     homeManager = {
+      fcitx5Settings,
+      lib,
+      ...
+    }: {
       home.sessionVariables = {
         GTK_IM_MODULE = "fcitx5";
         QT_IM_MODULE = "fcitx5";
@@ -38,16 +26,9 @@ in {
 
         # Suppress some warnings
         fcitx5.waylandFrontend = true;
+
+        fcitx5.settings = lib.foldl' lib.recursiveUpdate {} fcitx5Settings;
       };
     };
   };
-
-  den.schema.user.includes = [
-    (
-      {user}:
-        if user.aspect ? fcitx5
-        then den.aspects.utility.fcitx5
-        else {}
-    )
-  ];
 }
