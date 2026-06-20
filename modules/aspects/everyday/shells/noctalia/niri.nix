@@ -4,7 +4,7 @@
     niriSettings = {
       spawn-at-startup = [
         {
-          command = "noctalia";
+          command = ["noctalia"];
         }
       ];
 
@@ -18,7 +18,7 @@
             ++ (lib.splitString " " args);
         };
 
-        binds = {
+        commands = {
           "XF86MonBrightnessDown" = "brightness-down";
           "XF86MonBrightnessUp" = "brightness-up";
 
@@ -39,7 +39,7 @@
           "Mod+X" = "session shutdown";
         };
       in
-        lib.mapAttrs (_: spawnNoctaliaCommand) binds;
+        lib.mapAttrs (_: spawnNoctaliaCommand) commands;
     };
   };
 }

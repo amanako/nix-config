@@ -1,7 +1,6 @@
 {
   niri,
   inputs,
-  __findFile,
   ...
 }: {
   imports = [(inputs.den.namespace "niri" false)];
@@ -21,7 +20,7 @@
 
   niri.full = {
     includes = [
-      niri.entry
+      niri._
       niri.animations._
     ];
   };
@@ -61,16 +60,29 @@
         package = inputs'.niri-pkgs.packages.niri-unstable;
         # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
         settings =
-          lib.foldl lib.recursiveUpdate
-          {
+          # First parameter represents name of attribute list to use(can be omitted in this case).
+          # Second one is list of all elements in this attribute set.
+          # Concatenate lists keeping only unique one's and deep merge attribute sets similarly to Den's freeform approach.
+          lib.zipAttrsWith (
+            _: values: let
+              allLists = builtins.all builtins.isList values;
+              allAttrs = builtins.all builtins.isAttrs values;
+            in
+              if allLists
+              then lib.unique (builtins.concatLists values)
+              else if allAttrs
+              then lib.foldl' lib.recursiveUpdate {} values
+              else builtins.head values
+          )
+          niriSettings
+          // {
             includes = lib.mkAfter [
               ./blur.kdl
             ];
             xwayland-satellite.path = lib.getExe inputs'.niri-pkgs.packages.xwayland-satellite-unstable;
 
             animations.slowdown = 1.5;
-          }
-          niriSettings;
+          };
       };
     };
   };

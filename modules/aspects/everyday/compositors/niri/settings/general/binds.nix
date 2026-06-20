@@ -1,5 +1,9 @@
-{
+{niri, ...}: {
   niri.binds = {
+    includes = [
+      niri.binds.keyboard-backlight
+    ];
+
     niriSettings = {
       user,
       lib,

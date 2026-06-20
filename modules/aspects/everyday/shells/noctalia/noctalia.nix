@@ -19,12 +19,13 @@
   noctalia.full = {
     includes = [
       noctalia._
+      noctalia.niri
       noctalia.settings._
     ];
   };
 
   noctalia.entry = {
-    stylixHome.targets."noctalia-shell".enable = false;
+    stylixHMSettings.targets."noctalia-shell".enable = false;
 
     persysUser = {
       directories = [

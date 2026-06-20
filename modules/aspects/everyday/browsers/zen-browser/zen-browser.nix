@@ -25,7 +25,7 @@
     niriSettings = lib.optionalAttrs isZen {
       spawn-at-startup = [
         {
-          command = stripOfficial;
+          command = [stripOfficial];
         }
       ];
     };
