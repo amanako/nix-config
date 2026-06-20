@@ -34,7 +34,7 @@
       ".config/zen/${user.userName}"
     ];
 
-    stylixHome.targets."zen-browser" = {
+    stylixHMSettings.targets."zen-browser" = {
       enable = true;
       profileNames = ["${user.userName}"];
     };

@@ -1,7 +1,6 @@
 {den, ...}: {
   den.aspects.shell.interpreters.fish = {
-    stylix.targets."fish".enable = false;
-    stylixHome.targets."fish".enable = false;
+    stylixHMSettings.targets."fish".enable = false;
 
     persysUser.files = [
       ".local/share/fish/fish_history"

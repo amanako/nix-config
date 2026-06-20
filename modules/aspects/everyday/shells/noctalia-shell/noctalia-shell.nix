@@ -13,7 +13,7 @@
   };
 
   noctalia-shell.entry = {
-    stylixHome.targets."noctalia-shell".enable = false;
+    stylixHMSettings.targets."noctalia-shell".enable = false;
 
     persysUser.files = [".cache/noctalia/shell-state.json"];
 

@@ -8,8 +8,8 @@
     };
   };
 
-  den.aspects.terminal.yazi = {user, ...}: {
-    stylixHome.targets."yazi".enable = false;
+  den.aspects.terminal.yazi = {
+    stylixHMSettings.targets."yazi".enable = false;
 
     homeManager = {
       nixpkgs.overlays = [

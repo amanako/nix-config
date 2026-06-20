@@ -1,7 +1,7 @@
 {
-  den.aspects.shell.fzf = {user, ...}: {
+  den.aspects.shell.fzf = {
     # Stylix colors for fzf aren't really appealing
-    stylixHome.targets."fzf".enable = false;
+    stylixHMSettings.targets."fzf".enable = false;
 
     nixos.programs.fzf.fuzzyCompletion = true;
 

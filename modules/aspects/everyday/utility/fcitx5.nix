@@ -24,7 +24,7 @@ in {
       ];
     };
 
-    stylixHome.targets."fcitx5".enable = true;
+    stylixHMSettings.targets."fcitx5".enable = true;
 
     homeManager = {
       home.sessionVariables = {

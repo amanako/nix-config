@@ -9,7 +9,7 @@
       way up to the login manager.
     '';
 
-    stylix.targets."plymouth".enable = false;
+    stylixNixOSSettings.targets."plymouth".enable = false;
 
     nixos = {pkgs, ...}: {
       boot.plymouth = {

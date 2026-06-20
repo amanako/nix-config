@@ -1,6 +1,6 @@
 {den, ...}: {
   den.aspects.editors.helix = {
-    stylixHome.targets."helix".enable = false;
+    stylixHMSettings.targets."helix".enable = false;
 
     homeManager = {
       user,

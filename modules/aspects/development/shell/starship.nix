@@ -1,6 +1,6 @@
 {
-  den.aspects.shell.starship = {user, ...}: {
-    stylixHome.targets."starship".enable = false;
+  den.aspects.shell.starship = {
+    stylixHMSettings.targets."starship".enable = false;
 
     homeManager = {lib, ...}: {
       programs.starship = {

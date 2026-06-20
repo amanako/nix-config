@@ -1,6 +1,6 @@
 {
-  den.aspects.terminal.kitty = {user, ...}: {
-    stylixHome.targets."kitty".enable = false;
+  den.aspects.terminal.kitty = {
+    stylixHMSettings.targets."kitty".enable = false;
 
     homeManager = {pkgs, ...}: {
       programs.kitty = {

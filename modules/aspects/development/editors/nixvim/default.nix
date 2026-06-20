@@ -7,13 +7,13 @@
 
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
-  nixvim.entry = {user, ...}: {
+  nixvim.entry = {
     persysUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
     ];
 
-    stylixHome.targets."nixvim".enable = false;
+    stylixHMSettings.targets."nixvim".enable = false;
     nixos.xdg.mime.defaultApplications = {
       "text/*" = "nvim.desktop";
       "text/english" = "nvim.desktop";

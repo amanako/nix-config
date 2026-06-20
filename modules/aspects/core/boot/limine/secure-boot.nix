@@ -1,16 +1,20 @@
 {lib, ...}: {
-  den.aspects.core.boot.limine.secureBoot = {host}:
-    lib.optionalAttrs host.wantsSecureBootSupport {
-      description = ''
-        Secure boot functionality for limine. Automatically enabled when host opts in
-        via wantsSecureBootSupport option.
-      '';
+  den.aspects.core.boot.limine.secureBoot = {
+    description = ''
+      Secure boot functionality for limine. Automatically enabled when host opts in
+      via wantsSecureBootSupport option.
+    '';
 
-      persys.directories = [
-        "/var/lib/sbctl"
-      ];
+    persys.directories = [
+      "/var/lib/sbctl"
+    ];
 
-      nixos = {pkgs, ...}: {
+    nixos = {
+      host,
+      pkgs,
+      ...
+    }:
+      lib.optionalAttrs host.wantsSecureBootSupport {
         # Status can be verified via sbctl status, sbctl verify.
         environment.systemPackages = with pkgs; [
           sbctl
@@ -25,5 +29,5 @@
           secureBoot.enable = true;
         };
       };
-    };
+  };
 }

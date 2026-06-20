@@ -7,8 +7,7 @@
       ".local/state/nvim"
     ];
 
-    # Fix for .config/init.lua out of home
-    stylixHome.targets."neovim".enable = false;
+    stylixHMSettings.targets."neovim".enable = false;
 
     # Should fix binary problems with mason/tree-sitter for example
     nixos.programs.nix-ld.enable = true;
