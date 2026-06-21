@@ -5,7 +5,7 @@
       via wantsSecureBootSupport option.
     '';
 
-    persys.directories = [
+    persistSystem.directories = [
       "/var/lib/sbctl"
     ];
 

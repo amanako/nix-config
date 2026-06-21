@@ -8,31 +8,46 @@
   den.aspects.core.impermanence = {
     includes = [
       den.aspects.core.impermanence.btrfs
-      den.aspects.core.impermanence.classes
+      den.aspects.core.impermanence.persistSystemCollector
+      den.aspects.core.impermanence.persistUserCollector
     ];
 
+    persistSystem = {
+      directories = [
+        # Without this dir all users/groups without specified
+        # uids/gids will have them reassigned on reboot.
+        "/var/lib/nixos"
+
+        # Popup lecturing on sudo usage
+        "/var/db/sudo/lectured"
+
+        # Time stamps for systemd tasks which should help with remembering timers countdown
+        "/var/lib/systemd/timers"
+      ];
+
+      files = [
+        # Fix wpa/network errors
+        "/etc/machine-id"
+      ];
+    };
+
     nixos = {
-      lib,
       host,
+      lib,
       ...
     }: {
-      imports = [inputs.impermanence.nixosModules.impermanence];
+      imports = [
+        inputs.impermanence.nixosModules.impermanence
+      ];
       fileSystems =
         {
           "${host.impermanence.persistenceDir}".neededForBoot = true;
         }
-        // lib.optionalAttrs (!host.impermanence.enableHome) {
+        // lib.optionalAttrs (!host.impermanence.enableUser) {
           "/home".neededForBoot = true;
         };
+
+      environment.persistence.${host.impermanence.persistenceDir}.hideMounts = true;
     };
   };
-
-  den.schema.host.includes = [
-    (
-      {host}:
-        if host.impermanence.enableSystem
-        then den.aspects.core.impermanence
-        else {}
-    )
-  ];
 }

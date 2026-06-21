@@ -2,7 +2,7 @@
   den.aspects.shell.interpreters.fish = {
     stylixHMSettings.targets."fish".enable = false;
 
-    persysUser.files = [
+    persistUser.files = [
       ".local/share/fish/fish_history"
     ];
 

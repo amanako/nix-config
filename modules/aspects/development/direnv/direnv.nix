@@ -1,6 +1,6 @@
 {den, ...}: {
   den.aspects.direnv-for-users = {
-    persysUser.directories = [
+    persistUser.directories = [
       # Direnv allow directory persistence
       ".local/share/direnv/allow"
       # Cache for installed hooks

@@ -18,10 +18,7 @@
 
     keyboardLightScript.device = "asus::kbd_backlight";
 
-    impermanence = {
-      persistenceDir = "/persist";
-      enableHome = true;
-    };
+    impermanence.persistenceDir = "/persist";
 
     limine.wallpapers = [
       {

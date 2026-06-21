@@ -1,6 +1,6 @@
 {
-  den.aspects.shell.zoxide = {user, ...}: {
-    persysUser.directories = [
+  den.aspects.shell.zoxide = {
+    persistUser.directories = [
       ".local/share/zoxide" # database for previous entries
     ];
 

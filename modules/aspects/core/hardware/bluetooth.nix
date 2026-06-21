@@ -1,6 +1,6 @@
 {
   den.aspects.core.hardware.bluetooth = {
-    persys.directories = [
+    persistSystem.directories = [
       # Bluetooth device history
       "/var/lib/bluetooth"
     ];

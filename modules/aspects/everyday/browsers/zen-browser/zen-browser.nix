@@ -30,7 +30,7 @@
       ];
     };
 
-    persysUser.directories = [
+    persistUser.directories = [
       ".config/zen/${user.userName}"
     ];
 

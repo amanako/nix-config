@@ -6,9 +6,9 @@
       enable = true;
       options = {
         recolor = true;
-        recolor-adjust-lightness = true;
-        recolor-lightcolor = "#1e3a8a";
-        recolor-darkcolor = "#e0f2fe";
+        recolor-adjust-lightness = false;
+        recolor-lightcolor = "#32302f";
+        recolor-darkcolor = "#d4be98";
         recolor-keephue = true;
         recolor-reverse-video = true;
 

@@ -1,6 +1,6 @@
 {
-  den.aspects.shell.interpreters.nu.entry = {user, ...}: {
-    persysUser.directories = [
+  den.aspects.shell.interpreters.nu.entry = {
+    persistUser.directories = [
       ".config/nu/history.txt"
     ];
 

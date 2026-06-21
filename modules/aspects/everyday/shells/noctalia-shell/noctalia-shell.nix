@@ -15,7 +15,7 @@
   noctalia-shell.entry = {
     stylixHMSettings.targets."noctalia-shell".enable = false;
 
-    persysUser.files = [".cache/noctalia/shell-state.json"];
+    persistsUser.files = [".cache/noctalia/shell-state.json"];
 
     homeManager = {
       imports = [

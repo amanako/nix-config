@@ -170,7 +170,7 @@ If this is not the case, manual partitioning is required, I can recommend taking
 When using impermanence: to persist configuration add directory containing configuration to persys class in host or user aspect, either with:
 
 ```
-persysUser.directories = [
+persistUser.directories = [
   # Example path - made at $HOME/nix-config
   "nix-config"
   # It can be some upper path for example:
@@ -182,7 +182,7 @@ persysUser.directories = [
 or
 
 ```
-persys.directories = [
+persistSystem.directories = [
   # Typical nixos configuration path
   "/etc/nixos"
 ;]

@@ -1,8 +1,8 @@
 {inputs, ...}: {
   flake-file.inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-  den.aspects.editors.neovim = {user, ...}: {
-    persysUser.directories = [
+  den.aspects.editors.neovim = {
+    persistUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
     ];
@@ -13,6 +13,7 @@
     nixos.programs.nix-ld.enable = true;
 
     homeManager = {
+      user,
       pkgs,
       lib,
       config,

@@ -4,7 +4,7 @@
       (den.batteries.user-shell "bash")
     ];
 
-    persysUser.directories = [
+    persistUser.directories = [
       ".bash_history"
     ];
   };

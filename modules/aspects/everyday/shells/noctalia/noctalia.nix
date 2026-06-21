@@ -27,7 +27,7 @@
   noctalia.entry = {
     stylixHMSettings.targets."noctalia-shell".enable = false;
 
-    persysUser = {
+    persistUser = {
       directories = [
         ".local/state/noctalia/clipboard"
       ];

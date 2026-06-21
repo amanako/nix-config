@@ -48,7 +48,7 @@ in {
       ];
     };
 
-    persysUser.directories = [
+    persistUser.directories = [
       "Dev"
       "Documents"
       "Downloads"

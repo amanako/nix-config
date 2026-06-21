@@ -8,7 +8,7 @@
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
   nixvim.entry = {
-    persysUser.directories = [
+    persistUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"
     ];

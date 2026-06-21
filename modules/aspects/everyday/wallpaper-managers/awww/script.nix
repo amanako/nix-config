@@ -6,7 +6,7 @@
 
   den.aspects.wallpaper-managers.awww.script = {
     # Awww keeps cached actions so preserving directory should reduce load
-    persysUser.directories = [".cache/awww"];
+    persistUser.directories = [".cache/awww"];
 
     homeManager = {
       user,
@@ -16,7 +16,7 @@
     }: let
       wallpapersPath = inputs.wallpapers.outPath;
 
-      # Since systemd services run in minimal environment many core linux utilies are not available
+      # Since systemd services run in minimal environment many core linux utilities are not available
       awwwExe = lib.getExe' pkgs.awww "awww";
       find = lib.getExe' pkgs.findutils "find";
       shuf = lib.getExe' pkgs.coreutils "shuf";
