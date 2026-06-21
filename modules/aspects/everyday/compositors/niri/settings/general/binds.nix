@@ -40,11 +40,19 @@
           "Mod+J".action.focus-window-or-workspace-down = [];
           "Mod+H".action.focus-column-left = [];
           "Mod+L".action.focus-column-right = [];
+          "Mod+Shift+K".action.move-column-to-workspace-up = [];
+          "Mod+Shift+J".action.move-column-to-workspace-down = [];
+          "Mod+Shift+H".action.move-column-left = [];
+          "Mod+Shift+L".action.move-column-right = [];
 
           "Mod+Up".action.focus-window-or-workspace-up = [];
           "Mod+Down".action.focus-window-or-workspace-down = [];
           "Mod+Left".action.focus-column-left = [];
           "Mod+Right".action.focus-column-right = [];
+          "Mod+Shift+Up".action.move-column-to-workspace-up = [];
+          "Mod+Shift+Down".action.move-column-to-workspace-down = [];
+          "Mod+Shift+Left".action.move-column-left = [];
+          "Mod+Shift+Right".action.move-column-right = [];
 
           "Mod+R".action.switch-preset-column-width-back = [];
           "Mod+Tab".action.toggle-overview = [];
@@ -56,10 +64,6 @@
 
           "Mod+Shift+C".action.center-visible-columns = [];
           "Mod+Shift+F".action.fullscreen-window = [];
-          "Mod+Shift+H".action.move-column-left = [];
-          "Mod+Shift+J".action.move-column-to-workspace-down = [];
-          "Mod+Shift+K".action.move-column-to-workspace-up = [];
-          "Mod+Shift+L".action.move-column-right = [];
           "Mod+Shift+R".action.switch-preset-column-width = [];
 
           "Mod+Home".action.focus-column-first = [];
