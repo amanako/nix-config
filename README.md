@@ -40,11 +40,35 @@
 
 ## Design
 
-- [denful/den][den] framework with [SoC] in mind.
-- Files not overwhelmingly long (ideally ~80 lines), splitting to composable parts if crossing the line or causing severe mental load
-- Documented with tips and tricks I learned along the way to hopefully make it easier to understand for fellow nix users (likely pending improvements)
-- Using most of den capabilities - thorough thinking of which tool is best for the job at hand
-- Creating declarations, [flake-file] inputs, [custom classes] etc. near to actual place of usage to allow for easy removal<br>
+### Project Overview
+
+- **Framework:** `denful/den` — built with **[SoC]** in mind.
+
+### File Organization
+
+- **Manageable size:**
+  - Aim for ~ 80 lines per file.
+  - Split into composable parts when a file gets out of control or mentally heavy.
+
+### Aspect Inclusion
+
+- **Primary focus:** importing aspects.
+- **Fine‑grained control:** optional manual overrides or schema options for advanced users.
+
+### Documentation
+
+- Includes **tips & tricks** gathered from real‑world usage.
+- Intended to help fellow Nix users starting with the framework (myself included), with room for future improvements.
+
+### Leveraging Den Capabilities
+
+- Choosing the **best tool** for each task after thoughtful consideration.
+
+### Specific Practices
+
+- Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, etc., **as close to the point of use** as possible.
+- This makes removal or refactoring straightforward.
+
 Other specifics can be figured out by comparing individual files.
 
 ## Goals
@@ -111,7 +135,7 @@ To avoid duplication and reduce cache size, store paths already present at upstr
 
 ## Cloning repo
 
-Clone and enter the repo with the following command:
+Clone and enter the repo with either of the following commands:
 
 ```
 # For enabled flakes and nix-command
