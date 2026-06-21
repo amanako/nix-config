@@ -10,7 +10,9 @@
       user,
       ...
     }:
-      if user.impermanence.useHMModule
+      if (user.impermanence.useHMModule == null)
+      then {}
+      else if user.impermanence.useHMModule
       then {
         homeManager = {persistUser, ...}: {
           home.persistence.${host.impermanence.persistenceDir} = mkPersist persistUser;

@@ -22,10 +22,9 @@
           }
         ];
 
-        focus-ring = {
+        focus-ring = lib.mkIf config.programs.starship.enable {
           width = 2;
           active.color =
-            lib.mkIf config.programs.starship.enable
             config.programs.starship.settings.palettes.gruvbox_dark.color_main;
         };
 
