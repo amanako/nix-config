@@ -1,6 +1,4 @@
 {den, ...}: {
-  flake.den = den;
-
   den.aspects.core.hardware = {
     includes = [
       den.aspects.core.hardware.audio

@@ -1,6 +1,4 @@
-{den, ...}: {
-  flake.den = den;
-
+{
   den.schema.host = {
     host,
     lib,
