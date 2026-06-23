@@ -9,7 +9,7 @@
       lib.optionalAttrs (host.keyboardLightScript.device != null) {
         programs.niri.settings.binds = let
           keyboardLightScriptPath = let
-            brightnessCmd = lib.getExe pkgs.brightnessctl;
+            brightnessCmd = pkgs.brightnessctl |> lib.getExe;
             inherit (host.keyboardLightScript) device;
           in
             pkgs.writeTextFile rec {
@@ -17,7 +17,7 @@
               executable = true;
               destination = "/bin/${name}";
               text = ''
-                #!${lib.getExe pkgs.nushell}
+                #!${pkgs.nushell |> lib.getExe}
                 def update_brightness [command: string, percent = 0.10] {
                     let max_brightness = ^brightnessctl --device ${device} max | into int;
                     let step = [(($max_brightness | into float) * $percent | into int), 1] | math max;
@@ -41,8 +41,8 @@
             };
           sh = cmd: {action.spawn-sh = cmd;};
         in {
-          "Alt+Up" = sh "${lib.getExe keyboardLightScriptPath} increase";
-          "Alt+Down" = sh "${lib.getExe keyboardLightScriptPath} decrease";
+          "Alt+Up" = sh "${keyboardLightScriptPath |> lib.getExe} increase";
+          "Alt+Down" = sh "${keyboardLightScriptPath |> lib.getExe} decrease";
         };
       };
   };

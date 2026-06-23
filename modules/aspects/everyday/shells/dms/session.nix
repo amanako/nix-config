@@ -6,7 +6,8 @@
       ...
     }: {
       programs.dank-material-shell.session =
-        lib.recursiveUpdate {
+        user.dank-material-shell.additionalSessionSettings
+        |> lib.recursiveUpdate {
           isLightMode = false;
 
           nightModeEnabled = true;
@@ -20,8 +21,7 @@
           nightModeUseIpLocation = false;
 
           showThirdPartyPlugins = true;
-        }
-        user.dank-material-shell.additionalSessionSettings;
+        };
     };
   };
 }

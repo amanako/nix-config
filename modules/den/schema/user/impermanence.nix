@@ -8,7 +8,9 @@
     options.impermanence = lib.mkOption {
       type = lib.types.submodule {
         options.useHMModule = let
-          isInHMClass = lib.elem "homeManager" user.classes;
+          isInHMClass =
+            "homeManager"
+            |> lib.flip lib.elem user.classes;
           inherit (host.impermanence) enableUser;
         in
           lib.mkOption {

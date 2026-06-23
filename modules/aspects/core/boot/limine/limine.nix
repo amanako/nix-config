@@ -41,14 +41,15 @@
               margin = 20;
               marginGradient = 10;
             };
-            wallpapers = map ({
-              url,
-              hash,
-            }:
-              pkgs.fetchurl {
-                inherit url hash;
-              })
-            host.limine.wallpapers;
+            wallpapers =
+              host.limine.wallpapers
+              |> map ({
+                url,
+                hash,
+              }:
+                pkgs.fetchurl {
+                  inherit url hash;
+                });
           };
           panicOnChecksumMismatch = true;
           # Boot partition may fill up quickly

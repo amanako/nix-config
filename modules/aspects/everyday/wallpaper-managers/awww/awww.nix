@@ -25,8 +25,8 @@
       lib,
       ...
     }: let
-      awwwDaemon = lib.getExe' pkgs.awww "awww-daemon";
-      systemctl = lib.getExe' pkgs.systemdMinimal "systemctl";
+      awwwDaemon = "awww-daemon" |> lib.getExe' pkgs.awww;
+      systemctl = "systemctl" |> lib.getExe' pkgs.systemdMinimal;
 
       service = user.awww.service.label;
     in {

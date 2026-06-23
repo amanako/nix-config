@@ -10,7 +10,8 @@
         iconBasePath = "${pkgs.papirus-icon-theme}/share/icons/Papirus/${iconSize}x${iconSize}";
         defaultIcon = "${iconBasePath}/apps/distributor-logo-nixos.svg"; # Fallback icon to use if none specified
         mkEngines = engines:
-          builtins.mapAttrs (_: engine: {
+          engines
+          |> lib.mapAttrs (_: engine: {
             inherit (engine) name;
             icon = engine.icon or defaultIcon;
 
@@ -21,8 +22,7 @@
             ];
 
             definedAliases = engine.aliases;
-          })
-          engines;
+          });
 
         engineFiles = [
           ./_dictionaries.nix
@@ -31,14 +31,15 @@
         ];
 
         # Merge all files/modules as attributes passing them iconBasePath to allow for choosing of icons
-        rawEngines = lib.attrsets.mergeAttrsList (
-          map (file: import file {inherit iconBasePath;}) engineFiles
-        );
+        rawEngines =
+          engineFiles
+          |> map (file: import file {inherit iconBasePath;})
+          |> lib.mergeAttrsList;
       in {
         force = true;
         default = "ddg";
         privateDefault = "ddg";
-        engines = mkEngines rawEngines;
+        engines = rawEngines |> mkEngines;
       };
     };
   };

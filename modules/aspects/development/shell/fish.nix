@@ -21,7 +21,7 @@
         interactiveShellInit = ''
           set -U fish_greeting
           # Shell remains same when running "nix run" or "nix-shell"
-          ${lib.getExe pkgs.any-nix-shell} fish --info-right | source
+          ${pkgs.any-nix-shell |> lib.getExe} fish --info-right | source
         '';
         shellAliases = {
           bios = "systemctl reboot --firmware-setup";
@@ -29,34 +29,34 @@
           cat = "bat";
           cd = "z";
 
-          ls = "${lib.getExe config.programs.eza.package} --icons -a --group-directories-first";
-          man = "${lib.getExe pkgs.bat-extras.batman}";
+          ls = "${config.programs.eza.package |> lib.getExe} --icons -a --group-directories-first";
+          man = "${pkgs.bat-extras.batman |> lib.getExe}";
           rm = "rm -I";
         };
         plugins = [
           {
             name = "bass";
-            src = pkgs.fishPlugins.bass.src;
+            inherit (pkgs.fishPlugins.bass) src;
           }
           {
             name = "fish-you-should-use";
-            src = pkgs.fishPlugins.fish-you-should-use.src;
+            inherit (pkgs.fishPlugins.fish-you-should-use) src;
           }
           {
             name = "z";
-            src = pkgs.fishPlugins.z.src;
+            inherit (pkgs.fishPlugins.z) src;
           }
           {
             name = "fzf-fish";
-            src = pkgs.fishPlugins.fzf-fish.src;
+            inherit (pkgs.fishPlugins.fzf-fish) src;
           }
           {
             name = "git";
-            src = pkgs.fishPlugins.plugin-git.src;
+            inherit (pkgs.fishPlugins.plugin-git) src;
           }
           {
             name = "done";
-            src = pkgs.fishPlugins.done.src;
+            inherit (pkgs.fishPlugins.done) src;
           }
         ];
       };

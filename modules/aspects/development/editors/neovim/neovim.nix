@@ -21,7 +21,7 @@
     }: let
       configDir = "${user.repoRoot}/modules/aspects/editors/neovim/nvim";
     in {
-      xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink configDir;
+      xdg.configFile."nvim".source = configDir |> config.lib.file.mkOutOfStoreSymlink;
 
       nixpkgs.overlays = [
         inputs.neovim-nightly-overlay.overlays.default

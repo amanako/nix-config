@@ -24,10 +24,12 @@
             }
           ]
           ++ lib.optional
-          (lib.hasAttr "nix-monitor" config.programs && config.programs.nix-monitor.enable)
-          {
-            id = "nixMonitor";
-          };
+          (config.programs |> lib.hasAttr "nix-monitor" && config.programs.nix-monitor.enable)
+          [
+            {
+              id = "nixMonitor";
+            }
+          ];
         centerWidgets = [
           "systemTray"
           "battery"

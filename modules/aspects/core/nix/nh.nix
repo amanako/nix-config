@@ -18,18 +18,26 @@
       times better speed.
     '';
 
-    nix = {host, ...}: {
+    nix = {
+      host,
+      lib,
+      ...
+    }: {
       programs.nh =
         args
-        // {
+        |> lib.mergeAttrs {
           flake = host.repoRoot;
         };
     };
 
-    homeManager = {user, ...}: {
+    homeManager = {
+      user,
+      lib,
+      ...
+    }: {
       programs.nh =
         args
-        // {
+        |> lib.mergeAttrs {
           flake = user.repoRoot;
         };
     };

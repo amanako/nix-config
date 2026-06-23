@@ -1,5 +1,6 @@
 {
   den,
+  lib,
   inputs,
   ...
 }: {
@@ -12,41 +13,30 @@
   #    enable = lib.mkForce false;
   #  };
 
-  den.aspects.optional.stylix = {
+  den.aspects.optional.stylix = let
+    mergeWithDefaults = settings:
+      settings
+      ++ [
+        {
+          enable = true;
+          autoEnable = true;
+          enableReleaseChecks = false;
+        }
+      ]
+      |> lib.mkMerge;
+  in {
     includes = [
       den.aspects.optional.stylix.base-settings
     ];
 
-    nixos = {
-      lib,
-      stylixNixOSSettings,
-      ...
-    }: {
+    nixos = {stylixNixOSSettings, ...}: {
       imports = [inputs.stylix.nixosModules.stylix];
 
-      stylix = lib.mkMerge (stylixNixOSSettings
-        ++ [
-          {
-            enable = true;
-            autoEnable = true;
-            enableReleaseChecks = false;
-          }
-        ]);
+      stylix = stylixNixOSSettings |> mergeWithDefaults;
     };
 
-    provides.to-users.homeManager = {
-      lib,
-      stylixHMSettings,
-      ...
-    }: {
-      stylix = lib.mkMerge (stylixHMSettings
-        ++ [
-          {
-            enable = true;
-            autoEnable = true;
-            enableReleaseChecks = false;
-          }
-        ]);
+    provides.to-users.homeManager = {stylixHMSettings, ...}: {
+      stylix = stylixHMSettings |> mergeWithDefaults;
     };
   };
 }

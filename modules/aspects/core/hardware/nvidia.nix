@@ -3,6 +3,8 @@
   lib,
   ...
 }: {
+  flake.den = den;
+
   den.aspects.core.hardware.nvidia = {host}:
     lib.optionalAttrs host.wantsNvidiaSupport {
       includes = [
@@ -13,10 +15,13 @@
       ];
 
       nixos = {config, ...}: let
-        tryFindBusId = gpuType: (lib.findFirst (gpu: gpu.type == gpuType) null host.gpus).busId or "";
-        nvidiaBusId = tryFindBusId "nvidia";
-        amdgpuBusId = tryFindBusId "amd";
-        intelBusId = tryFindBusId "intel";
+        tryFindBusId = gpuType:
+          host.gpus
+          |> lib.findFirst (gpu: gpu.type == gpuType) null
+          |> lib.attrByPath ["busId"] "";
+        nvidiaBusId = "nvidia" |> tryFindBusId;
+        amdgpuBusId = "amd" |> tryFindBusId;
+        intelBusId = "intel" |> tryFindBusId;
       in {
         nixpkgs.config = {
           # Cups 2.4.19 is broken so ignore it
@@ -24,9 +29,7 @@
         };
 
         services.xserver.videoDrivers =
-          [
-            "nvidia"
-          ]
+          lib.optional (nvidiaBusId != "") "nvidia"
           ++ lib.optional (amdgpuBusId != "") "amdgpu"
           ++ lib.optional (intelBusId != "") "modesetting";
 

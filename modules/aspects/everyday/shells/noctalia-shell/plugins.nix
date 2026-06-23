@@ -28,7 +28,8 @@
               "keybind-cheatsheet"
             ];
           in
-            lib.genAttrs officialPlugins (_: {
+            officialPlugins
+            |> lib.flip lib.genAttrs (_: {
               enabled = true;
               sourceUrl = noctaliaPluginURL;
             });

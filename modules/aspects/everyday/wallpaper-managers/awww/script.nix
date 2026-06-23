@@ -17,11 +17,11 @@
       wallpapersPath = inputs.wallpapers.outPath;
 
       # Since systemd services run in minimal environment many core linux utilities are not available
-      awwwExe = lib.getExe' pkgs.awww "awww";
-      find = lib.getExe' pkgs.findutils "find";
-      shuf = lib.getExe' pkgs.coreutils "shuf";
+      awwwExe = "awww" |> lib.getExe' pkgs.awww;
+      find = "find" |> lib.getExe' pkgs.findutils;
+      shuf = "shuf" |> lib.getExe' pkgs.coreutils;
 
-      joinedScriptArgs = lib.join " " user.awww.script.args;
+      joinedScriptArgs = user.awww.script.args |> lib.join " ";
 
       scriptPkg = pkgs.writeShellScriptBin "${user.awww.script.label}" ''
         DIR="${wallpapersPath}"
@@ -46,11 +46,10 @@
       };
 
       home.packages =
-        lib.optional user.awww.script.exposePackage scriptPkg
-        ++ [
-          # To test functionality
-          pkgs.awww
-        ];
+        # To test functionality
+        [pkgs.awww]
+        ++ [scriptPkg]
+        |> lib.optionals user.awww.script.exposePackage;
     };
   };
 }

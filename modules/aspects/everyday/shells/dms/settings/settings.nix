@@ -6,7 +6,8 @@
       ...
     }: {
       programs.dank-material-shell.settings =
-        lib.recursiveUpdate
+        user.dank-material-shell.additionalSettings
+        |> lib.recursiveUpdate
         {
           "24HourClock" = true;
           buttonColorMode = "primaryContainer";
@@ -26,7 +27,7 @@
             niri = {
               hideWhenTyping = true;
               # Visually mouse could be focusing a tile and then
-              # disappearing causing incosistency
+              # disappearing causing inconsistency
               hideAfterInactiveMs = 0;
             };
           };
@@ -67,8 +68,7 @@
           };
 
           configVersion = 5;
-        }
-        user.dank-material-shell.additionalSettings;
+        };
     };
   };
 }

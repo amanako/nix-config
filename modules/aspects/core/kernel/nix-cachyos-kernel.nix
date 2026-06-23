@@ -21,22 +21,33 @@
         ];
 
         warnings = let
+          # ----------------------------------------------------------------------
+          # The warning text that will be shown when no CachyOS kernel module is present
+          # ----------------------------------------------------------------------
           msg = ''
-            `den.aspects.core.nix-cachyos-kernel` was included by host but none of the modules of kernel package host is using contain cachyos-related modules.
-            This means host is likely not using provided cachyos kernels.
-            If this is intended please remove aspect from host includes. If not, please enable one of the kernels
-            with `pkgs.cachyosKernels.linuxPackages_''${name}. Reference: https://github.com/xddxdd/nix-cachyos-kernel.
+            `den.aspects.core.nix-cachyos-kernel` was included by host but none of the
+            modules of the kernel package that host is using contain CachyOS‑related
+            modules.
+            This means the host is likely not using the provided CachyOS kernels.
+            If this is intended, please remove the aspect from host includes.
+            If not, enable one of the kernels with
+            `pkgs.cachyosKernels.linuxPackages_''${name}`.
+            Reference: https://github.com/xddxdd/nix-cachyos-kernel.
           '';
+
+          # ----------------------------------------------------------------------
+          # Boolean: true when **no** attribute name of `config.boot.kernelPackages`
+          # contains the substring “cachyos”.
+          # ----------------------------------------------------------------------
           noCachyOsModule =
-            builtins.all
-            (module: !(lib.hasInfix "cachyos" module))
-            (lib.attrNames config.boot.kernelPackages);
+            config.boot.kernelPackages
+            |> lib.attrNames
+            |> builtins.all (mod: !(mod |> lib.hasInfix "cachyos"));
         in
-          # Since warning fires when predicate is true and returns list return empty list and then append message to it
-          (lib.warnIf
-            noCachyOsModule
-            msg [])
-          ++ lib.optionals noCachyOsModule [msg];
+          # `lib.warnIf` prints the warning as a side‑effect when the predicate is true.
+          # It returns its third argument unchanged, so we give it an empty list `[]`.
+          # `lib.optional` adds the message to the list only when the predicate is true.
+          lib.warnIf noCachyOsModule msg [] ++ lib.optional noCachyOsModule msg;
       };
     };
   };

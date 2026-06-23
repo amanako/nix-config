@@ -7,8 +7,14 @@
       ...
     }: {
       environment.persistence."${host.impermanence.persistenceDir}" = {
-        directories = lib.concatMap (entries: entries.directories or []) persistSystem;
-        files = lib.concatMap (entries: entries.files or []) persistSystem;
+        directories =
+          persistSystem
+          |> lib.concatMap (entries: entries.directories or [])
+          |> lib.unique;
+        files =
+          persistSystem
+          |> lib.concatMap (entries: entries.files or [])
+          |> lib.unique;
       };
     };
   };

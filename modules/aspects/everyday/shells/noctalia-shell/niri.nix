@@ -1,6 +1,6 @@
 # Sensible keybinds
 {lib, ...}: {
-  noctalia-shell.niri = {user, ...}: {
+  noctalia-shell.niri = {
     niriSettings = {
       spawn-at-startup = [
         {
@@ -18,7 +18,7 @@
               "ipc"
               "call"
             ]
-            ++ (lib.splitString " " args);
+            ++ (args |> lib.splitString " ");
         };
 
         binds = {
@@ -50,7 +50,8 @@
           "Mod+Alt+P" = "plugin:pomodoro stop";
         };
       in
-        lib.mapAttrs (_: spawnNoctaliaShellCommand) binds;
+        binds
+        |> lib.mapAttrs (_: spawnNoctaliaShellCommand);
     };
   };
 }

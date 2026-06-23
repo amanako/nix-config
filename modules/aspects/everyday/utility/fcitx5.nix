@@ -27,7 +27,9 @@
         # Suppress some warnings
         fcitx5.waylandFrontend = true;
 
-        fcitx5.settings = lib.foldl' lib.recursiveUpdate {} fcitx5Settings;
+        fcitx5.settings =
+          fcitx5Settings
+          |> lib.foldl' lib.recursiveUpdate {};
       };
     };
   };

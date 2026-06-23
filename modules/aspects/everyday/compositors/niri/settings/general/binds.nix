@@ -12,19 +12,29 @@
       binds = let
         sh = cmd: {action.spawn-sh = cmd;};
         # Generate list with numbers from 1 to 9
-        workspaceNumsList = lib.genList (i: i + 1) 8;
+        workspaceNumsList =
+          8
+          |> lib.genList (i: i + 1);
 
-        generatedFocusWorkspace = builtins.listToAttrs (map (val: {
-            name = "Mod+${toString val}";
-            value = {action.focus-workspace = val;};
+        generatedFocusWorkspace =
+          workspaceNumsList
+          |> map (val: {
+            name = "Mod+${val |> toString}";
+            value = {
+              action.focus-workspace = val;
+            };
           })
-          workspaceNumsList);
+          |> builtins.listToAttrs;
 
-        generatedMoveColumn = builtins.listToAttrs (map (val: {
+        generatedMoveColumn =
+          workspaceNumsList
+          |> map (val: {
             name = "Mod+Ctrl+${toString val}";
-            value = {action.move-column-to-workspace = val;};
+            value = {
+              action.move-column-to-workspace = val;
+            };
           })
-          workspaceNumsList);
+          |> builtins.listToAttrs;
 
         pref = user.preferences;
       in

@@ -55,31 +55,46 @@
       imports = [inputs.niri.homeModules.niri];
       nixpkgs.overlays = [inputs.niri.overlays.niri];
 
-      programs.niri = {
+      programs.niri = let
+        niri-pkgs = inputs'.niri-pkgs.packages;
+      in {
         enable = true;
-        package = inputs'.niri-pkgs.packages.niri-unstable;
+        package = niri-pkgs.niri-unstable;
         # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
         settings =
           # First parameter represents name of attribute list to use(can be omitted in this case).
           # Second one is list of all elements in this attribute set.
-          # Concatenate lists keeping only unique one's and deep merge attribute sets similarly to Den's freeform approach.
-          lib.zipAttrsWith (
+          # Concatenate lists keeping only unique one's and deep merge attribute sets similarly to den's freeform approach.
+          niriSettings
+          |> lib.zipAttrsWith (
             _: values: let
-              allLists = builtins.all builtins.isList values;
-              allAttrs = builtins.all builtins.isAttrs values;
+              allLists =
+                values
+                |> (builtins.all builtins.isList);
+              allAttrs =
+                values
+                |> (builtins.all builtins.isAttrs);
             in
               if allLists
-              then lib.unique (builtins.concatLists values)
+              then
+                values
+                |> builtins.concatLists
+                |> lib.unique
               else if allAttrs
-              then lib.foldl' lib.recursiveUpdate {} values
-              else builtins.head values
+              then
+                values
+                |> lib.foldl' lib.recursiveUpdate {}
+              else
+                values
+                |> builtins.head
           )
-          niriSettings
-          // {
+          |> lib.recursiveUpdate {
             includes = lib.mkAfter [
               ./blur.kdl
             ];
-            xwayland-satellite.path = lib.getExe inputs'.niri-pkgs.packages.xwayland-satellite-unstable;
+            xwayland-satellite.path =
+              niri-pkgs.xwayland-satellite-unstable
+              |> lib.getExe;
 
             animations.slowdown = 1.5;
           };

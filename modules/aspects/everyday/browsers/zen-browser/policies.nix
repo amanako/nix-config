@@ -1,6 +1,6 @@
 # Reference: https://mozilla.github.io/policy-templates
 {
-  zen-browser.policies = {user, ...}: {
+  zen-browser.policies = {
     homeManager.programs.zen-browser.policies = {
       DontCheckDefaultBrowser = true;
 

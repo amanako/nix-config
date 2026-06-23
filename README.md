@@ -67,6 +67,7 @@
 ### Specific Practices
 
 - Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, etc., **as close to the point of use** as possible.
+- Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
 - This makes removal or refactoring straightforward.
 
 Other specifics can be figured out by comparing individual files.
@@ -363,3 +364,4 @@ Assets from third-party repositories(primarily flake-inputs, den included) are l
 [zathura]: https://pwmt.org/projects/zathura
 [zen-browser]: https://github.com/0xc000022070/zen-browser-flake
 [nix-direnv]: https://github.com/nix-community/nix-direnv
+[pipe-operators]: https://nix.dev/manual/nix/latest/development/experimental-features.html?highlight=pipe#pipe-operators

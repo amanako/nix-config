@@ -27,11 +27,18 @@
             nh = "nix.nh";
           };
           tryGetAspect = aspect:
-            if builtins.hasAttr aspect aspects
-            then den.aspects.${builtins.getAttr aspect aspects}
+            if
+              aspects
+              |> builtins.hasAttr aspect
+            then
+              den.aspects.${
+                aspects
+                |> builtins.getAttr aspect
+              }
             else {};
         in
-          tryGetAspect user.gc
+          user.gc
+          |> tryGetAspect
       )
     ];
   };

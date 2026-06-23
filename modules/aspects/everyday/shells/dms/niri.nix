@@ -1,5 +1,5 @@
 {lib, ...}: {
-  dms.niri = {user, ...}: {
+  dms.niri = {
     niriSettings = {
       windows.recent-windows.highlight.corner-radius = 12;
       layout = {
@@ -70,7 +70,7 @@
               "ipc"
               "call"
             ]
-            ++ (lib.splitString " " args);
+            ++ (args |> lib.splitString " ");
         };
         binds = {
           "Super+Alt+L" = "lock lock";
@@ -94,7 +94,8 @@
           "XF86MonBrightnessUp" = "brightness increment 5";
         };
       in
-        lib.mapAttrs (_: spawnDMSCommand) binds;
+        binds
+        |> lib.mapAttrs (_: spawnDMSCommand);
     };
   };
 }

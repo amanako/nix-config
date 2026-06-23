@@ -5,8 +5,13 @@
       pkgs,
       lib,
       ...
-    }:
-      lib.optionalAttrs (lib.elem "amd" (map (gpu: gpu.type) host.gpus)) {
+    }: let
+      hasAmd =
+        host.gpus
+        |> map (gpu: gpu.type)
+        |> lib.elem "amd";
+    in
+      lib.optionalAttrs hasAmd {
         environment.systemPackages = [
           pkgs.lact
         ];

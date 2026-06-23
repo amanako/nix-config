@@ -40,7 +40,9 @@
           protontricks.enable = true;
           platformOptimizations.enable = true;
 
-          fontPackages = builtins.filter lib.types.package.check config.fonts.packages;
+          fontPackages =
+            config.fonts.packages
+            |> builtins.filter lib.types.package.check;
 
           extraPackages = with pkgs; [
             gamescope

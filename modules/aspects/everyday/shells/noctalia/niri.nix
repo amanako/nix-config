@@ -15,7 +15,7 @@
               "noctalia"
               "msg"
             ]
-            ++ (lib.splitString " " args);
+            ++ (args |> lib.splitString " ");
         };
 
         commands = {
@@ -39,7 +39,8 @@
           "Mod+X" = "session shutdown";
         };
       in
-        lib.mapAttrs (_: spawnNoctaliaCommand) commands;
+        commands
+        |> lib.mapAttrs (_: spawnNoctaliaCommand);
     };
   };
 }

@@ -6,7 +6,8 @@
       ...
     }: {
       programs.noctalia.settings =
-        lib.recursiveUpdate
+        user.noctalia.additionalSettings
+        |> lib.recursiveUpdate
         {
           settingsVersion = 60;
 
@@ -22,8 +23,7 @@
             fontDefault = "Mona Sans Display Light";
             fontFixed = "VictorMono NF";
           };
-        }
-        user.noctalia.additionalSettings;
+        };
     };
   };
 }

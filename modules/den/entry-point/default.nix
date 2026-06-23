@@ -6,14 +6,14 @@
     ];
 
     nixos = {pkgs, ...}: {
-      # Enable flakes and nix command
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"
+        # Pipe operators like |> and <| for various operations with nesting
+        "pipe-operators"
       ];
 
       environment.systemPackages = with pkgs; [
-        # For flakes to work properly
         git
       ];
 

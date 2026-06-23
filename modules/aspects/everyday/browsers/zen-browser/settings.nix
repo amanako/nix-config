@@ -1,9 +1,13 @@
 # reference: about:config in zen
 {
-  zen-browser.settings = {user, ...}: {
-    homeManager = {lib, ...}: {
+  zen-browser.settings = {
+    homeManager = {
+      user,
+      lib,
+      ...
+    }: {
       programs.zen-browser.profiles."${user.userName}".settings = let
-        urlbarDontSuggest = [
+        urlbarDontSuggestList = [
           "addons"
           "amp"
           "calculator"
@@ -22,10 +26,10 @@
         ];
 
         urlbarDontSuggestPreferences =
-          lib.foldl' (
+          urlbarDontSuggestList
+          |> lib.foldl' (
             acc: name: acc // {"browser.urlbar.suggest.${name}" = false;}
-          ) {}
-          urlbarDontSuggest;
+          ) {};
       in
         urlbarDontSuggestPreferences
         // {

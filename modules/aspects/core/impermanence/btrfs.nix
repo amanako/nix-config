@@ -70,8 +70,7 @@
         };
 
         extraBin = let
-          # The binary names that come from coreutils
-          coreutils = [
+          coreutilsBinNames = [
             "mkdir"
             "date"
             "mv"
@@ -82,8 +81,9 @@
             btrfs = pkgs.btrfs-progs;
           };
         in
-          lib.genAttrs coreutils (name: lib.getExe' pkgs.coreutils name)
-          // lib.mapAttrs (name: pkg: lib.getExe' pkg name) other;
+          coreutilsBinNames
+          |> lib.flip lib.genAttrs (name: lib.getExe' pkgs.coreutils name)
+          |> lib.flip lib.mergeAttrs (lib.mapAttrs (n: p: lib.getExe' p n) other);
       };
     };
   };
