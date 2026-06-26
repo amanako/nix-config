@@ -2,6 +2,7 @@
   den.aspects.nebula.hardware = {
     includes = [
       den.aspects.core.hardware
+      den.aspects.core.disko
       den.aspects.core.nix-cachyos-kernel
     ];
 

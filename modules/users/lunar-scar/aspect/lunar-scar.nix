@@ -19,6 +19,7 @@ in {
       den.aspects.utility._
       den.aspects.shell._
       den.aspects.shell.interpreters.fish
+      den.aspects.basic.git
 
       <terminal/zellij>
       <terminal/kitty>

@@ -1,8 +1,8 @@
 {
   den.schema.user = {
+    host,
     lib,
     config,
-    host,
     ...
   }: {
     options = {
@@ -11,7 +11,7 @@
           options = let
             mkPrefOption = pref: {
               example ? "",
-              description ? "Prefered ${pref} binary name.",
+              description ? "Preferred ${pref} binary name.",
             }:
               lib.mkOption {
                 inherit example description;

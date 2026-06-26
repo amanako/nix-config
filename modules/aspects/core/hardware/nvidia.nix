@@ -3,8 +3,6 @@
   lib,
   ...
 }: {
-  flake.den = den;
-
   den.aspects.core.hardware.nvidia = {host}:
     lib.optionalAttrs host.wantsNvidiaSupport {
       includes = [

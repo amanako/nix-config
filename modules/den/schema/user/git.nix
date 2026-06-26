@@ -1,10 +1,6 @@
 {
-  den,
-  lib,
-  ...
-}: {
-  den = {
-    schema.user.options.git = lib.mkOption {
+  den.schema.user = {lib, ...}: {
+    options.git = lib.mkOption {
       type = lib.types.submodule {
         options = {
           username = lib.mkOption {
@@ -26,22 +22,6 @@
             default = null;
             description = "Signing key consisting of 16 alphanumeric characters to use for commits. Will be passed to `homeManager.programs.git.signing.key`.";
           };
-        };
-      };
-    };
-
-    schema.user.includes = [den.aspects.git];
-
-    aspects.git.homeManager = {user, ...}: {
-      programs.git = {
-        enable = true;
-        settings = {
-          user.name = user.git.username;
-          user.email = user.git.email;
-        };
-        signing = {
-          key = user.git.signingKey;
-          signByDefault = true;
         };
       };
     };

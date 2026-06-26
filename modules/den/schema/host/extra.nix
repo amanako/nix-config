@@ -5,6 +5,7 @@
 
       batteryID = lib.mkOption {
         type = lib.types.str;
+        default = null;
         description = ''
           Option named native-path assigned to batteries of pcs and laptops.
           Can be obtained by running `upower -b | grep -E 'vendor|model|native-path'`

@@ -9,6 +9,7 @@
       den.aspects.core.boot.optional.silent
       den.aspects.core.displayManagers.ly
       den.aspects.core.nix
+      den.aspects.core.software.tlp
     ];
 
     nixos.boot.loader.limine.style.wallpaperStyle = "centered";

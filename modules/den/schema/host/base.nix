@@ -1,15 +1,6 @@
 {
-  __findFile,
-  lib,
-  ...
-}: {
-  den.schema = {
-    host.includes = [
-      <den.batteries.hostname>
-      <timezone>
-    ];
-
-    host.options = {
+  den.schema.host = {lib, ...}: {
+    options = {
       repoRoot = lib.mkOption {
         example = "/etc/nixos";
         type = lib.types.path;
@@ -38,9 +29,5 @@
         example = "server";
       };
     };
-  };
-
-  den.aspects.timezone.nixos = {host, ...}: {
-    time.timeZone = host.timeZone or "UTC";
   };
 }
