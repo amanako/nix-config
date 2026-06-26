@@ -45,7 +45,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
     noctalia.url = "github:noctalia-dev/noctalia";
-    noctalia-shell.url = "github:noctalia-dev/noctalia/legacy-v4";
+    noctalia-shell.url = "github:noctalia-dev/noctalia/f816591afc2f2f606d1f0cf70b51e95c04a7a8aa";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";
     wallpapers = {

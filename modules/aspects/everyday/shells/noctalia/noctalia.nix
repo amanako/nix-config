@@ -25,6 +25,14 @@
   };
 
   noctalia.entry = {
+    description = ''
+      From [description](https://github.com/noctalia-dev/noctalia):
+      A sleek and minimal desktop shell thoughtfully crafted for Wayland.
+
+      This is the new v5 version which is currently in alpha phase.
+      It is recommended to use this version.
+    '';
+
     stylixHMSettings.targets."noctalia-shell".enable = false;
 
     persistUser = {

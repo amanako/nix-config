@@ -1,5 +1,5 @@
 {
-  nixvim.dependencies = {user, ...}: {
+  nixvim.dependencies = {
     hm.programs.nixvim.dependencies = {
       git.enable = true;
       ripgrep.enable = true;

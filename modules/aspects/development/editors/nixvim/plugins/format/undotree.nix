@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.undotree = {user, ...}: {
+  nixvim.plugins.undotree = {
     hm.programs.nixvim.plugins.undotree = {
       enable = true;
     };

@@ -1,5 +1,7 @@
 {
-  nixvim.plugins.luasnip = {user, ...}: {
-    hm.programs.nixvim.plugins.luasnip.enable = true;
+  nixvim.plugins.luasnip = {
+    hm.programs.nixvim.plugins.luasnip = {
+      enable = true;
+    };
   };
 }

@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.lint = {user, ...}: {
+  nixvim.plugins.lint = {
     hm.programs.nixvim.plugins.lint = {
       enable = true;
       lintersByFt = {
@@ -11,9 +11,7 @@
         ];
       };
 
-      autoInstall = {
-        enable = true;
-      };
+      autoInstall.enable = false;
     };
   };
 }

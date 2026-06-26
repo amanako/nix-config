@@ -1,11 +1,13 @@
 {
-  nixvim.plugins.trouble = {user, ...}: {
+  nixvim.plugins.trouble = {
     hm.programs.nixvim.plugins.trouble = {
       enable = true;
-      auto_close = true;
-      auto_jump = true;
-      auto_refresh = true;
-      focus = true;
+      settings = {
+        auto_close = true;
+        auto_jump = true;
+        auto_refresh = true;
+        focus = true;
+      };
     };
   };
 }

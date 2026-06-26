@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.mini-files = {user, ...}: {
+  nixvim.plugins.mini-files = {
     hm = {config, ...}: let
       helpers = config.lib.nixvim;
     in {

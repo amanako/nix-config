@@ -2,7 +2,7 @@
   __findFile,
   den,
   # Bring namespace aspects into scope when __findFile lookup won't suffice
-  nixvim,
+  # nixvim,
   zen-browser,
   niri,
   noctalia,
@@ -38,8 +38,9 @@ in {
       noctalia.full
       niri.full
 
-      nixvim._
-      nixvim.plugins._
+      # Pending fix
+      # nixvim._
+      # nixvim.plugins._
     ];
 
     user = {
