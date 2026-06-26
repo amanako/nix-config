@@ -1,6 +1,6 @@
 {
   dms.settings.power = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       powerActionConfirm = true;
       powerActionHoldDuration = 0.5;
       powerMenuActions = [

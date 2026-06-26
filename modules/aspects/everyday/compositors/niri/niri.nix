@@ -46,7 +46,7 @@
       };
     };
 
-    homeManager = {
+    hm = {
       niriSettings,
       inputs',
       lib,

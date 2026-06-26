@@ -11,7 +11,7 @@
   den.aspects.terminal.yazi = {
     stylixHMSettings.targets."yazi".enable = false;
 
-    homeManager = {
+    hm = {
       nixpkgs.overlays = [
         inputs.yazi.overlays.default
       ];

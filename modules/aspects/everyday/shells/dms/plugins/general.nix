@@ -2,7 +2,7 @@
   flake-file.inputs.dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
 
   dms.plugins.general = {
-    homeManager = {
+    hm = {
       imports = [
         inputs.dms-plugin-registry.modules.default
       ];

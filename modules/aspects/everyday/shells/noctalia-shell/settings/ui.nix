@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.ui = {
-    homeManager.programs.noctalia-shell.settings.ui = {
+    hm.programs.noctalia-shell.settings.ui = {
       fontDefaultScale = 1;
       fontFixedScale = 1;
 

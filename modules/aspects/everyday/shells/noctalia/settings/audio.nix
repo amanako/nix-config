@@ -1,6 +1,6 @@
 {
   noctalia.settings.audio = {
-    homeManager.programs.noctalia.settings.audio = {
+    hm.programs.noctalia.settings.audio = {
       enable_overdrive = true;
       enable_sounds = true;
       spectrumFrameRate = 60;

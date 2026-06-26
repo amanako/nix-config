@@ -8,7 +8,7 @@
       shell = pkgs.nushell;
     };
 
-    homeManager = {
+    hm = {
       programs = {
         nushell.enable = true;
         direnv.enableNushellIntegration = true;

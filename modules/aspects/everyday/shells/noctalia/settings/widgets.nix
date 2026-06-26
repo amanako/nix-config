@@ -1,6 +1,6 @@
 {
   noctalia.settings.widget = {
-    homeManager.programs.noctalia.settings.widget = {
+    hm.programs.noctalia.settings.widget = {
       battery = {
         display_mode = "graphic";
         show_label = false;

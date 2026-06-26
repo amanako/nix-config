@@ -1,6 +1,6 @@
 {
   nixvim.plugins.lsp-lines = {
-    homeManager.programs.nixvim = {
+    hm.programs.nixvim = {
       plugins.lsp-lines.enable = true;
 
       diagnostic.settings = {

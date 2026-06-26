@@ -5,7 +5,7 @@
   };
 
   den.aspects.shell.fastfetch = {
-    homeManager = {lib, ...}: {
+    hm = {lib, ...}: {
       programs.fastfetch = {
         enable = true;
         settings =

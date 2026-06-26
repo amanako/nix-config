@@ -1,6 +1,6 @@
 {
   noctalia.settings.shell = {
-    homeManager.programs.noctalia.settings.shell = {
+    hm.programs.noctalia.settings.shell = {
       niri_overview_type_to_launch_enabled = true;
       password_style = "random";
       polkit_agent = true;

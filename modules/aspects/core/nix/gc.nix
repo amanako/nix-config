@@ -8,6 +8,6 @@
     };
   in {
     nixos.nix.gc = gc;
-    homeManager.nix.gc = gc;
+    hm.nix.gc = gc;
   };
 }

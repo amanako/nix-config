@@ -4,7 +4,7 @@
       dms.bar.widgets
     ];
 
-    homeManager = {
+    hm = {
       programs.dank-material-shell.settings = {
         # Unlimited
         barMaxVisibleApps = 0;

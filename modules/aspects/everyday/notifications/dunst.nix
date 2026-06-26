@@ -1,5 +1,5 @@
 {
-  den.aspects.notifications.dunst.homeManager.services.dunst = {
+  den.aspects.notifications.dunst.hm.services.dunst = {
     enable = true;
     settings = {
       global = {

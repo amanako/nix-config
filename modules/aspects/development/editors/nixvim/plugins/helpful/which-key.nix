@@ -1,6 +1,6 @@
 {
   nixvim.plugins.which-key = {user, ...}: {
-    homeManager.programs.nixvim.plugins.which-key = {
+    hm.programs.nixvim.plugins.which-key = {
       enable = true;
       settings = {
         delay = 200;

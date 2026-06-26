@@ -1,6 +1,6 @@
 {
   noctalia.settings.ui = {
-    homeManager.programs.noctalia.settings.ui = {
+    hm.programs.noctalia.settings.ui = {
       fontDefaultScale = 1;
       fontFixedScale = 1;
       tooltipsEnabled = true;

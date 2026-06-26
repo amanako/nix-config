@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.idle = {
-    homeManager.programs.noctalia-shell.settings.idle = {
+    hm.programs.noctalia-shell.settings.idle = {
       enabled = true;
       screenOffTimeout = 300;
       lockTimeout = 600;

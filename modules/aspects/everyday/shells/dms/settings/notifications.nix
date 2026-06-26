@@ -1,6 +1,6 @@
 {
   dms.notifications = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       notificationCompactMode = true;
       notificationOverlayEnabled = true;
       notificationPopupShadowEnabled = true;

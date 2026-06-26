@@ -30,7 +30,7 @@
         };
     };
 
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

@@ -12,7 +12,7 @@
     # Should fix binary problems with mason/tree-sitter for example
     nixos.programs.nix-ld.enable = true;
 
-    homeManager = {
+    hm = {
       user,
       pkgs,
       lib,

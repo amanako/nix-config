@@ -1,6 +1,6 @@
 {
   noctalia.settings.plugins = {
-    homeManager.programs.noctalia.settings.plugins = {
+    hm.programs.noctalia.settings.plugins = {
       enabled = [];
     };
   };

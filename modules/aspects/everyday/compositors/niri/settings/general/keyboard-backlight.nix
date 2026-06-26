@@ -1,6 +1,6 @@
 {
   niri.binds.keyboard-backlight = {
-    homeManager = {
+    hm = {
       host,
       pkgs,
       lib,

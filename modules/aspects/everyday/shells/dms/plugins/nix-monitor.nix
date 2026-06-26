@@ -2,9 +2,9 @@
   flake-file.inputs.nix-monitor.url = "github:antonjah/nix-monitor";
 
   dms.plugins.nix-monitor = {user, ...}: {
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       imports = [
-        inputs.nix-monitor.homeManagerModules.default
+        inputs.nix-monitor.hmModules.default
       ];
 
       # This plugin won't be included for now for known issues

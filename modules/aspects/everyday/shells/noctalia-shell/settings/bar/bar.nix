@@ -4,7 +4,7 @@
       noctalia-shell.settings.bar.widgets
     ];
 
-    homeManager.programs.noctalia-shell.settings.bar = {
+    hm.programs.noctalia-shell.settings.bar = {
       barType = "framed";
       position = "left";
       monitors = [

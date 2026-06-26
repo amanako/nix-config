@@ -1,5 +1,5 @@
 {
   nixvim.plugins.yazi = {user, ...}: {
-    homeManager.programs.nixvim.plugins.yazi.enable = true;
+    hm.programs.nixvim.plugins.yazi.enable = true;
   };
 }

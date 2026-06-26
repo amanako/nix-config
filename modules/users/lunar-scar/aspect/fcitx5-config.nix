@@ -6,7 +6,7 @@
 
     # Addons require access to pkgs instance but fcitx5 is a quirk for settings only.
     # Therefore, define a homeManager class to append addons
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       i18n.inputMethod.fcitx5.addons = with pkgs; [
         # Basic GUI for configuration
         fcitx5-gtk

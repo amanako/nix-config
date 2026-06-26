@@ -5,7 +5,7 @@
 
     nixos.programs.fzf.fuzzyCompletion = true;
 
-    homeManager = {
+    hm = {
       pkgs,
       lib,
       ...

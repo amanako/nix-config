@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings = {
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

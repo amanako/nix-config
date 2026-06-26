@@ -4,7 +4,7 @@
       noctalia.settings.bar.widgets
     ];
 
-    homeManager.programs.noctalia.settings.bar = {
+    hm.programs.noctalia.settings.bar = {
       autoHideDelay = 500;
       autoShowDelay = 150;
       backgroundOpacity = 0.8;

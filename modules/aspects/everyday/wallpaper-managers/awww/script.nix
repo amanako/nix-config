@@ -8,7 +8,7 @@
     # Awww keeps cached actions so preserving directory should reduce load
     persistUser.directories = [".cache/awww"];
 
-    homeManager = {
+    hm = {
       user,
       pkgs,
       lib,

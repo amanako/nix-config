@@ -20,7 +20,7 @@
       system.stateVersion = "25.11";
     };
 
-    homeManager = {
+    hm = {
       home.stateVersion = "25.11";
     };
   };

@@ -1,6 +1,6 @@
 {
   den.aspects.shell.bat = {
-    homeManager = {
+    hm = {
       pkgs,
       lib,
       ...

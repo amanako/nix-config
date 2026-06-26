@@ -21,7 +21,7 @@
       then {}
       else if user.impermanence.useHMModule
       then {
-        homeManager = {persistUser, ...}: {
+        hm = {persistUser, ...}: {
           home.persistence.${host.impermanence.persistenceDir} = persistUser |> mkPersist;
         };
       }

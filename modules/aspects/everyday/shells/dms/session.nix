@@ -1,6 +1,6 @@
 {
   dms.session = {
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

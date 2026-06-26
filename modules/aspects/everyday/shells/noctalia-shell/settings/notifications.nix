@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.notifications = {
-    homeManager.programs.noctalia-shell.settings.notifications = {
+    hm.programs.noctalia-shell.settings.notifications = {
       enabled = true;
       enableMarkdown = true;
       density = "compact";

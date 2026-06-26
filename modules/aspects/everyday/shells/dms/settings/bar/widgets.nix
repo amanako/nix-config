@@ -1,6 +1,6 @@
 {
   dms.bar.widgets = {
-    homeManager = {
+    hm = {
       lib,
       config,
       ...

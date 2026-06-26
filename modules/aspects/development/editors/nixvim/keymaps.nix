@@ -1,6 +1,6 @@
 {
   nixvim.keymaps = {user, ...}: {
-    homeManager.programs.nixvim.keymaps = [
+    hm.programs.nixvim.keymaps = [
       {
         mode = "n";
         key = "<leader>s";

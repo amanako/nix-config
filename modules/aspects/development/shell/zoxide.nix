@@ -4,7 +4,7 @@
       ".local/share/zoxide" # database for previous entries
     ];
 
-    homeManager.programs.zoxide = {
+    hm.programs.zoxide = {
       enable = true;
       enableFishIntegration = true;
     };

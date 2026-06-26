@@ -1,6 +1,6 @@
 {
   noctalia.settings.sessionMenu = {
-    homeManager.programs.noctalia.settings.sessionMenu = {
+    hm.programs.noctalia.settings.sessionMenu = {
       countdownDuration = 10000;
       enableCountdown = true;
       largeButtonsLayout = "grid";

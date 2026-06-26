@@ -1,13 +1,13 @@
 {
   noctalia.settings.desktopWidgets = {
-    homeManager.programs.noctalia.settings.desktopWidgets = {
+    hm.programs.noctalia.settings.desktopWidgets = {
       enabled = false;
       monitorWidgets = [];
     };
   };
 
   noctalia.settings.desktop_widgets = {
-    homeManager.programs.noctalia.settings.desktop_widgets = {
+    hm.programs.noctalia.settings.desktop_widgets = {
       schema_version = 2;
       widget_order = ["desktop-widget-0000000000000001"];
 

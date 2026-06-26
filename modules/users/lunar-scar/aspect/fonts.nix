@@ -11,7 +11,7 @@
       ];
     };
 
-    homeManager = {
+    hm = {
       fonts.fontconfig = {
         enable = true;
         hinting = "slight";

@@ -46,7 +46,7 @@
       command = ["noctalia"];
     };
 
-    homeManager = {
+    hm = {
       imports = [
         inputs.noctalia.homeModules.default
       ];

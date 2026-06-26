@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.calendar = {
-    homeManager.programs.noctalia-shell.settings.calendar = {
+    hm.programs.noctalia-shell.settings.calendar = {
       cards = [
         {
           enabled = true;

@@ -1,6 +1,6 @@
 {
   nixvim.colorschemes = {user, ...}: {
-    homeManager.programs.nixvim.colorschemes.gruvbox = {
+    hm.programs.nixvim.colorschemes.gruvbox = {
       enable = true;
       settings = {
         italic = {

@@ -1,6 +1,6 @@
 {
   dms.settings.control-centre = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       controlCenterTileColorMode = "primaryContainer";
 
       controlCenterWidgets = [

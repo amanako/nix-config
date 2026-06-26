@@ -10,7 +10,7 @@
 
     stylixHMSettings.targets."fcitx5".enable = true;
 
-    homeManager = {
+    hm = {
       fcitx5Settings,
       lib,
       ...

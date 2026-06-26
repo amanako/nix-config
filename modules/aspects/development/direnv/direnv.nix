@@ -7,7 +7,7 @@
       ".cache/pre-commit"
     ];
 
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

@@ -2,7 +2,7 @@
   den.aspects.shell.starship = {
     stylixHMSettings.targets."starship".enable = false;
 
-    homeManager = {lib, ...}: {
+    hm = {lib, ...}: {
       programs.starship = {
         enable = true;
         enableFishIntegration = true;

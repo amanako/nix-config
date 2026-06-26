@@ -1,6 +1,6 @@
 {
   dms.theme = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       currentThemeName = "Kitty Gruvbox";
       currentThemeCategory = "custom";
       customThemeFile = ./theme.json;

@@ -1,6 +1,7 @@
 {
-  zen-browser.search = {user, ...}: {
-    homeManager = {
+  zen-browser.search = {
+    hm = {
+      user,
       pkgs,
       lib,
       ...

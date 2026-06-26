@@ -11,7 +11,7 @@
       (den.batteries.user-shell "fish")
     ];
 
-    homeManager = {
+    hm = {
       pkgs,
       lib,
       config,

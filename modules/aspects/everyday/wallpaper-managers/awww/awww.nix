@@ -19,7 +19,7 @@
       <wallpaper-managers/awww/script>
     ];
 
-    homeManager = {
+    hm = {
       user,
       pkgs,
       lib,

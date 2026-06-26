@@ -1,6 +1,6 @@
 {
   nixvim.plugins.conform = {
-    homeManager = {
+    hm = {
       pkgs,
       lib,
       ...

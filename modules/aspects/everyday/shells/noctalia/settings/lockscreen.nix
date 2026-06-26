@@ -1,12 +1,12 @@
 {
   noctalia.settings.lockscreen = {
-    homeManager.programs.noctalia.settings.lockscreen = {
+    hm.programs.noctalia.settings.lockscreen = {
       blurred_desktop = true;
     };
   };
 
   noctalia.settings.lockscreen_widgets = {
-    homeManager.programs.noctalia.settings.lockscreen_widgets = {
+    hm.programs.noctalia.settings.lockscreen_widgets = {
       enabled = true;
       schema_version = 2;
       widget_order = ["lockscreen-login-box@eDP-1" "lockscreen-widget-0000000000000001"];

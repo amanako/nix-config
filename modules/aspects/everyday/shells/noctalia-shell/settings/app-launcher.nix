@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.appLauncher = {
-    homeManager.programs.noctalia-shell.settings.appLauncher = {
+    hm.programs.noctalia-shell.settings.appLauncher = {
       enableClipboardHistory = true;
       autoPasteClipboard = true;
       enableClipPreview = true;

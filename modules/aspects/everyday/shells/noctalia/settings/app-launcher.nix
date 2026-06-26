@@ -1,6 +1,6 @@
 {
   noctalia.settings.appLauncher = {
-    homeManager.programs.noctalia.settings.appLauncher = {
+    hm.programs.noctalia.settings.appLauncher = {
       autoPasteClipboard = true;
       clipboardWrapText = true;
       customLaunchPrefix = "";

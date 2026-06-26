@@ -1,6 +1,6 @@
 {
   dms.settings.window = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       wallpaperFillMode = "Fill";
 
       blurredWallpaperLayer = false;

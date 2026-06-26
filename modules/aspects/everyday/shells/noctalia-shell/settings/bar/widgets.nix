@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.bar.widgets = {
-    homeManager.programs.noctalia-shell.settings.bar.widgets = {
+    hm.programs.noctalia-shell.settings.bar.widgets = {
       left = [
         {
           id = "Network";

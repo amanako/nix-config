@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.general = {
-    homeManager.programs.noctalia-shell.settings.general = {
+    hm.programs.noctalia-shell.settings.general = {
       dimmerOpacity = 0.5;
       showScreenCorners = false;
       forceBlackScreenCorners = false;

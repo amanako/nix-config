@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.location = {
-    homeManager.programs.noctalia-shell.settings.location = {
+    hm.programs.noctalia-shell.settings.location = {
       weatherEnabled = true;
       weatherShowEffects = true;
       weatherTaliaMascotAlways = false;

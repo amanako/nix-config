@@ -35,7 +35,7 @@
       stylix = stylixNixOSSettings |> mergeWithDefaults;
     };
 
-    provides.to-users.homeManager = {stylixHMSettings, ...}: {
+    provides.to-users.hm = {stylixHMSettings, ...}: {
       stylix = stylixHMSettings |> mergeWithDefaults;
     };
   };

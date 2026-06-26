@@ -11,7 +11,7 @@
         programs.steam.package = pkgs.jovian-chaotic.steam;
       };
 
-    homeManager = {
+    hm = {
       user,
       lib,
       pkgs,

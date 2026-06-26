@@ -1,7 +1,7 @@
 {
   # Less important settings lie here
   niri.other = {
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       home.packages = [
         pkgs.capitaine-cursors-themed
       ];

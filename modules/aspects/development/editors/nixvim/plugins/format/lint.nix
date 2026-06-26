@@ -1,6 +1,6 @@
 {
   nixvim.plugins.lint = {user, ...}: {
-    homeManager.programs.nixvim.plugins.lint = {
+    hm.programs.nixvim.plugins.lint = {
       enable = true;
       lintersByFt = {
         nix = [

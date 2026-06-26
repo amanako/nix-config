@@ -1,6 +1,6 @@
 {
   nixvim.plugins.lsp = {
-    homeManager.programs.nixvim.plugins = {
+    hm.programs.nixvim.plugins = {
       lspkind.enable = true;
       lsp-signature.enable = true;
       lsp-config.enable = true;

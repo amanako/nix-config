@@ -2,7 +2,7 @@
   den.aspects.terminal.kitty = {
     stylixHMSettings.targets."kitty".enable = false;
 
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       programs.kitty = {
         enable = true;
         themeFile = "GruvboxMaterialDarkSoft";

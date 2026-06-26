@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.controlCenter = {
-    homeManager.programs.noctalia-shell.settings.controlCenter = {
+    hm.programs.noctalia-shell.settings.controlCenter = {
       position = "top_center";
       shortcuts = {
         left = [

@@ -1,6 +1,6 @@
 {
   noctalia.settings.idle = {
-    homeManager.programs.noctalia.settings.idle = {
+    hm.programs.noctalia.settings.idle = {
       behavior_order = ["screen-off" "lock" "lock-and-suspend"];
       customCommands = "[]";
       enabled = true;

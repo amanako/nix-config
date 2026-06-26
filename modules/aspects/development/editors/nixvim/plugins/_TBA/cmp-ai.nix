@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.homeManager.programs.nixvim.plugins.cmp-ai = {
+  nixvim.plugins.hm.programs.nixvim.plugins.cmp-ai = {
     enable = true;
     settings.provider = "ollama";
   };

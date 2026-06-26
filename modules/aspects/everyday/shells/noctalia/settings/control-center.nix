@@ -1,6 +1,6 @@
 {
   noctalia.settings.controlCenter = {
-    homeManager.programs.noctalia.settings.controlCenter = {
+    hm.programs.noctalia.settings.controlCenter = {
       position = "top_center";
 
       shortcuts = {
@@ -48,7 +48,7 @@
   };
 
   noctalia.settings.control_center = {
-    homeManager.programs.noctalia.settings.control_center = {
+    hm.programs.noctalia.settings.control_center = {
       sidebar = "full";
       sidebar_section = "full";
 

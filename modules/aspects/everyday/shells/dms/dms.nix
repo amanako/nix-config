@@ -6,7 +6,7 @@
   dms.entry = {
     stylixHMSettings.targets."dank-material-shell".enable = false;
 
-    homeManager = {
+    hm = {
       imports = [
         inputs.dms.homeModules.dank-material-shell
       ];

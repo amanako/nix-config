@@ -39,7 +39,7 @@
       profileNames = ["${user.userName}"];
     };
 
-    homeManager = {
+    hm = {
       imports = [
         # Defaults to recommended beta version
         inputs.zen-browser.homeModules.${

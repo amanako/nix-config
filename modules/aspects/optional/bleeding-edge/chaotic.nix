@@ -15,7 +15,7 @@
       ];
     };
 
-    homeManager = {
+    hm = {
       imports = [inputs.chaotic.homeManagerModules.default];
     };
   };

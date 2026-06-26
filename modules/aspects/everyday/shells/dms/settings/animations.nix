@@ -1,6 +1,6 @@
 {
   dms.settings.animations = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       syncComponentAnimationSpeeds = false;
 
       popoutAnimationSpeed = 2;

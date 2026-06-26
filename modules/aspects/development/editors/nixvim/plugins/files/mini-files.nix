@@ -1,6 +1,6 @@
 {
   nixvim.plugins.mini-files = {user, ...}: {
-    homeManager = {config, ...}: let
+    hm = {config, ...}: let
       helpers = config.lib.nixvim;
     in {
       programs.nixvim.plugins.mini-files = {

@@ -1,6 +1,6 @@
 {
   den.aspects.shell.interpreters.nu.completions = {user, ...}: {
-    homeManager = {
+    hm = {
       pkgs,
       lib,
       ...

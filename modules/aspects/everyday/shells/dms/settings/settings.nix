@@ -1,6 +1,6 @@
 {
   dms.settings = {
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

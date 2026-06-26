@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.sessionMenu = {
-    homeManager.programs.noctalia-shell.settings.sessionMenu = {
+    hm.programs.noctalia-shell.settings.sessionMenu = {
       enableCountdown = true;
       countdownDuration = 10000;
       position = "center";

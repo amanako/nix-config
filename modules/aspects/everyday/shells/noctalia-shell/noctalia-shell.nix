@@ -17,7 +17,7 @@
 
     persistsUser.files = [".cache/noctalia/shell-state.json"];
 
-    homeManager = {
+    hm = {
       imports = [
         inputs.noctalia-shell.homeModules.default
       ];

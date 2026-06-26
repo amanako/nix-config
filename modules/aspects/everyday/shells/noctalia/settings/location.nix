@@ -1,6 +1,6 @@
 {
   noctalia.settings.location = {
-    homeManager.programs.noctalia.settings.location = {
+    hm.programs.noctalia.settings.location = {
       analogClockInCalendar = false;
       autoLocate = false;
       hideWeatherCityName = false;

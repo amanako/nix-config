@@ -1,6 +1,6 @@
 {
   noctalia.settings.notification = {
-    homeManager.programs.noctalia.settings.notification = {
+    hm.programs.noctalia.settings.notification = {
       background_opacity = 0.85;
       layer = "overlay";
       offset_y = 10;
@@ -8,7 +8,7 @@
   };
 
   noctalia.settings.notifications = {
-    homeManager.programs.noctalia.settings.notifications = {
+    hm.programs.noctalia.settings.notifications = {
       backgroundOpacity = 0.7;
       clearDismissed = true;
       criticalUrgencyDuration = 15;

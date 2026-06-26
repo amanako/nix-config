@@ -6,8 +6,9 @@
   den.schema.user = {
     includes = [
       den.batteries.define-user
-      den.aspects.basic.homeBackup
       den.batteries.mutual-provider
+      den.policies.hm-shorthand
+      den.aspects.basic.homeBackup
       (
         {user}:
           if user.isPrimaryUser
@@ -15,7 +16,7 @@
           else {}
       )
     ];
-  };
 
-  den.schema.user.classes = lib.mkDefault ["homeManager"];
+    classes = lib.mkDefault ["homeManager"];
+  };
 }

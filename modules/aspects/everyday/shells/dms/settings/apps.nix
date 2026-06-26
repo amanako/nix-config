@@ -1,6 +1,6 @@
 {
   dms.settings.apps = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       dwlShowAllTags = false;
       focusedWindowCompactMode = false;
 

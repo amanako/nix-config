@@ -6,6 +6,6 @@
       ".cache/zellij"
     ];
 
-    homeManager.programs.zellij.enable = true;
+    hm.programs.zellij.enable = true;
   };
 }

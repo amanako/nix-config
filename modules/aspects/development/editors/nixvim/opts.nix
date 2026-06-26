@@ -1,6 +1,6 @@
 {
   nixvim.opts = {user, ...}: {
-    homeManager.programs.nixvim.opts = {
+    hm.programs.nixvim.opts = {
       # Numbers
       number = true;
       relativenumber = true;

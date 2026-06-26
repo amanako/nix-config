@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.systemMonitor = {
-    homeManager.programs.noctalia-shell.settings.systemMonitor = {
+    hm.programs.noctalia-shell.settings.systemMonitor = {
       cpuWarningThreshold = 80;
       cpuCriticalThreshold = 90;
       tempWarningThreshold = 60;

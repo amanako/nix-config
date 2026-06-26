@@ -1,6 +1,6 @@
 {
   den.aspects.shell.eza = {
-    homeManager.programs.eza = {
+    hm.programs.eza = {
       enable = true;
       enableFishIntegration = true;
       icons = "always";

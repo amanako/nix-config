@@ -1,6 +1,6 @@
 {
   dms.settings.battery = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       acMonitorTimeout = 600;
       acLockTimeout = 600;
       acSuspendTimeout = 1200;

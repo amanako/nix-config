@@ -2,7 +2,7 @@
   den.aspects.utility.zathura = {
     stylixHMSettings.targets."zathura".enable = false;
 
-    homeManager.programs.zathura = {
+    hm.programs.zathura = {
       enable = true;
       options = {
         recolor = true;
@@ -10,7 +10,7 @@
         recolor-lightcolor = "#32302f";
         recolor-darkcolor = "#d4be98";
         recolor-keephue = true;
-        recolor-reverse-video = true;
+        recolor-reverse-video = false;
 
         # Don't limit previous results to display
         show-recent = -1;
@@ -20,7 +20,7 @@
         render-loading = false;
         font = "VictorMono NF";
         # c - command line
-        guioptions = "c";
+        guioptions = "cs";
         zoom-step = 25;
 
         statusbar-basename = false;

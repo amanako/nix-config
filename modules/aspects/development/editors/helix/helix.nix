@@ -2,7 +2,7 @@
   den.aspects.editors.helix = {
     stylixHMSettings.targets."helix".enable = false;
 
-    homeManager = {
+    hm = {
       user,
       pkgs,
       lib,

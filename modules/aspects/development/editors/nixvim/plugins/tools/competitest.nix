@@ -1,6 +1,6 @@
 {
   nixvim.plugins.competitest = {user, ...}: {
-    homeManager.programs.nixvim.plugins.competitest = {
+    hm.programs.nixvim.plugins.competitest = {
       enable = true;
       settings = {
         compile_command = {

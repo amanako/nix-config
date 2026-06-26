@@ -7,7 +7,7 @@
       ".config/noctalia/plugins"
     ];
 
-    homeManager = {lib, ...}: {
+    hm = {lib, ...}: {
       programs.noctalia-shell = {
         plugins = let
           noctaliaPluginURL = "https://github.com/noctalia-dev/noctalia-plugins";

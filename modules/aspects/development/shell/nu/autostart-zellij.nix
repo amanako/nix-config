@@ -3,7 +3,7 @@
   den.aspects.shell.interpreters.nu.autostart-zellij = {
     includes = [
       (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.terminal.zellij && user.hasAspect den.aspects.shell.interpreters.nu) {
-        homeManager = {
+        hm = {
           home.sessionVariables = {
             "ZELLIJ_AUTO_ATTACH" = true;
             "ZELLIJ_AUTO_EXIT" = true;

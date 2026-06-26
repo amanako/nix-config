@@ -24,7 +24,7 @@
       "application/octet-stream" = "zen-twilight.desktop";
     };
 
-    homeManager = {user, ...}: {
+    hm = {user, ...}: {
       imports = [inputs.nixvim.homeModules.nixvim];
 
       xdg.dataFile."applications/nvim.desktop".text = ''

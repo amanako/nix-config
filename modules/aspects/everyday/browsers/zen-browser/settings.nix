@@ -1,7 +1,7 @@
 # reference: about:config in zen
 {
   zen-browser.settings = {
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

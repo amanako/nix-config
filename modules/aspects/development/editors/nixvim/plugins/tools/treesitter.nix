@@ -1,6 +1,6 @@
 {
   nixvim.plugins.treesitter = {user, ...}: {
-    homeManager.programs.nixvim.plugins.treesitter = {
+    hm.programs.nixvim.plugins.treesitter = {
       enable = true;
       nixGrammars = true;
 

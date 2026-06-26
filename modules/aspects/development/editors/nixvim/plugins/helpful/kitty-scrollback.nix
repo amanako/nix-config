@@ -1,6 +1,6 @@
 {
   nixvim.plugins.kitty-scrollback = {user, ...}: {
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       programs = {
         nixvim.plugins.kitty-scrollback.enable = true;
 

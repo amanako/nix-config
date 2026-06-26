@@ -1,6 +1,6 @@
 {
   noctalia-shell.settings.nightLight = {
-    homeManager.programs.noctalia-shell.settings.nightLight = {
+    hm.programs.noctalia-shell.settings.nightLight = {
       enabled = true;
       forced = false;
       autoSchedule = true;

@@ -1,6 +1,6 @@
 {
   noctalia.settings.general = {
-    homeManager.programs.noctalia.settings.general = {
+    hm.programs.noctalia.settings.general = {
       dimmerOpacity = 0.5;
       showScreenCorners = false;
       forceBlackScreenCorners = false;
@@ -42,7 +42,7 @@
   };
 
   noctalia.settings.backdrop = {
-    homeManager.programs.noctalia.settings.backdrop = {
+    hm.programs.noctalia.settings.backdrop = {
       tint_intensity = 0.2;
     };
   };

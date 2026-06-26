@@ -1,6 +1,6 @@
 {
   nixvim.extra-config = {
-    homeManager.programs.nixvim.extraConfigLua = ''
+    hm.programs.nixvim.extraConfigLua = ''
       local _border = "rounded"
 
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(

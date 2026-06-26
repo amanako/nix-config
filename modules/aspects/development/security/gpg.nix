@@ -1,6 +1,6 @@
 {
   den.aspects.security.gpg = {
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       programs.gpg.enable = true;
 
       services.gpg-agent = {

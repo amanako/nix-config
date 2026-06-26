@@ -1,6 +1,6 @@
 {
   dms.workspaces = {
-    homeManager.programs.dank-material-shell.settings = {
+    hm.programs.dank-material-shell.settings = {
       showWorkspaceIndex = true;
       showWorkspaceName = false;
       showWorkspacePadding = false;

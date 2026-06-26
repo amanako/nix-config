@@ -70,7 +70,7 @@ in {
       ".local/share/systemd/timers"
     ];
 
-    homeManager = {pkgs, ...}: {
+    hm = {pkgs, ...}: {
       home.packages = with pkgs; [
         nemo
         youtube-tui

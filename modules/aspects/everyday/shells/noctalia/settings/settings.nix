@@ -1,6 +1,6 @@
 {
   noctalia.settings = {
-    homeManager = {
+    hm = {
       user,
       lib,
       ...

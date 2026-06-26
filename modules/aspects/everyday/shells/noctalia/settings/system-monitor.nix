@@ -1,6 +1,6 @@
 {
   noctalia.settings.systemMonitor = {
-    homeManager.programs.noctalia.settings.systemMonitor = {
+    hm.programs.noctalia.settings.systemMonitor = {
       batteryCriticalThreshold = 5;
       batteryWarningThreshold = 20;
       cpuCriticalThreshold = 90;

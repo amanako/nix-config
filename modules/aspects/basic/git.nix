@@ -1,6 +1,6 @@
 {
   den.aspects.basic.git = {
-    homeManager = {user, ...}: {
+    hm = {user, ...}: {
       programs.git = {
         enable = true;
         settings = {

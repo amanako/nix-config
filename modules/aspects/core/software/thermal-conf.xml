@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+  <ThermalConfiguration>
+    <Platform>
+      <Name>Override CPU default passive</Name>
+      <ProductName>*</ProductName>
+    <Preference>PERFORMANCE</Preference>
+    <ThermalZones>
+      <ThermalZone>
+      <Type>cpu</Type>
+      <TripPoints>
+        <TripPoint>
+          <Temperature>45000</Temperature>
+          <type>passive</type>
+          <ControlType>PARALLEL</ControlType>
+        </TripPoint>
+      </TripPoints>
+      </ThermalZone>
+    </ThermalZones>
+  </Platform>
+  </ThermalConfiguration>

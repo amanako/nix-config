@@ -1,6 +1,6 @@
 {
   nixvim.plugins.gitsigns = {user, ...}: {
-    homeManager.programs.nixvim.plugins.gitsigns = {
+    hm.programs.nixvim.plugins.gitsigns = {
       enable = true;
       settings = {
         signs = {
