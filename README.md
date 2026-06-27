@@ -52,7 +52,7 @@
 
 ### Aspect Inclusion
 
-- **Primary focus:** importing aspects.
+- **Primary focus:** including aspects.
 - **Fine‑grained control:** optional manual overrides or schema options for advanced users.
 
 ### Documentation
@@ -66,9 +66,10 @@
 
 ### Specific Practices
 
-- Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, etc., **as close to the point of use** as possible.
+- Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible.
 - Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
 - This makes removal or refactoring straightforward.
+- Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)
 
 Other specifics can be figured out by comparing individual files.
 

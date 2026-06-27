@@ -9,20 +9,20 @@
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
   zen-browser.entry = {user, ...}: let
-    browser = user.preferences.browser;
-    isZen = lib.hasPrefix "zen" browser;
+    preferedBrowser = user.preferences.browser;
+    isZenPrefered = lib.hasPrefix "zen" preferedBrowser;
 
     # Since binary name remains "zen-twilight" for both twilight and twilight-official
     # variants, strip "-official" part when passing command to niri.
     stripZen =
-      if isZen
+      if isZenPrefered
       then
         (lib.removePrefix "zen-"
-          browser)
+          preferedBrowser)
       else "";
-    stripOfficial = lib.removeSuffix "-official" browser;
+    stripOfficial = lib.removeSuffix "-official" preferedBrowser;
   in {
-    niriSettings = lib.optionalAttrs isZen {
+    niriSettings = lib.optionalAttrs isZenPrefered {
       spawn-at-startup = [
         {
           command = [stripOfficial];
@@ -43,7 +43,7 @@
       imports = [
         # Defaults to recommended beta version
         inputs.zen-browser.homeModules.${
-          if isZen
+          if isZenPrefered
           then stripZen
           else "beta"
         }
@@ -51,7 +51,7 @@
 
       programs.zen-browser = {
         enable = true;
-        setAsDefaultBrowser = true;
+        setAsDefaultBrowser = isZenPrefered;
       };
     };
   };
