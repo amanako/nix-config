@@ -12,7 +12,7 @@
     }: {
       xdg.desktopEntries =
         desktopEntries
-        |> lib.foldl (acc: curr: curr |> lib.mergeAttrs acc) {};
+        |> lib.foldl lib.mergeAttrs {};
     };
   };
 }

@@ -2,7 +2,7 @@
   __findFile,
   den,
   # Bring namespace aspects into scope when __findFile lookup won't suffice
-  # nixvim,
+  nixvim,
   zen-browser,
   niri,
   noctalia,
@@ -34,13 +34,13 @@ in {
       <editors/helix>
 
       # Works for namespaces as well
-      zen-browser._
+      zen-browser.full
       noctalia.full
       niri.full
 
       # Pending fix
-      # nixvim._
-      # nixvim.plugins._
+      nixvim._
+      nixvim.plugins._
     ];
 
     user = {
@@ -65,10 +65,6 @@ in {
         directory = "keys/gnupg";
         mode = "0700";
       }
-
-      # For direnv to remember allowed .envrc files
-      ".local/share/youtube-tui"
-      ".local/share/systemd/timers"
     ];
 
     hm = {pkgs, ...}: {

@@ -1,4 +1,5 @@
 {
+  zen-browser,
   inputs,
   lib,
   ...
@@ -7,6 +8,13 @@
   imports = [(inputs.den.namespace "zen-browser" false)];
 
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+  zen-browser.full = {
+    includes = [
+      zen-browser._
+      zen-browser.search._
+    ];
+  };
 
   zen-browser.entry = {user, ...}: let
     preferedBrowser = user.preferences.browser;
@@ -22,6 +30,10 @@
       else "";
     stripOfficial = lib.removeSuffix "-official" preferedBrowser;
   in {
+    includes = [
+      zen-browser.userSettingsCollector
+    ];
+
     niriSettings = lib.optionalAttrs isZenPrefered {
       spawn-at-startup = [
         {

@@ -1,12 +1,8 @@
 # reference: about:config in zen
 {
   zen-browser.settings = {
-    hm = {
-      user,
-      lib,
-      ...
-    }: {
-      programs.zen-browser.profiles."${user.userName}".settings = let
+    zenUserSettings = {lib, ...}: {
+      settings = let
         urlbarDontSuggestList = [
           "addons"
           "amp"
