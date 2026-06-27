@@ -1,8 +1,4 @@
-{
-  __findFile,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [(inputs.den.namespace "nixvim" false)];
 
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
@@ -14,30 +10,9 @@
     ];
 
     stylixHMSettings.targets."nixvim".enable = false;
-    nixos.xdg.mime.defaultApplications = {
-      "text/*" = "nvim.desktop";
-      "text/english" = "nvim.desktop";
-      "text/html" = "nvim.desktop";
-      "text/plain" = "nvim.desktop";
-      "inode/directory" = "thunar.desktop";
-      "x-scheme-handler/file" = "thunar.desktop";
-      "application/octet-stream" = "zen-twilight.desktop";
-    };
 
-    hm = {user, ...}: {
+    hm = {
       imports = [inputs.nixvim.homeModules.nixvim];
-
-      xdg.dataFile."applications/nvim.desktop".text = ''
-        [Desktop Entry]
-        Name=Neovim
-        Exec=${user.preferences.term} -e nvim
-        Terminal=false
-        Type=Application
-        Keywords=Text;editor;
-        Icon=nvim
-        Categories=Utility;TextEditor;
-        StartupNotify=false
-      '';
 
       programs.nixvim = {
         enable = true;
