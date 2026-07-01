@@ -2,6 +2,10 @@
   den.aspects.terminal.kitty = {
     stylixHMSettings.targets."kitty".enable = false;
 
+    niriSettings.binds = {
+      "Mod+W".action.spawn-sh = "kitten quick-access-terminal";
+    };
+
     hm = {pkgs, ...}: {
       programs.kitty = {
         enable = true;
@@ -9,7 +13,7 @@
         font = {
           name = "VictorMono Nerd Font";
           package = pkgs.nerd-fonts.victor-mono;
-          size = 12;
+          size = 14;
         };
 
         enableGitIntegration = true;
@@ -33,8 +37,26 @@
           cursor_trail_decay = "0.15 0.3";
         };
 
-        # Allow for the keybinding to serve a dual purpose based on whether text is selected
-        keybindings."ctrl+c" = "copy_or_interrupt";
+        keybindings = {
+          # Allow for the keybinding to serve a dual purpose based on whether text is selected
+          "ctrl+c" = "copy_or_interrupt";
+
+          # Tell new tabs and windows to start in same directory
+          "ctrl+shift+t" = "new_tab_with_cwd";
+          "ctrl+shift+enter" = "new_window_with_cwd";
+
+          "ctrl+h" = "previous_tab";
+          "ctrl+l" = "next_tab";
+
+          "ctrl+j" = "previous_window";
+          "ctrl+k" = "next_window";
+        };
+
+        quickAccessTerminalConfig = {
+          lines = 10;
+          columns = 60;
+          hide_on_focus_loss = true;
+        };
       };
     };
   };
