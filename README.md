@@ -178,7 +178,7 @@ This explains the structure of attribute set:
 
 For such users I would suggest making multiple files within `entry` folder with this pattern for example: `${user}-${host}.nix`.<br>
 Furthermore, all files can be broken into easy-to-follow pieces which is displayed in the examples.<br>
-My current user and host are provided as a starting point. Please reference [`users`](modules/users) and [`hosts`](modules/hosts).
+Some users and hosts are provided as a starting point. Please reference [`users`](modules/users) and [`hosts`](modules/hosts).
 
 There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is supposed to represent directory of cloned repo, and should be set upfront.
 Other than that some other options which are a must likely have an assertion forcing repo users to make a declaration.
