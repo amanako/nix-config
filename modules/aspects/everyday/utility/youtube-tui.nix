@@ -7,10 +7,12 @@
     persistUser = {
       directories = [
         ".local/share/youtube-tui/channels"
+        ".local/share/youtube-tui/info"
       ];
 
       files = [
         ".local/share/youtube-tui/subscriptions.json"
+        ".local/share/youtube-tui/watch_history.json"
       ];
     };
 

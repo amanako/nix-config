@@ -2,6 +2,11 @@
   den.aspects.utility.zathura = {
     stylixHMSettings.targets."zathura".enable = false;
 
+    persistUser.directories = [
+      # Remember where user left of
+      ".local/share/zathura"
+    ];
+
     hm.programs.zathura = {
       enable = true;
       options = {
