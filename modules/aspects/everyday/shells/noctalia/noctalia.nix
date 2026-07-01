@@ -50,10 +50,6 @@
       ];
     };
 
-    niriSpawnAtStartup = {
-      command = ["noctalia"];
-    };
-
     hm = {
       imports = [
         inputs.noctalia.homeModules.default

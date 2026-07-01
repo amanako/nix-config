@@ -11,32 +11,30 @@
       ];
     };
 
-    hm = {
-      fonts.fontconfig = {
-        enable = true;
-        hinting = "slight";
-        antialiasing = true;
-        defaultFonts = {
-          sansSerif = [
-            "Biz UDPGothic"
-            "IPAPGothic"
-            "Noto Sans"
-            "Open Sans"
-            "Droid Sans"
-            "NotoSansCJK"
-          ];
-          serif = [
-            "IPAPMincho"
-            "Mona Sans Display Medium"
-            "Noto Serif"
-            "Droid Serif"
-          ];
-          monospace = [
-            "VictorMono NF"
-            "IPAGothic"
-            "Inconsolatazi4"
-          ];
-        };
+    hm.fonts.fontconfig = {
+      enable = true;
+      hinting = "slight";
+      antialiasing = true;
+      defaultFonts = {
+        sansSerif = [
+          "Biz UDPGothic"
+          "IPAPGothic"
+          "Noto Sans"
+          "Open Sans"
+          "Droid Sans"
+          "NotoSansCJK"
+        ];
+        serif = [
+          "IPAPMincho"
+          "Mona Sans Display Medium"
+          "Noto Serif"
+          "Droid Serif"
+        ];
+        monospace = [
+          "VictorMono NF"
+          "IPAGothic"
+          "Inconsolatazi4"
+        ];
       };
     };
   };
