@@ -33,7 +33,7 @@
       It is recommended to use this version.
     '';
 
-    stylixHMSettings.targets."noctalia-shell".enable = false;
+    stylixHMSettings.targets."noctalia".enable = false;
 
     persistUser = {
       directories = [

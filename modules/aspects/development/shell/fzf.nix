@@ -22,7 +22,7 @@
         # Alt-c = fzf cd
         enableFishIntegration = true;
         inherit defaultCommand;
-        fileWidgetCommand = defaultCommand;
+        fileWidget.command = defaultCommand;
         defaultOptions = [
           "--ansi"
           "--border"
