@@ -19,7 +19,7 @@ jobs:
       - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            experimental-features = nix-command flakes
+            experimental-features = nix-command flakes pipe-operators
             substituters = https://cache.nixos.org https://nyx-cache.chaotic.cx https://cache.nixos.asia/oss
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk= oss:KO872wNJkCDgmGN3xy9dT89WAhvv13EiKncTtHDItVU=
             accept-flake-config = true
