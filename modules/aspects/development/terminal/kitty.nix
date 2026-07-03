@@ -45,11 +45,11 @@
           "ctrl+shift+t" = "new_tab_with_cwd";
           "ctrl+shift+enter" = "new_window_with_cwd";
 
-          "ctrl+h" = "previous_tab";
-          "ctrl+l" = "next_tab";
+          "Alt+h" = "previous_tab";
+          "Alt+l" = "next_tab";
 
-          "ctrl+j" = "previous_window";
-          "ctrl+k" = "next_window";
+          "Alt+j" = "previous_window";
+          "Alt+k" = "next_window";
         };
 
         quickAccessTerminalConfig = {

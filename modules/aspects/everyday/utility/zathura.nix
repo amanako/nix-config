@@ -24,7 +24,7 @@
 
         render-loading = false;
         font = "VictorMono NF";
-        # c - command line
+        # c - command line # s - "statusbar"
         guioptions = "cs";
         zoom-step = 25;
 
