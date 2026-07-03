@@ -1,6 +1,8 @@
 {
   zen-browser.userSettingsCollector = {
-    homeManager = {
+    # Reference for settings: https://zen-browser-flake.nshard.com
+
+    hm = {
       zenUserSettings,
       zenSearchEngines,
       user,

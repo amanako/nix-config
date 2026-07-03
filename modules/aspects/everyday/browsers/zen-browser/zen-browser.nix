@@ -42,9 +42,49 @@
       ];
     };
 
-    persistUser.directories = [
-      ".config/zen/${user.userName}"
-    ];
+    persistUser = let
+      basePath = ".config/zen/${user.userName}";
+      dirs = [
+        # "sessionstore-backups"
+        "settings"
+        "storage"
+        "zen-sessions-backup"
+      ];
+
+      files = [
+        # "sessionstore.jsonlz4"
+
+        # Cookies
+        "cookies.sqlite"
+
+        # Favicons
+        "favicons.sqlite"
+
+        # Logins and encryption
+        "key4.db"
+        "logins.db"
+        "logins.json"
+
+        # Bookmarks and browsing history
+        "places.sqlite"
+        "prefs.js"
+
+        # Store data related to web applications, such as local storage for cookies, preferences, and other information that web apps may need to function properly
+        "webappsstore.sqlite"
+
+        # Zen essentials
+        "zen-live-folders.jsonlz4"
+        # "zen-sessions.jsonlz4"
+      ];
+    in {
+      directories =
+        dirs
+        |> map (dir: basePath + "/" + dir);
+
+      files =
+        files
+        |> map (file: basePath + "/" + file);
+    };
 
     stylixHMSettings.targets."zen-browser" = {
       enable = true;
