@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
   # Enable lock flattening: https://flake-file.denful.dev/guides/lock-flattening
   imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
@@ -16,9 +12,6 @@
     '';
 
     formatter = pkgs: pkgs.alejandra;
-
-    # Required due to conflict with omnix cli
-    check-hooks = lib.mkForce [];
 
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

@@ -14,32 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: wimpysworld/nothing-but-nix@main
+      - uses: wimpysworld/nothing-but-nix@v10
 
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
-            fallback = true
+      - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
 
       - name: Setup caches
         uses: cachix/cachix-action@v17
         with:
           name: amanako
-
-      - name: Setup packages
-        run: |
-          nix --accept-flake-config profile add \
-            github:juspay/omnix#default \
-            github:juspay/cachix-push#default
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Build flake outputs
-        run: om ci run --results=om.json
-
-      - name: Push to cache
-        env:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
-          cachix-push-om-outputs -c amanako \
-            --subflake ROOT \
-            --prefix "$(git branch --show-current)" < om.json
+          nix build ".#all" --accept-flake-config \
+             --print-out-paths
