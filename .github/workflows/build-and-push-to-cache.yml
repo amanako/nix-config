@@ -26,5 +26,6 @@ jobs:
 
       - name: Build flake outputs
         run: |
-          nix build ".#all" --accept-flake-config \
+          nix --accept-flake-config run .#write-flake
+          nix --accept-flake-config build ".#all" \
              --print-out-paths

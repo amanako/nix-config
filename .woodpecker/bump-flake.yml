@@ -17,7 +17,9 @@ steps:
         EOF
         )
 
+      - nix run .#write-flake
       - nix flake update
+      - nix run .#write-flake
       - nix flake check -L
 
   - name: commit-and-push
