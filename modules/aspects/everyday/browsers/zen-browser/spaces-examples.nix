@@ -8,7 +8,7 @@
     '';
 
     # Currently undeclarative feature so should be managed via zen directly, changes made persist
-    persistUser = [
+    persistUser.directories = [
       ".config/zen/zen-space-routing.jsonlz4"
     ];
 

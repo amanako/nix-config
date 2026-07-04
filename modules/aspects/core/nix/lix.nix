@@ -1,4 +1,10 @@
 {
+  flake-file.nixConfig = {
+    extra-deprecated-features = [
+      "or-as-identifier" # Silence runtime warning
+    ];
+  };
+
   den.aspects.core.nix.lix = {
     description = ''
       From [official site](https://lix.systems):

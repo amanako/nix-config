@@ -4,7 +4,7 @@
       "Additional zen browser settings for lunar-scar."
     '';
 
-    persistUser = [
+    persistUser.files = [
       ".config/zen/zen-space-routing.jsonlz4"
     ];
 

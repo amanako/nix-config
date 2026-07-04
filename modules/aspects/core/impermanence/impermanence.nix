@@ -9,6 +9,9 @@
     includes = [
       den.aspects.core.impermanence.btrfs
       den.aspects.core.impermanence.persistSystemCollector
+    ];
+
+    provides.to-users.includes = [
       den.aspects.core.impermanence.persistUserCollector
     ];
 

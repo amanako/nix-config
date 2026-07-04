@@ -54,6 +54,9 @@
       files = [
         # "sessionstore.jsonlz4"
 
+        # Verified certificates
+        "cert9.db"
+
         # Cookies
         "cookies.sqlite"
 
