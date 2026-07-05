@@ -43,11 +43,16 @@ steps:
       - |
         git config --global gpg.format ssh
         git config --global commit.gpgsign true
-        echo "$${GIT_SSH_SIGNING_KEY}" | git config --global user.signingkey /dev/stdin
+        mkdir -p ~/.ssh
+        echo "$${GIT_SSH_SIGNING_KEY}" > ~/.ssh/signing_key
+        chmod 600 ~/.ssh/signing_key
+        export PUBLIC_KEY=$(ssh-keygen -y -f ~/.ssh/signing_key)
+        echo $PUBLIC_KEY > ~/.ssh/signing_key.pub
+        git config --global user.signingkey $PUBLIC_KEY
 
       - |
         BRANCH="weekly-flake-update"
-        git checkout -b "$BRANCH"
+        git checkout -b $BRANCH
         git add flake.lock
 
       - |
