@@ -33,22 +33,25 @@ steps:
         from_secret: GIT_AUTHOR_EMAIL
       GITEA_TOKEN:
         from_secret: GITEA_TOKEN
-      GIT_SSH_SIGNING_KEY:
-        from_secret: GIT_SSH_SIGNING_KEY
+      GIT_SSH_PRIVATE_KEY:
+        from_secret: GIT_SSH_PRIVATE_KEY
+      GIT_SSH_PUBLIC_KEY:
+        from_secret: GIT_SSH_PUBLIC_KEY
     commands:
       - |
         git config --global user.name "$${GIT_AUTHOR_NAME}"
         git config --global user.email "$${GIT_AUTHOR_EMAIL}"
-
-      - |
         git config --global gpg.format ssh
         git config --global commit.gpgsign true
+
+      - |
         mkdir -p ~/.ssh
-        echo "$${GIT_SSH_SIGNING_KEY}" > ~/.ssh/signing_key
+        echo "$${GIT_SSH_PRIVATE_KEY}" > ~/.ssh/signing_key
+        echo "$${GIT_SSH_PUBLIC_KEY}" > ~/.ssh/signing_key.pub
+
+      - |
         chmod 600 ~/.ssh/signing_key
-        export PUBLIC_KEY=$(ssh-keygen -y -f ~/.ssh/signing_key)
-        echo $PUBLIC_KEY > ~/.ssh/signing_key.pub
-        git config --global user.signingkey $PUBLIC_KEY
+        git config --global user.signingkey $${GIT_SSH_PUBLIC_KEY}
 
       - |
         BRANCH="weekly-flake-update"
