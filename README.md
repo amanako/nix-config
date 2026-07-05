@@ -7,7 +7,7 @@
 ![checks](https://ci.codeberg.org/api/badges/16923/status.svg)
 
 ## Credits
-Because of diligent work of these people/communities configuration was able to rise to these heights. I couldn't to this without them. Thank you.
+Because of diligent work of these people/communities configuration was able to rise to these heights. This couldn't be done without them. Thank you.
 
 - https://nixos-and-flakes.thiscute.world (the cornerstone of my journey)
 - https://den.denful.dev/tutorials/default (base)
@@ -28,24 +28,29 @@ Because of diligent work of these people/communities configuration was able to r
 
 ## Branches
 
-| Branch | Description |
-|--------|-------------|
-| dev    | Branch I primarily use. All the new changes/plans land here first. After enough testing (currently by me solely) main is fast-forwarded to match certain commit or HEAD of this branch |
-| main   | "Stable" branch. Stuff residing here shouldn't be that dangerous and is least likely to exhibit unexplicable behaviour. No guarantees though. If anything is breaking though I will implement fix in dev branch and fast-forward likely |
-| old    | My old pre-den config. This branch is just here to showcase and remind me how mature APIs beats regular nix in terms of readability and potential.
+General branches are listed below:
+
+| Branch              | Description |
+|---------------------|-------------|
+| dev                 | Branch primarily targeted by CI and commits. All the new changes/plans land here first. After enough testing (currently by me solely) main is fast-forwarded to match certain commit or `HEAD` of this branch. |
+| main                | "Stable" branch. Stuff residing here shouldn't be error-prone and is least likely to exhibit unexplainable behaviour. No guarantees though. If anything is breaking fix will be shipped as soon as possible. |
+| old                 | Old pre-den config. This branch is just here to showcase and remind of how mature APIs beats regular nix in terms of readability and potential.                                                              |
+| weekly-flake-update | Temporary branch made by Woodpecker CI [here](.woodpecker/bump-flake.yml) containing latest flake files to merge into dev branch. Seeing this branch likely means PR isn't merged yet. Deleted after merge.  |
+
+Other than these, temporary branches may be added but their purpose should be understandable judging by name.
 
 ## Docs
 
 All relevant cross-cutting guides/information regarding usage, design, development etc. is documented in [docs](docs), in case of any questions refer to those.
-Otherwise feature-specific stuff are documented in directory where that feature resides.
+Otherwise, feature-specific stuff are documented in directory where that feature resides.
 
 ## Screenshots
 
 These can be found in [screenshots folder](assets/screenshots).
 
-As for credits:
-Fastfetch logo is from: https://gitlab.com/ntgn/ascii-art [LICENCE](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE).
-Wallpapers can be found [here](https://codeberg.org/voidptrx/wallpapers).<br>
+As for credits: <br>
+Fastfetch logo is from: https://gitlab.com/ntgn/ascii-art( [LICENCE](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE) ).<br>
+Wallpapers can be found at: https://codeberg.org/voidptrx/wallpapers.<br>
 
 ## Binary cache
 
