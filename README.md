@@ -15,7 +15,7 @@
 - https://github.com/zerokqx/ZNix (some [nixvim] plugins)
 - and redditors over at [r/NixOS](https://www.reddit.com/r/NixOS) for ideas and answers to my questions
 
-## Table of contents
+## Table of contents (a.k.a. TOC)
 
 <!-- toc -->
 
@@ -42,22 +42,22 @@
 
 ### Project Overview
 
-- **Framework:** `denful/den` — built with **[SoC]** in mind.
+- **Framework:** [denful/den][den] — built with **[SoC]** in mind.
 
 ### File Organization
 
 - **Manageable size:**
-  - Aim for ~ 80 lines per file.
+  - Aim for _~80_ lines per file.
   - Split into composable parts when a file gets out of control or mentally heavy.
 
 ### Aspect Inclusion
 
-- **Primary focus:** including aspects.
-- **Fine‑grained control:** optional manual overrides or schema options for advanced users.
+- **Primary focus:** Including aspects should mean opt-in, not including / excluding should mean opt-out.
+- **Fine‑grained control:** Optional manual overrides of schema options. Ideally existing aspects should not be touched, only new ones made to override/build upon them.
 
 ### Documentation
 
-- Includes **tips & tricks** gathered from real‑world usage.
+- Includes **tips & tricks** gathered from real‑world & personal usage.
 - Intended to help fellow Nix users starting with the framework (myself included), with room for future improvements.
 
 ### Leveraging Den Capabilities
@@ -69,9 +69,9 @@
 - Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible.
 - Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
 - This makes removal or refactoring straightforward.
-- Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)
+- Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(inspiration: https://github.com/sini/nix-config)
 
-Other specifics can be figured out by comparing individual files.
+Other specifics can be figured out by looking at individual files (i.e. modules).
 
 ## Goals
 
@@ -106,17 +106,9 @@ and some secondary options.
 
 ## Screenshots
 
-### Noctalia
+These can be found in [screenshots folder](assets/screenshots).
 
-![noctalia-preview](assets/screenshots/2026-03-14-noctalia-preview.png)
-
-Logo is from https://gitlab.com/ntgn/ascii-art: [LICENCE](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE).
-
-### Dank Material Shell
-
-![dank-material-shell-preview](assets/screenshots/2026-03-29-dms-preview.png)
-
-All screenshots can be found [here](assets/screenshots).<br>
+Fastfetch logo is from: https://gitlab.com/ntgn/ascii-art [LICENCE](https://gitlab.com/ntgn/ascii-art/-/blob/main/LICENSE).
 Wallpapers can be found [here](https://codeberg.org/voidptrx/wallpapers).<br>
 
 ## Binary cache
@@ -129,10 +121,6 @@ amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=
 ```
 
 Relevant workflow file can be found [here](.github/workflows/build-and-push-to-cache.yml).
-
-It is using [omnix] to create a om.json file with all flake outputs,
-which is then consumed by [cachix-push] tool and pushed to cache.
-This way outputs are also pinned and easier to maintain.<br>
 To avoid duplication and reduce cache size, store paths already present at upstream caches are avoided.
 
 ## Cloning repo
