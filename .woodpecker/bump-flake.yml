@@ -17,10 +17,12 @@ steps:
         EOF
         )
 
-      - nix run .#write-flake
-      - nix flake update
-      - nix run .#write-flake
-      - nix flake check -L
+      - |
+        nix run .#write-flake
+        nix flake update
+      - |
+        nix run .#write-flake
+        nix flake check -L
 
   - name: commit-and-push
     image: alpine/git:latest
@@ -31,10 +33,17 @@ steps:
         from_secret: GIT_AUTHOR_EMAIL
       GITEA_TOKEN:
         from_secret: GITEA_TOKEN
+      GIT_SSH_SIGNING_KEY:
+        from_secret: GIT_SSH_SIGNING_KEY
     commands:
       - |
         git config --global user.name "$${GIT_AUTHOR_NAME}"
         git config --global user.email "$${GIT_AUTHOR_EMAIL}"
+
+      - |
+        git config --global gpg.format ssh
+        git config --global commit.gpgsign true
+        echo "$${GIT_SSH_SIGNING_KEY}" | git config --global user.signingkey /dev/stdin
 
       - |
         BRANCH="weekly-flake-update"
@@ -48,7 +57,7 @@ steps:
         fi
 
       - |
-        git commit -m "Weekly flake.lock update"
+        git commit -S -m "Weekly flake.lock update"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
 
   - name: open-pr
@@ -61,7 +70,7 @@ steps:
       owner: ${CI_REPO_OWNER}
       repo: ${CI_REPO_NAME}
       branch: weekly-flake-update
-      base_branch: main
+      base_branch: dev
       pr_title: Bump flake
       pr_body: |
         Update flake.lock dependencies.
