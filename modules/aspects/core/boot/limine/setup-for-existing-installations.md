@@ -1,7 +1,8 @@
 # Limine setup
 
+_If you are doing a fresh installation, you may ignore this section._
+
 **Note that without this setup old bootloader with previous entries will likely start preventing you from booting to new generations**.
-**If you are doing a fresh installation, you may ignore this section**.
 
 <h3> The setup can either be done: </h3>
 <hr>

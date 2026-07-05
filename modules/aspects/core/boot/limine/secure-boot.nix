@@ -21,11 +21,8 @@
         ];
 
         boot.loader.limine = {
-          # Editor must be disabled for security reasons.
+          # Editor must be disabled for security reasons (upstream requirement).
           enableEditor = lib.mkForce false;
-
-          # While admittedly it is possible to use autoGenerateKeys and autoEnrollKey options,
-          # I only faced trouble and following guide from README should be a one-time setup anyway.
           secureBoot.enable = true;
         };
       };
