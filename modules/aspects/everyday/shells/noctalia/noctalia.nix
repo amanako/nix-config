@@ -6,7 +6,9 @@
   imports = [(inputs.den.namespace "noctalia" false)];
 
   flake-file = {
-    inputs.noctalia.url = "github:noctalia-dev/noctalia";
+    # Following cachix branch ensures latest *cached* build is used.
+    # This may cause a little lag behind main, but it should be a negligible difference.
+    inputs.noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
     nixConfig = {
       extra-substituters = ["https://noctalia.cachix.org"];
@@ -29,7 +31,7 @@
       From [description](https://github.com/noctalia-dev/noctalia):
       A sleek and minimal desktop shell thoughtfully crafted for Wayland.
 
-      This is the new v5 version which is currently in alpha phase.
+      This is the new v5 version which is currently in beta phase.
       It is recommended to use this version.
     '';
 
