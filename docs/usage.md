@@ -1,6 +1,6 @@
 # Usage
 
-General instructinons for anyone willing to give a try to the config.
+General instructions for anyone willing to give config a try.
 It isn't 100% foolproof at the moment so remain cautious.
 
 <!-- toc -->
@@ -24,15 +24,15 @@ nix run nixpkgs#git -- clone https://codeberg.org/abyssal-twilight/nix-config.gi
 nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
 ```
 
-No matter the choice, option repoRoot should be set for either host or user,
-where user preference may override hosts choice making both of them eligible.<br>
+No matter the choice, option `repoRoot` should be set for either host or user,
+where user preference overrides host's choice, making both of them eligible.<br>
 See [Making a config](#making-a-config).
 
 ## Making a config
 
-> Since then uses [import-tree] as long as folders aren't prefixed with \_, they will be included by default.<br>
+> Since flake uses [import-tree] ro recursively import files under modules/ as long as folders or files aren't prefixed with \_, they will be included by default.<br>
 > That means it all boils down to individual preference. Therefore following will be my current preference which is subject to change.
-> I accept corrections if I am mistaken somewhere or same can be achieved in an easier to understand fashion.
+> I accept corrections if I am mistaken somewhere or same can be achieved in an easier-to-understand fashion.
 
 Users can be created by making an entry in [`users`](modules/users) directory, whereas host are made by adding an entry under [`hosts`](modules/hosts) folder.<br>
 Following instruction apply equally to both of them, with difference which is explained below.
@@ -40,7 +40,7 @@ Following instruction apply equally to both of them, with difference which is ex
 Duties are split among 2 folders: `entry` and `aspect`(optional), where:
 
 - `entry` is made for den's definition and options which is tasked with actually creating host/user. Where applicable it should be prioritized over `aspect`.
-- `aspect` is reserved for potential overrides for each of classes(including [custom][custom-classes] ones).<br>
+- `aspect` is reserved for potential overrides for each of classes or quirks.<br>
 
 Notable difference is that one user can be declared across multiple host and even have different den options per host.
 This explains the structure of attribute set:
@@ -58,17 +58,7 @@ Furthermore, all files can be broken into easy-to-follow pieces which is display
 Some users and hosts are provided as a starting point. Please reference [`users`](modules/users) and [`hosts`](modules/hosts).
 
 There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is supposed to represent directory of cloned repo, and should be set upfront.
-Other than that some other options which are a must likely have an assertion forcing repo users to make a declaration.
-
-For hosts using disko configuration packages are exposed when using `disko.devices` host schema option with the following format: `${host}-disko`,
-and can be easily run with:
-
-```
-# Run script to format disks of all declared devices on host
-just disko
-```
-
-If this is not the case, manual partitioning is required, I can recommend taking a look at this [video].
+Other than that some other options which are a must-have likely have an assertion forcing repo users to make a declaration.
 
 When using impermanence: to persist configuration add directory containing configuration to persys class in host or user aspect, either with:
 
@@ -95,21 +85,25 @@ persistSystem.directories = [
 
 After completing previous section:
 
-1. Run nixos-install and follow instructions:
+Make sure your disk is formatted. [Disko][disko] is the recommended approach for this purpose.
+If using this method running:
 
 ```
-nixos-install --flake $REPO_DIR
+just disko
 ```
 
-2. And then copy configuration over to desired (or persisted) folder.
+should run scripts to take care of partitioning.
+
+If this is not the case, manual partitioning is required, I recommend taking a look at this [video].
 
 ```
+# yes unix utility will answer y to all questions regarding usage of flake (trusted and extra substituters and keys)
+yes | nixos-install --no-channel-copy --no-bootloader --flake ${REPO_DIR}.${hostname}
+
+Copy configuration over to desired (or persisted) folder (likely in user's home).
 cp -r $CONFIG_DIRECTORY $PATH_TO_FOLDER
-```
 
-3. Reboot
-
-```
+# reboot into new configuration
 reboot
 ```
 
@@ -126,9 +120,10 @@ will build host using [nh].
 
 After rebuilding, extra steps are needed to enable secure boot.
 
-For [limine]: checkout [secure-boot-setup.md](../modules/aspects/core/boot/limine/secure-boot-setup.md).
+For [limine]: check out [secure-boot-setup.md](../modules/aspects/core/boot/limine/secure-boot-setup.md).
 
-[video]: https://www.youtube.com/watch?v=lUB2rwDUm5A
-[nh]: https://github.com/nix-community/nh
-[limine]: https://github.com/Limine-Bootloader/Limine
+[disko]: https://github.com/nix-community/disko
 [import-tree]: https://github.com/denful/import-tree
+[limine]: https://github.com/Limine-Bootloader/Limine
+[nh]: https://github.com/nix-community/nh
+[video]: https://www.youtube.com/watch?v=lUB2rwDUm5A

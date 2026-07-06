@@ -1,6 +1,6 @@
 # Included
 
-Here is a short table representing software along with it's functionality whose aspects can be found in corresponding aspects.
+Here is a short table representing software along with it's functionality whose aspects can be found in modules/.
 Refer to these as it will be updated from time to time to conform to overall design.
 
 <div align="center">

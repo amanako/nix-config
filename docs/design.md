@@ -7,6 +7,7 @@ Outline some decisions and choices made during development for anyone willing to
 - [Project Overview](#project-overview)
   * [File Organization](#file-organization)
   * [Aspect Inclusion](#aspect-inclusion)
+  * [Quirks as Top Priority](#quirks-as-top-priority)
   * [Documentation](#documentation)
   * [Leveraging Den Capabilities](#leveraging-den-capabilities)
   * [Specific Practices](#specific-practices)
@@ -14,39 +15,45 @@ Outline some decisions and choices made during development for anyone willing to
 
 <!-- tocstop -->
 
-<!-- tocend -->
-
 ## Project Overview
 
-- **Framework:** [denful/den][den] — built with **[SoC]** in mind.
+- **Framework:** [denful/den][den] — built with **[SoC]** in mind
 
 ### File Organization
 
 - **Manageable size:**
-  - Aim for _~80_ lines per file.
-  - Split into composable parts when a file gets out of control or mentally heavy.
+  - Aim for _~80_ lines per file
+  - Split into composable parts when a file gets out of control or mentally heavy
 
 ### Aspect Inclusion
 
-- **Primary focus:** Including aspects should mean opt-in, not including / excluding should mean opt-out.
-- **Fine‑grained control:** Optional manual overrides / special cases handled with host and user schema options.
+- **Primary focus:** Including aspects should mean opt-in, not including / excluding should mean opt-out
+- **Fine‑grained control:** Optional manual overrides / special cases handled with host and user schema options
 Ideally existing aspects should not be touched, only new ones made to override/build upon them.
+
+### Quirks as Top Priority
+
+Since general flow of building config relates to data, one might think that custom classes can prove to be amazing with guards logic and so on.
+However upon some discussion I came to realize quirks overpower them with simplicity and versatility and should be considered first and foremost
+in situations where multiple aspects contribute to some result(which is usually assembled by some collector aspect).
+
+Conversation leading to this conclusion can be found [here](https://github.com/denful/den/discussions/590).
 
 ### Documentation
 
-- Includes **tips & tricks** gathered from real‑world & personal usage.
-- Intended to help fellow Nix users starting with the framework (myself included), with room for future improvements.
+- Includes **tips & tricks** gathered from real‑world & personal usage
+- Intended to help fellow Nix users starting with the framework (myself included), with room for future improvements
 
 ### Leveraging Den Capabilities
 
-- Choosing the **best tool** for each task after thoughtful consideration.
+- Choosing the **best tool** for each task after thoughtful consideration
 
 ### Specific Practices
 
-- Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible.
+- Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible
 - Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
-- This makes removal or refactoring straightforward.
-- Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(inspiration: https://github.com/sini/nix-config)
+- This makes removal or refactoring straightforward
+- Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(Inspiration: https://github.com/sini/nix-config)
 
 Other specifics can be figured out by looking at individual files (i.e. modules).
 
