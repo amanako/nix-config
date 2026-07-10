@@ -18,7 +18,7 @@ Refer to these as it will be updated from time to time to conform to overall des
 | Wallpaper Manager| [awww] |
 | Shell | [fish] |
 | Display Manager | [ly] |
-| Boot Loader | [limine], for setup check [README](modules/aspects/boot/limine) |
+| Boot Loader | [limine], for setup check [README](modules/den/aspects/core/boot/limine) |
 | Memory layout | btrfs (unencrypted) via [disko] + [impermanence] |
 
 </div>

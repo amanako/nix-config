@@ -19,7 +19,7 @@
       config,
       ...
     }: let
-      configDir = "${user.repoRoot}/modules/aspects/editors/neovim/nvim";
+      configDir = "${user.repoRoot}/modules/den/aspects/editors/neovim/nvim";
     in {
       xdg.configFile."nvim".source = configDir |> config.lib.file.mkOutOfStoreSymlink;
 

@@ -120,7 +120,7 @@ will build host using [nh].
 
 After rebuilding, extra steps are needed to enable secure boot.
 
-For [limine]: check out [secure-boot-setup.md](../modules/aspects/core/boot/limine/secure-boot-setup.md).
+For [limine]: check out [secure-boot-setup.md](../modules/den/aspects/core/boot/limine/secure-boot-setup.md).
 
 [disko]: https://github.com/nix-community/disko
 [import-tree]: https://github.com/denful/import-tree
