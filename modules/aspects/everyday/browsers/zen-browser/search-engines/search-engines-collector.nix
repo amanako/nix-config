@@ -15,7 +15,13 @@
         |> map (
           engine:
             if builtins.isFunction engine
-            then engine {inherit pkgs iconBasePath;}
+            then
+              engine {
+                inherit
+                  pkgs
+                  iconBasePath
+                  ;
+              }
             else engine
         )
         |> lib.foldl lib.recursiveUpdate {}

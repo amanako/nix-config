@@ -1,22 +1,9 @@
-{
-  den,
-  __findFile,
-  ...
-}: {
-  den.schema.user.includes = [
-    (
-      {user}:
-        if user.awww.enable
-        then den.aspects.wallpaper-managers.awww
-        else {}
-    )
-  ];
-
+{den, ...}: {
   # Using parametric aspect capturing user is impossible here since schema is including it.
   # Schemas don't have access to aspect parameters.
   den.aspects.wallpaper-managers.awww = {
     includes = [
-      <wallpaper-managers/awww/script>
+      den.aspects.wallpaper-managers.awww.script
     ];
 
     hm = {
@@ -28,7 +15,7 @@
       awwwDaemon = "awww-daemon" |> lib.getExe' pkgs.awww;
       systemctl = "systemctl" |> lib.getExe' pkgs.systemdMinimal;
 
-      service = user.awww.service.label;
+      cfg = user.settings.wallpaper-managers.awww.service;
     in {
       systemd.user = {
         services = {
@@ -37,12 +24,12 @@
             Unit = {
               Description = "Start awww daemon";
               After = ["graphical-session.target"];
-              Wants = ["${service}.timer"];
+              Wants = ["${cfg.label}.timer"];
             };
 
             Service = {
               ExecStart = "${awwwDaemon}";
-              ExecStartPost = "${systemctl} --user start ${service}.service";
+              ExecStartPost = "${systemctl} --user start ${cfg.label}.service";
               Restart = "on-failure";
               RestartSec = 1;
             };
@@ -51,16 +38,14 @@
           };
         };
 
-        timers.${service} = {
+        timers.${cfg.label} = {
           Unit = {
             Description = "Change wallpaper using awww";
             BindsTo = ["awww-daemon.service"];
             Wants = ["awww-daemon.service"];
           };
 
-          Timer = let
-            cfg = user.awww.service;
-          in
+          Timer =
             lib.optionalAttrs (cfg.interval != null) {
               OnUnitActiveSec = cfg.interval;
             }

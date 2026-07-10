@@ -55,6 +55,20 @@ Conversation leading to this conclusion can be found [here](https://github.com/d
 - This makes removal or refactoring straightforward
 - Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(Inspiration: https://github.com/sini/nix-config)
 
+- Prefer using [inherit] over [with], expect in basic list expressions such as `with pkgs`.
+If there are multiple expressions you want to inherit assign one per row.
+- Use [inherit] to either avoid repetition or shorten long names (such as `cfg` attribute used with aspect settings).
+  Also if , as an example, you want to use `inherit (lib) mkOption` to avoid rewriting `lib` every time,
+  you may as well inherit other `lib` attrset values you use, for the sake of consistency.
+- When declaring options, follow this order, for each item where applicable:
+  1. default
+  2. example
+  3. type
+  4. description
+- Make aspects themselves static(plain attrset) and configure lambda in shorter scope, for `nixos` or `hm` classes.<br>
+  One exception to this "shorter scope" is `lib` which can be used in file scope if den needs it (that is module taking in lambda `{ lib, ...}` at file level).
+  If this is the case redeclartion of file within shorter scopes is redundant.
+
 Other specifics can be figured out by looking at individual files (i.e. modules).
 
 ## Goals
@@ -64,11 +78,13 @@ Other specifics can be figured out by looking at individual files (i.e. modules)
 - Single theme spread across whole configuration: currently [gruvbox] but this may change
 - **Light gaming** , I use it primarily for [VNs][vn]
 
-[gruvbox]: https://duckduckgo.com/?q=gruvbox&iar=images&t=ffab
-[pipe-operators]: https://nix.dev/manual/nix/latest/development/experimental-features.html?highlight=pipe#pipe-operators
-[vn]: https://en.wikipedia.org/wiki/Visual_novel
-[tui]: https://en.wikipedia.org/wiki/Text-based_user_interface
-[soc]: https://en.wikipedia.org/wiki/Separation_of_concerns
-[flake-file]: https://github.com/denful/flake-file
 [custom-classes]: https://den.denful.dev/guides/custom-classes
 [den]: https://den.denful.dev
+[flake-file]: https://github.com/denful/flake-file
+[gruvbox]: https://duckduckgo.com/?q=gruvbox&iar=images&t=ffab
+[inherit]: https://nix.dev/tutorials/nix-language.html#inherit
+[pipe-operators]: https://nix.dev/manual/nix/latest/development/experimental-features.html?highlight=pipe#pipe-operators
+[soc]: https://en.wikipedia.org/wiki/Separation_of_concerns
+[tui]: https://en.wikipedia.org/wiki/Text-based_user_interface
+[vn]: https://en.wikipedia.org/wiki/Visual_novel
+[with]: https://nix.dev/tutorials/nix-language.html#with

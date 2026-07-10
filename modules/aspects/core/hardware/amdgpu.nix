@@ -6,12 +6,13 @@
       lib,
       ...
     }: let
-      hasAmd =
-        host.gpus
-        |> map (gpu: gpu.type)
-        |> lib.elem "amd";
+      cfg = host.settings.core.hardware;
+      hasAmdgpu =
+        cfg.gpus
+        |> map (gpu: gpu.manufacturer)
+        |> lib.elem "amdgpu";
     in
-      lib.optionalAttrs hasAmd {
+      lib.optionalAttrs hasAmdgpu {
         environment.systemPackages = [
           pkgs.lact
         ];

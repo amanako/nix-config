@@ -1,5 +1,27 @@
-{
+{lib, ...}: {
   dms.settings = {
+    userSettings = {
+      overrides = lib.mkOption {
+        example = {
+          currentThemeName = "gruvbox";
+          showDock = true;
+          controlCenterWidgets = [
+            {
+              id = "wifi";
+              enabled = false;
+              width = 100;
+            }
+          ];
+        };
+        default = {};
+        type = lib.types.attrs;
+        description = ''
+          User settings to append to default settings, overriding if necessary.
+          Passed to `homeManager.programs.dank-material-shell.settings`.;
+        '';
+      };
+    };
+
     hm = {
       user,
       lib,

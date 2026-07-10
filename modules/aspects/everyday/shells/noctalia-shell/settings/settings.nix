@@ -1,16 +1,52 @@
-{
-  noctalia-shell.settings = {
+{lib, ...}: {
+  noctalia-shell.settings = let
+    inherit
+      (lib)
+      mkOption
+      types
+      ;
+  in {
+    userSettings = {
+      overrides = mkOption {
+        default = {};
+        example = {
+          currentThemeName = "gruvbox";
+          showDock = true;
+          controlCenterWidgets = [
+            {
+              id = "wifi";
+              enabled = false;
+              width = 100;
+            }
+          ];
+        };
+        type = types.attrs;
+        description = "Settings to append to defaults, overriding if necessary.";
+      };
+
+      pfpName = mkOption {
+        default = ".face";
+        example = "my_pfp";
+        type = types.str;
+        description = ''
+          Name to use for the avatar image without extension shown in control center and other panels.
+          The path is currently immutable at `$repoRoot}/assets/users/$username`.
+        '';
+      };
+    };
+
     hm = {
       user,
       lib,
       ...
     }: {
       programs.noctalia-shell.settings =
-        lib.recursiveUpdate
+        user.settings.noctalia-shell.overrides
+        |> lib.recursiveUpdate
         {
           general = {
-            # Should be easily identifyable in user section
-            avatarImage = "${user.repoRoot}/assets/users/${user.userName}/${user.noctalia-shell.pfpName}";
+            # Should be easily identifiable in user section
+            avatarImage = "${user.repoRoot}/assets/users/${user.userName}/${user.settings.noctalia-shell.settings.pfpName}";
           };
 
           ui = {
@@ -58,8 +94,7 @@
           };
 
           settingsVersion = 59;
-        }
-        user.noctalia-shell.additionalSettings;
+        };
     };
   };
 }

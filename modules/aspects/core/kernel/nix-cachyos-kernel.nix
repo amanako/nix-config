@@ -1,4 +1,22 @@
-{inputs, ...}: {
+{
+  inputs,
+  lib,
+  ...
+}: let
+  variants = [
+    "bore"
+    "latest"
+    "bmq"
+    "lts"
+    "hardened"
+    "deckify"
+    "rt-bore"
+    "server"
+    "rc"
+    "eevdf"
+  ];
+  uarchs = ["generic" "x86_64-v2" "x86_64-v3" "x86_64-v4" "zen4"];
+in {
   flake-file = {
     inputs.nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
@@ -8,47 +26,50 @@
     };
   };
 
-  # Options for kernel can be viewed with `nix flake show github:xddxdd/nix-cachyos-kernel/release`
   den.aspects.core.nix-cachyos-kernel = {
-    nixos = {
-      lib,
-      config,
-      ...
-    }: {
-      config = {
-        nixpkgs.overlays = [
-          inputs.nix-cachyos-kernel.overlays.pinned
-        ];
+    description = "CachyOS Linux kernel with various scheduler and optimization variants.";
 
-        warnings = let
-          # ----------------------------------------------------------------------
-          # The warning text that will be shown when no CachyOS kernel module is present
-          # ----------------------------------------------------------------------
-          msg = ''
-            `den.aspects.core.nix-cachyos-kernel` was included by host but none of the
-            modules of the kernel package that host is using contain CachyOS‑related
-            modules.
-            This means the host is likely not using the provided CachyOS kernels.
-            If this is intended, please remove the aspect from host includes.
-            If not, enable one of the kernels with
-            `pkgs.cachyosKernels.linuxPackages_''${name}`.
-            Reference: https://github.com/xddxdd/nix-cachyos-kernel.
-          '';
-
-          # ----------------------------------------------------------------------
-          # Boolean: true when **no** attribute name of `config.boot.kernelPackages`
-          # contains the substring “cachyos”.
-          # ----------------------------------------------------------------------
-          noCachyOsModule =
-            config.boot.kernelPackages
-            |> lib.attrNames
-            |> builtins.all (mod: !(mod |> lib.hasInfix "cachyos"));
-        in
-          # `lib.warnIf` prints the warning as a side‑effect when the predicate is true.
-          # It returns its third argument unchanged, so we give it an empty list `[]`.
-          # `lib.optional` adds the message to the list only when the predicate is true.
-          lib.warnIf noCachyOsModule msg [] ++ lib.optional noCachyOsModule msg;
+    hostSettings = {
+      variant = lib.mkOption {
+        type = lib.types.enum variants;
+        default = "bore";
+        description = ''
+          Kernel scheduler/variant.
+          See https://github.com/xddxdd/nix-cachyos-kernel for details.
+        '';
       };
+
+      lto = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Enable Clang+ThinLTO compilation.";
+      };
+
+      uarch = lib.mkOption {
+        type = lib.types.enum uarchs;
+        default = "generic";
+        description = ''
+          CPU microarchitecture optimization target.
+        '';
+      };
+    };
+
+    nixos = {
+      host,
+      pkgs,
+      ...
+    }: let
+      cfg = host.settings.core.nix-cachyos-kernel;
+      pkgName =
+        "cachyos-${cfg.variant}"
+        + lib.optionalString cfg.lto "-lto"
+        + lib.optionalString (cfg.uarch != "generic") "-${cfg.uarch}";
+    in {
+      nixpkgs.overlays = [
+        inputs.nix-cachyos-kernel.overlays.pinned
+      ];
+
+      boot.kernelPackages = pkgs.cachyosKernels."linuxPackages-${pkgName}";
     };
   };
 }

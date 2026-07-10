@@ -1,28 +1,42 @@
-{
-  den.aspects.core.displayManagers.ly = {host}: {
-    nixos.services.displayManager.ly = {
-      enable = true;
-      settings = {
-        animation = "matrix";
-        animation_frame_delay = 5;
+{lib, ...}: {
+  den.aspects.core.displayManagers.ly = {
+    hostSettings = {
+      batteryID = lib.mkOption {
+        type = lib.types.str;
+        default = "";
+        description = ''
+          Option named native-path assigned to batteries of pcs and laptops.
+          Can be obtained by running `upower -b | grep -E 'vendor|model|native-path'`
+          Currently used by ly display manager to display battery percentage.
+        '';
+      };
+    };
 
-        asterisk = "*";
-        blank_box = true;
-        hide_borders = false;
-        load = true;
+    nixos = {host, ...}: {
+      services.displayManager.ly = {
+        enable = true;
+        settings = {
+          animation = "matrix";
+          animation_frame_delay = 5;
 
-        margin_box_h = 2;
-        margin_box_v = 4;
-        text_in_center = true;
-        full_color = true;
+          asterisk = "*";
+          blank_box = true;
+          hide_borders = false;
+          load = true;
 
-        clear_password = true;
-        default_input = "password";
+          margin_box_h = 2;
+          margin_box_v = 4;
+          text_in_center = true;
+          full_color = true;
 
-        vi_mode = true;
-        vi_default_mode = "insert";
+          clear_password = true;
+          default_input = "password";
 
-        battery_id = host.batteryID;
+          vi_mode = true;
+          vi_default_mode = "insert";
+
+          battery_id = host.settings.core.displayManagers.ly.batteryID;
+        };
       };
     };
   };

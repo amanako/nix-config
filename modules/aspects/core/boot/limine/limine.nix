@@ -1,4 +1,8 @@
-{den, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   den.aspects.core.boot.limine = {
     description = ''
       From [description](https://github.com/Limine-Bootloader/Limine):
@@ -10,6 +14,43 @@
     ];
 
     stylixNixOSSettings.targets."limine".enable = false;
+
+    hostSettings = let
+      inherit
+        (lib)
+        mkOption
+        types
+        ;
+    in {
+      wallpapers = mkOption {
+        type = types.listOf (types.submoduleWith {
+          modules = [
+            {
+              options.url = mkOption {
+                type = lib.types.str;
+                default = "";
+                description = "Remote url to be used to fetch wallpapers.";
+              };
+
+              options.hash = mkOption {
+                type = types.str;
+                default = "";
+                description = ''
+                  Hash used to compute corresponding wallpaper.
+                  Can be obtained by running command once and looking at the error, copying it from there.
+                '';
+              };
+            }
+          ];
+        });
+
+        default = [];
+        description = ''
+          List of remote links of wallpapers to use for limine, Will be fetched and passed to
+          `boot.loader.limine.style.wallpapers`.
+        '';
+      };
+    };
 
     nixos = {
       host,
@@ -42,13 +83,16 @@
               marginGradient = 10;
             };
             wallpapers =
-              host.limine.wallpapers
+              host.settings.core.boot.limine.wallpapers
               |> map ({
                 url,
                 hash,
               }:
                 pkgs.fetchurl {
-                  inherit url hash;
+                  inherit
+                    url
+                    hash
+                    ;
                 });
           };
           panicOnChecksumMismatch = true;

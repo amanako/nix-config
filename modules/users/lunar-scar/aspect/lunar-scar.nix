@@ -20,6 +20,7 @@ in {
       den.aspects.shell._
       den.aspects.shell.interpreters.fish
       den.aspects.basic.git
+      den.aspects.wallpaper-managers.awww
 
       <terminal/zellij>
       <terminal/kitty>

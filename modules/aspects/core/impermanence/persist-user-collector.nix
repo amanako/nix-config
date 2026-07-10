@@ -11,23 +11,30 @@
         |> lib.concatMap (entries: entries.files or [])
         |> lib.unique;
     };
-  in
-    {
+  in {
+    hm = {
+      host,
+      persistUser,
+      ...
+    }: let
+      cfg = host.settings.core.impermanence;
+    in {
+      home.persistence.${cfg.persistenceDir} = persistUser |> mkPersist;
+    };
+
+    nixos = {
       host,
       user,
+      persistUser,
       ...
-    }:
-      if (user.impermanence.useHMModule == null)
-      then {}
-      else if user.impermanence.useHMModule
-      then {
-        hm = {persistUser, ...}: {
-          home.persistence.${host.impermanence.persistenceDir} = persistUser |> mkPersist;
-        };
-      }
-      else {
-        nixos = {persistUser, ...}: {
-          environment.persistence.${host.impermanence.persistenceDir}.users.${user.userName} = persistUser |> mkPersist;
-        };
+    }: let
+      isInHM =
+        user.classes
+        |> lib.elem "homeManager";
+      cfg = host.settings.core.impermanence;
+    in
+      lib.optionalAttrs (!isInHM) {
+        environment.persistence.${cfg.persistenceDir}.users.${user.userName} = persistUser |> mkPersist;
       };
+  };
 }

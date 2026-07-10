@@ -9,14 +9,12 @@
   };
 
   den.aspects.optional.bleeding-edge.chaotic = {
-    nixos = {
-      imports = [
-        inputs.chaotic.nixosModules.default
-      ];
-    };
+    nixos.imports = [
+      inputs.chaotic.nixosModules.default
+    ];
 
-    hm = {
-      imports = [inputs.chaotic.homeManagerModules.default];
-    };
+    hm.imports = [
+      inputs.chaotic.homeManagerModules.default
+    ];
   };
 }

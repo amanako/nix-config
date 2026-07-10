@@ -1,4 +1,4 @@
-{
+{den, ...}: {
   den.aspects.terminal.kitty = {
     stylixHMSettings.targets."kitty".enable = false;
 
@@ -6,7 +6,11 @@
       "Mod+W".action.spawn-sh = "kitten quick-access-terminal";
     };
 
-    hm = {pkgs, ...}: {
+    hm = {
+      user,
+      pkgs,
+      ...
+    }: {
       programs.kitty = {
         enable = true;
         themeFile = "GruvboxMaterialDarkSoft";
@@ -16,7 +20,7 @@
           size = 14;
         };
 
-        enableGitIntegration = true;
+        enableGitIntegration = user.hasAspect den.aspects.basic.git;
         shellIntegration.enableFishIntegration = true;
         shellIntegration.mode = "enabled";
 

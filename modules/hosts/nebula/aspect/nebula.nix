@@ -7,6 +7,7 @@
       den.aspects.core.impermanence
 
       den.aspects.core.boot.limine
+      den.aspects.core.boot.limine.secureBoot
       den.aspects.core.boot.optional.plymouth
       den.aspects.core.boot.optional.silent
 

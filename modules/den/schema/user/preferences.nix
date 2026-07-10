@@ -1,7 +1,6 @@
-{
+{lib, ...}: {
   den.schema.user = {
     host,
-    lib,
     config,
     ...
   }: {
@@ -14,7 +13,10 @@
               description ? "Preferred ${pref} binary name.",
             }:
               lib.mkOption {
-                inherit example description;
+                inherit
+                  example
+                  description
+                  ;
                 type = lib.types.str;
               };
           in {

@@ -1,7 +1,7 @@
 {inputs, ...}: {
   flake-file.inputs.disko.url = "github:nix-community/disko";
 
-  den.aspects.core.disko = {
+  den.aspects.core.hardware.disko = {
     nixos = {
       host,
       lib,

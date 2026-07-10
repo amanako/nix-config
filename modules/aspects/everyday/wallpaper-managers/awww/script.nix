@@ -14,6 +14,7 @@
       lib,
       ...
     }: let
+      cfg = user.settings.wallpaper-managers.awww.script;
       wallpapersPath = inputs.wallpapers.outPath;
 
       # Since systemd services run in minimal environment many core linux utilities are not available
@@ -21,9 +22,9 @@
       find = "find" |> lib.getExe' pkgs.findutils;
       shuf = "shuf" |> lib.getExe' pkgs.coreutils;
 
-      joinedScriptArgs = user.awww.script.args |> lib.join " ";
+      joinedScriptArgs = cfg.args |> lib.join " ";
 
-      scriptPkg = pkgs.writeShellScriptBin "${user.awww.script.label}" ''
+      scriptPkg = pkgs.writeShellScriptBin "${cfg.label}" ''
         DIR="${wallpapersPath}"
         img=$( ${find} "$DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.bmp" \) | ${shuf} -n 1)
         if [ -n "$img" ]; then
@@ -31,9 +32,9 @@
         fi
       '';
 
-      service = user.awww.service.label;
+      inherit (user.settings.wallpaper-managers.awww) service;
     in {
-      systemd.user.services.${service} = {
+      systemd.user.services.${service.label} = {
         Unit.Description = "Wallpaper rotator";
 
         Service = {
@@ -49,7 +50,7 @@
         # To test functionality
         [pkgs.awww]
         ++ [scriptPkg]
-        |> lib.optionals user.awww.script.exposePackage;
+        |> lib.optionals cfg.exposePackage;
     };
   };
 }

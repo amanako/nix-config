@@ -1,16 +1,22 @@
 {
   den.hosts.x86_64-linux.cachy = {
-    deviceType = "laptop";
-    timeZone = "Europe/Belgrade";
-    batteryID = "BAT0";
-
     repoRoot = "/etc/nixos";
 
-    keyboardLightScript.device = "backlight:amdgpu_bl1";
+    settings = {
+      core = {
+        nix-cachyos-kernel = {
+          uarch = "zen4";
+        };
 
-    impermanence = {
-      enableUser = false;
-      persistenceDir = "/persist";
+        hardware.deviceType = "laptop";
+
+        impermanence = {
+          persistenceDir = "/persist";
+          btrfs.disk-partition = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A-part2";
+        };
+      };
+
+      basic.time.timeZone = "Europe/Belgrade";
     };
   };
 }

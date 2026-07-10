@@ -5,8 +5,10 @@
       host,
       lib,
       ...
-    }: {
-      environment.persistence."${host.impermanence.persistenceDir}" = {
+    }: let
+      cfg = host.settings.core.impermanence;
+    in {
+      environment.persistence."${cfg.persistenceDir}" = {
         directories =
           persistSystem
           |> lib.concatMap (entries: entries.directories or [])

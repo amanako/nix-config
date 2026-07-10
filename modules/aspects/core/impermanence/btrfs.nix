@@ -1,10 +1,21 @@
-{
-  # Script included for impermanence functionality on btrfs filesystems
-  den.aspects.core.impermanence.btrfs = {host, ...}: let
-    # TODO: Remove hardcoding, LUKS seems like only viable option
-    partition = "${host.disko.devices.disk.main.device}-part2";
-  in {
+{lib, ...}: {
+  den.aspects.core.impermanence.btrfs = {
+    description = ''
+      Script included for impermanence functionality on btrfs filesystems.
+    '';
+
+    hostSettings = {
+      disk-partition = lib.mkOption {
+        type = lib.types.str;
+        description = ''
+          Full name of the partition to wipe on each reboot
+          Can be found by looking at output `ls -l /dev/disk/by-id`.
+        '';
+      };
+    };
+
     nixos = {
+      host,
       pkgs,
       lib,
       ...
@@ -37,12 +48,14 @@
             "local-fs-pre.target"
           ];
 
-          script = ''
+          script = let
+            partition = host.settings.core.impermanence.btrfs.disk-partition;
+          in ''
             mkdir -p /btrfs_tmp
             mount ${partition} /btrfs_tmp
             if [[ -e /btrfs_tmp/root ]]; then
               mkdir -p /btrfs_tmp/persist/old_roots
-              timestamp=$(TZ=${host.timeZone} date "+%h-%d-%Y_%R")
+              timestamp=$(TZ=${host.settings.basic.time.timeZone} date "+%h-%d-%Y_%R")
               mv /btrfs_tmp/root "/btrfs_tmp/persist/old_roots/$timestamp"
               echo "Created backup at /btrfs_tmp/persist/old_roots with timestamp $timestamp."
             fi

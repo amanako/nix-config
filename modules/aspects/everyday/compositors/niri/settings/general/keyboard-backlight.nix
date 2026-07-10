@@ -1,12 +1,36 @@
-{
+{lib, ...}: {
   niri.binds.keyboard-backlight = {
+    userSettings = let
+      inherit
+        (lib)
+        mkOption
+        types
+        ;
+    in {
+      device = mkOption {
+        type = types.nullOr lib.types.str;
+        default = null;
+        description = "Keyboard light device name. Can be obtained via `nix run nixpkgs#brightnessctl -- -l`";
+        example = "asus::kbd_backlight";
+      };
+
+      step = mkOption {
+        type = types.int;
+        default = 1;
+        description = "Step to increase/decrease brightness on each script run";
+        example = 5;
+      };
+    };
+
     hm = {
-      host,
+      user,
       pkgs,
       lib,
       ...
-    }:
-      lib.optionalAttrs (host.keyboardLightScript.device != null) {
+    }: let
+      cfg = user.settings.niri.binds.keyboard-backlight;
+    in
+      lib.optionalAttrs (cfg.device != null) {
         programs.niri.settings.binds = let
           keyboardLightScriptPath = let
             brightnessCmd = pkgs.brightnessctl |> lib.getExe;
@@ -39,7 +63,7 @@
               '';
             };
           sh = cmd: {action.spawn-sh = cmd;};
-          inherit (host.keyboardLightScript) device;
+          inherit (cfg) device;
         in {
           "Alt+Up" = sh "${keyboardLightScriptPath |> lib.getExe} ${device} increase";
           "Alt+Down" = sh "${keyboardLightScriptPath |> lib.getExe} ${device} decrease";

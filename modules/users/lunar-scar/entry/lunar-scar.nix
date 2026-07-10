@@ -3,15 +3,6 @@
     isPrimaryUser = true;
     repoRoot = "/home/lunar-scar/nix-config";
 
-    git = let
-      username = "abyssal-twilight";
-    in {
-      inherit username;
-      # Tip from: https://docs.codeberg.org/git/configuring-git
-      email = "${username}@noreply.codeberg.org";
-      signingKey = "5CB7F18E1B212DB2";
-    };
-
     preferences = {
       editor = "nvim";
       fileManager = "yazi";
@@ -19,22 +10,35 @@
       term = "kitty";
     };
 
-    noctalia = {
-      additionalSettings.location.address = "Niš, Serbia";
+    settings = {
+      niri.binds.keyboard-backlight.device = "asus::kbd_backlight";
 
-      avatarFilename = "bear.png";
-    };
+      noctalia.settings = {
+        overrides.location.address = "Niš, Serbia";
 
-    awww = {
-      script.args = [
-        "--transition-fps 144"
-        "--transition-type wave"
-        "--transition-angle 225"
-        "--resize=fit"
-      ];
-      script.label = "wallpaper-mix";
+        avatarFilename = "bear.png";
+      };
 
-      service.calendar = "*-*-* *:00";
+      basic.git = let
+        username = "abyssal-twilight";
+      in {
+        inherit username;
+        # Tip from: https://docs.codeberg.org/git/configuring-git
+        email = "${username}@noreply.codeberg.org";
+        signingKey = "5CB7F18E1B212DB2";
+      };
+
+      wallpaper-managers.awww = {
+        script.args = [
+          "--transition-fps 144"
+          "--transition-type wave"
+          "--transition-angle 225"
+          "--resize=fit"
+        ];
+        script.label = "wallpaper-mix";
+
+        service.calendar = "*-*-* *:00";
+      };
     };
   };
 }
