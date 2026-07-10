@@ -8,6 +8,8 @@
           uarch = "zen4";
         };
 
+        displayManagers.ly.batteryID = "BAT0";
+
         hardware.deviceType = "laptop";
 
         impermanence = {

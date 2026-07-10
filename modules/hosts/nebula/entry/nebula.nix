@@ -5,7 +5,7 @@
 
       core = {
         impermanence = {
-          btrfs.disk-partition = "nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
+          btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
           persistenceDir = "/persist";
           dontEnableUsers = false;
         };

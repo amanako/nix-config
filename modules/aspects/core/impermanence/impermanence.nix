@@ -6,19 +6,29 @@
 }: {
   flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
 
-  den.aspects.core.impermanence = {
-    hostSettings = {
-      persistenceDir = lib.mkOption {
+  den.aspects.core.impermanence = let
+    inherit
+      (lib)
+      mkOption
+      mkEnableOption
+      types
+      ;
+  in {
+    hostSettings = {host, ...}: {
+      persistenceDir = mkOption {
         default = "/nix/persist/system";
         example = "/persist";
-        type = lib.types.nullOr lib.types.path;
+        type = types.nullOr types.path;
         description = "Directory for impermanence persistent storage";
       };
 
       dontEnableUsers =
-        lib.mkEnableOption ""
+        mkEnableOption ""
         // {
-          default = true;
+          default =
+            host.users
+            |> lib.attrValues
+            |> builtins.any (_: true);
           description = ''
             Whether to not enable impermanence module for users, that is impermanence for `/home` directory.
             Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
