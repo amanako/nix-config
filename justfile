@@ -1,41 +1,48 @@
 # Display all recipes
+[private]
 help:
     just --list
 
 # Update flake inputs using "write-flake" app of flake-file
+[group('flake')]
 fwrite:
     nix --accept-flake-config run {{ repo-root }}#write-flake
 
-# Check configuration of flake.nix from repo root
-fcheck:
-    nix --accept-flake-config flake check -L {{ repo-root }}
-
 # Update one or more flake inputs, all when no inputs specified
+[group('flake')]
 fupdate *inputs:
+    just fwrite
     nix --accept-flake-config flake update -L {{ inputs }} --flake {{ repo-root }}
+    just fwrite
 
-# Rebuild and activate config with nh and make it the default boot entry
-rebuild-switch:
-    nh os switch --accept-flake-config --ask --diff always --show-trace --hostname {{ hostname }}
+# Rebuild and activate config of a host with nh and make it the default boot entry, defaults to current host
+[group('config')]
+rebuild-switch host=hostname:
+    nh os switch --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
-# Rebuild config with nh and make it the default boot entry, activated after reboot
-rebuild-boot:
-    nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ hostname }}
+# Rebuild config of a host with nh and make it the default boot entry, activated after reboot, defaults to current host
+[group('config')]
+rebuild-boot host=hostname:
+    nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
-# Run disko configuration for current host
-disko:
-    nix --accept-flake-config run {{ repo-root }}#{{ hostname }}-disko
+# Run disko configuration for a host, defaults to current host
+[group('packages')]
+disko host=hostname:
+    nix --accept-flake-config run {{ repo-root }}#{{ host }}-disko
 
-# Spin up a virtual machine for current host
-vm:
-    nix --accept-flake-config run {{ repo-root }}#{{ hostname }}-vm
+# Spin up a virtual machine for a host, defaults to current host
+[group('packages')]
+vm host=hostname:
+    nix --accept-flake-config run {{ repo-root }}#{{ host }}-vm
 
 # Enter nix repl with flake.nix from repo root
+[group('packages')]
 repl:
     nix --accept-flake-config repl {{ repo-root }}#
 
 # Pull in changes from remote
 [arg("branch", help="Branch to restore flake.nix and flake.lock files from")]
+[group('flake')]
 pull-flake branch="main":
     # Fetch latest commits
     git fetch origin
@@ -48,7 +55,6 @@ repo-root := `git rev-parse --show-toplevel`
 
 alias h := help
 alias fw := fwrite
-alias fc := fcheck
 alias fu := fupdate
 alias rs := rebuild-switch
 alias rb := rebuild-boot

@@ -98,7 +98,7 @@ Make sure your disk is formatted. [Disko][disko] is the recommended approach for
 If using this method running:
 
 ```
-just disko
+just disko $HOSTNAME
 ```
 
 should run scripts to take care of partitioning.

@@ -16,16 +16,19 @@ Descriptions are provided.
   just
 just --list
 Available recipes:
-    disko                    # Run disko configuration for current host [alias: d]
-    fcheck                   # Check configuration of flake.nix from repo root [alias: fc]
-    fupdate *inputs          # Update one or more flake inputs, all when no inputs specified [alias: fu]
-    fwrite                   # Update flake inputs using "write-flake" app of flake-file [alias: fw]
-    help                     # Display all recipes [alias: h]
-    pull-flake branch="main" # Pull in changes from remote [alias: pf]
-    rebuild-boot             # Rebuild config with nh and make it the default boot entry, activated after reboot [alias: rb]
-    rebuild-switch           # Rebuild and activate config with nh and make it the default boot entry [alias: rs]
-    repl                     # Enter nix repl with flake.nix from repo root [alias: r]
-    vm                       # Spin up a virtual machine for current host
+    [config]
+    rebuild-boot host=hostname   # Rebuild config of a host with nh and make it the default boot entry, activated after reboot, defaults to current host [alias: rb]
+    rebuild-switch host=hostname # Rebuild and activate config of a host with nh and make it the default boot entry, defaults to current host [alias: rs]
+
+    [flake]
+    fupdate *inputs              # Update one or more flake inputs, all when no inputs specified [alias: fu]
+    fwrite                       # Update flake inputs using "write-flake" app of flake-file [alias: fw]
+    pull-flake branch="main"     # Pull in changes from remote [alias: pf]
+
+    [packages]
+    disko host=hostname          # Run disko configuration for a host, defaults to current host [alias: d]
+    repl                         # Enter nix repl with flake.nix from repo root [alias: r]
+    vm host=hostname             # Spin up a virtual machine for a host, defaults to current host
 ```
 
 ## Pulling remote changes
