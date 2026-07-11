@@ -8,7 +8,6 @@
     includes = let
       inherit (den.aspects.core) hardware;
     in [
-      hardware.amdgpu
       hardware.audio
       hardware.battery
       hardware.bluetooth
