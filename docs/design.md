@@ -22,7 +22,8 @@ Outline some decisions and choices made during development for anyone willing to
 ### File Organization
 
 - **Manageable size:**
-  - Aim for _~80_ lines per file
+  - Aim for files of consistent size - not small and scattered, not too large to get lost in complicated code
+  - Exceptions are files made for a single purpose which don't gain that much by being divided or conjoined
   - Split into composable parts when a file gets out of control or mentally heavy
 
 ### Aspect Inclusion
@@ -60,11 +61,14 @@ If there are multiple expressions you want to inherit assign one per row.
 - Use [inherit] to either avoid repetition or shorten long names (such as `cfg` attribute used with aspect settings).
   Also if , as an example, you want to use `inherit (lib) mkOption` to avoid rewriting `lib` every time,
   you may as well inherit other `lib` attrset values you use, for the sake of consistency.
-- When declaring options, follow this order, for each item where applicable:
-  1. default
-  2. example
-  3. type
-  4. description
+- When declaring options, follow this order, for each item where applicable (marked in parentheses) and prioritizing examples:
+  1. type
+  2. (default)
+  3. (example)
+  4. (description)
+  5. (readOnly)
+- Leave out default to signal the user an option should be set
+- Write `description` as a proper sentence ending with a period (`.`). Use `''...''` for multi‑line text and `"..."` for a single line
 - Make aspects themselves static(plain attrset) and configure lambda in shorter scope, for `nixos` or `hm` classes.<br>
   One exception to this "shorter scope" is `lib` which can be used in file scope if den needs it (that is module taking in lambda `{ lib, ...}` at file level).
   If this is the case, redeclartion of `{lib, ...}` within shorter scopes is redundant.
