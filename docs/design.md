@@ -67,7 +67,7 @@ If there are multiple expressions you want to inherit assign one per row.
   4. description
 - Make aspects themselves static(plain attrset) and configure lambda in shorter scope, for `nixos` or `hm` classes.<br>
   One exception to this "shorter scope" is `lib` which can be used in file scope if den needs it (that is module taking in lambda `{ lib, ...}` at file level).
-  If this is the case redeclartion of file within shorter scopes is redundant.
+  If this is the case, redeclartion of `{lib, ...}` within shorter scopes is redundant.
 
 Other specifics can be figured out by looking at individual files (i.e. modules).
 
