@@ -3,7 +3,7 @@
   imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
   flake-file = {
-    description = "Adorable flake";
+    description = "Adorable flake.";
     do-not-edit = ''
       # This file was auto-generated using flake-file.
       # Run `just fw` if just is installed or `nix run .#write-flake` to revalidate it.

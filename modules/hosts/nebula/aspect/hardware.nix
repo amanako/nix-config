@@ -1,16 +1,14 @@
 {den, ...}: {
+  flake.den = den;
   den.aspects.nebula.hardware = {
     includes = [
-      den.aspects.core.hardware
-      den.aspects.core.disko
+      den.aspects.core.hardware.essential
+      den.aspects.core.hardware.nvidia
+      den.aspects.core.hardware.disko
       den.aspects.core.nix-cachyos-kernel
     ];
 
-    nixos = {
-      pkgs,
-      modulesPath,
-      ...
-    }: {
+    nixos = {modulesPath, ...}: {
       imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
       boot.initrd.availableKernelModules = [
@@ -19,8 +17,6 @@
       ];
 
       boot = {
-        kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-zen4;
-
         kernelModules = [
           "kvm-amd"
           "btrfs"

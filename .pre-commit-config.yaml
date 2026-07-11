@@ -49,15 +49,7 @@ repos:
     hooks:
       - id: markdown-toc
         name: markdown‑toc – update README TOC
-        entry: >-
-          bash -c '
-            # Do nothing for empty files
-            if [ -z "$1" ]; then
-              exit 0
-            fi
-
-            markdown-toc -i "$1"
-          '
+        entry: bash -c 'for f; do markdown-toc -i "$f"; done' --
         language: system
         files: \.md$
         stages: [pre-commit]

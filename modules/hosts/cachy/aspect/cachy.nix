@@ -5,6 +5,7 @@
       den.aspects.core.impermanence
       # Wants power-daemon instead
 
+      den.aspects.core.displayManagers.ly
       den.aspects.core.boot.optional.silent
       den.aspects.core.boot.optional.plymouth
       den.aspects.core.boot.limine

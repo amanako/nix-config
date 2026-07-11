@@ -3,7 +3,7 @@
 # It should NOT be edited manually, unless you have mistyped an input(branch name for example).
 # If that is the case edit that typo here to point to valid link, then run the command above.
 {
-  description = "Adorable flake";
+  description = "Adorable flake.";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
@@ -49,7 +49,7 @@
     nix-monitor.url = "github:antonjah/nix-monitor";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
-    noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
     noctalia-shell.url = "github:noctalia-dev/noctalia/f816591afc2f2f606d1f0cf70b51e95c04a7a8aa";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";

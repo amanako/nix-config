@@ -7,5 +7,9 @@
       editor = "nvim";
       fileManager = "nautilus";
     };
+
+    settings = {
+      niri.binds.keyboard-backlight.device = "backlight:amdgpu_bl1";
+    };
   };
 }
