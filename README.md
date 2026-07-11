@@ -42,38 +42,11 @@ Other than these, temporary branches may be added but their purpose should be un
 
 ## Project structure
 
-A high-level overview of the repository layout (build/CI artifacts excluded).
+A high-level overview of the repository layout (build/CI artifacts excluded).<br>
 The `den` directory is the [den framework](https://den.denful.dev) that this configuration is built on;
 `hosts` and `users` are entries that compose `aspects` through the options defined in `schema`.
 
-```
-.
-├── assets              # Files, screenshots and other data accessed by users, hosts and aspects
-├── docs                # Documentation regarding main cross-cutting topics
-├── flake.lock          # Locked dependencies, flattened via fzakaria/nix-auto-follow integration
-├── flake.nix           # Entry point - assembled via `flake-parts.lib.mkFlake` + `import-tree`
-├── justfile            # Common commands runnable via `just` cli tool
-├── LICENSE             # MIT
-├── modules
-│   ├── den             # Den framework infrastructure
-│   │   ├── aspects     # All present aspects, grouped by:
-│   │   │   ├── basic       # git, timezone, desktop entries, backups
-│   │   │   ├── core        # boot, kernel, hardware, nix, impermanence
-│   │   │   ├── development # editors, shell, security
-│   │   │   ├── everyday    # compositors, desktop shells, browsers, utilities
-│   │   │   └── optional    # gaming, performance, stylix, chaotic
-│   │   ├── classes     # Additional classes alongside nixos, homeManager etc.
-│   │   ├── entry-point # Flake-file definition for den, as well as some default settings
-│   │   ├── extras      # Optional additions to framework
-│   │   ├── policies    # Declarations of entity relation, data routing etc.
-│   │   ├── quirks      # Definitions allowing aspects to emit data to be consumed and assembled
-│   │   └── schema      # User and host schema options and includes
-│   ├── hosts           # Machine entries that enable aspects for a system
-│   ├── packages        # Packages for users / hosts or general usage made via flake-parts `perSystem` integration
-│   ├── shells          # Development shells
-│   └── users           # User entries that enable aspects for a profile
-└── README.md
-```
+![project structure](assets/structure.svg)
 
 ## Docs
 
