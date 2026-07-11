@@ -36,8 +36,15 @@
                 type = types.str;
                 default = "";
                 description = ''
-                  Hash used to compute corresponding wallpaper.
-                  Can be obtained by running command once and looking at the error, copying it from there.
+                  Hash used to compute corresponding wallpaper url.
+                  Can be obtained by trying to rebuild system once and looking at the error.
+                  The hash can be looked up from column 'got' in this way:
+                  error: hash mismatch in fixed-output derivation '...':
+                    likely URL: ...
+                    specified: ...
+                    got: <this is the hash>
+                    expected path: ...
+                    got path: ...
                 '';
               };
             }
@@ -45,9 +52,15 @@
         });
 
         default = [];
+        example = [
+          {
+            url = "https://w.wallhaven.cc/full/2e/2ewm1x.jpg";
+            hash = "sha256-000000000000000000000000000000000000000000000=";
+          }
+        ];
         description = ''
           List of remote links of wallpapers to use for limine, Will be fetched and passed to
-          `boot.loader.limine.style.wallpapers`.
+          `boot.loader.limine.style.wallpapers`. If multiple specified, randomized on boot.
         '';
       };
     };

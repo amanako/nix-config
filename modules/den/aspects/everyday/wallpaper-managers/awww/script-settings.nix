@@ -7,29 +7,27 @@
       ;
   in {
     label = mkOption {
+      type = lib.types.str;
       default = "awww-randomizer";
       example = "wallpaper-switch";
-      type = lib.types.str;
-      description = "Name to use for the script";
+      description = "Name to use for the script.";
     };
 
     args = mkOption {
+      type = types.listOf types.str;
       default = [];
       example = [
         "--transition-type wave"
         "--resize=fit"
       ];
-      type = types.listOf types.str;
-      description = ''
-        Arguments to pass to the script. Reference: https://codeberg.org/LGFae/awww#usage.
-      '';
+      description = "Arguments to pass to the script. Reference: https://codeberg.org/LGFae/awww#usage.";
     };
 
-    exposePackage =
-      lib.mkEnableOption "expose script as a home manager package"
-      // {
-        default = true;
-        description = "This option is great one-time invoking function and testing functionality";
-      };
+    exposePackage = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      example = false;
+      description = "Whether to expose script package for manual invoking or testing.";
+    };
   };
 }

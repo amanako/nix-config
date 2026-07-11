@@ -47,7 +47,6 @@
       };
 
       home.packages =
-        # To test functionality
         [pkgs.awww]
         ++ [scriptPkg]
         |> lib.optionals cfg.exposePackage;

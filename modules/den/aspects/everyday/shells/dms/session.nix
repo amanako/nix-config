@@ -2,6 +2,8 @@
   dms.session = {
     userSettings = {
       additionalSettings = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
         example = {
           currentThemeName = "gruvbox";
           showDock = true;
@@ -13,11 +15,9 @@
             }
           ];
         };
-        default = {};
-        type = lib.types.attrs;
         description = ''
           User settings to append to default session settings, overriding if necessary.
-          Passed to `homeManager.programs.dank-material-shell.session`.;
+          Passed to `homeManager.programs.dank-material-shell.session`.
         '';
       };
     };

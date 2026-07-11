@@ -31,7 +31,7 @@
       A scrollable-tiling Wayland compositor.
 
       This is aspect using flake for nix-native setup of niri.
-      Reference: https://github.com/sodiboo/niri-flake
+      Reference: https://github.com/sodiboo/niri-flake.
     '';
 
     includes = [

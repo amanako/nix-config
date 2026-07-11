@@ -10,31 +10,30 @@
     inherit
       (lib)
       mkOption
-      mkEnableOption
       types
       ;
   in {
     hostSettings = {host, ...}: {
       persistenceDir = mkOption {
+        type = types.nullOr types.path;
         default = "/nix/persist/system";
         example = "/persist";
-        type = types.nullOr types.path;
-        description = "Directory for impermanence persistent storage";
+        description = "Directory for impermanence persistent storage.";
       };
 
-      dontEnableUsers =
-        mkEnableOption ""
-        // {
-          default =
-            host.users
-            |> lib.attrValues
-            |> builtins.any (_: true);
-          description = ''
-            Whether to not enable impermanence module for users, that is impermanence for `/home` directory.
-            Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
-            which is done automatically when `den.aspects.core.impermanence` aspect is included.
-          '';
-        };
+      dontEnableUsers = mkOption {
+        type = types.bool;
+        default =
+          host.users
+          |> lib.attrValues
+          |> builtins.any (_: true);
+        example = false;
+        description = ''
+          Whether to not enable impermanence module for users, that is impermanence for `/home` directory.
+          Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
+          which is done automatically when `den.aspects.core.impermanence` aspect is included.
+        '';
+      };
     };
 
     includes = [

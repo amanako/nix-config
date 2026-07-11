@@ -11,9 +11,9 @@
       type = types.submodule {
         options = {
           label = mkOption {
+            type = types.str;
             default = cfg.script.label;
             example = "awww-rand-service";
-            type = types.str;
             description = ''
               Name to use for the service.
               Defaults to the script label (`user.settings.wallpaper-managers.awww.script.label`)
@@ -22,12 +22,12 @@
           };
 
           interval = mkOption {
+            type = types.nullOr types.str;
             default =
               if cfg.service.calendar == null
               then "30min"
               else null;
             example = "2h";
-            type = types.nullOr types.str;
             description = ''
               Value for systemd's OnUnitActiveSec. Fires this long after the initial activation.
               Defaults to `30min` when no `calendar` is set, otherwise `null`.
@@ -36,8 +36,8 @@
           };
 
           calendar = mkOption {
-            default = null;
             type = types.nullOr types.str;
+            default = null;
             example = "daily";
             description = ''
               Value for systemd's OnCalendar to fire the script.

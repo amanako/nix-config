@@ -70,7 +70,7 @@
           mkOption {
             type = types.submodule (nodeModule context child);
             default = {};
-            description = "Settings under ${name}";
+            description = "Settings under ${name}.";
           }
       )
       settingChildren;
@@ -156,7 +156,7 @@ in {
       mkOption {
         type = mkSettingsType context;
         default = {};
-        description = "Per-aspect typed settings for host";
+        description = "Per-aspect typed settings for host.";
       }
       // {
         identity = false;

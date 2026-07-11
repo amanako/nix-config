@@ -2,6 +2,8 @@
   dms.settings = {
     userSettings = {
       overrides = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
         example = {
           currentThemeName = "gruvbox";
           showDock = true;
@@ -13,11 +15,9 @@
             }
           ];
         };
-        default = {};
-        type = lib.types.attrs;
         description = ''
           User settings to append to default settings, overriding if necessary.
-          Passed to `homeManager.programs.dank-material-shell.settings`.;
+          Passed to `homeManager.programs.dank-material-shell.settings`.
         '';
       };
     };

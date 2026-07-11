@@ -4,12 +4,15 @@
       timeZone = lib.mkOption {
         type = lib.types.str;
         default = "UTC";
-        description = "Define time zone";
+        example = "Poland/Warsaw";
+        description = "Define time zone.";
       };
     };
 
-    nixos = {host, ...}: {
-      time.timeZone = host.settings.basic.time.timeZone;
+    nixos = {host, ...}: let
+      cfg = host.settings.basic.time;
+    in {
+      time.timeZone = cfg.timeZone;
     };
   };
 }

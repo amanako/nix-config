@@ -6,8 +6,10 @@
       types
       ;
   in {
-    userSettings = {
+    userSettings = {user, ...}: {
       overrides = mkOption {
+        type = types.attrs;
+        default = {};
         example = {
           currentThemeName = "gruvbox";
           showDock = true;
@@ -19,18 +21,16 @@
             }
           ];
         };
-        default = {};
-        type = types.attrs;
         description = "Settings to append to defaults, overriding if necessary.";
       };
 
       avatarFilename = mkOption {
-        example = "my_pfp.jpg";
-        default = ".face";
         type = types.str;
+        default = ".face";
+        example = "my_pfp.jpg";
         description = ''
           Avatar filename (with extension) to be used for avatar shown in control center and other panels.
-          The path of file is currently immutable at `$repoRoot/assets/users/$username` and avatar should be left there.
+          The path of file is currently immutable at `${user.repoRoot}/assets/users/${user.userName}` and avatar should be left there.
         '';
       };
     };

@@ -7,6 +7,7 @@
     hostSettings = {
       disk-partition = lib.mkOption {
         type = lib.types.str;
+        example = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_1TB_ABC123";
         description = ''
           Full name of the partition to wipe on each reboot
           Can be found by looking at output `ls -l /dev/disk/by-id`.

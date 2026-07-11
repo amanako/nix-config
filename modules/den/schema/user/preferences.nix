@@ -4,20 +4,27 @@
     config,
     ...
   }: {
-    options = {
-      preferences = lib.mkOption {
-        type = lib.types.submodule {
+    options = let
+      inherit
+        (lib)
+        mkOption
+        types
+        ;
+    in {
+      preferences = mkOption {
+        type = types.submodule {
           options = let
             mkPrefOption = pref: {
               example ? "",
               description ? "Preferred ${pref} binary name.",
             }:
-              lib.mkOption {
+              mkOption {
+                type = lib.types.str;
+                default = "";
                 inherit
                   example
                   description
                   ;
-                type = lib.types.str;
               };
           in {
             editor = mkPrefOption "text editor" {

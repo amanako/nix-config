@@ -10,15 +10,15 @@
       device = mkOption {
         type = types.nullOr lib.types.str;
         default = null;
-        description = "Keyboard light device name. Can be obtained via `nix run nixpkgs#brightnessctl -- -l`";
         example = "asus::kbd_backlight";
+        description = "Keyboard light device name. Can be obtained via `nix run nixpkgs#brightnessctl -- -l`.";
       };
 
       step = mkOption {
         type = types.int;
         default = 1;
-        description = "Step to increase/decrease brightness on each script run";
         example = 5;
+        description = "Step to increase/decrease brightness on each script run.";
       };
     };
 

@@ -44,9 +44,9 @@
       ];
     in {
       variant = mkOption {
+        type = lib.types.enum variants;
         default = "bore";
         example = "rt-bore";
-        type = lib.types.enum variants;
         description = ''
           Kernel scheduler/variant.
           See https://github.com/xddxdd/nix-cachyos-kernel for details.
@@ -54,18 +54,17 @@
       };
 
       lto = mkOption {
+        type = types.bool;
         default = false;
         example = true;
-        type = types.bool;
         description = "Enable Clang+ThinLTO compilation.";
       };
 
       uarch = mkOption {
         type = types.enum uarchs;
         default = "generic";
-        description = ''
-          CPU microarchitecture optimization target.
-        '';
+        example = "zen4";
+        description = "CPU microarchitecture optimization target.";
       };
     };
 

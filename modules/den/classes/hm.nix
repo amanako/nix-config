@@ -1,5 +1,5 @@
 {
   den.classes.hm = {
-    description = "Shorthand class for homeManager class";
+    description = "Shorthand class for homeManager class.";
   };
 }

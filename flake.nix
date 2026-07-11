@@ -3,7 +3,7 @@
 # It should NOT be edited manually, unless you have mistyped an input(branch name for example).
 # If that is the case edit that typo here to point to valid link, then run the command above.
 {
-  description = "Adorable flake";
+  description = "Adorable flake.";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
