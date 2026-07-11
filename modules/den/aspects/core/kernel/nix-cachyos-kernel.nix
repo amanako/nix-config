@@ -2,21 +2,7 @@
   inputs,
   lib,
   ...
-}: let
-  variants = [
-    "bore"
-    "latest"
-    "bmq"
-    "lts"
-    "hardened"
-    "deckify"
-    "rt-bore"
-    "server"
-    "rc"
-    "eevdf"
-  ];
-  uarchs = ["generic" "x86_64-v2" "x86_64-v3" "x86_64-v4" "zen4"];
-in {
+}: {
   flake-file = {
     inputs.nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
@@ -29,24 +15,53 @@ in {
   den.aspects.core.nix-cachyos-kernel = {
     description = "CachyOS Linux kernel with various scheduler and optimization variants.";
 
-    hostSettings = {
-      variant = lib.mkOption {
-        type = lib.types.enum variants;
+    hostSettings = let
+      inherit
+        (lib)
+        mkOption
+        types
+        ;
+
+      variants = [
+        "bore"
+        "latest"
+        "bmq"
+        "lts"
+        "hardened"
+        "deckify"
+        "rt-bore"
+        "server"
+        "rc"
+        "eevdf"
+      ];
+
+      uarchs = [
+        "generic"
+        "x86_64-v2"
+        "x86_64-v3"
+        "x86_64-v4"
+        "zen4"
+      ];
+    in {
+      variant = mkOption {
         default = "bore";
+        example = "rt-bore";
+        type = lib.types.enum variants;
         description = ''
           Kernel scheduler/variant.
           See https://github.com/xddxdd/nix-cachyos-kernel for details.
         '';
       };
 
-      lto = lib.mkOption {
-        type = lib.types.bool;
+      lto = mkOption {
         default = false;
+        example = true;
+        type = types.bool;
         description = "Enable Clang+ThinLTO compilation.";
       };
 
-      uarch = lib.mkOption {
-        type = lib.types.enum uarchs;
+      uarch = mkOption {
+        type = types.enum uarchs;
         default = "generic";
         description = ''
           CPU microarchitecture optimization target.

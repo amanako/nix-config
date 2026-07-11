@@ -50,9 +50,17 @@
       };
     };
 
-    hm = {inputs', ...}: {
+    hm = {
+      inputs',
+      pkgs,
+      ...
+    }: {
       imports = [inputs.niri.homeModules.niri];
       nixpkgs.overlays = [inputs.niri.overlays.niri];
+
+      home.packages = [
+        pkgs.wl-clipboard
+      ];
 
       programs.niri = {
         enable = true;
