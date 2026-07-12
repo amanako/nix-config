@@ -56,7 +56,7 @@ steps:
         ssh-add ~/.ssh/signing_key
 
       - |
-        git config --global user.signingkey $(cat ~/.ssh/signing_key.pub)
+        git config --global user.signingkey "$(cat ~/.ssh/signing_key.pub)"
         git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
         echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
 
