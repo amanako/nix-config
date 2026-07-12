@@ -48,10 +48,16 @@ steps:
         mkdir -p ~/.ssh
         echo "$${GIT_SSH_PRIVATE_KEY}" > ~/.ssh/signing_key
         echo "$${GIT_SSH_PUBLIC_KEY}" > ~/.ssh/signing_key.pub
+        chmod 600 ~/.ssh/signing_key
 
       - |
-        chmod 600 ~/.ssh/signing_key
-        git config --global user.signingkey $${GIT_SSH_PUBLIC_KEY}
+        git config --global user.signingkey "$${GIT_SSH_PUBLIC_KEY}"
+        git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+        echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
+
+      - |
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/signing_key
 
       - |
         BRANCH="weekly-flake-update"
