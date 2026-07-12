@@ -14,6 +14,7 @@ steps:
         export NIX_CONFIG=$(cat <<-EOF
         extra-experimental-features = nix-command flakes pipe-operators
         accept-flake-config = true
+        access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
 
