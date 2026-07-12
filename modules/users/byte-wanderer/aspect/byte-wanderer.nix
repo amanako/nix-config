@@ -8,7 +8,7 @@
     includes = [
       niri.full
       zen-browser._
-      den.aspects.wallpaper-managers.awww
+      den.aspects.everyday.wallpaper-managers.awww
     ];
   };
 }

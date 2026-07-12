@@ -1,5 +1,5 @@
 {
-  den.aspects.notifications.dunst = {
+  den.aspects.everyday.notifications.dunst = {
     hm.services.dunst = {
       enable = true;
       settings = {

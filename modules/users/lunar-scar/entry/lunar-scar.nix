@@ -28,7 +28,7 @@
         signingKey = "5CB7F18E1B212DB2";
       };
 
-      wallpaper-managers.awww = {
+      everyday.wallpaper-managers.awww = {
         script.args = [
           "--transition-fps 144"
           "--transition-type wave"

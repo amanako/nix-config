@@ -1,5 +1,4 @@
 {
-  __findFile,
   den,
   # Bring namespace aspects into scope when __findFile lookup won't suffice
   nixvim,
@@ -15,24 +14,27 @@ in {
     includes = [
       # Include all direct subaspects created under my user and other ones
       den.aspects.lunar-scar._
-      den.aspects.security._
-      den.aspects.utility._
-      den.aspects.shell._
-      den.aspects.shell.interpreters.fish
       den.aspects.basic.git
-      den.aspects.wallpaper-managers.awww
 
-      <terminal/zellij>
-      <terminal/kitty>
-      <terminal/yazi>
+      den.aspects.everyday.utility._
+      den.aspects.everyday.wallpaper-managers.awww
+
+      den.aspects.dev.terminal.zellij
+      den.aspects.dev.terminal.kitty
+      den.aspects.dev.terminal.yazi
+      den.aspects.dev.editors.helix
+      den.aspects.dev.shells.fish
+      den.aspects.dev.shell-tools._
+
+      den.aspects.security.ssh
+      den.aspects.security.gpg
 
       den.aspects.core.nix.nh
-      <nixUtils/nixIndexDatabase>
 
-      <gaming/optimizations>
-      <gaming/software>
-      <optional/bleeding-edge/chaotic>
-      <editors/helix>
+      den.aspects.extra.nix-utils.nix-index-database
+      den.aspects.extra.gaming.optimizations
+      den.aspects.extra.gaming.software
+      den.aspects.extra.bleeding-edge.chaotic
 
       # Works for namespaces as well
       zen-browser.full

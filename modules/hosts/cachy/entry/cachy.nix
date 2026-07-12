@@ -3,12 +3,14 @@
     repoRoot = "/etc/nixos";
 
     settings = {
-      core = {
-        nix-cachyos-kernel = {
+      extra.performance = {
+        cachyos-kernel = {
           uarch = "zen4";
         };
+      };
 
-        displayManagers.ly.batteryID = "BAT0";
+      core = {
+        display-managers.ly.batteryID = "BAT0";
 
         hardware.deviceType = "laptop";
 

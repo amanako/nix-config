@@ -38,11 +38,11 @@
 
     includes = [
       den.aspects.core.impermanence.btrfs
-      den.aspects.core.impermanence.persistSystemCollector
+      den.aspects.core.impermanence.persist-system-collector
     ];
 
     provides.to-users.includes = [
-      den.aspects.core.impermanence.persistUserCollector
+      den.aspects.core.impermanence.persist-user-collector
     ];
 
     persistSystem = {

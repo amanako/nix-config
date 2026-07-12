@@ -1,5 +1,5 @@
 {
-  den.aspects.utility.fcitx5 = {
+  den.aspects.everyday.utility.fcitx5 = {
     niriSettings = {
       spawn-at-startup = [
         {

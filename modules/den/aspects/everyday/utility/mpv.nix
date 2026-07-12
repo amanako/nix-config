@@ -1,5 +1,5 @@
 {
-  den.aspects.utility.mpv = {
+  den.aspects.everyday.utility.mpv = {
     hm.programs.mpv = {
       enable = true;
       bindings = {

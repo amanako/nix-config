@@ -1,9 +1,9 @@
 {den, ...}: {
   # Using parametric aspect capturing user is impossible here since schema is including it.
   # Schemas don't have access to aspect parameters.
-  den.aspects.wallpaper-managers.awww = {
+  den.aspects.everyday.wallpaper-managers.awww = {
     includes = [
-      den.aspects.wallpaper-managers.awww.script
+      den.aspects.everyday.wallpaper-managers.awww.script
     ];
 
     hm = {
@@ -15,7 +15,7 @@
       awwwDaemon = "awww-daemon" |> lib.getExe' pkgs.awww;
       systemctl = "systemctl" |> lib.getExe' pkgs.systemdMinimal;
 
-      cfg = user.settings.wallpaper-managers.awww.service;
+      cfg = user.settings.everyday.wallpaper-managers.awww.service;
     in {
       systemd.user = {
         services = {

@@ -1,5 +1,5 @@
 {
-  den.aspects.basic.desktopEntriesCollector = {
+  den.aspects.basic.desktop-entries-collector = {
     description = ''
       Collector which assembles all emitted desktop entries,
       flattens them to attribute sets of entries and passes them to xdg.desktopEntries in hm class.

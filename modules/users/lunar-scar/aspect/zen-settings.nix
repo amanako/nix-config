@@ -1,5 +1,5 @@
 {
-  den.aspects.lunar-scar.zenSettings = {
+  den.aspects.lunar-scar.zen-settings = {
     description = ''
       "Additional zen browser settings for lunar-scar."
     '';

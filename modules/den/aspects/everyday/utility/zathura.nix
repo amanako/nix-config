@@ -1,5 +1,5 @@
 {
-  den.aspects.utility.zathura = {
+  den.aspects.everyday.utility.zathura = {
     stylixHMSettings.targets."zathura".enable = false;
 
     persistUser.directories = [

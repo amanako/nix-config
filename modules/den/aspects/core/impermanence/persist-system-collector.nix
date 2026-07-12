@@ -1,5 +1,5 @@
 {
-  den.aspects.core.impermanence.persistSystemCollector = {
+  den.aspects.core.impermanence.persist-system-collector = {
     nixos = {
       persistSystem,
       host,

@@ -10,7 +10,7 @@
     '';
 
     includes = [
-      den.aspects.core.boot.limine.secureBoot
+      den.aspects.core.boot.limine.secure-boot
     ];
 
     stylixNixOSSettings.targets."limine".enable = false;

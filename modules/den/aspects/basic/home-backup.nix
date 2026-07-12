@@ -2,7 +2,7 @@
   # Opinionated: Skip rebuilding every time when overriding a file
   # Take into consideration that with ephemeral setup this file will
   # be wiped when rebooting
-  den.aspects.basic.homeBackup = {
+  den.aspects.basic.home-backup = {
     nixos = {
       user,
       lib,

@@ -3,6 +3,14 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
+      extra.performance = {
+        cachyos-kernel = {
+          variant = "bore";
+          lto = true;
+          uarch = "zen4";
+        };
+      };
+
       core = {
         impermanence = {
           btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
@@ -10,13 +18,7 @@
           dontEnableUsers = false;
         };
 
-        nix-cachyos-kernel = {
-          variant = "bore";
-          lto = true;
-          uarch = "zen4";
-        };
-
-        displayManagers.ly.batteryID = "BAT1";
+        display-managers.ly.batteryID = "BAT1";
 
         boot.limine.wallpapers = [
           {

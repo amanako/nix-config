@@ -1,5 +1,5 @@
 {
-  den.aspects.utility.youtubeTUI = {
+  den.aspects.everyday.utility.youtube-tui = {
     description = ''
       Aesthetically pleasing YouTube TUI written in Rust.
     '';
