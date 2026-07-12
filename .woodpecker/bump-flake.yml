@@ -51,13 +51,13 @@ steps:
         chmod 600 ~/.ssh/signing_key
 
       - |
-        git config --global user.signingkey "$${GIT_SSH_PUBLIC_KEY}"
-        git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
-        echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
-
-      - |
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/signing_key
+
+      - |
+        git config --global user.signingkey $(cat ~/.ssh/signing_key.pub)
+        git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+        echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
 
       - |
         BRANCH="weekly-flake-update"
