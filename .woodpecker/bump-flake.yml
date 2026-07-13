@@ -16,7 +16,7 @@ steps:
         access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
-      - nix profile install nixpkgs#just
+      - nix profile add nixpkgs#just
       - just fupdate
       - nix --accept-flake-config flake check -L
 

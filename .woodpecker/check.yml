@@ -11,6 +11,6 @@ steps:
         extra-experimental-features = nix-command flakes
         EOF
         )
-      - nix profile install nixpkgs#just
+      - nix profile add nixpkgs#just
       - just fwrite
       - nix --accept-flake-config flake check -L
