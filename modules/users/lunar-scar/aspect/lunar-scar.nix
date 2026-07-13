@@ -22,6 +22,7 @@ in {
       den.aspects.dev.terminal.zellij
       den.aspects.dev.terminal.kitty
       den.aspects.dev.terminal.yazi
+      den.aspects.dev.terminal.llm-agents
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._

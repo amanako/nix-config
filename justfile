@@ -18,11 +18,13 @@ fupdate *inputs:
 # Rebuild and activate config of a host with nh and make it the default boot entry, defaults to current host
 [group('config')]
 rebuild-switch host=hostname:
+    just fwrite
     nh os switch --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
 # Rebuild config of a host with nh and make it the default boot entry, activated after reboot, defaults to current host
 [group('config')]
 rebuild-boot host=hostname:
+    just fwrite
     nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
 # Run disko configuration for a host, defaults to current host
