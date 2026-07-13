@@ -9,8 +9,8 @@ steps:
       - |
         export NIX_CONFIG=$(cat <<-EOF
         extra-experimental-features = nix-command flakes
-        accept-flake-config = true
         EOF
         )
-      - nix run .#write-flake
-      - nix flake check -L
+      - nix profile install nixpkgs#just
+      - just fwrite
+      - nix --accept-flake-config flake check -L
