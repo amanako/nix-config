@@ -26,6 +26,4 @@
         };
     };
   };
-
-  den.schema.user.includes = [den.aspects.dev.shell-tools.direnv];
 }

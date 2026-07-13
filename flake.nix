@@ -24,6 +24,7 @@
     };
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     den.url = "github:denful/den";
+    direnv-instant.url = "github:Mic92/direnv-instant";
     disko.url = "github:nix-community/disko";
     dms.url = "github:AvengeMedia/DankMaterialShell/stable";
     dms-plugin-registry.url = "github:AvengeMedia/dms-plugin-registry";
