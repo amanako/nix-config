@@ -4,7 +4,6 @@
       programs.nixvim.plugins = {
         lspkind.enable = true;
         lsp-signature.enable = true;
-        lspconfig.enable = true;
 
         lsp = {
           enable = true;

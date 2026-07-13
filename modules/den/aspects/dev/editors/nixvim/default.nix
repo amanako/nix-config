@@ -16,6 +16,8 @@
 
       programs.nixvim = {
         enable = true;
+        nixpkgs.source = inputs.nixpkgs;
+
         waylandSupport = true;
         defaultEditor = true;
         viAlias = true;
