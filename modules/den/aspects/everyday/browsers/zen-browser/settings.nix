@@ -48,6 +48,7 @@
           "extensions.autoDisableScopes" = 0;
 
           "zen.window-sync.enabled" = false;
+          "zen.welcome-screen.seen" = true;
 
           # Force workspace containers
           "zen.workspaces.force-container-workspace" = true;

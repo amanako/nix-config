@@ -4,10 +4,6 @@
       "Additional zen browser settings for lunar-scar."
     '';
 
-    persistUser.files = [
-      ".config/zen/zen-space-routing.jsonlz4"
-    ];
-
     zenUserSettings = {
       settings = {
         "font.cjk_pref_fallback_order" = "ja,zh-cn,zh-hk,zh-tw,ko";
