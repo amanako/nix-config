@@ -6,7 +6,7 @@
   den.schema.user = {
     includes = [
       den.batteries.define-user
-      den.batteries.mutual-provider
+      den.batteries.host-aspects
       den.policies.hm-shorthand
       den.aspects.basic.desktop-entries-collector
       den.aspects.basic.home-backup
