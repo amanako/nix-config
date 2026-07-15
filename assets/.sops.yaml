@@ -1,0 +1,34 @@
+# sops-nix configuration (https://github.com/Mic92/sops-nix)
+#
+# Repo-wide sops file, discovered by walking up from any secret. Secrets live
+# under host/user-scoped directories, and each `creation_rules` entry restricts
+# decryption to just that entity (plus you, so you can manage it):
+#
+#   assets/hosts/<hostname>/secrets/   -> that host + you
+#   (?:assets/)?users/<username>/secrets/  -> that user + you
+#
+# Age public keys are derived two ways (run from the repo root):
+#   - user key:   nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+#   - host key:   nix shell nixpkgs#ssh-to-age -c ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+#                 (or: ssh-keyscan <host> | nix shell nixpkgs#ssh-to-age -c ssh-to-age)
+#
+# The `path_regex` rules below tolerate an optional `assets/` prefix, so sops
+# matches whether you run it from the repo root (`assets/users/...`) or from
+# inside `assets/` (`users/...`).
+
+keys:
+  - &host_nebula age1vvlzt3s8eef3a444ytwlzml206y5h879nqjs3cwur7smtwq0auesy62syr
+  - &user_lunar_scar age19l5w7et4mzeunr6xl33aa9yapm4n70uapljcjv7q44qf3m365seqa4yprr
+
+creation_rules:
+  - path_regex: hosts/nebula/secrets/.*\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *host_nebula
+          # Allow admin user access to decrypt host secrets
+          - *user_lunar_scar
+
+  - path_regex: users/lunar-scar/secrets/.*\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *user_lunar_scar

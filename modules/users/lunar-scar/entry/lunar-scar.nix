@@ -39,6 +39,10 @@
 
         service.calendar = "*-*-* *:00";
       };
+
+      security.sops = {
+        ageKeyFile = "keys/age/key.txt";
+      };
     };
   };
 }

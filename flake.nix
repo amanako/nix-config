@@ -53,6 +53,7 @@
     nixvim.url = "github:nix-community/nixvim";
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
     noctalia-shell.url = "github:noctalia-dev/noctalia/f816591afc2f2f606d1f0cf70b51e95c04a7a8aa";
+    sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";
     wallpapers = {

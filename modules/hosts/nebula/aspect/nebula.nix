@@ -16,6 +16,8 @@
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
+
+      den.aspects.security.sops
     ];
 
     nixos.boot.loader.limine.style.wallpaperStyle = "centered";

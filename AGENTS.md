@@ -256,6 +256,10 @@ Subaspects are reachable by appending `.`, e.g.
   via the `persistSystem`/`persistUser` quirks. To keep a file/dir across reboots,
   add it to the relevant quirk (see `docs/usage.md`), not by editing the module
   system directly.
+- **Inclusion is the opt-in mechanism; do not add `enable` toggles.** Per
+  `docs/design.md`, including an aspect means opt-in and not-including means
+  opt-out. Configure variation through `hostSettings`/`userSettings`, never a
+  boolean `enable` guard (see `modules/den/aspects/security/sops` for the pattern).
 - Primary development branch is **`dev`**; `main` is "stable". README's `old`
   branch holds the pre-den config for reference only.
 

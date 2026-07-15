@@ -29,6 +29,7 @@ in {
 
       den.aspects.security.ssh
       den.aspects.security.gpg
+      den.aspects.security.sops
 
       den.aspects.core.nix.nh
 
