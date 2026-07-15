@@ -12,10 +12,17 @@
       };
     in {
       # declare each secret (decrypted at activation via the age key)
-      sops.secrets = lib.mapAttrs' (envVar: secret:
-        lib.nameValuePair secret {
-          sopsFile = user.settings.security.sops.secretsDir + "/${secret}.yaml";
-        });
+      sops.secrets =
+        lib.mapAttrs' (envVar: secret:
+          lib.nameValuePair secret {
+            sopsFile = user.settings.security.sops.secretsDir + "/${secret}.yaml";
+          })
+        secretEnv
+        // {
+          anki-key = {
+            sopsFile = user.settings.security.sops.secretsDir + "/anki-key.yaml";
+          };
+        };
 
       # expose each as a *_FILE path (shell-agnostic, secret stays out of the store)
       home.sessionVariables =
