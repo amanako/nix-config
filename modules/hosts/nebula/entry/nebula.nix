@@ -47,7 +47,7 @@
         };
       };
 
-      security.sops.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      security.sops.ageKeyFile = "/var/lib/sops-nix/key.txt";
     };
   };
 }

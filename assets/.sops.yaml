@@ -17,7 +17,7 @@
 # inside `assets/` (`users/...`).
 
 keys:
-  - &host_nebula age1vvlzt3s8eef3a444ytwlzml206y5h879nqjs3cwur7smtwq0auesy62syr
+  - &host_nebula age1ctptalgwuhp7cw2q0p5cr9lfnhqs8gxa96swn4laae3djzrja5zqysdpcg
   - &user_lunar_scar age19l5w7et4mzeunr6xl33aa9yapm4n70uapljcjv7q44qf3m365seqa4yprr
 
 creation_rules:

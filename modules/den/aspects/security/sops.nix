@@ -5,11 +5,6 @@
 }: {
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
 
-  # Single aspect with both classes. Inclusion is the opt-in mechanism (no
-  # `enable` toggle): when a host includes it only the `nixos` class applies
-  # (the host has no homeManager class, so `hm` is dropped and users are
-  # unaffected); when a user includes it, `hm` reaches that user and `nixos`
-  # reaches the host. See `docs/design.md` and the `host-aspects` battery.
   den.aspects.security.sops = let
     inherit
       (lib)
@@ -30,19 +25,19 @@
           Should be specified WITHOUT persist mounpoint.
           Must be persisted across reboots for ephemeral systems, otherwise
           the host can no longer decrypt its own secrets after a reboot.
-          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both.
+          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both as it's unnecessary.
         '';
       };
 
       ageKeyFile = mkOption {
-        type = types.nullOr types;
+        type = types.nullOr types.str;
         default = null;
-        example = "/persist/system/sops/key.txt";
+        example = "/etc/sops/key.txt";
         description = ''
           Optional dedicated age key file used for decryption instead of deriving it
           from SSH host keys. Must be persisted across reboots for ephemeral setups.
           Should be specified WITHOUT persist mounpoint.
-          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both.
+          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both as it's unnecessary.
         '';
       };
 
@@ -117,9 +112,18 @@
       ];
     };
 
-    persistSystem = {host, ...}: {
-      directories = lib.optionals (host.settings.security.sops.sshKeyPaths != null) [
+    persistSystem = {host, ...}: let
+      cfg = host.settings.security.sops;
+    in {
+      directories = lib.optionals (cfg.sshKeyPaths != null) [
         "/etc/ssh"
+      ];
+
+      files = lib.optionals (cfg.ageKeyFile != null) [
+        {
+          # Attempt to persist via symlink to prevent "file already exists at ... error"
+          file = cfg.ageKeyFile;
+        }
       ];
     };
 
@@ -143,16 +147,14 @@
 
       sops = {
         age.sshKeyPaths =
+          lib.optionals (cfg.sshKeyPaths != null)
           cfg.sshKeyPaths
           |> map (path: imp.persistenceDir + path);
-
-        # Fallback to generating an age key if none set. Ignored when ssh key is set.
-        age.generateKey = true;
 
         age.keyFile =
           mkIf
           (cfg.ageKeyFile != null)
-          "${imp.persistenceDir}/${cfg.ageKeyFile}";
+          "${imp.persistenceDir}${cfg.ageKeyFile}";
 
         defaultSopsFile =
           mkIf
@@ -168,11 +170,16 @@
       ...
     }: let
       cfg = user.settings.security.sops;
+      absolutePath = config.home.homeDirectory + "/" + cfg.ageKeyFile;
     in {
       imports = [inputs.sops-nix.homeManagerModules.sops];
 
+      # Export a variable to be able to decrypt files when changing/re-crypting passwords
+      home.sessionVariables."SOPS_AGE_KEY_FILE" = absolutePath;
+
       sops = {
-        age.keyFile = host.settings.core.impermanence.persistenceDir + "${config.home.homeDirectory}/${cfg.ageKeyFile}";
+        # Since path is relative to home directory append one / for full path
+        age.keyFile = host.settings.core.impermanence.persistenceDir + absolutePath;
         defaultSopsFile = mkIf (cfg.defaultSopsFile != null) cfg.defaultSopsFile;
       };
     };

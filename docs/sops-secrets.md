@@ -56,9 +56,15 @@ an OpenRouter API key as the example.
    nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 
    # For ssh-to-age conversion, otherwise repear similarly to command above
+   # Requirement: /etc/ssh mounted as a a filesystem
    nix shell nixpkgs#ssh-to-age -c ssh-to-age < /etc/ssh/ssh_host_ed25519_pub
    # or from a remote:  ssh-keyscan <host> | nix shell nixpkgs#ssh-to-age -c ssh-to-age
    ```
+
+   > One advantage of generating age key for host as well is that you don't need to have `/etc/ssh` mounted as filesystem like
+   > with age key file approach where only key is enough to persist
+   > *NOTE: For users of impermanence save the age key file directly within persisted directory*
+   > After that in setup reference non-persistent key folder.
 
 3. Paste those public keys into `assets/.sops.yaml` as the `&user_...` /
    `&host_...` anchors under `keys:`, referencing them in the `creation_rules`
