@@ -3,10 +3,10 @@
     # Showcase usage of hashed password for users.
     # For each user who set their password in host file "user-passwords.yaml" extract hashed password by key.
     # Reference: https://github.com/Mic92/sops-nix#setting-a-users-password.
-    provides.to-users = {user, ...}: (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.security.sops) {
+    provides.to-users = {user, ...}: (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.security.sops-user) {
       nixos = {host, ...}: {
         sops.secrets."${user.userName}-hashed-password" = let
-          cfg = host.settings.security.sops;
+          cfg = host.settings.security.sops-host;
         in {
           neededForUsers = true;
           key = user.userName;

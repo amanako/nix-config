@@ -40,7 +40,7 @@
         service.calendar = "*-*-* *:00";
       };
 
-      security.sops = {
+      security.sops-user = {
         ageKeyFile = "keys/age/key.txt";
       };
     };

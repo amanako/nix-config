@@ -15,7 +15,7 @@
         impermanence = {
           btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
           persistenceDir = "/persist";
-          dontEnableUsers = false;
+          mountHomeDir = false;
         };
 
         display-managers.ly.batteryID = "BAT1";
@@ -47,7 +47,7 @@
         };
       };
 
-      security.sops.ageKeyFile = "/var/lib/sops-nix/key.txt";
+      security.sops-host.ageKeyFile = "/var/lib/sops-nix/main-key.txt";
     };
   };
 }

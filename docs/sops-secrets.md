@@ -30,14 +30,14 @@ an OpenRouter API key as the example.
 | `assets/.sops.yaml` | Recipients (age public keys) and per-directory `creation_rules`. Repo-wide. |
 | `assets/hosts/<hostname>/secrets/*.yaml` | Host-scoped encrypted secret files. |
 | `assets/users/<username>/secrets/*.yaml` | User-scoped encrypted secret files. |
-| `<~/path-to-age-key-file>` | **Private** age key. Conventionally `~/.config/sops/age/keys.txt`; can be specified via `settings.security.sops.ageKeyFile`. Not part of the repo. |
+| `<~/path-to-age-key-file>` | **Private** age key. Conventionally `~/.config/sops/age/keys.txt`; can be specified via `settings.security.sops-user.ageKeyFile`. Not part of the repo. |
 | `/etc/ssh/<key-file>` or `<path-to-age-key-file>` | Host key - private ssh key or age key; sops-nix derives the host's age recipient from it. Not part of the repo. |
 | `~/.config/sops-nix/secrets/<name>` | Symlink to the decrypted secret; points into `$XDG_RUNTIME_DIR/secrets.d/`. Not part of the repo. |
 
 ## One-time setup
 
 1. Generate user age key. Write it to the path the
-   repo expects — by default `user.settings.sops.security.ageKeyFile`. (look at [den-setup](#den-setup) below)
+   repo expects — by default `user.settings.sops-user.security.ageKeyFile`. (look at [den-setup](#den-setup) below)
    For example:
 
    ```sh
@@ -63,8 +63,11 @@ an OpenRouter API key as the example.
 
    > One advantage of generating age key for host as well is that you don't need to have `/etc/ssh` mounted as filesystem like
    > with age key file approach where only key is enough to persist
-   > *NOTE: For users of impermanence save the age key file directly within persisted directory*
-   > After that in setup reference non-persistent key folder.
+   > Just reference key folder in ageKeyFile.
+
+   > *NOTE: For ephemeral hosts save the age key file directly within persisted directory
+   > After that run rebuild-switch (`just rs`) to rebuild configuration in place*
+   > This way file will be copied to regular directory and available after reboot
 
 3. Paste those public keys into `assets/.sops.yaml` as the `&user_...` /
    `&host_...` anchors under `keys:`, referencing them in the `creation_rules`
@@ -104,33 +107,33 @@ repo root will not find the config.
 
 1. For hosts
 
-- Include `den.aspects.security.sops`
-- Provide `ageKeyFile` or `sshKeyPaths` in `host.settings.sops.security`
+- Include `den.aspects.security.sops-host`
+- Provide `ageKeyFile` or `sshKeyPaths` in `host.settings.sops-host.security`
 
-2. For users (effective only if host has completed previous steps)
+2. For users
 
-- Include `den.aspects.security.sops`
-- Provide `ageKeyFile` or `sshKeyPaths` (either way must not have password set)
+- Include `den.aspects.security.sops-user`
+- Provide `ageKeyFile` (must not have password set)
 
 ### Expose secret
 
-As for example: Declare the secret and point it at the encrypted file. Because this is a
+As for example: Declare the secret and point it at the encrypted file. Because api key is a
 user-level secret, declare it in a `hm` block (e.g.
-`modules/users/lunar-scar/aspect/lunar-scar.nix`):
+`modules/users/lunar-scar/aspect/secrets.nix`):
 
 ```nix
 hm = {user, ...}: {
   # ...existing config...
 
   sops.secrets.openrouter-api-key = {
-    sopsFile = user.settings.security.sops.secretsDir + "/openrouter-api-key.yaml";
+    sopsFile = user.settings.security.sops-user.secretsDir + "/openrouter-api-key.yaml";
   };
 }
 ```
 
 For now I advise not using defaultSopsFile for better control and easier management, so pass `sopsFile` explicitly for each secret.
 For a **host** secret, declare it in a
-`nixos` block instead — the same `sops.secrets.<name>` option applies.
+`nixos` block included by host instead — the same `sops.secrets.<name>` option applies.
 
 ### Use in aspect
 

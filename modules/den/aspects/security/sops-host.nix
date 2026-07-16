@@ -1,11 +1,12 @@
 {
+  den,
   lib,
   inputs,
   ...
 }: {
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
 
-  den.aspects.security.sops = let
+  den.aspects.security.sops-host = let
     inherit
       (lib)
       mkIf
@@ -13,7 +14,7 @@
       types
       ;
   in {
-    description = "Sops-nix secret management.";
+    description = "Sops-nix secret management for machine secrets.";
 
     hostSettings = {host, ...}: {
       sshKeyPaths = mkOption {
@@ -68,68 +69,25 @@
       };
     };
 
-    userSettings = {user, ...}: {
-      ageKeyFile = mkOption {
-        type = types.str;
-        example = ".config/sops/age/keys.txt";
-        description = ''
-          Age key file the user decrypts secrets with, relative to user's home directory.
-          Should be specified WITHOUT persist mounpoint.
-          Must be set explicitly; there is no default.
-        '';
-      };
-
-      defaultSopsFile = mkOption {
-        type = types.nullOr types.path;
-        default = null;
-        example = "${user.repoRoot}/assets/users/${user.userName}/secrets/default.yaml";
-        description = ''
-          Default sops file for the user's secrets. With host/user-scoped secret
-          directories there is no single default, so set this per user or pass
-          `sopsFile` on each secret.
-        '';
-      };
-
-      # Store-imported directory of this user's encrypted secrets. The path is
-      # relative to this aspect module so Nix copies the files into the store
-      # (sops-install-secrets reads them inside a pure-eval sandbox, where an
-      # absolute `repoRoot` path is invisible). Reference a secret with
-      # `sopsFile = user.settings.security.sops.secretsDir + "/name.yaml"`.
-      secretsDir = mkOption {
-        type = types.path;
-        default = ../../../../assets/users/${user.userName}/secrets;
-        description = ''
-          Directory of this user's encrypted secret files, imported into the Nix
-          store. Convenience tool. Use it to set `sopsFile` on user secrets without hardcoding a
-          relative path in every declaration.
-        '';
-      };
-    };
-
-    persistUser = {user, ...}: {
-      files = [
-        user.settings.security.sops.ageKeyFile
-      ];
-    };
-
     persistSystem = {host, ...}: let
-      cfg = host.settings.security.sops;
+      cfg = host.settings.security.sops-host;
     in {
       directories = lib.optionals (cfg.sshKeyPaths != null) [
         "/etc/ssh"
       ];
 
       files = lib.optionals (cfg.ageKeyFile != null) [
-        {
-          # Attempt to persist via symlink to prevent "file already exists at ... error"
-          file = cfg.ageKeyFile;
-        }
+        cfg.ageKeyFile
       ];
     };
 
     nixos = {host, ...}: let
-      cfg = host.settings.security.sops;
-      imp = host.settings.core.impermanence;
+      cfg = host.settings.security.sops-host;
+      # Prefix the path for ephemeral hosts where necessary
+      persistenceDir =
+        den.aspects.core.impermanence
+        |> host.hasAspect
+        |> lib.flip lib.optionalString host.settings.core.impermanence.persistenceDir;
     in {
       imports = [inputs.sops-nix.nixosModules.sops];
 
@@ -149,38 +107,17 @@
         age.sshKeyPaths =
           lib.optionals (cfg.sshKeyPaths != null)
           cfg.sshKeyPaths
-          |> map (path: imp.persistenceDir + path);
+          |> map (path: persistenceDir + path);
 
         age.keyFile =
           mkIf
           (cfg.ageKeyFile != null)
-          "${imp.persistenceDir}${cfg.ageKeyFile}";
+          "${persistenceDir}${cfg.ageKeyFile}";
 
         defaultSopsFile =
           mkIf
           (cfg.defaultSopsFile != null)
           cfg.defaultSopsFile;
-      };
-    };
-
-    hm = {
-      host,
-      user,
-      config,
-      ...
-    }: let
-      cfg = user.settings.security.sops;
-      absolutePath = config.home.homeDirectory + "/" + cfg.ageKeyFile;
-    in {
-      imports = [inputs.sops-nix.homeManagerModules.sops];
-
-      # Export a variable to be able to decrypt files when changing/re-crypting passwords
-      home.sessionVariables."SOPS_AGE_KEY_FILE" = absolutePath;
-
-      sops = {
-        # Since path is relative to home directory append one / for full path
-        age.keyFile = host.settings.core.impermanence.persistenceDir + absolutePath;
-        defaultSopsFile = mkIf (cfg.defaultSopsFile != null) cfg.defaultSopsFile;
       };
     };
   };

@@ -11,16 +11,15 @@
         OPENROUTER_API_KEY = "openrouter-api-key";
       };
     in {
-      # declare each secret (decrypted at activation via the age key)
       sops.secrets =
         lib.mapAttrs' (envVar: secret:
           lib.nameValuePair secret {
-            sopsFile = user.settings.security.sops.secretsDir + "/${secret}.yaml";
+            sopsFile = user.settings.security.sops-user.secretsDir + "/${secret}.yaml";
           })
         secretEnv
         // {
           anki-key = {
-            sopsFile = user.settings.security.sops.secretsDir + "/anki-key.yaml";
+            sopsFile = user.settings.security.sops-user.secretsDir + "/anki-key.yaml";
           };
         };
 

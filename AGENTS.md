@@ -97,6 +97,27 @@ class via `den.lib.policy.route`. Write `hm = ...` in aspects; it becomes
 `homeManager`. User schema default classes are `["homeManager"]`
 (`modules/den/schema/user/default.nix`).
 
+## Cross-scope membership checks (`hasAspect` is projected)
+
+`host.hasAspect` / `user.hasAspect` are **scope-projected**: inside a class
+lambda that runs at a *descendant* scope (e.g. an `hm` lambda for a user aspect,
+or any lambda bound to a child entity), `host.hasAspect X` answers "is `X`
+delivered INTO this active scope (i.e. provided to this user)?", NOT "does the
+host include `X`?". Concretely, `den.aspects.core.impermanence` is included at
+host level but only `provides.to-users` its `persist-user-collector` (not the
+aspect itself), so `host.hasAspect den.aspects.core.impermanence` returns
+`false` from a user-scope `hm` even though the host clearly has it. This is a
+classic source of "works at host scope, blank at user scope" bugs.
+
+For reliable, scope-invariant membership checks prefer one of:
+
+- `lib.hasAttrByPath ["<aspect>" "..."] host.settings` (or `user.settings`).
+  The `settings` namespace reflects the actually-generated settings and is safe
+  to probe (returns `false` when the path is absent), unlike `host.hasAspect`.
+- Reading the **concrete effect** the aspect produces, e.g.
+  `config.home.persistence` for impermanence — also scope-invariant and needs no
+  membership query at all.
+
 ## Namespaces
 
 External flake projects that provide many aspects (zen-browser, niri, noctalia,

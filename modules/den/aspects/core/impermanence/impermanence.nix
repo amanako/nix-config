@@ -21,7 +21,7 @@
         description = "Directory for impermanence persistent storage.";
       };
 
-      dontEnableUsers = mkOption {
+      mountHomeDir = mkOption {
         type = types.bool;
         default =
           host.users
@@ -29,9 +29,11 @@
           |> builtins.any (_: true);
         example = false;
         description = ''
-          Whether to not enable impermanence module for users, that is impermanence for `/home` directory.
+          Whether to mount `/home` directory as persistent, for users of the host.
+          A safe option for ones who don't like to experiment too much.
+          Defaults to true if host has at least one user.
           Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
-          which is done automatically when `den.aspects.core.impermanence` aspect is included.
+          which is done automatically when `den.aspects.core.impermanence` aspect is included and this option is set to true.
         '';
       };
     };
@@ -78,7 +80,7 @@
         {
           "${cfg.persistenceDir}".neededForBoot = true;
         }
-        // lib.optionalAttrs (cfg.dontEnableUsers) {
+        // lib.optionalAttrs (cfg.mountHomeDir) {
           "/home".neededForBoot = true;
         };
 

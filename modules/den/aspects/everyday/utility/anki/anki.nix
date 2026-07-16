@@ -28,7 +28,7 @@
 
           sync = let
             wantsSync =
-              user.hasAspect den.aspects.security.sops
+              user.hasAspect den.aspects.security.sops-user
               && builtins.hasAttr "anki-key" config.sops.secrets;
           in
             lib.optionalAttrs wantsSync {
