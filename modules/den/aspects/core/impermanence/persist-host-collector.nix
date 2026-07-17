@@ -1,7 +1,7 @@
 {
-  den.aspects.core.impermanence.persist-system-collector = {
+  den.aspects.core.impermanence.persist-host-collector = {
     nixos = {
-      persistSystem,
+      persistHost,
       host,
       lib,
       ...
@@ -10,11 +10,11 @@
     in {
       environment.persistence."${cfg.persistenceDir}" = {
         directories =
-          persistSystem
+          persistHost
           |> lib.concatMap (entries: entries.directories or [])
           |> lib.unique;
         files =
-          persistSystem
+          persistHost
           |> lib.concatMap (entries: entries.files or [])
           |> lib.unique;
       };

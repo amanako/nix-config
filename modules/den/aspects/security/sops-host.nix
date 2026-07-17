@@ -69,7 +69,7 @@
       };
     };
 
-    persistSystem = {host, ...}: let
+    persistHost = {host, ...}: let
       cfg = host.settings.security.sops-host;
     in {
       directories = lib.optionals (cfg.sshKeyPaths != null) [

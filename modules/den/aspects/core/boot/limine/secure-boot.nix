@@ -1,6 +1,6 @@
 {lib, ...}: {
   den.aspects.core.boot.limine.secure-boot = {
-    persistSystem.directories = [
+    persistHost.directories = [
       "/var/lib/sbctl"
     ];
 

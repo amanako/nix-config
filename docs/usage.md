@@ -69,7 +69,7 @@ Some users and hosts are provided as a starting point. Please reference [`users`
 There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is supposed to represent directory of cloned repo, and should be set upfront.
 Other than that some other options which are a must-have likely have an assertion forcing repo users to make a declaration.
 
-When using impermanence: to persist configuration add directory containing configuration to `persistSystem` / `persistUser` quirk, either with:
+When using impermanence: to persist configuration add directory containing configuration to `persistHost` / `persistUser` quirk, either with:
 
 ```
 persistUser.directories = [
@@ -84,7 +84,7 @@ persistUser.directories = [
 or
 
 ```
-persistSystem.directories = [
+persistHost.directories = [
   # Typical nixos configuration path
   "/etc/nixos"
 ;]

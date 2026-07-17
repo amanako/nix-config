@@ -40,14 +40,14 @@
 
     includes = [
       den.aspects.core.impermanence.btrfs
-      den.aspects.core.impermanence.persist-system-collector
+      den.aspects.core.impermanence.persist-host-collector
     ];
 
     provides.to-users.includes = [
       den.aspects.core.impermanence.persist-user-collector
     ];
 
-    persistSystem = {
+    persistHost = {
       directories = [
         # Without this dir all users/groups without specified
         # uids/gids will have them reassigned on reboot.

@@ -64,13 +64,13 @@ Consequences that are easy to get wrong:
 
 When several aspects contribute pieces to one result, den uses **quirks** instead
 of custom classes. A quirk is a declared data channel (e.g. `niriSettings`,
-`persistSystem`, `persistUser`, `zenUserSettings`). Individual aspects push data
+`persistHost`, `persistUser`, `zenUserSettings`). Individual aspects push data
 into the quirk name (a top-level key on the aspect attrset), and a **collector**
 aspect folds all contributions together and applies them.
 
 Key examples:
 
-- `den.quirks.persistUser` / `den.quirks.persistSystem` gather directories/files
+- `den.quirks.persistUser` / `den.quirks.persistHost` gather directories/files
   to persist under impermanence. Aspects set `persistUser.directories = [...]`;
   `modules/den/aspects/core/impermanence/persist-user-collector.nix` concatenates
   and de-duplicates everything and writes `home.persistence.<dir>`.
@@ -274,7 +274,7 @@ Subaspects are reachable by appending `.`, e.g.
 - **nixpkgs tracks `nixos-unstable`.** Expect frequent upstream churn; flake
   bumps land on `dev` first.
 - This config targets impermanence (tmpfs root) with persistent dirs collected
-  via the `persistSystem`/`persistUser` quirks. To keep a file/dir across reboots,
+  via the `persistHost`/`persistUser` quirks. To keep a file/dir across reboots,
   add it to the relevant quirk (see `docs/usage.md`), not by editing the module
   system directly.
 - **Inclusion is the opt-in mechanism; do not add `enable` toggles.** Per
