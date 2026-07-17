@@ -12,8 +12,8 @@ three kinds of modules under `modules/`:
 
 - **Aspects** (`modules/den/aspects/**` and `modules/{hosts,users}/*/aspect/**`)
   are reusable, composable units of configuration. An aspect is any module that
-  sets `den.aspects.<path> = { ... }`. Aspects declare what they *include*, what
-  they *configure* (per class), and what *settings/quirks* they expose.
+  sets `den.aspects.<path> = { ... }`. Aspects declare what they _include_, what
+  they _configure_ (per class), and what _settings/quirks_ they expose.
 - **Entries** (`modules/{hosts,users}/*/entry/**`) instantiate concrete hosts and
   users and compose aspects via attribute paths:
   - Host: `den.hosts.<architecture>.<hostname> = { ... }`
@@ -40,7 +40,12 @@ Hosts and users expose a single typed `settings` option whose sub-options are
 own settings under `hostSettings` (host-relevant) or `userSettings` (user-relevant),
 each a plain attrset of `mkOption`s (or a function `{host, ...}` / `{user, ...}`
 that returns one). `modules/den/schema/{host,user}/settings.nix` walks the aspect
-tree and builds the matching submodule.
+tree and builds the matching submodule. The generator there is adapted from
+sini's
+[Typed per-aspect settings in Den](https://gist.github.com/sini/c67ccc0d38983e6636ba408e042e36be)
+how-to (which covers a single `settings` key on host); this repo generalizes it
+to the `userSettings`/`hostSettings` reserved keys plus an inclusion-pruning
+layer.
 
 Consequences that are easy to get wrong:
 
@@ -53,8 +58,15 @@ Consequences that are easy to get wrong:
 - Settings are **pruned**: only aspects the entity (and its host) actually
   includes produce settings. If you add an aspect to `includes`, its settings
   appear; remove it and they vanish from the type.
-- Aspects read their settings inside their class lambda via the entity arg, e.g.
-  `cfg = host.settings.core.impermanence;` (see
+- **Declaration is decoupled from consumption.** An aspect that sets
+  `userSettings`/`hostSettings` does **not** have to read it back, and does not
+  have to do so inside an `hm`/`nixos` lambda. Any aspect can read any
+  `settings.<aspectPath>.<option>` by attrpath — `userSettings` is effectively a
+  typed, tree-addressable config bus. Example: `awww.script` declares settings
+  while the sibling `awww.service-settings` reads them (and cross-references them
+  as defaults); `script`'s own `hm` reads both. See `docs/settings.md`.
+- Aspects commonly read their _own_ settings inside their class lambda via the
+  entity arg, e.g. `cfg = host.settings.core.impermanence;` (see
   `modules/den/aspects/core/impermanence/impermanence.nix:67`), or
   `cfg = user.settings.basic.git;` (see `modules/den/aspects/basic/git.nix:34`).
 - `hostSettings` / `userSettings` are **reserved key names** (`den.reservedKeys`);
@@ -100,7 +112,7 @@ class via `den.lib.policy.route`. Write `hm = ...` in aspects; it becomes
 ## Cross-scope membership checks (`hasAspect` is projected)
 
 `host.hasAspect` / `user.hasAspect` are **scope-projected**: inside a class
-lambda that runs at a *descendant* scope (e.g. an `hm` lambda for a user aspect,
+lambda that runs at a _descendant_ scope (e.g. an `hm` lambda for a user aspect,
 or any lambda bound to a child entity), `host.hasAspect X` answers "is `X`
 delivered INTO this active scope (i.e. provided to this user)?", NOT "does the
 host include `X`?". Concretely, `den.aspects.core.impermanence` is included at
@@ -120,12 +132,15 @@ For reliable, scope-invariant membership checks prefer one of:
 
 ## Namespaces
 
-External flake projects that provide many aspects (zen-browser, niri, noctalia,
+Larger flake projects that provide many aspects (zen-browser, niri, noctalia,
 nixvim) are brought in as den **namespaces** via `inputs.den.namespace "name" false`
 (e.g. `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix:8`).
 Namespaces expose a `.full` aggregator (`zen-browser.full`, `niri.full`,
 `noctalia.full`) and `._` (all direct subaspects). Include these via
-`includes` rather than listing every sub-aspect.
+`includes` rather than listing every sub-aspect. Namespace aspects are also
+supported by the settings generator: their `userSettings`/`hostSettings` are
+folded in from `den.ful` and pruned into the entity's `settings` tree like local
+aspects (see `docs/settings.md` "Namespace aspects").
 
 ## `provides.to-users`
 
@@ -154,16 +169,16 @@ updated by `just fupdate` and committed by CI (see below).
 
 `just` is the primary entry point. Recipes (`just --list`):
 
-| Recipe | Alias | Purpose |
-|---|---|---|
-| `rebuild-switch host=hostname` | `rs` | `nh os switch` (activate now, set default boot) |
-| `rebuild-boot host=hostname` | `rb` | `nh os boot` (activate after reboot) |
-| `disko host=hostname` | `d` | Run disko partitioning for host |
-| `vm host=hostname` | | Build/run host VM |
-| `repl` | `r` | `nix repl` on this flake |
-| `fwrite` | `fw` | Regenerate `flake.nix` from `flake-file` inputs |
-| `fupdate *inputs` | `fu` | `fwrite` + `nix flake update` + `fwrite` |
-| `pull-flake branch="main"` | `pf` | Restore `flake.nix`/`flake.lock` from a remote branch |
+| Recipe                         | Alias | Purpose                                               |
+| ------------------------------ | ----- | ----------------------------------------------------- |
+| `rebuild-switch host=hostname` | `rs`  | `nh os switch` (activate now, set default boot)       |
+| `rebuild-boot host=hostname`   | `rb`  | `nh os boot` (activate after reboot)                  |
+| `disko host=hostname`          | `d`   | Run disko partitioning for host                       |
+| `vm host=hostname`             |       | Build/run host VM                                     |
+| `repl`                         | `r`   | `nix repl` on this flake                              |
+| `fwrite`                       | `fw`  | Regenerate `flake.nix` from `flake-file` inputs       |
+| `fupdate *inputs`              | `fu`  | `fwrite` + `nix flake update` + `fwrite`              |
+| `pull-flake branch="main"`     | `pf`  | Restore `flake.nix`/`flake.lock` from a remote branch |
 
 Both `hostname` and `repo-root` default to the current host (`uname -n`) and git
 root. All `nix`/`nh` invocations pass `--accept-flake-config` because `flake.nix`
@@ -198,6 +213,7 @@ The GitHub Action builds `."#all"` and pushes to the `amanako` cachix cache
 
 <!-- toc -->
 
+  * [Do not manually run the formatter](#do-not-manually-run-the-formatter)
 - [Style conventions (from `docs/design.md`)](#style-conventions-from-docsdesignmd)
 - [Adding things](#adding-things)
 - [Important gotchas](#important-gotchas)
@@ -205,10 +221,21 @@ The GitHub Action builds `."#all"` and pushes to the `amanako` cachix cache
 
 <!-- tocstop -->
 
-` blocks in `*.md` (README and docs).
+`blocks in`\*.md` (README and docs).
+
 - `woodpecker-cli lint` validates `.woodpecker/*.yml`.
 
 Keep markdown TOC blocks intact so the hook can update them.
+
+### Do not manually run the formatter
+
+Do **not** invoke `alejandra`/`stylua`/`prettier` yourself (e.g. `nix run
+nixpkgs#alejandra -- file.nix`). Formatting is enforced automatically by the
+pre-commit hook on every commit, and CI re-runs it. Manually formatting risks
+producing output that diverges from the hook's pinned tool versions, or leaving
+partial commits that then fail CI. Just write code in a reasonable style; the
+hook fixes the rest. If you want to verify formatting before committing, run
+`pre-commit run --all-files` rather than calling a formatter directly.
 
 ## Style conventions (from `docs/design.md`)
 

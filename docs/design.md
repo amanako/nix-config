@@ -8,6 +8,7 @@ Outline some decisions and choices made during development for anyone willing to
   * [File Organization](#file-organization)
   * [Aspect Inclusion](#aspect-inclusion)
   * [Quirks as Top Priority](#quirks-as-top-priority)
+  * [Settings namespace](#settings-namespace)
   * [Documentation](#documentation)
   * [Leveraging Den Capabilities](#leveraging-den-capabilities)
   * [Specific Practices](#specific-practices)
@@ -30,7 +31,7 @@ Outline some decisions and choices made during development for anyone willing to
 
 - **Primary focus:** Including aspects should mean opt-in, not including / excluding should mean opt-out
 - **Fine‑grained control:** Optional manual overrides / special cases handled with host and user schema options
-Ideally existing aspects should not be touched, only new ones made to override/build upon them.
+  Ideally existing aspects should not be touched, only new ones made to override/build upon them.
 
 ### Quirks as Top Priority
 
@@ -39,6 +40,17 @@ However upon some discussion I came to realize quirks overpower them with simpli
 in situations where multiple aspects contribute to some result(which is usually assembled by some collector aspect).
 
 Conversation leading to this conclusion can be found [here](https://github.com/denful/den/discussions/590).
+
+### Settings namespace
+
+Aspects expose typed, per-entity options through `userSettings` / `hostSettings`
+(reserved keys). den auto-generates a `settings` submodule mirroring the aspect
+tree, pruned to what the entity includes. Declaration is decoupled from
+consumption: an aspect may declare settings that a _different_ aspect reads by
+attrpath. This is distinct from quirks, which fold fragments from many aspects
+into one result. The generator is adapted from sini's
+[Typed per-aspect settings in Den](https://gist.github.com/sini/c67ccc0d38983e6636ba408e042e36be)
+how-to; see [settings.md](settings.md).
 
 ### Documentation
 
@@ -57,7 +69,7 @@ Conversation leading to this conclusion can be found [here](https://github.com/d
 - Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(Inspiration: https://github.com/sini/nix-config)
 
 - Prefer using [inherit] over [with], expect in basic list expressions such as `with pkgs`.
-If there are multiple expressions you want to inherit assign one per row.
+  If there are multiple expressions you want to inherit assign one per row.
 - Use [inherit] to either avoid repetition or shorten long names (such as `cfg` attribute used with aspect settings).
   Also if , as an example, you want to use `inherit (lib) mkOption` to avoid rewriting `lib` every time,
   you may as well inherit other `lib` attrset values you use, for the sake of consistency.

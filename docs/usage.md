@@ -8,6 +8,7 @@ It isn't 100% foolproof at the moment so remain cautious.
 - [Cloning repo](#cloning-repo)
 - [Making a config](#making-a-config)
 - [Build steps](#build-steps)
+- [Settings (`userSettings` / `hostSettings`)](#settings-usersettings--hostsettings)
 - [Secure boot setup](#secure-boot-setup)
 
 <!-- tocstop -->
@@ -43,11 +44,11 @@ Following instruction apply equally to both of them, with difference which is ex
 Duties are split among 2 folders: `entry` and `aspect`(optional), where:
 
 1. `entry`: must begin with `den.hosts.${architecture}.${hostname}` for hosts and `den.hosts.${architecture}.${hostname}.users.${username}` for users:
-    - Is made for den's definition and options which is tasked with actually creating host/user. Where applicable it should be prioritized over `aspect`.
-    - Additionally, `userSettings` and `hostSettings` overrides for particular aspects are provided, and they can be specified here by accessing settings.
+   - Is made for den's definition and options which is tasked with actually creating host/user. Where applicable it should be prioritized over `aspect`.
+   - Additionally, `userSettings` and `hostSettings` overrides for particular aspects are provided, and they can be specified here by accessing settings.
 2. `aspect`: must begin with `den.aspects.${username}` for users and `den.aspects.${hostname}`:
-    - Main purpose in inclusion of aspects user would like to use.
-    - Is reserved for potential overrides for each of classes or quirks<br>
+   - Main purpose in inclusion of aspects user would like to use.
+   - Is reserved for potential overrides for each of classes or quirks<br>
 
 Also, den provides direct subaspects which can be used to modularize config by appending a `.` and specifying subaspect of an aspect.
 Take a look at [`hosts`](../modules/hosts) specifying their hardware requirements separately or users to find those and other examples.<br>
@@ -124,6 +125,14 @@ just rb
 ```
 
 will build host using [nh].
+
+## Settings (`userSettings` / `hostSettings`)
+
+Aspects advertise typed options via `userSettings` / `hostSettings`, which den
+auto-generates into the `user.settings` / `host.settings` namespace. See
+[settings.md](settings.md) for the full mechanism, including that declaration is
+**decoupled from consumption** (any aspect can read any `settings.<path>`), and
+how it differs from quirks.
 
 ## Secure boot setup
 
