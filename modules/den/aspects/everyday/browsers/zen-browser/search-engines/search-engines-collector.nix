@@ -1,6 +1,6 @@
 {
   zen-browser.searchEnginesCollector = {
-    zenUserSettings = {
+    zenProfileSettings = {
       zenSearchEngines,
       pkgs,
       lib,

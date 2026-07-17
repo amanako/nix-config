@@ -30,7 +30,7 @@
       else "";
   in {
     includes = [
-      zen-browser.userSettingsCollector
+      zen-browser.profileSettingsCollector
     ];
 
     niriSettings = let

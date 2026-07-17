@@ -177,7 +177,7 @@ namespace-addressable option channel keyed by aspect attrpath.
 | Mechanism                       | Use when                                                                                                    | Shape                                                                                                                        |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `userSettings` / `hostSettings` | An aspect exposes a **typed, named option** (or attrset/submodule of them) that users configure per entity. | One declared option per setting; addressed as `settings.<path>.<name>`.                                                      |
-| Quirks (`den.quirks.*`)         | **Many aspects each contribute a fragment** that a collector folds into one result.                         | A data channel (`persistUser`, `niriSettings`, `zenUserSettings`, …) collected via `lib.foldl lib.recursiveUpdate` / concat. |
+| Quirks (`den.quirks.*`)         | **Many aspects each contribute a fragment** that a collector folds into one result.                         | A data channel (`persistUser`, `niriSettings`, `zenProfileSettings`, …) collected via `lib.foldl lib.recursiveUpdate` / concat. |
 
 See also `AGENTS.md` for the scope-projection caveat (`hasAspect` vs. probing
 `settings`) when reading settings from a descendant scope.

@@ -3,7 +3,7 @@
     # reference: about:config in zen
     # some of my findings for clean fuss-free experience
 
-    zenUserSettings = {lib, ...}: {
+    zenProfileSettings = {lib, ...}: {
       settings = let
         urlbarDontSuggestList = [
           "addons"

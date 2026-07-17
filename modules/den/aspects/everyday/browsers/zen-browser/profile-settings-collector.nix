@@ -1,9 +1,9 @@
 {
-  zen-browser.userSettingsCollector = {
+  zen-browser.profileSettingsCollector = {
     # Reference for settings: https://zen-browser-flake.nshard.com
 
     hm = {
-      zenUserSettings,
+      zenProfileSettings,
       zenSearchEngines,
       user,
       lib,
@@ -13,7 +13,7 @@
       ...
     }: {
       programs.zen-browser.profiles.${user.userName} =
-        zenUserSettings
+        zenProfileSettings
         # Handle function by providing required lambda parameters
         # Handle as static aspects otherwise
         |> map (

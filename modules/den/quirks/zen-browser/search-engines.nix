@@ -1,7 +1,7 @@
 {
   den.quirks.zenSearchEngines = {
     description = ''
-      Search engines built by zen user settings collector.
+      Search engines built by zen profile settings collector.
       They should be made an attribute named after engine with the following:
 
       Name: string - name displayed when searching with the engine

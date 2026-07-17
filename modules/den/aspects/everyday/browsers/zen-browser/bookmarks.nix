@@ -1,6 +1,6 @@
 {
   zen-browser.bookmarks = {
-    zenUserSettings.bookmarks = {
+    zenProfileSettings.bookmarks = {
       settings = [];
     };
   };

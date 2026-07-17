@@ -2,12 +2,12 @@
   zen-browser.spaces.examples = {
     description = ''
       Example aspect demonstrating usage of zen containers.
-      Using zenUserSettings quirk automatically assembles and
+      Using zenProfileSettings quirk automatically assembles and
       builds all of them. Since they are commonly used with containers,
       it is recommended to take a look at `zen-browser.containers.example` aspect too.
     '';
 
-    zenUserSettings = {
+    zenProfileSettings = {
       spacesForce = true;
 
       spaces = {

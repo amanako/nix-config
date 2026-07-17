@@ -4,7 +4,7 @@
       "Additional zen browser settings for lunar-scar."
     '';
 
-    zenUserSettings = {
+    zenProfileSettings = {
       settings = {
         "font.cjk_pref_fallback_order" = "ja,zh-cn,zh-hk,zh-tw,ko";
         "font.default.ja" = "serif";

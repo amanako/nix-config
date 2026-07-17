@@ -76,7 +76,7 @@ Consequences that are easy to get wrong:
 
 When several aspects contribute pieces to one result, den uses **quirks** instead
 of custom classes. A quirk is a declared data channel (e.g. `niriSettings`,
-`persistHost`, `persistUser`, `zenUserSettings`). Individual aspects push data
+`persistHost`, `persistUser`, `zenProfileSettings`). Individual aspects push data
 into the quirk name (a top-level key on the aspect attrset), and a **collector**
 aspect folds all contributions together and applies them.
 
@@ -89,9 +89,9 @@ Key examples:
 - `den.quirks.niriSettings` gathers `programs.niri.settings` fragments; aspects
   set `niriSettings.<attr> = ...` (see
   `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix:37`).
-- `zen-browser.userSettingsCollector` folds a list of setting aspects (some of
+- `zen-browser.profileSettingsCollector` folds a list of setting aspects (some of
   which are functions receiving `{pkgs, lib, inputs', zenSearchEngines}`) via
-  `lib.foldl lib.recursiveUpdate {}` (`modules/den/aspects/everyday/browsers/zen-browser/user-settings-collector.nix`).
+  `lib.foldl lib.recursiveUpdate {}` (`modules/den/aspects/everyday/browsers/zen-browser/profile-settings-collector.nix`).
 
 Prefer quirks over guard-logic custom classes whenever multiple aspects feed one
 output. See `docs/design.md` "Quirks as Top Priority".
