@@ -292,6 +292,15 @@ Subaspects are reachable by appending `.`, e.g.
   embedded `nixConfig` enables pipe-operators and trusted binary caches
   (`amanako.cachix.org`, `nix-community`, `noctalia`, `niri`, `chaotic`, ...).
   Without it, evaluation fails or re-downloads everything.
+- **Pipe operators and curried `lib` functions don't mix.** `x |> lib.mapAttrs'
+  f` parses as `(lib.mapAttrs' f) x` *only* when `f` is fully applied; writing
+  `x |> (attrs: lib.mapAttrs' f attrs)` leaves a **partially-applied function**
+  as the pipeline result and fails with `expected a set but found a function`
+  (seen at `modules/users/lunar-scar/aspect/secrets.nix`). When a `lib` higher-
+  order function needs both a fn and the attrset, pipe into a lambda that fully
+  applies it and returns the *result*, e.g.
+  `secretEnv |> lib.mapAttrsToList (k: v: ...) |> builtins.listToAttrs`, or
+  simply build the attrset in a `let` instead of forcing it through `|>`.
 - **`flake.nix`/`flake.lock` are committed and CI-gated.** CI regenerates
   `flake.nix` via `write-flake` and runs `nix flake check -L` on `main`/`dev`.
   Weekly Woodpecker cron bumps `flake.lock` into a `weekly-flake-update` branch and
