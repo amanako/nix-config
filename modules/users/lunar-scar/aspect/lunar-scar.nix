@@ -16,13 +16,20 @@ in {
       den.aspects.lunar-scar._
       den.aspects.basic.git
 
+      # `everyday.utility` is a folder of sibling top-level aspects, not a
+      # parent aspect with sub-keys, so `._` resolves to nothing here and will
+      # not surface any of them. Each utility aspect must be included by its
+      # full attrpath for its userSettings/hm to activate (this is the intended
+      # opt-in mechanism — settings are pruned to included aspects).
+      # TODO: add something so that utility._ includes anki settings
       den.aspects.everyday.utility._
+
       den.aspects.everyday.wallpaper-managers.awww
 
       den.aspects.dev.terminal.zellij
       den.aspects.dev.terminal.kitty
       den.aspects.dev.terminal.yazi
-      den.aspects.dev.terminal.llm-agents
+      den.aspects.dev.terminal.vix
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._
