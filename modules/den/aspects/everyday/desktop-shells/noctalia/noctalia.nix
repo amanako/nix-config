@@ -1,4 +1,5 @@
 {
+  den,
   inputs,
   noctalia,
   ...
@@ -34,6 +35,15 @@
       This is the new v5 version which is currently in beta phase.
       It is recommended to use this version.
     '';
+
+    # Don't enable bar for users who don't include corresponding aspect
+    includes = [
+      (
+        den.lib.policy.when ({user, ...}: !user.hasAspect noctalia.bar) {
+          hm.programs.noctalia.settings.bar.default.enabled = false;
+        }
+      )
+    ];
 
     stylixHMSettings.targets."noctalia".enable = false;
 
