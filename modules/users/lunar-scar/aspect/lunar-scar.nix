@@ -22,7 +22,12 @@ in {
       # full attrpath for its userSettings/hm to activate (this is the intended
       # opt-in mechanism — settings are pruned to included aspects).
       # TODO: add something so that utility._ includes anki settings
-      den.aspects.everyday.utility._
+      den.aspects.everyday.utility.anki
+      den.aspects.everyday.utility.localsend
+      den.aspects.everyday.utility.fcitx5
+      den.aspects.everyday.utility.mpv
+      den.aspects.everyday.utility.youtube-tui
+      den.aspects.everyday.utility.zathura
 
       den.aspects.everyday.wallpaper-managers.awww
 

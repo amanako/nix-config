@@ -1,8 +1,23 @@
-{den, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   den.aspects.everyday.utility.anki = {
     description = ''
       Anki is a flashcard program that helps you spend more time on challenging material, and less on what you already know.
     '';
+
+    # Supposing that one user doesn't want multiple profiles.
+    # Also recommended by upstream: https://docs.ankiweb.net/profiles.html#profiles.
+    userSettings = {user, ...}: {
+      profileName = lib.mkOption {
+        type = lib.types.str;
+        default = user.userName;
+        example = "flashcardMaster";
+        description = "Name to use for the Anki profile";
+      };
+    };
 
     persistUser.directories = [
       # Backups, addons and profiles
@@ -15,7 +30,9 @@
       config,
       pkgs,
       ...
-    }: {
+    }: let
+      cfg = user.settings.everyday.utility.anki;
+    in {
       programs.anki = {
         enable = true;
         addons = with pkgs; [
@@ -23,7 +40,7 @@
           ankiAddons.anki-connect
         ];
 
-        profiles."${user.userName}" = {
+        profiles."${cfg.profileName}" = {
           default = true;
 
           sync = let

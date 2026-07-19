@@ -28,16 +28,20 @@
         signingKey = "5CB7F18E1B212DB2";
       };
 
-      everyday.wallpaper-managers.awww = {
-        script.args = [
-          "--transition-fps 144"
-          "--transition-type wave"
-          "--transition-angle 225"
-          "--resize=fit"
-        ];
-        script.label = "wallpaper-mix";
+      everyday = {
+        utility.anki.profileName = "yoha";
 
-        service.calendar = "*-*-* *:00";
+        wallpaper-managers.awww = {
+          script.args = [
+            "--transition-fps 144"
+            "--transition-type wave"
+            "--transition-angle 225"
+            "--resize=fit"
+          ];
+          script.label = "wallpaper-mix";
+
+          service.calendar = "*-*-* *:00";
+        };
       };
 
       security.sops-user = {

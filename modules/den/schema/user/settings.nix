@@ -9,6 +9,8 @@
     types
     ;
 
+  # TODO: Currently not compatible with aspects included via ._ syntax
+
   # Keys that are NOT child aspects: structural keys (includes, nixos, …),
   # plus your framework's registered class names and quirk/extension keys.
   inherit (den.lib.aspects.fx.keyClassification) structuralKeysSet;
