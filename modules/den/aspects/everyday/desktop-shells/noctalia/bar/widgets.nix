@@ -1,5 +1,5 @@
 {
-  noctalia.settings.bar.widgets = {
+  noctalia.bar.widgets = {
     hm.programs.noctalia.settings.bar.widgets = {
       background_opacity = 0.65;
       border = "hover";

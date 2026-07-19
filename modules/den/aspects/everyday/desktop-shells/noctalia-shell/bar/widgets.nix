@@ -1,5 +1,5 @@
 {
-  noctalia-shell.settings.bar.widgets = {
+  noctalia-shell.bar.widgets = {
     hm.programs.noctalia-shell.settings.bar.widgets = {
       left = [
         {

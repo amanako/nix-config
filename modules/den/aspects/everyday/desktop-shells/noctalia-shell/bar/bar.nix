@@ -1,7 +1,7 @@
 {noctalia-shell, ...}: {
-  noctalia-shell.settings.bar = {
+  noctalia-shell.bar = {
     includes = [
-      noctalia-shell.settings.bar.widgets
+      noctalia-shell.bar.widgets
     ];
 
     hm.programs.noctalia-shell.settings.bar = {
