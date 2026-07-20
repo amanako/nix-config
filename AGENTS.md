@@ -288,6 +288,18 @@ Subaspects are reachable by appending `.`, e.g.
 - **Files must be `git add`ed.** `import-tree` ignores untracked files, so a new
   `.nix` module that isn't staged will not be loaded, producing confusing
   "option not found" or silently missing config.
+- **Reference executables via `pkgs`, never as bare strings.** Writing a
+  hardcoded binary name like `on-click = "waybar"` fails because the name is
+  not on `PATH` at evaluation/activation time (it resolves to nothing, so the
+  command silently does nothing). Prefer `lib.getExe pkgs.<pkg>` for the
+  package's main binary and `lib.getExe' pkgs.<pkg> "<bin>"` for a non-main
+  binary; fall back to `${pkgs.<pkg>}/bin/<name>` only when building a longer
+  command string. Avoid putting a package in `home.packages` just so a bare
+  binary name resolves — interpolate the derivation instead so it's tracked in
+  the closure and always available. See
+  `modules/den/aspects/everyday/bars/waybar.nix` (`wttrbar`, `brightnessctl`,
+  `btop`, `libnotify`, `blueman`, `networkmanager` all referenced via
+  `lib.getExe`/`lib.getExe'`).
 - **Always pass `--accept-flake-config`** (or rely on the dev shell). The
   embedded `nixConfig` enables pipe-operators and trusted binary caches
   (`amanako.cachix.org`, `nix-community`, `noctalia`, `niri`, `chaotic`, ...).

@@ -81,7 +81,7 @@ how-to; see [settings.md](settings.md).
   5. (readOnly)
 - Leave out default to signal the user an option should be set
 - Write `description` as a proper sentence ending with a period (`.`). Use `''...''` for multi‑line text and `"..."` for a single line
-- Make aspects themselves static(plain attrset) and configure lambda in shorter scope, for `nixos` or `hm` classes.<br>
+- **Make aspects themselves static(plain attrset)** and configure **lambda in shorter scope**, for `nixos` or `hm` classes.<br>
   One exception to this "shorter scope" is `lib` which can be used in file scope if den needs it (that is module taking in lambda `{ lib, ...}` at file level).
   If this is the case, redeclartion of `{lib, ...}` within shorter scopes is redundant.
 
