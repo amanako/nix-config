@@ -20,7 +20,9 @@
           size = 14;
         };
 
-        enableGitIntegration = user.hasAspect den.aspects.basic.git;
+        enableGitIntegration =
+          den.aspects.dev.shell-tools.git
+          |> user.hasAspect;
         shellIntegration.enableFishIntegration = true;
         shellIntegration.mode = "enabled";
 

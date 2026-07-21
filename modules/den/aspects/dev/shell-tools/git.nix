@@ -1,5 +1,5 @@
 {lib, ...}: {
-  den.aspects.basic.git = let
+  den.aspects.dev.shell-tools.git = let
     inherit
       (lib)
       mkOption
@@ -31,7 +31,7 @@
     };
 
     hm = {user, ...}: let
-      cfg = user.settings.basic.git;
+      cfg = user.settings.dev.shell-tools.git;
     in {
       programs.git = {
         enable = true;

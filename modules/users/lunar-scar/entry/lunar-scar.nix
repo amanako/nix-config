@@ -19,15 +19,6 @@
         avatarFilename = "bear.png";
       };
 
-      basic.git = let
-        username = "abyssal-twilight";
-      in {
-        inherit username;
-        # Tip from: https://docs.codeberg.org/git/configuring-git
-        email = "${username}@noreply.codeberg.org";
-        signingKey = "5CB7F18E1B212DB2";
-      };
-
       everyday = {
         utility.anki.profileName = "yoha";
 
@@ -48,9 +39,20 @@
         ageKeyFile = "keys/age/key.txt";
       };
 
-      dev.shell-tools.jujutsu.signing = {
-        backend = "gpg";
-        key = "5CB7F18E1B212DB2";
+      dev.shell-tools = {
+        git = let
+          username = "abyssal-twilight";
+        in {
+          inherit username;
+          # Tip from: https://docs.codeberg.org/git/configuring-git
+          email = "${username}@noreply.codeberg.org";
+          signingKey = "5CB7F18E1B212DB2";
+        };
+
+        jujutsu.signing = {
+          backend = "gpg";
+          key = "5CB7F18E1B212DB2";
+        };
       };
     };
   };

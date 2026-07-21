@@ -15,8 +15,8 @@
     in {
       username = mkOption {
         default =
-          user.settings.basic.git.username
-          |> lib.optionalString (den.aspects.basic.git |> user.hasAspect);
+          user.settings.dev.shell-tools.git.username
+          |> lib.optionalString (den.aspects.dev.shell-tools.git |> user.hasAspect);
         example = "git";
         type = types.str;
         description = "Name to use for jj version control system";
@@ -24,8 +24,8 @@
 
       email = mkOption {
         default =
-          user.settings.basic.git.email
-          |> lib.optionalString (den.aspects.basic.git |> user.hasAspect);
+          user.settings.dev.shell-tools.git.email
+          |> lib.optionalString (den.aspects.dev.shell-tools.git |> user.hasAspect);
         type = types.str;
         description = "Email to use for jj version control system";
       };

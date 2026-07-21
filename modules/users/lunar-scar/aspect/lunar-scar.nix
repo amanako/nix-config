@@ -14,7 +14,6 @@ in {
     includes = [
       # Include all direct subaspects created under my user and other ones
       den.aspects.lunar-scar._
-      den.aspects.basic.git
 
       # `everyday.utility` is a folder of sibling top-level aspects, not a
       # parent aspect with sub-keys, so `._` resolves to nothing here and will
@@ -39,6 +38,7 @@ in {
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._
       den.aspects.dev.shell-tools.jujutsu
+      den.aspects.dev.shell-tools.git
 
       den.aspects.security.ssh
       den.aspects.security.gpg
