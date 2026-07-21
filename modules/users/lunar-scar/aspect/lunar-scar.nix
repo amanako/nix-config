@@ -38,6 +38,7 @@ in {
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._
+      den.aspects.dev.shell-tools.jujutsu
 
       den.aspects.security.ssh
       den.aspects.security.gpg

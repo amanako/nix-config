@@ -47,6 +47,11 @@
       security.sops-user = {
         ageKeyFile = "keys/age/key.txt";
       };
+
+      dev.shell-tools.jujutsu.signing = {
+        backend = "gpg";
+        key = "5CB7F18E1B212DB2";
+      };
     };
   };
 }
