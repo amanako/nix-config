@@ -15,6 +15,7 @@
 
         buildInputs = with pkgs; [
           pre-commit
+          nixd
           woodpecker-cli
           alejandra
           stylua

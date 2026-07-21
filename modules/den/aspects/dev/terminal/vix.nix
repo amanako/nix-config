@@ -56,6 +56,7 @@
           ExecStart = "vixd" |> lib.getExe' vixPkg;
           Restart = "on-failure";
           RestartSec = 2;
+          Environment = "VIX_NO_MISSION_CONTROL=1"; # Don't open web UI
           EnvironmentFile =
             config.sops.templates
             |> lib.hasAttr "secrets.env"
