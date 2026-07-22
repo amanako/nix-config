@@ -74,10 +74,7 @@
           };
 
           signing = {
-            backend =
-              cfg.signing.backend
-              |> lib.optionalString (cfg.signing.backend != "none");
-            key = cfg.signing.key;
+            inherit (cfg.signing) backend key;
             behaviour = "own"; # Sign commits created or edited by user
           };
         };
