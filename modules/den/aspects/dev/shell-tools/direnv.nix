@@ -21,7 +21,7 @@
         // lib.optionalAttrs (user.hasAspect den.aspects.dev.shells.fish) {
           enableFishIntegration = true;
         }
-        // lib.optionalAttrs (user.hasAspect den.aspects.dev.shells.nu) {
+        // lib.optionalAttrs (user.hasAspect den.aspects.dev.shells.nushell) {
           enableNushellIntegration = true;
         };
     };

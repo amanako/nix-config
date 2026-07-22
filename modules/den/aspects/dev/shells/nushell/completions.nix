@@ -1,5 +1,5 @@
 {
-  den.aspects.dev.shells.nu.completions = {
+  den.aspects.dev.shells.nushell.completions = {
     hm = {
       pkgs,
       lib,

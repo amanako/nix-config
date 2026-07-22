@@ -1,8 +1,8 @@
 {den, ...}: {
   # Credits: https://www.grailbox.com/2023/07/autostart-zellij-in-nushell/
-  den.aspects.dev.shells.nu.zellij = {
+  den.aspects.dev.shells.nushell.zellij = {
     includes = [
-      (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.dev.terminal.zellij && user.hasAspect den.aspects.dev.shells.nu) {
+      (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.dev.terminal.zellij && user.hasAspect den.aspects.dev.shells.nushell) {
         hm = {
           home.sessionVariables = {
             "ZELLIJ_AUTO_ATTACH" = true;

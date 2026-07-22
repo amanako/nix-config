@@ -35,6 +35,7 @@ in {
       den.aspects.dev.terminal.yazi
       den.aspects.dev.terminal.vix
       den.aspects.dev.editors.helix
+      den.aspects.dev.shells.nushell
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._
       den.aspects.dev.shell-tools.jujutsu

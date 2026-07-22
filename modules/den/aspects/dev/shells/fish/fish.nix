@@ -1,14 +1,9 @@
-{den, ...}: {
+{
   den.aspects.dev.shells.fish = {
     stylixHMSettings.targets."fish".enable = false;
 
     persistUser.files = [
       ".local/share/fish/fish_history"
-    ];
-
-    # Sets fish for both nixos and homeManager
-    includes = [
-      (den.batteries.user-shell "fish")
     ];
 
     hm = {
@@ -18,6 +13,7 @@
       ...
     }: {
       programs.fish = {
+        enable = true;
         interactiveShellInit = ''
           set -U fish_greeting
           # Shell remains same when running "nix run" or "nix-shell"
