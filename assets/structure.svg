@@ -142,33 +142,6 @@
 <line x1="49.6" y1="546.0" x2="83.2" y2="546.0" stroke="#504945" stroke-width="1.2"/>
 <text x="83.2" y="551.0" fill="#ebdbb2">schema                  </text>
 <text x="284.8" y="551.0" fill="#928374"># (legacy alias) host/user schema definitions</text>
-<line x1="16.0" y1="556.0" x2="16.0" y2="576.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="556.0" x2="49.6" y2="576.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="566.0" x2="83.2" y2="566.0" stroke="#504945" stroke-width="1.2"/>
-<text x="83.2" y="571.0" fill="#ebdbb2">shared                  </text>
-<text x="284.8" y="571.0" fill="#928374"># Shared helpers and resources across modules</text>
-<line x1="16.0" y1="576.0" x2="16.0" y2="596.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="576.0" x2="49.6" y2="596.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="586.0" x2="83.2" y2="586.0" stroke="#504945" stroke-width="1.2"/>
-<text x="83.2" y="591.0" fill="#ebdbb2">system                  </text>
-<text x="284.8" y="591.0" fill="#928374"># System-level modules and overlays</text>
-<line x1="16.0" y1="596.0" x2="16.0" y2="616.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="596.0" x2="49.6" y2="616.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="606.0" x2="83.2" y2="606.0" stroke="#504945" stroke-width="1.2"/>
-<text x="83.2" y="611.0" fill="#ebdbb2">lib                      </text>
-<text x="284.8" y="611.0" fill="#928374"># Library functions and utilities used across config</text>
-<line x1="16.0" y1="616.0" x2="16.0" y2="636.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="616.0" x2="49.6" y2="636.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="626.0" x2="83.2" y2="626.0" stroke="#504945" stroke-width="1.2"/>
-<text x="83.2" y="631.0" fill="#ebdbb2">overlays                </text>
-<text x="284.8" y="631.0" fill="#928374"># Package overlays applied to nixpkgs</text>
-<line x1="16.0" y1="636.0" x2="16.0" y2="656.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="636.0" x2="49.6" y2="656.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="646.0" x2="83.2" y2="646.0" stroke="#504945" stroke-width="1.2"/>
-<text x="83.2" y="651.0" fill="#ebdbb2">templates               </text>
-<text x="284.8" y="651.0" fill="#928374"># Project templates (e.g. for `nix flake init`)</text>
-<line x1="16.0" y1="656.0" x2="16.0" y2="676.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="656.0" x2="49.6" y2="676.0" stroke="#504945" stroke-width="1.2"/>
-<line x1="49.6" y1="666.0" x2="83.2" y2="666.0" stroke="#504945" stroke-width="1.2"/>
+
 <text x="83.2" y="671.0" fill="#ebdbb2">README.md</text>
 </svg>
