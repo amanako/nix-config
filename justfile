@@ -17,7 +17,7 @@ fupdate *inputs:
 
 # Rebuild and activate config of a host with nh and make it the default boot entry, defaults to current host
 [group('config')]
-rebuild-switch host=hostname:
+rebuild-switch host=hostname: ensure-zen-closed
     just fwrite
     nh os switch --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
@@ -51,6 +51,16 @@ pull-flake branch="main":
 
     # Fetch flake.lock
     git restore --source=origin/{{ branch }} -- flake.nix flake.lock
+
+[group('assertions')]
+[private]
+ensure-zen-closed:
+    #!/usr/bin/env nu
+    if (ps | any {|proc| $proc.name | str contains "zen"}) {
+      error make {
+        msg: "Zen browser is currently running, please close it before proceeding."
+      }
+    }
 
 hostname := `uname -n`
 repo-root := `git rev-parse --show-toplevel`

@@ -126,6 +126,9 @@ just rb
 
 will build host using [nh].
 
+Pre-build assertions run before the build starts — for example, if Zen Browser is open,
+`ensure-zen-closed` aborts immediately with a clear message. Run standalone via `just ensure-zen-closed`.
+
 ## Settings (`userSettings` / `hostSettings`)
 
 Aspects advertise typed options via `userSettings` / `hostSettings`, which den
