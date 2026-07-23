@@ -22,7 +22,6 @@
 
       programs.direnv-instant = {
         enable = true;
-        enableFishIntegration = true;
         enableKittyIntegration =
           den.aspects.dev.terminal.kitty
           |> user.hasAspect;

@@ -5,10 +5,7 @@
       lib,
       ...
     }: {
-      programs.carapace = {
-        enable = true;
-        enableNushellIntegration = true;
-      };
+      programs.carapace.enable = true;
 
       programs.nushell = {
         extraConfig = ''

@@ -16,11 +16,6 @@
         defaultCommand = "${fd} --type file --follow --hidden --exclude .git";
       in {
         enable = true;
-        # Enables the following
-        # <C-t> = fzf select
-        # <C-r> = fzf history
-        # Alt-c = fzf cd
-        enableFishIntegration = true;
         inherit defaultCommand;
         fileWidget.command = defaultCommand;
         defaultOptions = [
