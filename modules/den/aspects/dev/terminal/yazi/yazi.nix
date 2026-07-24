@@ -15,22 +15,23 @@
       nixpkgs.overlays = [
         inputs.yazi.overlays.default
       ];
+
       programs.yazi = {
         enable = true;
         shellWrapperName = "y";
         keymap = {
           mgr.prepend_keymap = [];
         };
+
         settings = {
           mgr = {
+            ratio = [
+              1
+              3
+              4
+            ];
             show_hidden = false;
           };
-          opener.edit = [
-            {
-              run = "nvim \"$@\"";
-              block = true;
-            }
-          ];
         };
       };
     };

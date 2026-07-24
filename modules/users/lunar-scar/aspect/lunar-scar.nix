@@ -32,12 +32,21 @@ in {
 
       den.aspects.dev.terminal.zellij
       den.aspects.dev.terminal.kitty
+
       den.aspects.dev.terminal.yazi
+      den.aspects.dev.terminal.yazi.plugins.chmod
+      den.aspects.dev.terminal.yazi.plugins.full-border
+      den.aspects.dev.terminal.yazi.plugins.piper
+      den.aspects.dev.terminal.yazi.plugins.smart-enter
+      den.aspects.dev.terminal.yazi.plugins.starship
+      den.aspects.dev.terminal.yazi.plugins.zoom
+
       den.aspects.dev.terminal.vix
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.nushell
       den.aspects.dev.shells.fish
       den.aspects.dev.shell-tools._
+      den.aspects.dev.shell-tools.starship
       den.aspects.dev.shell-tools.jujutsu
       den.aspects.dev.shell-tools.git
 
