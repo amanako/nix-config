@@ -1,32 +1,39 @@
-{den, ...}: {
-  # Credits: https://www.grailbox.com/2023/07/autostart-zellij-in-nushell/
+{
+  den,
+  lib,
+  ...
+}: {
+  # Credits: https://www.grailbox.com/2023/07/autostart-zellij-in-nushell/.
   den.aspects.dev.shells.nushell.zellij = {
     includes = [
-      (den.lib.policy.when ({user, ...}: user.hasAspect den.aspects.dev.terminal.zellij && user.hasAspect den.aspects.dev.shells.nushell) {
-        hm = {
-          home.sessionVariables = {
-            "ZELLIJ_AUTO_ATTACH" = true;
-            "ZELLIJ_AUTO_EXIT" = true;
-          };
+      (den.lib.policy.when ({user, ...}: let
+        dependencies = [
+          den.aspects.dev.terminal.zellij
+          den.aspects.dev.shells.nushell
+        ];
+      in
+        dependencies |> builtins.all (d: d |> user.hasAspect)) {
+        nushellConfig = {user, ...}: let
+          cfg = user.settings.dev.terminal.zellij;
+        in ''
+          $env.ZELLIJ_AUTO_ATTACH = ${cfg.autoAttach |> lib.boolToString}
+          $env.ZELLIJ_AUTO_EXIT = ${cfg.autoExit |> lib.boolToString}
 
-          programs.nushell.extraConfig = ''
+          if $env.ZELLIJ_AUTO_ATTACH {
             def start_zellij [] {
-              if 'ZELLIJ' not-in ($env | columns) {
-                if 'IS_ZELLIJ_AUTO_ATTACH' in ($env | columns) and $env.IS_ZELLIJ_AUTO_ATTACH == 'true' {
-                  zellij attach -c
-                } else {
-                  zellij
-                }
+              # Don't start kitty quick access terminal in zellij since that isn't intended usage.
+              if 'ZELLIJ' not-in ($env | columns) and 'KITTY_QUICK_ACCESS' not-in ($env | columns) {
+                zellij attach -c
 
-                if 'IS_ZELLIJ_AUTO_EXIT' in ($env | columns) and $env.IS_ZELLIJ_AUTO_EXIT == 'true' {
+                if 'ZELLIJ_AUTO_EXIT' in ($env | columns) and $env.ZELLIJ_AUTO_EXIT {
                   exit
                 }
               }
             }
 
             start_zellij
-          '';
-        };
+          }
+        '';
       })
     ];
   };

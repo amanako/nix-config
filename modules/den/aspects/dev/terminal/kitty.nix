@@ -61,6 +61,8 @@
           lines = 10;
           columns = 60;
           hide_on_focus_loss = true;
+          # Set environment variable to inform other programs if necessary.
+          kitty_override = "env KITTY_QUICK_ACCESS=1";
         };
       };
     };
