@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   imports = [(inputs.den.namespace "nixvim" false)];
 
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
@@ -9,9 +13,14 @@
       ".local/state/nvim"
     ];
 
+    nushellConfig = {user, ...}:
+      lib.optionalString (user.preferences.editor == "nvim") ''
+        $env.EDITOR = "nvim"
+      '';
+
     stylixHMSettings.targets."nixvim".enable = false;
 
-    hm = {
+    hm = {user, ...}: {
       imports = [inputs.nixvim.homeModules.nixvim];
 
       programs.nixvim = {
@@ -19,7 +28,7 @@
         nixpkgs.source = inputs.nixpkgs;
 
         waylandSupport = true;
-        defaultEditor = true;
+        defaultEditor = user.preferences.editor == "nvim";
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;

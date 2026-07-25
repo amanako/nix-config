@@ -33,6 +33,11 @@
       zen-browser.profileSettingsCollector
     ];
 
+    nushellConfig = {user, ...}:
+      lib.optionalString (lib.hasPrefix "zen" user.preferences.browser) ''
+        $env.BROWSER = "${user.preferences.browser}"
+      '';
+
     niriSettings = let
       stripOfficial = preferedBrowser |> lib.removePrefix "-official";
     in

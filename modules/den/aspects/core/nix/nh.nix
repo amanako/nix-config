@@ -32,6 +32,7 @@
 
     hm = {
       user,
+      config,
       lib,
       ...
     }: {
@@ -40,6 +41,10 @@
         |> lib.mergeAttrs {
           flake = user.repoRoot;
         };
+
+      programs.nushell.extraConfig = ''
+        $env.NH_FLAKE = '${config.programs.nh.flake}'
+      '';
     };
   };
 }

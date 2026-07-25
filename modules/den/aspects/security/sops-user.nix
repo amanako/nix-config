@@ -81,6 +81,11 @@
       # Export a variable to be able to decrypt files when changing/re-crypting passwords
       home.sessionVariables."SOPS_AGE_KEY_FILE" = absolutePath;
 
+      # nushell doesn't inherit home.sessionVariables
+      programs.nushell.extraConfig = ''
+        $env.SOPS_AGE_KEY_FILE = '${absolutePath}'
+      '';
+
       sops = {
         # Since path is relative to home directory append one / for full path.
         # On ephemeral hosts prefix with the persistent mount so the key survives reboots.

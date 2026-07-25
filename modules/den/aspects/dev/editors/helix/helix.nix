@@ -1,6 +1,15 @@
-{den, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   den.aspects.dev.editors.helix = {
     stylixHMSettings.targets."helix".enable = false;
+
+    nushellConfig = {user, ...}:
+      lib.optionalString (user.preferences.editor == "hx") ''
+        $env.EDITOR = "hx"
+      '';
 
     hm = {
       user,

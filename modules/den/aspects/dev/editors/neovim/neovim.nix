@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  lib,
+  ...
+}: {
   flake-file.inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
   den.aspects.dev.editors.neovim = {
@@ -6,6 +10,11 @@
       ".local/share/nvim"
       ".local/state/nvim"
     ];
+
+    nushellConfig = {user, ...}:
+      lib.optionalString (user.preferences.editor == "nvim") ''
+        $env.EDITOR = "nvim"
+      '';
 
     stylixHMSettings.targets."neovim".enable = false;
 
