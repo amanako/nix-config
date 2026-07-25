@@ -10,6 +10,9 @@
       ".config/nushell/history.txt"
     ];
 
+    nushellConfig = ''
+      $env.config.show_banner = false
+    '';
 
     hm.programs.nushell = {
       enable = true;
