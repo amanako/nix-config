@@ -28,7 +28,7 @@
 
           "Mod+S" = "panel-toggle control-center";
           "Mod+Comma" = "settings-toggle";
-          "Mod+Space" = "panel-toggle launcher";
+          #"Mod+Space" = "panel-toggle launcher";
 
           "Mod+Shift+N" = "notification-clear-history";
           "Alt+Shift+B" = "bluetooth-toggle";

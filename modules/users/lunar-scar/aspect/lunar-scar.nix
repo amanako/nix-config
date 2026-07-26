@@ -50,6 +50,9 @@ in {
       den.aspects.dev.shell-tools.jujutsu
       den.aspects.dev.shell-tools.git
 
+      den.aspects.everyday.launchers.vicinae
+      den.aspects.everyday.launchers.vicinae.extensions
+
       den.aspects.security.ssh
       den.aspects.security.gpg
       den.aspects.security.sops-user
