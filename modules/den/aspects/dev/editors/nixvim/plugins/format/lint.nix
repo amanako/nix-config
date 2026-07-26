@@ -11,7 +11,7 @@
         ];
       };
 
-      autoInstall.enable = false;
+      autoInstall.enable = true;
     };
   };
 }
