@@ -11,12 +11,14 @@
     user = {
       user,
       pkgs,
+      lib,
       ...
     }: let
-      inherit (user.settings.dev.shells) defaultShell;
-    in {
-      shell = pkgs.${defaultShell};
-    };
+      defaultShell = user.settings.dev.shells.defaultShell or null;
+    in
+      lib.optionalAttrs (defaultShell != null) {
+        shell = pkgs.${defaultShell};
+      };
 
     # Home manager already handles enabling the shell so just enable shell on hosts so that users will be able to use them.
     nixos = {
