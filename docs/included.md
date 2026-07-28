@@ -10,7 +10,7 @@ Refer to these as it will be updated from time to time to conform to overall des
 | Functionality | Software |
 |:----------------:|:---------------------------------------------------------------------:|
 | Terminal | [kitty] |
-| Shell | [fish] / [nushell] |
+| Shell | [bash] / [fish] / [nushell] |
 | Terminal Multiplexer | [zellij] |
 | Shell Prompt | [starship] |
 
@@ -32,6 +32,7 @@ Refer to these as it will be updated from time to time to conform to overall des
 | Input Method | [fcitx5] |
 | Wallpaper Manager| [awww] |
 | Notifications | [dunst] |
+| Application Launcher | [vicinae] |
 | Media Player | [mpv] |
 | Desktop Environment | [noctalia] (v5 beta) |
 | Desktop Shell | [noctalia-shell] (legacy v4) / [dms] |
@@ -67,6 +68,8 @@ Refer to these as it will be updated from time to time to conform to overall des
 | LS Replacement | [eza] |
 | CD Replacement | [zoxide] |
 | Directory Env | [direnv] |
+| Directory Env Daemon | [direnv-instant] |
+| VCS | [jujutsu] |
 | AI Coding Agent | [vix] |
 | Nix Search Index | [nix-index-database] |
 | Theme Framework | [stylix] |
@@ -141,6 +144,10 @@ Refer to these as it will be updated from time to time to conform to overall des
 [eza]: https://github.com/eza-community/eza
 [zoxide]: https://github.com/ajeetdsouza/zoxide
 [direnv]: https://direnv.net
+[direnv-instant]: https://github.com/nix-community/nix-direnv
+[jujutsu]: https://github.com/jj-vcs/jj
+[bash]: https://www.gnu.org/software/bash
+[vicinae]: https://vicinae.com
 [anki]: https://apps.ankiweb.net
 [localsend]: https://localsend.org
 [youtube-tui]: https://github.com/dertuxmalwieder/youtube-tui

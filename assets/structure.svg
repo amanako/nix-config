@@ -73,7 +73,7 @@
 <line x1="116.8" y1="296.0" x2="116.8" y2="316.0" stroke="#504945" stroke-width="1.2"/>
 <line x1="116.8" y1="306.0" x2="150.4" y2="306.0" stroke="#504945" stroke-width="1.2"/>
 <text x="150.4" y="311.0" fill="#ebdbb2">everyday        </text>
-<text x="284.8" y="311.0" fill="#928374"># compositors, desktop-shells, browsers, bars, notifications, utilities, wallpaper-managers</text>
+<text x="284.8" y="311.0" fill="#928374"># compositors, desktop-shells, browsers, bars, notifications, launchers, utilities, wallpaper-managers</text>
 <line x1="16.0" y1="316.0" x2="16.0" y2="336.0" stroke="#504945" stroke-width="1.2"/>
 <line x1="49.6" y1="316.0" x2="49.6" y2="336.0" stroke="#504945" stroke-width="1.2"/>
 <line x1="83.2" y1="316.0" x2="83.2" y2="336.0" stroke="#504945" stroke-width="1.2"/>
