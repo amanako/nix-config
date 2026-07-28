@@ -10,6 +10,7 @@
       den.batteries.define-user
       den.batteries.host-aspects
       den.policies.hm-shorthand
+      den.aspects.basic.conflicts-collector
       den.aspects.basic.desktop-entries-collector
       den.aspects.basic.home-backup
       (

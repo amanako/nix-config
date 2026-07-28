@@ -17,6 +17,7 @@
         # den-arg thunks via `resolveMarkers`, but it does not descend into a
         # list we iterate here — so we unwrap each marker the same way,
         # supplying the args the engine originally expected.
+        # Similar pattern is used in other aspects.
         resolveEngine = engine: let
           fn =
             if builtins.isAttrs engine && engine ? __fn

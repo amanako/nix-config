@@ -329,6 +329,14 @@ Subaspects are reachable by appending `.`, e.g.
   `docs/design.md`, including an aspect means opt-in and not-including means
   opt-out. Configure variation through `hostSettings`/`userSettings`, never a
   boolean `enable` guard (see `modules/den/aspects/security/sops` for the pattern).
+- **Quirk data is always a *list* of per-aspect contributions**
+  Den's pipe assembly passes quirk data to collectors as a flat list
+  where each element is what a single aspect emitted. Accessing like
+  `quirkData.someKey or []` silently yields `[]` because a list has no named
+  attributes. Always iterate with `lib.concatMap (entry: entry.someKey or [])`
+  — the same pattern used by every existing collector (`persist-user-collector`,
+  `niri-settings-collector`, `conflicts-collector`). See
+  `modules/den/aspects/basic/conflicts-collector.nix` for a corrected example.
 - Primary development branch is **`dev`**; `main` is "stable". README's `old`
   branch holds the pre-den config for reference only.
 

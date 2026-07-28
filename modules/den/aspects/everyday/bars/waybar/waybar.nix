@@ -11,6 +11,29 @@
 
     stylixHMSettings.targets."waybar".enable = false;
 
+    conflicts.warnings = [
+      ({
+        user,
+        lib,
+        ...
+      }: let
+        shellBars = [
+          den.ful.noctalia.bar
+          den.ful.noctalia-shell.bar
+          den.ful.dms.bar
+        ];
+        active = shellBars |> lib.filter (bar: user.hasAspect bar);
+      in
+        lib.optional (active != []) {
+          subject = ["everyday.bars.waybar"];
+          target = active |> map (asp: asp.meta.name);
+          message = ''
+            everyday.bars.waybar: a desktop-shell bar is also active (${active |> map (asp: asp.meta.name) |> lib.concatStringsSep "\n"}).
+            Running multiple top-layer bars is likely unintended; remove all but one choice if you did not intend to stack them.
+          '';
+        })
+    ];
+
     userSettings = {
       location = lib.mkOption {
         type = lib.types.str;
@@ -26,23 +49,9 @@
       pkgs,
       ...
     }: let
-      shellBars = [
-        den.ful.noctalia.bar
-        den.ful.noctalia-shell.bar
-        den.ful.dms.bar
-      ];
-      activeShellBars = shellBars |> lib.filter (bar: user.hasAspect bar);
-
       # Launch a TUI inside the user's terminal emulator.
       termCmd = cmd: "${user.preferences.term} -e ${cmd}";
     in {
-      # Warn (not fail) when a shell bar is also active alongside this standalone
-      # waybar, so the user knows two top-layer bars may conflict.
-      warnings = lib.optional (activeShellBars != []) ''
-        everyday.bars.waybar: a desktop-shell bar is also active (${activeShellBars |> map (asp: asp.meta.name) |> lib.concatStringsSep "\n"}).
-        Running multiple top-layer bars is likely unintended; remove all but one choice if you did not intend to stack them.
-      '';
-
       programs.waybar = {
         enable = true;
 

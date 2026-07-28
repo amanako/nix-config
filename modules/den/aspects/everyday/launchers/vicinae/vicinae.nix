@@ -1,4 +1,9 @@
-{inputs, ...}: {
+{
+  den,
+  inputs,
+  lib,
+  ...
+}: {
   flake-file = {
     inputs.vicinae.url = "github:vicinaehq/vicinae";
 
@@ -18,6 +23,19 @@
     };
 
     stylixHMSettings.targets.vicinae.enable = true;
+
+    conflicts.warnings = [
+      ({user, ...}:
+        lib.optional (user.hasAspect den.ful.noctalia.niri) {
+          subject = ["everyday.launchers.vicinae"];
+          target = ["den.ful.noctalia"];
+          message = {
+            subject,
+            target,
+            ...
+          }: "${lib.concatStringsSep ", " subject} replaces ${lib.concatStringsSep ", " target} launcher (Mod+Space).";
+        })
+    ];
 
     hm = {
       pkgs,
