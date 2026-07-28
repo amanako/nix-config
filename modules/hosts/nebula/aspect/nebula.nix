@@ -13,6 +13,7 @@
 
       den.aspects.core.display-managers.ly
       den.aspects.core.power-management.tlp
+      den.aspects.core.power-management.thermald
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
