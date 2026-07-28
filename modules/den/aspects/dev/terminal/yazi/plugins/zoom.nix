@@ -1,5 +1,7 @@
 {
   den.aspects.dev.terminal.yazi.plugins.zoom = {
+    description = "Yazi plugin to zoom in/out on hovered files in preview.";
+
     hm = {pkgs, ...}: {
       programs.yazi = {
         plugins.zoom.package = pkgs.yaziPlugins.zoom;

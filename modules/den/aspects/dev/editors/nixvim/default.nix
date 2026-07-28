@@ -8,6 +8,8 @@
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
 
   nixvim.entry = {
+    description = "A Neovim distribution built around Nix modules — configure Neovim with Nix.";
+
     persistUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"

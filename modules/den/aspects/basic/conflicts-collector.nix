@@ -1,5 +1,10 @@
 {
   den.aspects.basic.conflicts-collector = {
+    description = ''
+      Aspect collecting and assembling all conflicts - warnings and assertions united.
+      Passed to hm so that user-facing conflict side is complete.
+    '';
+
     hm = {
       conflicts,
       user,

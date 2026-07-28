@@ -14,7 +14,6 @@
 
   noctalia-shell.entry = {
     description = ''
-      From [description](https://github.com/noctalia-dev/noctalia):
       A sleek and minimal desktop shell thoughtfully crafted for Wayland.
 
       This is legacy version 4 from branch legacy-v4 of repo.

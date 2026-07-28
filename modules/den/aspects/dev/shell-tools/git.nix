@@ -6,6 +6,8 @@
       types
       ;
   in {
+    description = "Distributed version control system configuration.";
+
     userSettings = {
       username = mkOption {
         type = types.str;

@@ -10,6 +10,8 @@
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
   zen-browser.full = {
+    description = "Full aggregator for the Zen Browser aspects, including all sub-aspects.";
+
     includes = [
       zen-browser._
       zen-browser.search._
@@ -29,6 +31,8 @@
           preferedBrowser)
       else "";
   in {
+    description = "Zen Browser — a Firefox-based browser focused on privacy and customization.";
+
     includes = [
       zen-browser.profileSettingsCollector
     ];

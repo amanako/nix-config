@@ -19,6 +19,8 @@
   };
 
   niri.full = {
+    description = "Full aggregator for the niri Wayland compositor aspects, including all sub-aspects.";
+
     includes = [
       niri._
       niri.animations._
@@ -27,7 +29,6 @@
 
   niri.entry = {
     description = ''
-      From [description](https://github.com/niri-wm/niri):
       A scrollable-tiling Wayland compositor.
 
       This is aspect using flake for nix-native setup of niri.

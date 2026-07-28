@@ -2,6 +2,8 @@
   # Using parametric aspect capturing user is impossible here since schema is including it.
   # Schemas don't have access to aspect parameters.
   den.aspects.everyday.wallpaper-managers.awww = {
+    description = "Wallpaper manager for Wayland, supporting dynamic wallpaper cycling.";
+
     includes = [
       den.aspects.everyday.wallpaper-managers.awww.script
     ];

@@ -5,6 +5,8 @@
   };
 
   den.aspects.dev.shell-tools.fastfetch = {
+    description = "A fast, highly customizable system information tool.";
+
     hm = {lib, ...}: {
       programs.fastfetch = {
         enable = true;

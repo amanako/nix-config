@@ -1,5 +1,7 @@
 {
   den.aspects.dev.shells.fish = {
+    description = "Friendly interactive shell with syntax highlighting and autosuggestions.";
+
     stylixHMSettings.targets."fish".enable = false;
 
     persistUser.files = [

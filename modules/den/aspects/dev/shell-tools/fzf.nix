@@ -1,5 +1,7 @@
 {
   den.aspects.dev.shell-tools.fzf = {
+    description = "A general-purpose command-line fuzzy finder.";
+
     # Stylix colors for fzf aren't really appealing
     stylixHMSettings.targets."fzf".enable = false;
 

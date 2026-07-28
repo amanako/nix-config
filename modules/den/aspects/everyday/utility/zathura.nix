@@ -1,5 +1,7 @@
 {
   den.aspects.everyday.utility.zathura = {
+    description = "A minimal, plugin-based document viewer supporting PDF, DjVu, and more.";
+
     stylixHMSettings.targets."zathura".enable = false;
 
     persistUser.directories = [

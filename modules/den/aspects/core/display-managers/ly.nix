@@ -1,5 +1,7 @@
 {lib, ...}: {
   den.aspects.core.display-managers.ly = {
+    description = "TUI display manager with a clean, console-based interface.";
+
     hostSettings = {
       batteryID = lib.mkOption {
         type = lib.types.str;

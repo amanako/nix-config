@@ -6,6 +6,8 @@
   flake-file.inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
   den.aspects.dev.editors.neovim = {
+    description = "Extensible, modern Vim-based text editor.";
+
     persistUser.directories = [
       ".local/share/nvim"
       ".local/state/nvim"

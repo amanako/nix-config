@@ -1,5 +1,7 @@
 {
   den.aspects.extra.stylix.base-settings = {
+    description = "Base stylix theming defaults: theme, fonts, and icon pack.";
+
     nixos = {
       pkgs,
       config,

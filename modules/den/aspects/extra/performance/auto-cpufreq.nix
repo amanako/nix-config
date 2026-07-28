@@ -1,5 +1,7 @@
 {
   den.aspects.extra.performance.auto-cpufreq = {
+    description = "Automatic CPU speed and power optimization for Linux.";
+
     nixos.services.auto-cpufreq = {
       enable = true;
       settings = {

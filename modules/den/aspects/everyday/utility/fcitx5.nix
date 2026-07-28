@@ -1,5 +1,7 @@
 {
   den.aspects.everyday.utility.fcitx5 = {
+    description = "Input method framework with Wayland support.";
+
     niriSettings = {
       spawn-at-startup = [
         {

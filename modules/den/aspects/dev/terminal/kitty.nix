@@ -1,5 +1,7 @@
 {den, ...}: {
   den.aspects.dev.terminal.kitty = {
+    description = "A fast, feature-rich GPU-based terminal emulator.";
+
     stylixHMSettings.targets."kitty".enable = false;
 
     niriSettings.binds = {

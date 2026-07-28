@@ -13,6 +13,8 @@
       types
       ;
   in {
+    description = "Filesystem state management for NixOS, enabling tmpfs root with selective persistence.";
+
     hostSettings = {host, ...}: {
       persistenceDir = mkOption {
         type = types.nullOr types.path;

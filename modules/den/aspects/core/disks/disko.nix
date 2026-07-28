@@ -2,6 +2,10 @@
   flake-file.inputs.disko.url = "github:nix-community/disko";
 
   den.aspects.core.disks.disko = {
+    description = ''
+      Declarative disk partitioning for nixos.
+    '';
+
     nixos = {
       host,
       lib,

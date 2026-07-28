@@ -1,5 +1,7 @@
 {
   den.aspects.dev.terminal.yazi.plugins.piper = {
+    description = "Yazi plugin for custom previewing of various file types.";
+
     hm = {
       pkgs,
       lib,

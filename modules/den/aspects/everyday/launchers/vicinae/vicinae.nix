@@ -14,6 +14,8 @@
   };
 
   den.aspects.everyday.launchers.vicinae = {
+    description = "High-performance, native command palette for your desktop.";
+
     persistUser.directories = [
       ".cache/vicinae"
     ];

@@ -4,6 +4,8 @@
   ...
 }: {
   den.aspects.dev.terminal.yazi.plugins.smart-enter = {
+    description = "Yazi plugin to smartly enter directories or open files.";
+
     hm = {
       pkgs,
       user,

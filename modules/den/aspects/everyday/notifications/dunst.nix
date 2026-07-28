@@ -1,5 +1,7 @@
 {
   den.aspects.everyday.notifications.dunst = {
+    description = "Lightweight and customizable notification daemon.";
+
     hm.services.dunst = {
       enable = true;
       settings = {

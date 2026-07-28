@@ -1,5 +1,7 @@
 {
   den.aspects.dev.shell-tools.starship = {
+    description = "The minimal, blazing-fast, and infinitely customizable prompt for any shell.";
+
     stylixHMSettings.targets."starship".enable = false;
 
     hm = {lib, ...}: {

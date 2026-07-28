@@ -4,6 +4,8 @@
   flake-file.inputs.dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
   dms.entry = {
+    description = "DankMaterialShell (DMS) — a feature-rich Wayland desktop shell.";
+
     stylixHMSettings.targets."dank-material-shell".enable = false;
 
     hm = {

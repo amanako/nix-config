@@ -4,6 +4,8 @@
   ...
 }: {
   den.aspects.dev.editors.helix = {
+    description = "Modern modal text editor with built-in LSP and tree-sitter support.";
+
     stylixHMSettings.targets."helix".enable = false;
 
     nushellConfig = {user, ...}:

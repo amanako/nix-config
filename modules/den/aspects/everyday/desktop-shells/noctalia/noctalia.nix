@@ -20,6 +20,8 @@
   };
 
   noctalia.full = {
+    description = "Full aggregator for the noctalia desktop shell (v5) aspects, including all sub-aspects.";
+
     includes = [
       noctalia._
       noctalia.niri
@@ -29,7 +31,6 @@
 
   noctalia.entry = {
     description = ''
-      From [description](https://github.com/noctalia-dev/noctalia):
       A sleek and minimal desktop shell thoughtfully crafted for Wayland.
 
       This is the new v5 version which is currently in beta phase.

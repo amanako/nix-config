@@ -1,5 +1,7 @@
 {lib, ...}: {
   den.aspects.dev.terminal.zellij = {
+    description = "A terminal workspace and multiplexer with batteries included.";
+
     userSettings = {user, ...}: let
       inherit
         (lib)

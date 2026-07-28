@@ -4,6 +4,8 @@
   ...
 }: {
   den.aspects.dev.terminal.yazi.plugins.starship = {
+    description = "Yazi plugin to render Starship prompt as the status line.";
+
     hm = {
       pkgs,
       user,

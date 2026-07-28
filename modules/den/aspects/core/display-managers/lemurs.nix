@@ -1,5 +1,7 @@
 {
   den.aspects.core.display-managers.lemurs = {
+    description = "Fast, TUI-based Wayland display manager written in Rust.";
+
     # Requirement for wayland
     provides.to-users.user.extraGroups = ["seat"];
 

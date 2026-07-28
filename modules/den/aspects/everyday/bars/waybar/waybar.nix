@@ -5,6 +5,8 @@
   ...
 }: {
   den.aspects.everyday.bars.waybar = {
+    description = "Highly customizable Wayland bar for wlroots-based compositors.";
+
     includes = [
       den.aspects.everyday.bars.waybar.style
     ];

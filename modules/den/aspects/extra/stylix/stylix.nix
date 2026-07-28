@@ -25,6 +25,8 @@
       ]
       |> lib.mkMerge;
   in {
+    description = "System-wide colour theme management using base16 schemes, powered by nix.";
+
     includes = [
       den.aspects.extra.stylix.base-settings
     ];

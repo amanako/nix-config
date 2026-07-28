@@ -1,5 +1,7 @@
 {
   den.aspects.security.gpg = {
+    description = "GNU Privacy Guard — encryption and signing tool configuration.";
+
     nushellConfig = ''
       $env.GPG_TTY = (tty | str trim)
     '';

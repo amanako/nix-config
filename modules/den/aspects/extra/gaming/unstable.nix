@@ -1,5 +1,7 @@
 {den, ...}: {
   den.aspects.extra.gaming.unstable = {
+    description = "Unstable/git gaming packages from chaotic overlay (gamescope, steam, etc.).";
+
     nixos = {
       user,
       pkgs,

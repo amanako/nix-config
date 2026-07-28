@@ -5,7 +5,6 @@
 }: {
   den.aspects.core.boot.limine = {
     description = ''
-      From [description](https://github.com/Limine-Bootloader/Limine):
       Modern, secure, portable, multiprotocol bootloader and boot manager.
     '';
 

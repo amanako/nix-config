@@ -1,5 +1,7 @@
 {
   den.aspects.dev.shell-tools.bat = {
+    description = "A cat(1) clone with syntax highlighting and Git integration.";
+
     hm = {
       pkgs,
       lib,
