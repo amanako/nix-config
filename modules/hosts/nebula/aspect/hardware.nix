@@ -5,11 +5,15 @@
       den.aspects.core.hardware.common
       den.aspects.core.hardware.nvidia
       den.aspects.core.disks.disko
+      den.aspects.core.disks.root-btrfs
+      den.aspects.core.disks.swap-subvol
       den.aspects.extra.performance.cachyos-kernel
     ];
 
     nixos = {modulesPath, ...}: {
-      imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ];
 
       boot.initrd.availableKernelModules = [
         "nvme"

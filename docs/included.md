@@ -43,7 +43,7 @@ Refer to these as it will be updated from time to time to conform to overall des
 |:----------------:|:---------------------------------------------------------------------:|
 | Display Manager | [ly] / [lemurs] |
 | Boot Loader | [limine] |
-| Memory layout | btrfs (unencrypted) via [disko] + [impermanence] |
+| Memory layout | btrfs (unencrypted by default, [luks] optional) via [disko] + [impermanence] |
 
 **System / Nix**
 
@@ -104,6 +104,7 @@ Refer to these as it will be updated from time to time to conform to overall des
 
 [awww]: https://codeberg.org/LGFae/awww
 [disko]: https://github.com/nix-community/disko
+[luks]: https://gitlab.com/cryptsetup/cryptsetup
 [dms]: https://danklinux.com/
 [dunst]: https://dunst-project.org
 [fcitx5]: https://fcitx-im.org/wiki/Fcitx_5

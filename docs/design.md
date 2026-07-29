@@ -90,6 +90,14 @@ how-to; see [settings.md](settings.md).
 - Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible
 - Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
 - This makes removal or refactoring straightforward
+- **`lib.mergeAttrs` is curried and right-biased toward the piped value:**
+  `x |> lib.mergeAttrs y` is `y // x`, so the piped operand wins. Use
+  `lib.mergeAttrsList` when folding a list (later wins). Wrap non-piped
+  arguments in parens, e.g. `x |> lib.mergeAttrs (lib.optionalAttrs cond {...})`,
+  to keep application total.
+- **Verify NixOS `assertions` by forcing the booleans, not the messages.**
+  `builtins.filter (a: !a.assertion)` is safe; forcing `message` can trip
+  unrelated lazy-evaluation errors (e.g. the `fileSystems'` cycle in nixpkgs).
 - Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(Inspiration: https://github.com/sini/nix-config)
 
 - Prefer using [inherit] over [with], expect in basic list expressions such as `with pkgs`.

@@ -3,15 +3,17 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
-      extra.performance = {
-        cachyos-kernel = {
-          variant = "bore";
-          lto = true;
-          uarch = "zen4";
-        };
+      extra.performance.cachyos-kernel = {
+        variant = "bore";
+        lto = true;
+        uarch = "zen4";
       };
 
       core = {
+        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
+
+        disks.esp.size = "2G";
+
         impermanence = {
           btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
           persistenceDir = "/persist";
