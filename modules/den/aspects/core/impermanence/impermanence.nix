@@ -13,7 +13,7 @@
       types
       ;
   in {
-    description = "Filesystem state management for NixOS, enabling tmpfs root with selective persistence.";
+    description = "Filesystem state management for NixOS: a fresh btrfs root subvolume on every boot (rolling-root) with selective persistence.";
 
     hostSettings = {host, ...}: {
       persistenceDir = mkOption {
@@ -49,6 +49,18 @@
       den.aspects.core.impermanence.persist-user-collector
     ];
 
+    diskoConfig = {host, ...}: let
+      cfg = host.settings.core.impermanence;
+    in {
+      subvolumes =
+        {
+          "${cfg.persistenceDir}".mountpoint = cfg.persistenceDir;
+        }
+        |> lib.flip lib.recursiveUpdate (lib.optionalAttrs cfg.mountHomeDir {
+          "/home".mountpoint = "/home";
+        });
+    };
+
     persistHost = {
       directories = [
         # Without this dir all users/groups without specified
@@ -74,17 +86,33 @@
       ...
     }: let
       cfg = host.settings.core.impermanence;
+
+      # The rolling-root initrd service and the persist subvolume layout both
+      # assume a btrfs root; gate the neededForBoot markers on it so a non-btrfs
+      # layout fails the assertion below instead of nixpkgs' fileSystems check.
+      hasBtrfsRoot = host.hasAspect den.aspects.core.disks.root-btrfs;
     in {
+      assertions = [
+        {
+          assertion = hasBtrfsRoot;
+          message = ''
+            core.impermanence: the btrfs rolling-root and the persist subvolume
+            layout assume a btrfs root. Include the btrfs root layout aspect
+            (`den.aspects.core.disks.root-btrfs`) alongside this aspect.
+          '';
+        }
+      ];
+
       imports = [
         inputs.impermanence.nixosModules.impermanence
       ];
       fileSystems =
-        {
+        lib.optionalAttrs hasBtrfsRoot {
           "${cfg.persistenceDir}".neededForBoot = true;
         }
-        // lib.optionalAttrs (cfg.mountHomeDir) {
+        |> lib.mergeAttrs (lib.optionalAttrs (hasBtrfsRoot && cfg.mountHomeDir) {
           "/home".neededForBoot = true;
-        };
+        });
 
       environment.persistence.${cfg.persistenceDir}.hideMounts = true;
     };
