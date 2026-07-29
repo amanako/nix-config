@@ -20,7 +20,9 @@
       sshKeyPaths = mkOption {
         type = lib.types.listOf lib.types.path;
         default = [];
-        example = ["/etc/ssh/ssh_host_ed25519_key"];
+        example = [
+          "/etc/ssh/ssh_host_ed25519_key"
+        ];
         description = ''
           Path to ssh host private keys sops-nix derives age recipients from for decryption.
           Should be specified WITHOUT persist mounpoint.
@@ -81,6 +83,30 @@
       ];
     };
 
+    # A host must be able to decrypt its secrets: either via SSH host keys or a
+    # dedicated age key file. Fail fast here, since a silent decryption failure
+    # at activation (secrets simply not mounting) is hard to debug.
+    hostConflicts.assertions = [
+      ({host, ...}: let
+        cfg = host.settings.security.sops-host;
+      in [
+        {
+          subject = [
+            "security.sops-host"
+          ];
+          target = [
+            "sops-nix"
+          ];
+          assertion =
+            cfg.sshKeyPaths != [] || cfg.ageKeyFile != null;
+          message = ''
+            security.sops-host: set either `${host.hostName}.settings.security.sops-host.sshKeyPaths`
+            or `${host.hostName}.settings.security.sops-host.ageKeyFile` so the host can decrypt its secrets.
+          '';
+        }
+      ])
+    ];
+
     nixos = {host, ...}: let
       cfg = host.settings.security.sops-host;
       # Prefix the path for ephemeral hosts where necessary
@@ -89,18 +115,8 @@
         |> host.hasAspect
         |> lib.flip lib.optionalString host.settings.core.impermanence.persistenceDir;
     in {
-      imports = [inputs.sops-nix.nixosModules.sops];
-
-      # A host must be able to decrypt its secrets: either via SSH host keys or a
-      # dedicated age key file. Fail fast here, since a silent decryption failure
-      # at activation (secrets simply not mounting) is hard to debug.
-      assertions = [
-        {
-          assertion =
-            cfg.sshKeyPaths != [] || cfg.ageKeyFile != null;
-          message = "security.sops: set either `${host.hostName}.settings.security.sops.sshKeyPaths` or `${host.hostName}.settings.security.sops.ageKeyFile`
-          so the host can decrypt its secrets.";
-        }
+      imports = [
+        inputs.sops-nix.nixosModules.sops
       ];
 
       sops = {

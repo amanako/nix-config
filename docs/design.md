@@ -8,6 +8,7 @@ Outline some decisions and choices made during development for anyone willing to
   * [File Organization](#file-organization)
   * [Aspect Inclusion](#aspect-inclusion)
   * [Quirks as Top Priority](#quirks-as-top-priority)
+  * [Scope-paired quirks and the conflicts pattern](#scope-paired-quirks-and-the-conflicts-pattern)
   * [Settings namespace](#settings-namespace)
   * [Documentation](#documentation)
   * [Leveraging Den Capabilities](#leveraging-den-capabilities)
@@ -40,6 +41,29 @@ However upon some discussion I came to realize quirks overpower them with simpli
 in situations where multiple aspects contribute to some result(which is usually assembled by some collector aspect).
 
 Conversation leading to this conclusion can be found [here](https://github.com/denful/den/discussions/590).
+
+### Scope-paired quirks and the conflicts pattern
+
+Some data channels only make sense for one scope, and one `den.quirks.*` name
+gets ambiguous when the same idea must serve both host and user. The `conflicts`
+quirk is therefore split into `hostConflicts` (folded in the `nixos` lambda of
+`den.aspects.basic.conflicts-collector`) and `userConflicts` (folded in its `hm`
+lambda). This lets host-scope assertions (e.g. `security.sops-host`) use the
+same pattern as user-scope ones instead of inline NixOS `assertions`.
+
+Conflict entries follow a fixed contract:
+
+- A contribution is a **list** of `{ subject, target, assertion, message }`
+  attrs; the collector flattens all contributions with `lib.concatLists`. Return
+  `lib.optional ... [ entry ]` (a list) for conditional entries — a bare
+  attrset silently yields nothing.
+- `subject` / `target` name the conflicting aspects for diagnostics; `assertion`
+  is the boolean to enforce; `message` explains the fix.
+- Entries may be functions taking `{host, ...}` / `{config, ...}` to read
+  settings; `resolve` injects `config` for lambdas that declare it.
+- For scope-invariant membership checks prefer probing the settings tree
+  (`lib.hasAttrByPath [...] settings`) over `host.hasAspect` /
+  `user.hasAspect`, which are scope-projected (see `AGENTS.md`).
 
 ### Settings namespace
 

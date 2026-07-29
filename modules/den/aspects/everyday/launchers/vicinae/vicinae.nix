@@ -26,7 +26,7 @@
 
     stylixHMSettings.targets.vicinae.enable = true;
 
-    conflicts.warnings = [
+    userConflicts.warnings = [
       ({user, ...}:
         lib.optional (user.hasAspect den.ful.noctalia.niri) {
           subject = ["everyday.launchers.vicinae"];

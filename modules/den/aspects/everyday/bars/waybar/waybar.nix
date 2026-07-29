@@ -13,7 +13,7 @@
 
     stylixHMSettings.targets."waybar".enable = false;
 
-    conflicts.warnings = [
+    userConflicts.warnings = [
       ({
         user,
         lib,
