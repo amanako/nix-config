@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   # Enable lock flattening: https://flake-file.denful.dev/guides/lock-flattening
   imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
@@ -12,6 +16,10 @@
     '';
 
     formatter = pkgs: pkgs.alejandra;
+
+    # When running nix flake check on even slightly outdated flake.lock dependencies error is thrown by hook check app.
+    # Disable these checks to help with testing and debugging.
+    check-hooks = lib.mkForce [];
 
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
