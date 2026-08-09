@@ -9,7 +9,7 @@
     inputs = {
       # Current workaround for blur: https://github.com/sodiboo/niri-flake/issues/1721
       niri.url = "github:sodiboo/niri-flake/very-refactor";
-      niri-pkgs.url = "github:sodiboo/niri-flake";
+      niri-pkgs.url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
     };
 
     nixConfig = {

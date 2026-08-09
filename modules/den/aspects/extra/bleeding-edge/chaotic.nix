@@ -13,6 +13,15 @@
 
     nixos.imports = [
       inputs.chaotic.nixosModules.default
+      # Use the system pkgs (which carry our allowUnfreePredicate) as the base
+      # for chaotic's jovian overlay instead of chaotic's own re-imported
+      # nixpkgs. Since nixpkgs f13ff45, `nixpkgs.config` is a deferred module,
+      # so `flakeNixpkgs.config` (default `pkgs.config`) no longer reaches
+      # check-meta and unfree packages (e.g. jovian-chaotic.steam) are refused.
+      # Cost: nyx's binary cache is not hit for these packages.
+      {
+        chaotic.nyx.overlay.onTopOf = "user-pkgs";
+      }
     ];
 
     hm.imports = [

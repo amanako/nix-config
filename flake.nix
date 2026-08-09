@@ -40,7 +40,7 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     niri.url = "github:sodiboo/niri-flake/very-refactor";
-    niri-pkgs.url = "github:sodiboo/niri-flake";
+    niri-pkgs.url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
       inputs.nixpkgs.follows = "nixpkgs";
