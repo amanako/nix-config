@@ -75,7 +75,7 @@
 
           signing = {
             inherit (cfg.signing) backend key;
-            behaviour = "own"; # Sign commits created or edited by user
+            behavior = "own"; # Sign commits created or edited by user
           };
         };
       };
