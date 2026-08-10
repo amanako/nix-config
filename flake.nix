@@ -22,7 +22,7 @@
       url = "gitlab:ntgn/ascii-art";
       flake = false;
     };
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    chaotic.url = "github:chaotic-cx/nyx/main";
     den.url = "github:denful/den";
     direnv-instant.url = "github:Mic92/direnv-instant";
     disko.url = "github:nix-community/disko";
