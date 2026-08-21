@@ -47,12 +47,12 @@
             inherit username;
             # Tip from: https://docs.codeberg.org/git/configuring-git
             email = "${username}@noreply.codeberg.org";
-            signingKey = "5CB7F18E1B212DB2";
+            signingKey = "A32087F99284F121";
           };
 
           jujutsu.signing = {
             backend = "gpg";
-            key = "5CB7F18E1B212DB2";
+            key = "A32087F99284F121";
           };
         };
 
