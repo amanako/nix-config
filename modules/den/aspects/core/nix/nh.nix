@@ -41,9 +41,7 @@
           flake = user.repoRoot;
         };
 
-      programs.nushell.extraConfig = ''
-        $env.NH_FLAKE = '${config.programs.nh.flake}'
-      '';
+      home.sessionVariables.NH_FLAKE = config.programs.nh.flake;
     };
   };
 }

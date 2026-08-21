@@ -12,11 +12,6 @@
 
     stylixHMSettings.targets."fcitx5".enable = true;
 
-    nushellConfig = ''
-      $env.GTK_IM_MODULE = "fcitx5"
-      $env.QT_IM_MODULE = "fcitx5"
-    '';
-
     hm = {
       fcitx5Settings,
       lib,

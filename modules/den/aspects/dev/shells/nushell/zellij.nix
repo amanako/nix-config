@@ -13,27 +13,29 @@
         ];
       in
         dependencies |> builtins.all (d: d |> user.hasAspect)) {
-        nushellConfig = {user, ...}: let
+        hm = {user, ...}: let
           cfg = user.settings.dev.terminal.zellij;
-        in ''
-          $env.ZELLIJ_AUTO_ATTACH = ${cfg.autoAttach |> lib.boolToString}
-          $env.ZELLIJ_AUTO_EXIT = ${cfg.autoExit |> lib.boolToString}
+        in {
+          programs.nushell.extraConfig = ''
+            $env.ZELLIJ_AUTO_ATTACH = ${cfg.autoAttach |> lib.boolToString}
+            $env.ZELLIJ_AUTO_EXIT = ${cfg.autoExit |> lib.boolToString}
 
-          if $env.ZELLIJ_AUTO_ATTACH {
-            def start_zellij [] {
-              # Don't start kitty quick access terminal in zellij since that isn't intended usage.
-              if 'ZELLIJ' not-in ($env | columns) and 'KITTY_QUICK_ACCESS' not-in ($env | columns) {
-                zellij attach -c
+            if $env.ZELLIJ_AUTO_ATTACH {
+              def start_zellij [] {
+                # Don't start kitty quick access terminal in zellij since that isn't intended usage.
+                if 'ZELLIJ' not-in ($env | columns) and 'KITTY_QUICK_ACCESS' not-in ($env | columns) {
+                  zellij attach -c
 
-                if 'ZELLIJ_AUTO_EXIT' in ($env | columns) and $env.ZELLIJ_AUTO_EXIT {
-                  exit
+                  if 'ZELLIJ_AUTO_EXIT' in ($env | columns) and $env.ZELLIJ_AUTO_EXIT {
+                    exit
+                  }
                 }
               }
-            }
 
-            start_zellij
-          }
-        '';
+              start_zellij
+            }
+          '';
+        };
       })
     ];
   };

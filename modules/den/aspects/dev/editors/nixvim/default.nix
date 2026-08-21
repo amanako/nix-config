@@ -1,8 +1,4 @@
-{
-  lib,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [(inputs.den.namespace "nixvim" false)];
 
   flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
@@ -14,11 +10,6 @@
       ".local/share/nvim"
       ".local/state/nvim"
     ];
-
-    nushellConfig = {user, ...}:
-      lib.optionalString (user.preferences.editor == "nvim") ''
-        $env.EDITOR = "nvim"
-      '';
 
     stylixHMSettings.targets."nixvim".enable = false;
 

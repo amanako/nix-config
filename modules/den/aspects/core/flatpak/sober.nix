@@ -9,19 +9,13 @@
       den.aspects.core.flatpaks
     ];
 
-    # Fix unable to move in first-person games due to x11 input
-    # Reference: https://github.com/vinegarhq/sober/issues/1356#issuecomment-3765883022
-    nushellConfig = ''
-      $env.GDK_BACKEND = "wayland"
-      $env.SDL_VIDEODRIVER = "wayland"
-      $env.CLUTTER_BACKEND = "wayland"
-    '';
-
     hm = {
       services.flatpak.packages = [
         "flathub:app/org.vinegarhq.Sober//stable"
       ];
 
+      # Fix unable to move in first-person games due to x11 input
+      # Reference: https://github.com/vinegarhq/sober/issues/1356#issuecomment-3765883022
       home.sessionVariables = {
         GDK_BACKEND = "wayland";
         SDL_VIDEODRIVER = "wayland";
