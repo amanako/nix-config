@@ -58,6 +58,7 @@ in {
       den.aspects.security.sops-user
 
       den.aspects.core.nix.nh
+      den.aspects.core.flatpaks.sober
 
       den.aspects.extra.nix-utils.nix-index-database
       den.aspects.extra.gaming.optimizations
