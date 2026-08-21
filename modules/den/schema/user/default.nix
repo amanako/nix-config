@@ -3,9 +3,7 @@
   lib,
   ...
 }: {
-  den.schema.user = let
-    inherit (den.lib) policy;
-  in {
+  den.schema.user = {
     includes = [
       den.batteries.define-user
       den.batteries.host-aspects
@@ -19,17 +17,7 @@
           then den.batteries.primary-user
           else {}
       )
-      (
-        policy.when (
-          {user, ...}:
-            den.aspects.dev.shells
-            |> lib.filterAttrs (n: v: (v |> builtins.isAttrs) && !(n |> lib.hasPrefix "_"))
-            |> builtins.attrNames
-            |> lib.remove "default-shell-setter"
-            |> lib.any (shell: user.hasAspect den.aspects.dev.shells)
-        )
-        (policy.include den.aspects.dev.shells)
-      )
+      den.aspects.dev.shells
     ];
 
     classes = lib.mkDefault ["homeManager"];

@@ -12,9 +12,7 @@
       config,
       ...
     }: let
-      # `or null` guards against the settings namespace collapsing entirely
-      # (see settings.nix pruning fallbacks), mirroring default-shell-setter.
-      defaultShell = user.settings.dev.shells.defaultShell or null;
+      inherit (user.settings.dev.shells) defaultShell;
     in
       lib.optionalAttrs (defaultShell == "nushell") {
         programs.nushell.extraEnv =

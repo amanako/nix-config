@@ -2,10 +2,24 @@
   den,
   lib,
   ...
-}: {
+}: let
+  fallbackShell = "bash";
+in {
   den.aspects.dev.shells = {
     includes = [
       den.aspects.dev.shells.default-shell-setter
+      (
+        den.lib.policy.when ({user, ...}: let
+          anyShellIncluded =
+            den.aspects.dev.shells
+            |> lib.filterAttrs (n: v: (v |> builtins.isAttrs) && !(n |> lib.hasPrefix "_"))
+            |> builtins.attrNames
+            |> lib.remove "default-shell-setter"
+            |> lib.any (shell: den.aspects.dev.shells.${shell} |> user.hasAspect);
+        in
+          !anyShellIncluded)
+        den.aspects.dev.shells.${fallbackShell}
+      )
     ];
 
     userSettings = {user, ...}: let
@@ -23,12 +37,20 @@
       cfg = user.settings.dev.shells;
     in {
       defaultShell = lib.mkOption {
-        default = availableShells |> lib.head;
-        example = availableShells |> lib.last;
-        type = lib.types.enum availableShells;
+        default =
+          if availableShells == []
+          then fallbackShell
+          else availableShells |> lib.head;
+        example =
+          if availableShells == []
+          then fallbackShell
+          else availableShells |> lib.last;
+        type = lib.types.enum (lib.unique (availableShells ++ [fallbackShell]));
         description = ''
           Default login and user shell to use.
-          The corresponding den.aspects.dev.shells.${cfg.defaultShell} must be included for shell to be registered here'';
+          The corresponding den.aspects.dev.shells.${cfg.defaultShell} must be included for shell to be registered here.
+          When no shell is included, ${fallbackShell} is used and included automatically.
+        '';
       };
     };
   };

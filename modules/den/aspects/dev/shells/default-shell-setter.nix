@@ -5,20 +5,15 @@
   den.aspects.dev.shells.default-shell-setter = {
     description = ''
       Aspect to wire in default shell for the user, based on user.settings.dev.shells.defaultShell option.
-      For this aspect to take effect user needs to enable at least one shell to work with.
     '';
 
     user = {
       user,
       pkgs,
-      lib,
       ...
-    }: let
-      defaultShell = user.settings.dev.shells.defaultShell or null;
-    in
-      lib.optionalAttrs (defaultShell != null) {
-        shell = pkgs.${defaultShell};
-      };
+    }: {
+      shell = pkgs.${user.settings.dev.shells.defaultShell};
+    };
 
     # Home manager already handles enabling the shell so just enable shell on hosts so that users will be able to use them.
     nixos = {
