@@ -1,41 +1,15 @@
 {
   noctalia.settings.notification = {
     hm.programs.noctalia.settings.notification = {
-      background_opacity = 0.85;
+      enable_daemon = true;
+      show_app_name = true;
+      show_actions = true;
+      position = "top_center";
       layer = "overlay";
+      scale = 1.0;
+      background_opacity = 0.85;
+      offset_x = 20;
       offset_y = 10;
-    };
-  };
-
-  noctalia.settings.notifications = {
-    hm.programs.noctalia.settings.notifications = {
-      backgroundOpacity = 0.7;
-      clearDismissed = true;
-      criticalUrgencyDuration = 15;
-      density = "compact";
-      enableBatteryToast = true;
-      enableKeyboardLayoutToast = true;
-      enableMarkdown = true;
-      enableMediaToast = false;
-      enabled = true;
-      location = "top_right";
-      lowUrgencyDuration = 3;
-      monitors = [];
-      normalUrgencyDuration = 8;
-      overlayLayer = true;
-      respectExpireTimeout = false;
-
-      saveToHistory = {
-        critical = true;
-        low = true;
-        normal = true;
-      };
-
-      sounds = {
-        enabled = true;
-        separateSounds = false;
-        volume = 0.5;
-      };
     };
   };
 }

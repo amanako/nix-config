@@ -1,7 +1,10 @@
 {
   noctalia.settings.colorSchemes = {
-    hm.programs.noctalia.settings.colorSchemes = {
-      predefinedScheme = "Gruvbox";
+    hm.programs.noctalia.settings.theme = {
+      mode = "dark";
+      source = "builtin";
+      builtin = "Gruvbox";
+      pure_black_dark = false;
     };
   };
 }

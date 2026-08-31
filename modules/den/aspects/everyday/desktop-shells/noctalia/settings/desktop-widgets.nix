@@ -1,13 +1,7 @@
 {
-  noctalia.settings.desktopWidgets = {
-    hm.programs.noctalia.settings.desktopWidgets = {
-      enabled = false;
-      monitorWidgets = [];
-    };
-  };
-
   noctalia.settings.desktop_widgets = {
     hm.programs.noctalia.settings.desktop_widgets = {
+      enabled = false;
       schema_version = 2;
       widget_order = ["desktop-widget-0000000000000001"];
 
@@ -18,7 +12,7 @@
       };
 
       widget = {
-        desktop-widget-0000000000000001 = {
+        "desktop-widget-0000000000000001" = {
           box_height = 304.0;
           box_width = 528.0;
           cx = 1576.0;
@@ -28,6 +22,7 @@
           type = "sysmon";
 
           settings = {
+            display = "graph";
             background_color = "on_hover";
             color = "primary";
             color2 = "secondary";

@@ -1,28 +1,18 @@
 {
   noctalia.settings.appLauncher = {
-    hm.programs.noctalia.settings.appLauncher = {
-      autoPasteClipboard = true;
-      clipboardWrapText = true;
-      customLaunchPrefix = "";
-      customLaunchPrefixEnabled = false;
-      density = "comfortable";
-      enableClipPreview = true;
-      enableClipboardChips = true;
-      enableClipboardHistory = true;
-      enableClipboardSmartIcons = true;
-      enableSessionSearch = true;
-      enableSettingsSearch = true;
-      enableWindowsSearch = true;
-      iconMode = "native";
-      ignoreMouseInput = false;
-      overviewLayer = true;
-      pinnedApps = [];
-      position = "center";
-      screenshotAnnotationTool = "";
-      showCategories = true;
-      showIconBackground = false;
-      sortByMostUsed = false;
-      viewMode = "list";
+    hm.programs.noctalia.settings.shell = {
+      clipboard_auto_paste = "auto";
+      clipboard_history_max_entries = 100;
+
+      launcher = {
+        categories = true;
+        show_icons = true;
+        compact = false;
+        app_grid = false;
+        sort_by_usage = false;
+        pinned = [];
+        provider_prefix = "/";
+      };
     };
   };
 }

@@ -3,9 +3,9 @@
     hm.programs.noctalia.settings.audio = {
       enable_overdrive = true;
       enable_sounds = true;
-      spectrumFrameRate = 60;
-      visualizerType = "wave";
-      volumeStep = 5;
+      sound_volume = 0.5;
+      volume_change_sound = "";
+      notification_sound = "";
     };
   };
 }

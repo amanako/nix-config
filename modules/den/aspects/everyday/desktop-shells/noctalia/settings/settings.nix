@@ -11,15 +11,9 @@
         type = types.attrs;
         default = {};
         example = {
-          currentThemeName = "gruvbox";
+          theme.mode = "dark";
+          bar.main.position = "left";
           showDock = true;
-          controlCenterWidgets = [
-            {
-              id = "wifi";
-              enabled = false;
-              width = 100;
-            }
-          ];
         };
         description = "Settings to append to defaults, overriding if necessary.";
       };
@@ -44,14 +38,10 @@
         user.settings.noctalia.settings.overrides
         |> lib.recursiveUpdate
         {
-          settingsVersion = 60;
-
-          shell.avatar_path = "${user.repoRoot}/assets/users/${user.userName}/${user.settings.noctalia.settings.avatarFilename}";
-          appLauncher.terminalCommand = "${user.preferences.term} -e";
-
-          ui = {
-            fontDefault = "Mona Sans Display Light";
-            fontFixed = "VictorMono NF";
+          shell = {
+            avatar_path = "${user.repoRoot}/assets/users/${user.userName}/${user.settings.noctalia.settings.avatarFilename}";
+            font_family = "Mona Sans Display Light";
+            time_format = "{:%H:%M}";
           };
         };
     };
