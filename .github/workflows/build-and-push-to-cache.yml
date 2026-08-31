@@ -19,12 +19,16 @@ jobs:
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
 
       - name: Build flake outputs
-        env:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           nix build ".#all" \
             --accept-flake-config \
             --print-out-paths \
             --no-link \
-            | nix run nixpkgs#cachix -- \
-            push amanako
+            > /tmp/out-paths.txt
+
+      - name: Push to cache
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          nix run nixpkgs#cachix -- push amanako \
+            $(cat /tmp/out-paths.txt)
