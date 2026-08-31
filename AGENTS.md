@@ -1,5 +1,26 @@
 # AGENTS.md
 
+<!-- toc -->
+
+- [Mental model: the den architecture](#mental-model-the-den-architecture)
+- [The `settings` namespace (the core gotcha)](#the-settings-namespace-the-core-gotcha)
+- [Quirks: cross-aspect data collection](#quirks-cross-aspect-data-collection)
+- [Classes and the `hm` shorthand](#classes-and-the-hm-shorthand)
+- [Cross-scope membership checks (`hasAspect` is projected)](#cross-scope-membership-checks-hasaspect-is-projected)
+- [Namespaces](#namespaces)
+- [`provides.to-users`](#providesto-users)
+- [`flake.nix` is generated — do not edit it by hand](#flakenix-is-generated--do-not-edit-it-by-hand)
+- [Commands](#commands)
+  * [Validation (mirrors CI)](#validation-mirrors-ci)
+- [Formatting and pre-commit](#formatting-and-pre-commit)
+  * [Do not manually run the formatter](#do-not-manually-run-the-formatter)
+- [Style conventions (from `docs/design.md`)](#style-conventions-from-docsdesignmd)
+- [Adding things](#adding-things)
+- [Important gotchas](#important-gotchas)
+- [Useful references](#useful-references)
+
+<!-- tocstop -->
+
 Guidance for AI agents working in this repository. This is a NixOS system
 configuration built on the [den](https://den.denful.dev) framework, composed
 with `flake-parts`, `import-tree`, and `flake-file`. Most non-obvious behavior
@@ -67,8 +88,8 @@ Consequences that are easy to get wrong:
   as defaults); `script`'s own `hm` reads both. See `docs/settings.md`.
 - Aspects commonly read their _own_ settings inside their class lambda via the
   entity arg, e.g. `cfg = host.settings.core.impermanence;` (see
-  `modules/den/aspects/core/impermanence/impermanence.nix:67`), or
-  `cfg = user.settings.dev.shell-tools.git;` (see `modules/den/aspects/dev/shell-tools/git.nix:34`).
+  `modules/den/aspects/core/impermanence/impermanence.nix`), or
+  `cfg = user.settings.dev.shell-tools.git;` (see `modules/den/aspects/dev/shell-tools/git.nix`).
 - `hostSettings` / `userSettings` are **reserved key names** (`den.reservedKeys`);
   do not reuse them for other purposes.
 
@@ -88,7 +109,7 @@ Key examples:
   and de-duplicates everything and writes `home.persistence.<dir>`.
 - `den.quirks.niriSettings` gathers `programs.niri.settings` fragments; aspects
   set `niriSettings.<attr> = ...` (see
-  `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix:37`).
+  `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix`).
 - `zen-browser.profileSettingsCollector` folds a list of setting aspects (some of
   which are functions receiving `{pkgs, lib, inputs', zenSearchEngines}`) via
   `lib.foldl lib.recursiveUpdate {}` (`modules/den/aspects/everyday/browsers/zen-browser/profile-settings-collector.nix`).
@@ -134,7 +155,7 @@ For reliable, scope-invariant membership checks prefer one of:
 
 Larger flake projects that provide many aspects (zen-browser, niri, noctalia,
 nixvim) are brought in as den **namespaces** via `inputs.den.namespace "name" false`
-(e.g. `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix:8`).
+(e.g. `modules/den/aspects/everyday/browsers/zen-browser/zen-browser.nix`).
 Namespaces expose a `.full` aggregator (`zen-browser.full`, `niri.full`,
 `noctalia.full`) and `._` (all direct subaspects). Include these via
 `includes` rather than listing every sub-aspect. Namespace aspects are also
@@ -148,7 +169,7 @@ A host aspect can inject aspects into its users using
 `provides.to-users.includes = [ ... ]`. Example:
 `den.aspects.core.impermanence` exposes
 `den.aspects.core.impermanence.persist-user-collector` to its users
-(`modules/den/aspects/core/impermanence/impermanence.nix:44`). Use this for
+(`modules/den/aspects/core/impermanence/impermanence.nix`). Use this for
 host-driven, user-wide config rather than duplicating includes per user.
 
 ## `flake.nix` is generated — do not edit it by hand
@@ -180,8 +201,8 @@ updated by `just fupdate` and committed by CI (see below).
 | `fupdate *inputs`              | `fu`  | `fwrite` + `nix flake update` + `fwrite`              |
 | `pull-flake branch="main"`     | `pf`  | Restore `flake.nix`/`flake.lock` from a remote branch |
 
-Both `hostname` and `repo-root` default to the current host (`uname -n`) and git
-root. All `nix`/`nh` invocations pass `--accept-flake-config` because `flake.nix`
+`hostname` defaults to the current host (`uname -n`).
+All `nix`/`nh` invocations pass `--accept-flake-config` because `flake.nix`
 embeds `nixConfig` (experimental features, substituters, trusted keys).
 
 Development shell: `nix-direnv` is enabled via `.envrc`
@@ -193,8 +214,8 @@ shell, or `nix develop` otherwise.
 The Woodpecker `check.yml` does exactly this — run it locally before pushing:
 
 ```
-nix run .#write-flake
-nix flake check -L
+just fwrite
+nix --accept-flake-config flake check -L
 ```
 
 The GitHub Action builds `."#all"` and pushes to the `amanako` cachix cache
@@ -210,16 +231,6 @@ The GitHub Action builds `."#all"` and pushes to the `amanako` cachix cache
   `modules/den/aspects/dev/editors/**/lua`).
 - **prettier** formats `.yml`/`.yaml`.
 - **markdown-toc** rewrites `
-
-<!-- toc -->
-
-  * [Do not manually run the formatter](#do-not-manually-run-the-formatter)
-- [Style conventions (from `docs/design.md`)](#style-conventions-from-docsdesignmd)
-- [Adding things](#adding-things)
-- [Important gotchas](#important-gotchas)
-- [Useful references](#useful-references)
-
-<!-- tocstop -->
 
 `blocks in`\*.md` (README and docs).
 
@@ -281,7 +292,7 @@ defaults to `host.repoRoot` and is read-only unless `isPrimaryUser = true`.
 
 Subaspects are reachable by appending `.`, e.g.
 `den.aspects.lunar-scar._` includes all of that user's direct subaspects
-(`modules/users/lunar-scar/aspect/lunar-scar.nix:16`).
+(`modules/users/lunar-scar/aspect/lunar-scar.nix`).
 
 ## Important gotchas
 
@@ -297,8 +308,8 @@ Subaspects are reachable by appending `.`, e.g.
   command string. Avoid putting a package in `home.packages` just so a bare
   binary name resolves — interpolate the derivation instead so it's tracked in
   the closure and always available. See
-  `modules/den/aspects/everyday/bars/waybar.nix` (`wttrbar`, `brightnessctl`,
-  `btop`, `libnotify`, `blueman`, `networkmanager` all referenced via
+  `modules/den/aspects/everyday/bars/waybar/waybar.nix` (`wttrbar`, `brightnessctl`,
+  `btop`, `libnotify`, `bluetui`, `wifitui` all referenced via
   `lib.getExe`/`lib.getExe'`).
 - **Always pass `--accept-flake-config`** (or rely on the dev shell). The
   embedded `nixConfig` enables pipe-operators and trusted binary caches
@@ -328,7 +339,8 @@ Subaspects are reachable by appending `.`, e.g.
 - **Inclusion is the opt-in mechanism; do not add `enable` toggles.** Per
   `docs/design.md`, including an aspect means opt-in and not-including means
   opt-out. Configure variation through `hostSettings`/`userSettings`, never a
-  boolean `enable` guard (see `modules/den/aspects/security/sops` for the pattern).
+  boolean `enable` guard (see `modules/den/aspects/security/sops-user.nix` for the
+  pattern).
 - **Quirk data is always a *list* of per-aspect contributions**
   Den's pipe assembly passes quirk data to collectors as a flat list
   where each element is what a single aspect emitted. Accessing like
