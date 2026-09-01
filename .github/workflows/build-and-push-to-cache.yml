@@ -10,17 +10,20 @@ on:
       - flake.lock
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build-hosts:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
     steps:
       - uses: actions/checkout@v4
       - uses: wimpysworld/nothing-but-nix@v10
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
 
-      - name: Build flake outputs
+      - name: Build hosts
         run: |
-          nix build ".#all" \
+          nix build ".#hosts" \
             --accept-flake-config \
             --print-out-paths \
             --no-link \

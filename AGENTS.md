@@ -218,8 +218,9 @@ just fwrite
 nix --accept-flake-config flake check -L
 ```
 
-The GitHub Action builds `."#all"` and pushes to the `amanako` cachix cache
-(`modules/packages/all.nix`).
+The GitHub Action builds `.#hosts` (every host's toplevel for the runner's
+architecture) on x86 and ARM64 runners and pushes the results to the `amanako`
+cachix cache (`modules/packages/hosts.nix`).
 
 ## Formatting and pre-commit
 
