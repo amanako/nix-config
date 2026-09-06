@@ -70,9 +70,36 @@ in {
       noctalia.full
       niri.full
 
-      # Pending fix
-      nixvim._
-      nixvim.plugins._
+      nixvim.entry
+      nixvim.opts
+      nixvim.keymaps
+      nixvim.extras
+      nixvim.extra-config
+      nixvim.colorschemes.gruvbox
+      nixvim.dependencies
+
+      nixvim.plugins.bufferline
+      nixvim.plugins.yazi
+      nixvim.plugins.telescope
+
+      nixvim.plugins.conform
+      nixvim.plugins.lint
+
+      nixvim.plugins.gitsigns
+      nixvim.plugins.lazygit
+
+      nixvim.plugins.kitty-scrollback
+      nixvim.plugins.lualine
+      nixvim.plugins.rainbow-delimiters
+      nixvim.plugins.which-key
+
+      nixvim.plugins.blink-cmp
+      nixvim.plugins.lsp-lines
+      nixvim.plugins.lsp
+      nixvim.plugins.noice
+      nixvim.plugins.trouble
+
+      nixvim.plugins.treesitter
     ];
 
     user = {

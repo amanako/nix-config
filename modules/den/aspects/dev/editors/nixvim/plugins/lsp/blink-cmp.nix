@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.blink-cmp = {user, ...}: {
+  nixvim.plugins.blink-cmp = {
     hm.programs.nixvim.plugins.blink-cmp = {
       enable = true;
       setupLspCapabilities = true;

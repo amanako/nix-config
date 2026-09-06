@@ -1,5 +1,5 @@
 {
-  nixvim.colorschemes = {user, ...}: {
+  nixvim.colorschemes.gruvbox = {
     hm.programs.nixvim.colorschemes.gruvbox = {
       enable = true;
       settings = {

@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.noice = {user, ...}: {
+  nixvim.plugins.noice = {
     hm.programs.nixvim.plugins.noice = {
       enable = true;
       settings = {

@@ -1,18 +1,7 @@
 {
   nixvim.extra-config = {
     hm.programs.nixvim.extraConfigLua = ''
-      local _border = "rounded"
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover, { border = _border }
-      )
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help, { border = _border }
-      )
-
-      require("lspconfig.ui.windows").default_options = {
-        border = _border,
-      }
+      vim.o.winborder = "rounded"
 
       local function nixvim_on_attach(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)

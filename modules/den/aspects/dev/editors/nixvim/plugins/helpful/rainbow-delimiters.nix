@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.rainbow-delimiters = {user, ...}: {
+  nixvim.plugins.rainbow-delimiters = {
     hm.programs.nixvim.plugins.rainbow-delimiters = {
       enable = true;
       # Careful comparison lead me to believe this combination fits best

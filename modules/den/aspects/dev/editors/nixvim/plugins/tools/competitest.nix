@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.competitest = {user, ...}: {
+  nixvim.plugins.competitest = {
     hm.programs.nixvim.plugins.competitest = {
       enable = true;
       settings = {

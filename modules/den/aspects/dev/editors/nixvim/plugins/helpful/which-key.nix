@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.which-key = {user, ...}: {
+  nixvim.plugins.which-key = {
     hm.programs.nixvim.plugins.which-key = {
       enable = true;
       settings = {

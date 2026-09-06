@@ -1,5 +1,5 @@
 {
-  nixvim.keymaps = {user, ...}: {
+  nixvim.keymaps = {
     hm.programs.nixvim.keymaps = [
       {
         mode = "n";

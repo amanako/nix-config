@@ -1,6 +1,7 @@
 {den, ...}: {
-  nixvim.plugins.kitty-scrollback = {user, ...}: {
+  nixvim.plugins.kitty-scrollback = {
     hm = {
+      user,
       pkgs,
       lib,
       ...

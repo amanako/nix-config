@@ -1,5 +1,5 @@
 {
-  nixvim.plugins.mini = {user, ...}: {
+  nixvim.plugins.mini = {
     hm.programs.nixvim.plugins.mini = {
       enable = true;
       mockDevIcons = true;

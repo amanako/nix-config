@@ -1,5 +1,5 @@
 {
-  nixvim.opts = {user, ...}: {
+  nixvim.opts = {
     hm.programs.nixvim.opts = {
       # Numbers
       number = true;
