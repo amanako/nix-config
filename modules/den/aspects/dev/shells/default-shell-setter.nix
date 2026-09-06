@@ -27,7 +27,7 @@
         |> lib.filterAttrs (n: v: (v |> builtins.isAttrs) && !(n |> lib.hasPrefix "_"))
         |> builtins.attrNames
         |> lib.remove "default-shell-setter"
-        |> lib.filter (shell: den.aspects.dev.shells.${shell} |> user.hasAspect)
+        |> lib.filter (shell: user.hasAspect { name = shell; meta.provider = ["dev" "shells"]; })
         # Remove shells not supported by nixos.programs options
         |> lib.filter (shell: !(unsupportedNixOSShells |> lib.elem shell));
     in {

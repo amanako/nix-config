@@ -15,7 +15,7 @@ in {
             |> lib.filterAttrs (n: v: (v |> builtins.isAttrs) && !(n |> lib.hasPrefix "_"))
             |> builtins.attrNames
             |> lib.remove "default-shell-setter"
-            |> lib.any (shell: den.aspects.dev.shells.${shell} |> user.hasAspect);
+            |> lib.any (shell: user.hasAspect { name = shell; meta.provider = ["dev" "shells"]; });
         in
           !anyShellIncluded)
         den.aspects.dev.shells.${fallbackShell}
@@ -33,7 +33,7 @@ in {
         # Remove other subaspects whose purpose is not a shell definition.
         |> lib.remove "default-shell-setter"
         # Only shells which user actually included will be displayed
-        |> lib.filter (shell: den.aspects.dev.shells.${shell} |> user.hasAspect);
+        |> lib.filter (shell: user.hasAspect { name = shell; meta.provider = ["dev" "shells"]; });
       cfg = user.settings.dev.shells;
     in {
       defaultShell = lib.mkOption {
