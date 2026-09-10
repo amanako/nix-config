@@ -1,6 +1,7 @@
 {
   den.hosts.x86_64-linux.cachy = {
     repoRoot = "/etc/nixos";
+    defaultChannel = "unstable";
 
     settings = {
       extra.performance.cachyos-kernel.uarch = "zen4";

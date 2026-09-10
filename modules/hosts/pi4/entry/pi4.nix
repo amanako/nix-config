@@ -1,5 +1,7 @@
 {
   den.hosts.aarch64-linux.pi4 = {
+    defaultChannel = "stable";
+
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
