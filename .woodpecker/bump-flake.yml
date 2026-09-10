@@ -18,7 +18,7 @@ steps:
         )
       - nix profile add nixpkgs#just
       - just fupdate
-      - nix --accept-flake-config flake check -L
+      - nix --accept-flake-config flake check -L --all-systems --show-trace
 
   - name: commit-and-push
     image: alpine/git:latest

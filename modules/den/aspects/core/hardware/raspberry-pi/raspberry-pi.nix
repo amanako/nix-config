@@ -3,18 +3,7 @@
   lib,
   ...
 }: {
-  # Keep nixos-raspberrypi's nixpkgs following OUR unstable nixpkgs. This makes
-  # its kernel build against the same nixpkgs as the surrounding config, so the
-  # NixOS modules (device-tree, top-level, kernel) all agree on kernel attrs
-  # like `buildDTBs` / `target`. Using the flake's OWN pinned nixos-26.05 nixpkgs
-  # instead would serve a prebuilt kernel from its Cachix cache, BUT the 26.05
-  # kernel lacks `buildDTBs`/`target` under our unstable module system, breaking
-  # evaluation. So we accept a local QEMU-emulated kernel build (a one-time cost,
-  # cached afterwards) in exchange for a clean eval.
-  flake-file.inputs.nixos-raspberrypi = {
-    url = "github:nvmd/nixos-raspberrypi";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
 
   den.aspects.core.hardware.raspberry-pi = let
     inherit

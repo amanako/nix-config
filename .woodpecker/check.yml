@@ -13,4 +13,4 @@ steps:
         )
       - nix profile add nixpkgs#just
       - just fwrite
-      - nix --accept-flake-config flake check -L
+      - nix --accept-flake-config flake check -L --all-systems --show-trace
