@@ -37,7 +37,7 @@
     flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/latest";
     home-manager.url = "github:nix-community/home-manager";
     impermanence.url = "github:nix-community/impermanence";
-    import-tree.url = "github:vic/import-tree";
+    import-tree.url = "github:denful/import-tree";
     llm-agents.url = "github:numtide/llm-agents.nix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     niri.url = "github:sodiboo/niri-flake/very-refactor";
