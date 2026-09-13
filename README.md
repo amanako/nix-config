@@ -36,7 +36,7 @@ General branches are listed below:
 | dev                 | Branch primarily targeted by CI and commits. All the new changes/plans land here first. After enough testing (currently by me solely) main is fast-forwarded to match certain commit or `HEAD` of this branch. |
 | main                | "Stable" branch. Stuff residing here shouldn't be error-prone and is least likely to exhibit unexplainable behaviour. No guarantees though. If anything is breaking fix will be shipped as soon as possible. |
 | old                 | Old pre-den config. This branch is just here to showcase and remind of how mature APIs beats regular nix in terms of readability and potential.                                                              |
-| weekly-flake-update | Temporary branch made by Woodpecker CI [here](.woodpecker/bump-flake.yml) containing latest flake files to merge into dev branch. Seeing this branch likely means PR isn't merged yet. Deleted after merge.  |
+| weekly-flake-update | Dated scratch branches made by Woodpecker CI [here](.woodpecker/bump-flake.yml) containing latest flake files to integrate into `dev` manually (no PR is opened). Older branches are auto-pruned monthly by CI [here](.woodpecker/prune-flake-branches.yml). |
 
 Other than these, temporary branches may be added but their purpose should be understandable judging by name.
 

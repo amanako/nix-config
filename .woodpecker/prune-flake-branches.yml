@@ -1,0 +1,24 @@
+when:
+  - event: cron
+    cron: "prune flake branches" # Runs 1st of every month at 03:40 UTC (schedule: 40 3 1 * ?)
+  - event: manual
+
+steps:
+  - name: prune-flake-branches
+    image: alpine/git:latest
+    environment:
+      GITEA_TOKEN:
+        from_secret: GITEA_TOKEN
+    commands:
+      - apk add --no-cache coreutils
+      - |
+        REMOTE_URL="https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git"
+        cutoff="$(date -u --date='-30 days' +%F)"
+        git ls-remote --heads "$REMOTE_URL" 'refs/heads/weekly-flake-update/*' | while read -r _ ref; do
+          branch="${ref#refs/heads/}"
+          date="${branch##*/}"
+          if [ "$date" \< "$cutoff" ]; then
+            echo "Pruning stale branch: $branch"
+            git push "$REMOTE_URL" --delete "$branch"
+          fi
+        done

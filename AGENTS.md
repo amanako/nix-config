@@ -327,8 +327,10 @@ Subaspects are reachable by appending `.`, e.g.
   simply build the attrset in a `let` instead of forcing it through `|>`.
 - **`flake.nix`/`flake.lock` are committed and CI-gated.** CI regenerates
   `flake.nix` via `write-flake` and runs `nix flake check -L` on `main`/`dev`.
-  Weekly Woodpecker cron bumps `flake.lock` into a `weekly-flake-update` branch and
-  opens a PR to `dev`. Don't hand-edit `flake.lock` except via `just fupdate`.
+  A Woodpecker cron (every 2nd Sunday) bumps `flake.lock` into a dated
+  `weekly-flake-update/YYYY-MM-DD` branch and does **not** open a PR; integrate
+  it into `dev` manually (e.g. by fast-forwarding `dev` to it). Don't
+  hand-edit `flake.lock` except via `just fupdate`.
 - **`repoRoot` is mandatory** for any host/user using paths/data from the repo;
   assertions fail if neither host nor user sets it.
 - **nixpkgs tracks `nixos-unstable`.** Expect frequent upstream churn; flake

@@ -1,6 +1,6 @@
 when:
   - event: cron
-    cron: "bump flake" # Runs Sunday 03:40 UTC
+    cron: "bump flake" # Runs every 2nd Sunday ~21:56 UTC (cron schedule: @every 336h)
   - event: manual
 
 steps:
@@ -18,7 +18,6 @@ steps:
         )
       - nix profile add nixpkgs#just
       - just fupdate
-      - nix --accept-flake-config flake check -L --all-systems --show-trace
 
   - name: commit-and-push
     image: alpine/git:latest
@@ -56,7 +55,7 @@ steps:
         echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
 
       - |
-        BRANCH="weekly-flake-update"
+        BRANCH="weekly-flake-update/$(date +%F)"
         git checkout -b $BRANCH
         git add flake.lock
 
@@ -69,25 +68,3 @@ steps:
       - |
         git commit -S -m "Weekly flake.lock update"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
-
-  - name: open-pr
-    image: woodpeckercommunity/gitea-pull-request-create-plugin:latest
-    pull: true
-    settings:
-      gitea_address: https://codeberg.org
-      gitea_token:
-        from_secret: GITEA_TOKEN
-      owner: ${CI_REPO_OWNER}
-      repo: ${CI_REPO_NAME}
-      branch: weekly-flake-update
-      base_branch: dev
-      pr_title: Bump flake
-      pr_body: |
-        Update flake.lock dependencies.
-        PR automatically created by Woodpecker CI.
-      skip_on_missing_branch: true
-      skip_on_empty_branch: true
-      close_pr_if_empty: true
-      delete_branch_if_pr_empty: true
-      merge_when_checks_succeed: true
-      delete_branch_after_merge: true
