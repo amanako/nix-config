@@ -12,15 +12,9 @@
 in {
   den.aspects.lunar-scar = {
     includes = [
-      # Include all direct subaspects created under my user and other ones
+      # Include all direct subaspects created under my user
       den.aspects.lunar-scar._
 
-      # `everyday.utility` is a folder of sibling top-level aspects, not a
-      # parent aspect with sub-keys, so `._` resolves to nothing here and will
-      # not surface any of them. Each utility aspect must be included by its
-      # full attrpath for its userSettings/hm to activate (this is the intended
-      # opt-in mechanism — settings are pruned to included aspects).
-      # TODO: add something so that utility._ includes anki settings
       den.aspects.everyday.utility.anki
       den.aspects.everyday.utility.localsend
       den.aspects.everyday.utility.fcitx5
