@@ -1,7 +1,12 @@
-{noctalia-shell, ...}: {
+{
+  den,
+  noctalia-shell,
+  ...
+}: {
   noctalia-shell.bar = {
     includes = [
       noctalia-shell.bar.widgets
+      den.aspects.everyday.bars.conflict-manager
     ];
 
     hm.programs.noctalia-shell.settings.bar = {

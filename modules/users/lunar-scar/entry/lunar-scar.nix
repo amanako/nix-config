@@ -13,12 +13,6 @@
     settings = {
       niri.binds.keyboard-backlight.device = "asus::kbd_backlight";
 
-      noctalia.settings = {
-        overrides.location.address = "Niš, Serbia";
-
-        avatarFilename = "bear.png";
-      };
-
       everyday = {
         utility.anki.profileName = "yoha";
 

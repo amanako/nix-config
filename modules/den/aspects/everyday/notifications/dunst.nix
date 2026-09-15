@@ -2,6 +2,8 @@
   den.aspects.everyday.notifications.dunst = {
     description = "Lightweight and customizable notification daemon.";
 
+    stylixHMSettings.targets.dunst.enable = false;
+
     hm.services.dunst = {
       enable = true;
       settings = {

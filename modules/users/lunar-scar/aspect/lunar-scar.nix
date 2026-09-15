@@ -4,7 +4,6 @@
   nixvim,
   zen-browser,
   niri,
-  noctalia,
   ...
 }: let
   u = "lunar-scar";
@@ -46,6 +45,8 @@ in {
 
       den.aspects.everyday.launchers.vicinae
       den.aspects.everyday.launchers.vicinae.extensions
+      den.aspects.everyday.bars.waybar
+      den.aspects.everyday.notifications.dunst
 
       den.aspects.security.ssh
       den.aspects.security.gpg
@@ -61,7 +62,6 @@ in {
 
       # Works for namespaces as well
       zen-browser.full
-      noctalia.full
       niri.full
 
       nixvim.entry

@@ -1,7 +1,12 @@
-{dms, ...}: {
+{
+  den,
+  dms,
+  ...
+}: {
   dms.bar = {
     includes = [
       dms.bar.widgets
+      den.aspects.everyday.bars.conflict-manager
     ];
 
     hm = {

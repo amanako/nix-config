@@ -16,6 +16,10 @@
   den.aspects.everyday.launchers.vicinae = {
     description = "High-performance, native command palette for your desktop.";
 
+    includes = [
+      den.aspects.everyday.launchers.conflict-manager
+    ];
+
     persistUser = {
       directories = [
         ".cache/vicinae"
@@ -31,19 +35,6 @@
     };
 
     stylixHMSettings.targets.vicinae.enable = true;
-
-    userConflicts.warnings = [
-      ({user, ...}:
-        lib.optional (user.hasAspect den.ful.noctalia.niri) {
-          subject = ["everyday.launchers.vicinae"];
-          target = ["den.ful.noctalia"];
-          message = {
-            subject,
-            target,
-            ...
-          }: "${lib.concatStringsSep ", " subject} replaces ${lib.concatStringsSep ", " target} launcher (Mod+Space).";
-        })
-    ];
 
     hm = {
       pkgs,

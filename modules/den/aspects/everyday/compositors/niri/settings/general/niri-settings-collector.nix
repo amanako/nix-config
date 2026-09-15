@@ -9,7 +9,35 @@
       lib,
       inputs',
       ...
-    }: {
+    }: let
+      # A keybind may declare exactly one action. When several contributors
+      # try to claim the same keybind, the
+      # recursiveUpdate merges their `action` into multiple keys, which
+      # violates niri's `kdl leaf` type before conflict quirk fires.
+      # Coerce such keybinds back to a single action so the conflict surfaces as
+      # a `userConflicts` assertion instead of an upstream kdl type error.
+      coalesceAction = keybind:
+        if keybind ? action && builtins.length (lib.attrNames keybind.action) > 1
+        then let
+          actionName = builtins.head (lib.attrNames keybind.action);
+        in
+          keybind
+          // {
+            action = builtins.listToAttrs [
+              {
+                name = actionName;
+                value = keybind.action.${actionName};
+              }
+            ];
+          }
+        else keybind;
+
+      normalizeBinds = settings:
+        settings
+        // lib.optionalAttrs (settings ? binds) {
+          binds = settings.binds |> lib.mapAttrs (_: coalesceAction);
+        };
+    in {
       # Reference: https://github.com/sodiboo/niri-flake/blob/main/docs.md#programsnirisettings
       programs.niri.settings =
         # First parameter represents name of attribute list to use(can be omitted in this case).
@@ -48,7 +76,8 @@
             |> lib.getExe;
 
           animations.slowdown = 1.5;
-        };
+        }
+        |> normalizeBinds;
     };
   };
 }

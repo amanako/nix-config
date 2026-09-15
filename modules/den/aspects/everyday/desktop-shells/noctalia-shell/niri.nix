@@ -1,6 +1,10 @@
 # Sensible keybinds
-{lib, ...}: {
+{den, lib, ...}: {
   noctalia-shell.niri = {
+    includes = [
+      den.aspects.everyday.launchers.conflict-manager
+    ];
+
     niriSettings = {
       spawn-at-startup = [
         {

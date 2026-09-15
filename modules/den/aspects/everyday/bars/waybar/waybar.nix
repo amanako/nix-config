@@ -9,32 +9,10 @@
 
     includes = [
       den.aspects.everyday.bars.waybar.style
+      den.aspects.everyday.bars.conflict-manager
     ];
 
     stylixHMSettings.targets."waybar".enable = false;
-
-    userConflicts.warnings = [
-      ({
-        user,
-        lib,
-        ...
-      }: let
-        shellBars = [
-          den.ful.noctalia.bar
-          den.ful.noctalia-shell.bar
-          den.ful.dms.bar
-        ];
-        active = shellBars |> lib.filter (bar: user.hasAspect bar);
-      in
-        lib.optional (active != []) {
-          subject = ["everyday.bars.waybar"];
-          target = active |> map (asp: asp.meta.name);
-          message = ''
-            everyday.bars.waybar: a desktop-shell bar is also active (${active |> map (asp: asp.meta.name) |> lib.concatStringsSep "\n"}).
-            Running multiple top-layer bars is likely unintended; remove all but one choice if you did not intend to stack them.
-          '';
-        })
-    ];
 
     userSettings = {
       location = lib.mkOption {

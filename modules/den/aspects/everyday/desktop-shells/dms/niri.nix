@@ -1,5 +1,9 @@
-{lib, ...}: {
+{den, lib, ...}: {
   dms.niri = {
+    includes = [
+      den.aspects.everyday.launchers.conflict-manager
+    ];
+
     niriSettings = {
       windows.recent-windows.highlight.corner-radius = 12;
       layout = {
