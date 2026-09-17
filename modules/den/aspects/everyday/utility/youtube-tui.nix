@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   den.aspects.everyday.utility.youtube-tui = {
     description = ''
       Aesthetically pleasing YouTube TUI written in Rust.
@@ -8,21 +8,19 @@
       ".local/share/youtube-tui"
     ];
 
-    desktopEntries = {
-      "youtube-tui" = {
-        name = "Youtube TUI";
-        type = "Application";
-        terminal = true;
-        exec = "youtube-tui";
-        comment = "Youtube content viewer in terminal";
-        genericName = "Aesthetically pleasing YouTube TUI written in Rust";
-      };
-    };
-
     hm = {pkgs, ...}: {
       home.packages = [
         pkgs.youtube-tui
       ];
+
+      xdg.desktopEntries."youtube-tui" = {
+        name = "Youtube TUI";
+        type = "Application";
+        terminal = true;
+        exec = pkgs.youtube-tui |> lib.getExe;
+        comment = "Youtube content viewer in terminal";
+        genericName = "Aesthetically pleasing YouTube TUI written in Rust";
+      };
     };
   };
 }

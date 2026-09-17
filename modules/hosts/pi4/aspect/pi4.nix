@@ -14,5 +14,9 @@
 
       den.aspects.security.ssh
     ];
+
+    persistHost.directories = [
+      "/etc/ssh"
+    ];
   };
 }

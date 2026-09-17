@@ -22,7 +22,7 @@
 
     stylixHMSettings.targets."noctalia-shell".enable = false;
 
-    persistsUser.files = [".cache/noctalia/shell-state.json"];
+    persistUser.files = [".cache/noctalia/shell-state.json"];
 
     hm = {
       imports = [
