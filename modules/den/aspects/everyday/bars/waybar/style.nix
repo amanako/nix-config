@@ -236,7 +236,7 @@
               padding: 0 10px 0 5px;
           }
 
-          /* memory/cpu: icon stacked over value via <br/> in format; narrow pill, tall */
+          /* memory/cpu: gold pills */
           #memory,
           #cpu {
             background-color: @gold;

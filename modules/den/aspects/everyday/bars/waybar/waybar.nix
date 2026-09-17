@@ -49,13 +49,12 @@
               name = "main";
               id = "main";
               layer = "top";
-              position = "left";
+              position = "top";
               exclusive = true;
-              height = 800;
               spacing = 10;
 
-              margin-top = 20;
-              margin-bottom = 20;
+              margin-left = 20;
+              margin-right = 20;
               on-scroll-up = "";
               on-scroll-down = "";
 
@@ -136,7 +135,6 @@
                 format = " {usage}%";
                 tooltip = true;
                 tooltip-format = "CPU: {usage}%";
-                justify = "center";
                 on-click = termCmd (pkgs.btop |> lib.getExe);
                 states = {
                   warning = 60;
@@ -171,7 +169,6 @@
                   charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
                   default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
                 };
-                justify = "center";
                 format-full = "󰂅";
                 tooltip-format-discharging = "{power:>1.0f}W↓ {capacity}%";
                 tooltip-format-charging = "{power:>1.0f}W↑ {capacity}%";
