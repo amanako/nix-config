@@ -31,12 +31,12 @@
     in {
       activeShells = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        readOnly = true;
         default =
           shells
           |> lib.filter (shell: user.hasAspect shell.aspect)
           |> map (shell: shell.name);
         description = "Names of the desktop shells active for the current user.";
+        readOnly = true;
       };
     };
   };
