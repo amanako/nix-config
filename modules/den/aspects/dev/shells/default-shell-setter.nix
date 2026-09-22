@@ -16,7 +16,11 @@
     };
 
     # Home manager already handles enabling the shell so just enable shell on hosts so that users will be able to use them.
-    nixos = {user, lib, ...}: {
+    nixos = {
+      user,
+      lib,
+      ...
+    }: {
       programs =
         user.settings.dev.shells.activeShells
         |> lib.flip lib.genAttrs (_: {enable = true;});

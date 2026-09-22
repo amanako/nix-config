@@ -41,7 +41,8 @@
   collect = packageChannels:
     packageChannels
     |> lib.foldl'
-      (acc: entry:
+    (
+      acc: entry:
         if !(lib.isAttrs entry)
         then acc
         else
@@ -54,9 +55,10 @@
                 "Channel conflict for '${pkg}': '${acc.${pkg}}' vs '${channel}'; using '${channel}'."
                 channel
               else channel
-          ) entry
-      )
-      {};
+          )
+          entry
+    )
+    {};
 
   overlay = packageChannels: rawConfig: _final: prev: let
     declared = packageChannels |> collect;
@@ -87,7 +89,10 @@ in {
     }: let
       usedChannels =
         packageChannels
-        |> lib.concatMap (entry: if lib.isAttrs entry then builtins.attrValues entry else [])
+        |> lib.concatMap (entry:
+          if lib.isAttrs entry
+          then builtins.attrValues entry
+          else [])
         |> lib.map normalize
         |> lib.unique
         |> lib.filter (channel: !(channelInputs ? ${channel}));
@@ -96,10 +101,12 @@ in {
         (overlay packageChannels config.nixpkgs.config)
       ];
 
-      assertions = lib.optionals (usedChannels != []) [{
-        assertion = false;
-        message = "Unknown channel(s) in packageChannels quirk: ${lib.concatStringsSep ", " usedChannels}. Available channels: ${lib.concatStringsSep ", " channels}.";
-      }];
+      assertions = lib.optionals (usedChannels != []) [
+        {
+          assertion = false;
+          message = "Unknown channel(s) in packageChannels quirk: ${lib.concatStringsSep ", " usedChannels}. Available channels: ${lib.concatStringsSep ", " channels}.";
+        }
+      ];
     };
   };
 }

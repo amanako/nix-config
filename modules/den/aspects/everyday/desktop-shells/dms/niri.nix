@@ -1,4 +1,8 @@
-{den, lib, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   dms.niri = {
     includes = [
       den.aspects.everyday.launchers.conflict-manager

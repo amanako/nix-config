@@ -1,5 +1,9 @@
 # Sensible keybinds
-{den, lib, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   noctalia.niri = {
     includes = [
       den.aspects.everyday.launchers.conflict-manager
