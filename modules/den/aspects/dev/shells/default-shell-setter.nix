@@ -1,4 +1,4 @@
-{den, ...}: {
+{...}: {
   # I am aware that den.batteries.user-shell exists but it isn't complete with shell support.
   # Therefore this aspect is supposed to represent universal solution to the shell problem.
 
@@ -16,27 +16,9 @@
     };
 
     # Home manager already handles enabling the shell so just enable shell on hosts so that users will be able to use them.
-    nixos = {
-      user,
-      lib,
-      ...
-    }: let
-      unsupportedNixOSShells = ["nushell"];
-      supportedShells =
-        den.aspects.dev.shells
-        |> lib.filterAttrs (n: v: (v |> builtins.isAttrs) && !(n |> lib.hasPrefix "_"))
-        |> builtins.attrNames
-        |> lib.remove "default-shell-setter"
-        |> lib.filter (shell:
-          user.hasAspect {
-            name = shell;
-            meta.provider = ["dev" "shells"];
-          })
-        # Remove shells not supported by nixos.programs options
-        |> lib.filter (shell: !(unsupportedNixOSShells |> lib.elem shell));
-    in {
+    nixos = {user, lib, ...}: {
       programs =
-        supportedShells
+        user.settings.dev.shells.activeShells
         |> lib.flip lib.genAttrs (_: {enable = true;});
     };
   };
