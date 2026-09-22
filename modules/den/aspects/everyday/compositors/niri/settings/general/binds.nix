@@ -2,6 +2,7 @@
   niri.binds = {
     includes = [
       niri.binds.keyboard-backlight
+      niri.binds.system
     ];
 
     niriSettings = {

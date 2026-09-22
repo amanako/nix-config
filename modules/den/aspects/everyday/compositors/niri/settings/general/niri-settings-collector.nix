@@ -6,10 +6,21 @@
 
     hm = {
       niriSettings,
+      user,
+      pkgs,
       lib,
       inputs',
       ...
     }: let
+      resolveContribution = contribution: let
+        fn =
+          if builtins.isAttrs contribution && contribution ? __fn
+          then contribution.__fn
+          else contribution;
+      in
+        if builtins.isFunction fn
+        then fn {inherit user pkgs lib inputs';}
+        else contribution;
       # A keybind may declare exactly one action. When several contributors
       # try to claim the same keybind, the
       # recursiveUpdate merges their `action` into multiple keys, which
@@ -44,6 +55,7 @@
         # Second one is list of all elements in this attribute set.
         # Concatenate lists keeping only unique one's and deep merge attribute sets similarly to den's freeform approach.
         niriSettings
+        |> map resolveContribution
         |> lib.zipAttrsWith (
           _: values: let
             allLists =
