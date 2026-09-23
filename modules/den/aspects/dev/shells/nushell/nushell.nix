@@ -12,12 +12,24 @@
       ".config/nushell/history.txt"
     ];
 
-    hm.programs.nushell = {
-      enable = true;
+    hm = {
+      pkgs,
+      config,
+      ...
+    }: let
+      nixYourShellFile = "${config.xdg.configHome}/nushell/nix-your-shell.nu";
+    in {
+      # Ensure correct shell preservation with nix, nix-shell and other commands.
+      home.file."${nixYourShellFile}".source =
+        pkgs.nix-your-shell.generate-config "nu";
 
-      extraConfig = ''
-        $env.config.show_banner = false
-      '';
+      programs.nushell = {
+        enable = true;
+        extraConfig = ''
+          $env.config.show_banner = false
+          source "${nixYourShellFile}"
+        '';
+      };
     };
   };
 }

@@ -1,7 +1,6 @@
-{...}: {
+{
   # I am aware that den.batteries.user-shell exists but it isn't complete with shell support.
   # Therefore this aspect is supposed to represent universal solution to the shell problem.
-
   den.aspects.dev.shells.default-shell-setter = {
     description = ''
       Aspect to wire in default shell for the user, based on user.settings.dev.shells.defaultShell option.
@@ -24,6 +23,11 @@
       programs =
         user.settings.dev.shells.activeShells
         |> lib.flip lib.genAttrs (_: {enable = true;});
+    };
+
+    hm.programs.nix-your-shell = {
+      enable = true;
+      nix-output-monitor.enable = true;
     };
   };
 }

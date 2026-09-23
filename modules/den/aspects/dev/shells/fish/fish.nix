@@ -19,7 +19,7 @@
         interactiveShellInit = ''
           set -U fish_greeting
           # Shell remains same when running "nix run" or "nix-shell"
-          ${pkgs.any-nix-shell |> lib.getExe} fish --info-right | source
+          ${pkgs.nix-your-shell |> lib.getExe} fish | source
         '';
         shellAliases = {
           bios = "systemctl reboot --firmware-setup";
