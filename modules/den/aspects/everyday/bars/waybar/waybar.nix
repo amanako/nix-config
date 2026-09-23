@@ -30,7 +30,8 @@
       ...
     }: let
       # Launch a TUI inside the user's terminal emulator.
-      termCmd = cmd: "${user.preferences.term} -e ${cmd}";
+      inherit (user.preferences.effective) term;
+      termCmd = cmd: "${term} -e ${cmd}";
     in {
       programs.waybar = {
         enable = true;

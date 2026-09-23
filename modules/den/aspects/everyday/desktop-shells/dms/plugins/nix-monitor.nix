@@ -1,7 +1,11 @@
 {inputs, ...}: {
   flake-file.inputs.nix-monitor.url = "github:antonjah/nix-monitor";
 
-  dms.plugins.nix-monitor = {user, ...}: {
+  dms.plugins.nix-monitor = {
+    user,
+    lib,
+    ...
+  }: {
     hm = {pkgs, ...}: {
       imports = [
         inputs.nix-monitor.hmModules.default
@@ -16,7 +20,7 @@
           # Delegate task to pkexec since nixos-rebuild requires password
           "bash"
           "-c"
-          "TERM=${user.preferences.term} pkexec nixos-rebuild switch --flake=${user.repoRoot} 2>&1"
+          "${lib.optionalString (user.preferences.term != null) "TERM=${user.preferences.term} "}pkexec nixos-rebuild switch --flake=${user.repoRoot} 2>&1"
         ];
 
         gcCommand = [

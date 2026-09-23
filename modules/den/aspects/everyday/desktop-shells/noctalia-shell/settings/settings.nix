@@ -55,7 +55,7 @@
           };
 
           appLauncher = {
-            terminalCommand = "${user.preferences.term} -e";
+            terminalCommand = "${user.preferences.effective.term} -e";
           };
 
           colorSchemes = {

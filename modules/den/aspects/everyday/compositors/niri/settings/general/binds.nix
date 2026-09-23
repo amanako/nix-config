@@ -68,11 +68,6 @@
           "Mod+R".action.switch-preset-column-width-back = [];
           "Mod+Tab".action.toggle-overview = [];
 
-          "Mod+T".action.spawn = pref.term;
-          "Mod+B".action.spawn = pref.browser;
-          "Mod+N" = sh "${pref.term} -e ${pref.editor}";
-          "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
-
           "Mod+Shift+C".action.center-visible-columns = [];
           "Mod+Shift+F".action.fullscreen-window = [];
           "Mod+Shift+R".action.switch-preset-column-width = [];
@@ -94,6 +89,18 @@
 
           "Mod+Shift+P".action.power-off-monitors = [];
           "Mod+Q".action.close-window = [];
+        }
+        // lib.optionalAttrs (pref.term != null) {
+          "Mod+T".action.spawn = pref.term;
+        }
+        // lib.optionalAttrs (pref.browser != null) {
+          "Mod+B".action.spawn = pref.browser;
+        }
+        // lib.optionalAttrs (pref.term != null && pref.editor != null) {
+          "Mod+N" = sh "${pref.term} -e ${pref.editor}";
+        }
+        // lib.optionalAttrs (pref.term != null && pref.fileManager != null) {
+          "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
         };
     };
   };

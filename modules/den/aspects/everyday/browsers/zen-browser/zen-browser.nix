@@ -20,7 +20,7 @@
 
   zen-browser.entry = {user, ...}: let
     preferedBrowser = user.preferences.browser;
-    isZenPrefered = lib.hasPrefix "zen" preferedBrowser;
+    isZenPrefered = preferedBrowser != null && lib.hasPrefix "zen" preferedBrowser;
 
     # Since binary name remains "zen-twilight" for both twilight and twilight-official
     # variants, strip the "zen-" prefix to get the flake/home-module variant name.

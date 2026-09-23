@@ -1,7 +1,6 @@
 {
   den,
   inputs,
-  lib,
   ...
 }: {
   flake-file = {
@@ -46,7 +45,7 @@
       ];
 
       # Per FAQ: https://docs.vicinae.com/faq#how-to-set-which-terminal-to-use-to-launch-terminal-apps.
-      xdg.configFile."xdg-terminals.list".text = "${user.preferences.term}.desktop\n";
+      xdg.configFile."xdg-terminals.list".text = "${user.preferences.effective.term}.desktop\n";
 
       programs.vicinae = {
         enable = true;

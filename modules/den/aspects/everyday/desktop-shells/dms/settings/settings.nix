@@ -26,7 +26,9 @@
       user,
       lib,
       ...
-    }: {
+    }: let
+      inherit (user.preferences) browser;
+    in {
       programs.dank-material-shell.settings =
         user.dank-material-shell.additionalSettings
         |> lib.recursiveUpdate
@@ -78,18 +80,17 @@
             "all"
           ];
 
+          configVersion = 5;
+        }
+        // lib.optionalAttrs (browser != null) {
           # Prevent being prompted every time when selecting a browser via dms.
-          browserUsageHistory = let
-            inherit (user.preferences) browser;
-          in {
+          browserUsageHistory = {
             ${browser} = {
               count = 1000;
               lastUsed = 1741500000000;
-              name = browser;
+              name = user.preferences.browser;
             };
           };
-
-          configVersion = 5;
         };
     };
   };
