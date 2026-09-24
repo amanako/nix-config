@@ -11,12 +11,18 @@
   den.aspects.extra.bleeding-edge.chaotic = {
     description = "Chaotic-CX Nyx overlay providing bleeding-edge and extra packages.";
 
-    nixos.imports = [
-      inputs.chaotic.nixosModules.default
-    ];
+    nixos = {
+      imports = [
+        inputs.chaotic.nixosModules.default
+      ];
+      chaotic.nyx.registry.enable = false;
+    };
 
-    hm.imports = [
-      inputs.chaotic.homeManagerModules.default
-    ];
+    hm = {
+      imports = [
+        inputs.chaotic.homeManagerModules.default
+      ];
+      chaotic.nyx.registry.enable = false;
+    };
   };
 }
