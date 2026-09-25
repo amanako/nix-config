@@ -17,7 +17,6 @@
     userSettings = {
       location = lib.mkOption {
         type = lib.types.str;
-        default = "New York, United States of America";
         example = "London, UK";
         description = "Location passed to wttrbar for the weather module.";
       };

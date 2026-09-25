@@ -51,7 +51,7 @@
 
           ui = {
             fontDefault = "Mona Sans Display Light";
-            fontFixed = "VictorMono NF";
+            fontFixed = user.preferences.monofont.name;
           };
 
           appLauncher = {

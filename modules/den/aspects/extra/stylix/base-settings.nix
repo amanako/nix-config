@@ -29,10 +29,8 @@
         };
 
         fonts = {
-          monospace = {
-            package = pkgs.nerd-fonts.victor-mono;
-            name = "VictorMono Nerd Font";
-          };
+          # Monospace is a per user preference (`preferences.monofont`) and is set in
+          # the user font aspect, since it is not a system wide choice.
           sansSerif = {
             package = pkgs.inter;
             name = "Inter";
