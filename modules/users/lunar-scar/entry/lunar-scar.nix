@@ -8,6 +8,11 @@
       fileManager = "yazi";
       browser = "zen-twilight";
       term = "kitty";
+
+      monofont = {
+        package = "nerd-fonts.victor-mono";
+        name = "VictorMono Nerd Font";
+      };
     };
 
     settings = {
@@ -27,6 +32,8 @@
 
           service.calendar = "*-*-* *:00";
         };
+
+        bars.waybar.location = "Nis";
       };
 
       security.sops-user = {
@@ -50,6 +57,7 @@
           };
         };
 
+        terminal.kitty.fontFeatures = "VictorMonoNF-Regular +ss08";
         shells.defaultShell = "nushell";
       };
     };

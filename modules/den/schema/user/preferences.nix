@@ -17,7 +17,7 @@
             mkPrefOption = pref: {
               default ? null,
               example ? "",
-              description ? "Preferred ${pref} binary name.",
+              description ? "Preferred ${pref} package name.",
             }:
               mkOption {
                 type = lib.types.nullOr lib.types.str;
@@ -42,6 +42,45 @@
 
             fileManager = mkPrefOption "file manager" {
               example = "thunar";
+            };
+
+            monofont = mkOption {
+              type = types.submodule {
+                options = {
+                  package = mkOption {
+                    type = types.str;
+                    example = "nerd-fonts.victor-mono";
+                    description = ''
+                      Nixpkgs package name providing the preferred font, resolved by
+                      consumers as `pkgs.''${package}`. A package name and not a
+                      derivation because `pkgs` is not in scope in entries.
+                      Read by consumers that accept a package.
+                    '';
+                  };
+
+                  name = mkOption {
+                    type = types.str;
+                    example = "VictorMono Nerd Font";
+                    description = ''
+                      Family name of the font as reported by fontconfig. Read by
+                      consumers that only accept a family name. It cannot be
+                      derived from `package` since one package may ship several
+                      families.
+                    '';
+                  };
+                };
+              };
+              default = {
+                package = "nerd-fonts.victor-mono";
+                name = "VictorMono Nerd Font";
+              };
+              description = ''
+                Preferred monospace font, the single source of truth for both the
+                package and its family name. Consumers that need a package read
+                `package` and resolve it themselves, consumers that need a family
+                name read `name`, so both halves have to be updated together when
+                changing the font.
+              '';
             };
 
             fallbacks = mkOption {
@@ -96,6 +135,10 @@
           term = "kitty";
           editor = "nvim";
           fileManager = "nautilus";
+          monofont = {
+            package = "nerd-fonts.victor-mono";
+            name = "VictorMono Nerd Font";
+          };
         };
 
         description = ''
@@ -103,6 +146,8 @@
           Used for keybindings in compositors and shells and some default settings.
           Default value of `null` is used to express "no preference"; consumers then fall
           back to a sensible default or skip the preference-driven feature accordingly.
+          `monofont` is the exception, it carries both the package and its family name and
+          comes with a default of its own, since neither half is derivable from the other.
         '';
       };
 
