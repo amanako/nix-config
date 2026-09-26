@@ -1,5 +1,5 @@
 {lib, ...}: {
-  den.aspects.core.impermanence.persistUserCollector = let
+  den.aspects.core.impermanence.persist-user-collector = let
     mkPersist = data: {
       directories =
         data

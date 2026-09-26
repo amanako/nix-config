@@ -9,6 +9,10 @@
     types
     ;
 
+  # Aspects reached via the `._` bundle (e.g. `utility._`) resolve into
+  # distinct child nodes in `config.aspects`, each carrying its own leaf
+  # identity, so their userSettings surface here like any other include.
+
   # Keys that are NOT child aspects: structural keys (includes, nixos, …),
   # plus your framework's registered class names and quirk/extension keys.
   inherit (den.lib.aspects.fx.keyClassification) structuralKeysSet;
@@ -107,7 +111,7 @@
     if !(builtins.isAttrs node)
     then node
     else let
-      children = lib.filterAttrs (k: v: builtins.isAttrs v && !(skipKey k)) node;
+      children = lib.filterAttrs (k: v: builtins.isAttrs v && !(skipKey k) && !(v._type or null == "option")) node;
       pruned = lib.mapAttrs (k: v: pruneTree includedSet (prefix ++ [k]) v) children;
       kept = lib.filterAttrs (_: v: v != null) pruned;
       selfIncluded = includedSet ? ${lib.concatStringsSep "/" prefix};

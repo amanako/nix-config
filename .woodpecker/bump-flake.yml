@@ -1,6 +1,6 @@
 when:
   - event: cron
-    cron: "bump flake" # Runs Sunday 03:40 UTC
+    cron: "bump flake" # Runs every 2nd Sunday ~21:56 UTC (cron schedule: @every 336h)
   - event: manual
 
 steps:
@@ -12,17 +12,12 @@ steps:
     commands:
       - |
         export NIX_CONFIG=$(cat <<-EOF
-        extra-experimental-features = nix-command flakes pipe-operators
-        accept-flake-config = true
+        extra-experimental-features = nix-command flakes
+        access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
-
-      - |
-        nix run .#write-flake
-        nix flake update
-      - |
-        nix run .#write-flake
-        nix flake check -L
+      - nix profile add nixpkgs#just
+      - just fupdate
 
   - name: commit-and-push
     image: alpine/git:latest
@@ -48,13 +43,19 @@ steps:
         mkdir -p ~/.ssh
         echo "$${GIT_SSH_PRIVATE_KEY}" > ~/.ssh/signing_key
         echo "$${GIT_SSH_PUBLIC_KEY}" > ~/.ssh/signing_key.pub
-
-      - |
         chmod 600 ~/.ssh/signing_key
-        git config --global user.signingkey $${GIT_SSH_PUBLIC_KEY}
 
       - |
-        BRANCH="weekly-flake-update"
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/signing_key
+
+      - |
+        git config --global user.signingkey "$(cat ~/.ssh/signing_key.pub)"
+        git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+        echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
+
+      - |
+        BRANCH="weekly-flake-update/$(date +%F)"
         git checkout -b $BRANCH
         git add flake.lock
 
@@ -67,25 +68,3 @@ steps:
       - |
         git commit -S -m "Weekly flake.lock update"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"
-
-  - name: open-pr
-    image: woodpeckercommunity/gitea-pull-request-create-plugin:latest
-    pull: true
-    settings:
-      gitea_address: https://codeberg.org
-      gitea_token:
-        from_secret: GITEA_TOKEN
-      owner: ${CI_REPO_OWNER}
-      repo: ${CI_REPO_NAME}
-      branch: weekly-flake-update
-      base_branch: dev
-      pr_title: Bump flake
-      pr_body: |
-        Update flake.lock dependencies.
-        PR automatically created by Woodpecker CI.
-      skip_on_missing_branch: true
-      skip_on_empty_branch: true
-      close_pr_if_empty: true
-      delete_branch_if_pr_empty: true
-      merge_when_checks_succeed: true
-      delete_branch_after_merge: true

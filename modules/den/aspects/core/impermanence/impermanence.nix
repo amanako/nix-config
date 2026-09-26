@@ -13,6 +13,8 @@
       types
       ;
   in {
+    description = "Filesystem state management for NixOS: a fresh btrfs root subvolume on every boot (rolling-root) with selective persistence.";
+
     hostSettings = {host, ...}: {
       persistenceDir = mkOption {
         type = types.nullOr types.path;
@@ -21,7 +23,7 @@
         description = "Directory for impermanence persistent storage.";
       };
 
-      dontEnableUsers = mkOption {
+      mountHomeDir = mkOption {
         type = types.bool;
         default =
           host.users
@@ -29,23 +31,37 @@
           |> builtins.any (_: true);
         example = false;
         description = ''
-          Whether to not enable impermanence module for users, that is impermanence for `/home` directory.
+          Whether to mount `/home` directory as persistent, for users of the host.
+          A safe option for ones who don't like to experiment too much.
+          Defaults to true if host has at least one user.
           Note that for this option to work `/home` must be an existing mountpoint marked as neededForBoot,
-          which is done automatically when `den.aspects.core.impermanence` aspect is included.
+          which is done automatically when `den.aspects.core.impermanence` aspect is included and this option is set to true.
         '';
       };
     };
 
     includes = [
       den.aspects.core.impermanence.btrfs
-      den.aspects.core.impermanence.persistSystemCollector
+      den.aspects.core.impermanence.persist-host-collector
     ];
 
     provides.to-users.includes = [
-      den.aspects.core.impermanence.persistUserCollector
+      den.aspects.core.impermanence.persist-user-collector
     ];
 
-    persistSystem = {
+    diskoConfig = {host, ...}: let
+      cfg = host.settings.core.impermanence;
+    in {
+      subvolumes =
+        {
+          "${cfg.persistenceDir}".mountpoint = cfg.persistenceDir;
+        }
+        |> lib.flip lib.recursiveUpdate (lib.optionalAttrs cfg.mountHomeDir {
+          "/home".mountpoint = "/home";
+        });
+    };
+
+    persistHost = {
       directories = [
         # Without this dir all users/groups without specified
         # uids/gids will have them reassigned on reboot.
@@ -70,17 +86,33 @@
       ...
     }: let
       cfg = host.settings.core.impermanence;
+
+      # The rolling-root initrd service and the persist subvolume layout both
+      # assume a btrfs root; gate the neededForBoot markers on it so a non-btrfs
+      # layout fails the assertion below instead of nixpkgs' fileSystems check.
+      hasBtrfsRoot = host.hasAspect den.aspects.core.disks.root-btrfs;
     in {
+      assertions = [
+        {
+          assertion = hasBtrfsRoot;
+          message = ''
+            core.impermanence: the btrfs rolling-root and the persist subvolume
+            layout assume a btrfs root. Include the btrfs root layout aspect
+            (`den.aspects.core.disks.root-btrfs`) alongside this aspect.
+          '';
+        }
+      ];
+
       imports = [
         inputs.impermanence.nixosModules.impermanence
       ];
       fileSystems =
-        {
+        lib.optionalAttrs hasBtrfsRoot {
           "${cfg.persistenceDir}".neededForBoot = true;
         }
-        // lib.optionalAttrs (cfg.dontEnableUsers) {
+        |> lib.mergeAttrs (lib.optionalAttrs (hasBtrfsRoot && cfg.mountHomeDir) {
           "/home".neededForBoot = true;
-        };
+        });
 
       environment.persistence.${cfg.persistenceDir}.hideMounts = true;
     };

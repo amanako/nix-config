@@ -1,14 +1,15 @@
 {
   den.hosts.x86_64-linux.cachy = {
     repoRoot = "/etc/nixos";
+    defaultChannel = "unstable";
 
     settings = {
-      core = {
-        nix-cachyos-kernel = {
-          uarch = "zen4";
-        };
+      extra.performance.cachyos-kernel.uarch = "zen4";
 
-        displayManagers.ly.batteryID = "BAT0";
+      core = {
+        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A";
+
+        display-managers.ly.batteryID = "BAT0";
 
         hardware.deviceType = "laptop";
 

@@ -15,6 +15,7 @@
 
         buildInputs = with pkgs; [
           pre-commit
+          nixd
           woodpecker-cli
           alejandra
           stylua
@@ -26,7 +27,6 @@
         ];
 
         shellHook = ''
-          echo "Welcome to my nix-config repo!"
           export PRE_COMMIT_HOME=$HOME/.cache/pre-commit
           # For pre commit to use pure nix packages instead of downloading
           export PRE_COMMIT_USE_NIX=1

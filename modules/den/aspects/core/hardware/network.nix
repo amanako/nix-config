@@ -1,6 +1,6 @@
 {
   den.aspects.core.hardware.network = {
-    persistSystem.directories = [
+    persistHost.directories = [
       # Remember connected networks
       "/etc/NetworkManager/system-connections"
     ];

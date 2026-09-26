@@ -3,7 +3,7 @@
     # reference: about:config in zen
     # some of my findings for clean fuss-free experience
 
-    zenUserSettings = {lib, ...}: {
+    zenProfileSettings = {lib, ...}: {
       settings = let
         urlbarDontSuggestList = [
           "addons"
@@ -48,6 +48,7 @@
           "extensions.autoDisableScopes" = 0;
 
           "zen.window-sync.enabled" = false;
+          "zen.welcome-screen.seen" = true;
 
           # Force workspace containers
           "zen.workspaces.force-container-workspace" = true;

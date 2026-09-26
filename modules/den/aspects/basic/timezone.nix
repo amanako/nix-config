@@ -1,5 +1,9 @@
 {lib, ...}: {
   den.aspects.basic.time = {
+    description = ''
+      Configuration aspect for host timezone.
+    '';
+
     hostSettings = {
       timeZone = lib.mkOption {
         type = lib.types.str;

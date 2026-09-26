@@ -4,7 +4,7 @@
       zen-browser.searchEnginesCollector
     ];
 
-    zenUserSettings.search = {
+    zenProfileSettings.search = {
       force = true;
       default = "ddg";
       privateDefault = "ddg";

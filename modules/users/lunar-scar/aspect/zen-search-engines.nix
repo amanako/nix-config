@@ -1,5 +1,5 @@
 {
-  den.aspects.lunar-scar.personalZenSearchEngines = {
+  den.aspects.lunar-scar.personal-zen-search-engines = {
     description = ''
       Collection of lunar scar's additional custom search engines for usage in zen browser.
     '';

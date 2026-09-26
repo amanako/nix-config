@@ -8,6 +8,8 @@ Outline some decisions and choices made during development for anyone willing to
   * [File Organization](#file-organization)
   * [Aspect Inclusion](#aspect-inclusion)
   * [Quirks as Top Priority](#quirks-as-top-priority)
+  * [Scope-paired quirks and the conflicts pattern](#scope-paired-quirks-and-the-conflicts-pattern)
+  * [Settings namespace](#settings-namespace)
   * [Documentation](#documentation)
   * [Leveraging Den Capabilities](#leveraging-den-capabilities)
   * [Specific Practices](#specific-practices)
@@ -30,7 +32,7 @@ Outline some decisions and choices made during development for anyone willing to
 
 - **Primary focus:** Including aspects should mean opt-in, not including / excluding should mean opt-out
 - **Fine‑grained control:** Optional manual overrides / special cases handled with host and user schema options
-Ideally existing aspects should not be touched, only new ones made to override/build upon them.
+  Ideally existing aspects should not be touched, only new ones made to override/build upon them.
 
 ### Quirks as Top Priority
 
@@ -39,6 +41,40 @@ However upon some discussion I came to realize quirks overpower them with simpli
 in situations where multiple aspects contribute to some result(which is usually assembled by some collector aspect).
 
 Conversation leading to this conclusion can be found [here](https://github.com/denful/den/discussions/590).
+
+### Scope-paired quirks and the conflicts pattern
+
+Some data channels only make sense for one scope, and one `den.quirks.*` name
+gets ambiguous when the same idea must serve both host and user. The `conflicts`
+quirk is therefore split into `hostConflicts` (folded in the `nixos` lambda of
+`den.aspects.basic.conflicts-collector`) and `userConflicts` (folded in its `hm`
+lambda). This lets host-scope assertions (e.g. `security.sops-host`) use the
+same pattern as user-scope ones instead of inline NixOS `assertions`.
+
+Conflict entries follow a fixed contract:
+
+- A contribution is a **list** of `{ subject, target, assertion, message }`
+  attrs; the collector flattens all contributions with `lib.concatLists`. Return
+  `lib.optional ... [ entry ]` (a list) for conditional entries — a bare
+  attrset silently yields nothing.
+- `subject` / `target` name the conflicting aspects for diagnostics; `assertion`
+  is the boolean to enforce; `message` explains the fix.
+- Entries may be functions taking `{host, ...}` / `{config, ...}` to read
+  settings; `resolve` injects `config` for lambdas that declare it.
+- For scope-invariant membership checks prefer probing the settings tree
+  (`lib.hasAttrByPath [...] settings`) over `host.hasAspect` /
+  `user.hasAspect`, which are scope-projected (see `AGENTS.md`).
+
+### Settings namespace
+
+Aspects expose typed, per-entity options through `userSettings` / `hostSettings`
+(reserved keys). den auto-generates a `settings` submodule mirroring the aspect
+tree, pruned to what the entity includes. Declaration is decoupled from
+consumption: an aspect may declare settings that a _different_ aspect reads by
+attrpath. This is distinct from quirks, which fold fragments from many aspects
+into one result. The generator is adapted from sini's
+[Typed per-aspect settings in Den](https://gist.github.com/sini/c67ccc0d38983e6636ba408e042e36be)
+how-to; see [settings.md](settings.md).
 
 ### Documentation
 
@@ -54,10 +90,18 @@ Conversation leading to this conclusion can be found [here](https://github.com/d
 - Declare **[flake-file]** inputs, **[custom classes][custom-classes]**, lambda parameters etc., **as close to the point of use** as possible
 - Prefer using [pipe-operators] for clearer intentions and similarities with other functional languages
 - This makes removal or refactoring straightforward
+- **`lib.mergeAttrs` is curried and right-biased toward the piped value:**
+  `x |> lib.mergeAttrs y` is `y // x`, so the piped operand wins. Use
+  `lib.mergeAttrsList` when folding a list (later wins). Wrap non-piped
+  arguments in parens, e.g. `x |> lib.mergeAttrs (lib.optionalAttrs cond {...})`,
+  to keep application total.
+- **Verify NixOS `assertions` by forcing the booleans, not the messages.**
+  `builtins.filter (a: !a.assertion)` is safe; forcing `message` can trip
+  unrelated lazy-evaluation errors (e.g. the `fileSystems'` cycle in nixpkgs).
 - Declare [shorthand for homeManager class to use instead](modules/den/policies/hm-shorthand.nix)(Inspiration: https://github.com/sini/nix-config)
 
 - Prefer using [inherit] over [with], expect in basic list expressions such as `with pkgs`.
-If there are multiple expressions you want to inherit assign one per row.
+  If there are multiple expressions you want to inherit assign one per row.
 - Use [inherit] to either avoid repetition or shorten long names (such as `cfg` attribute used with aspect settings).
   Also if , as an example, you want to use `inherit (lib) mkOption` to avoid rewriting `lib` every time,
   you may as well inherit other `lib` attrset values you use, for the sake of consistency.
@@ -69,7 +113,7 @@ If there are multiple expressions you want to inherit assign one per row.
   5. (readOnly)
 - Leave out default to signal the user an option should be set
 - Write `description` as a proper sentence ending with a period (`.`). Use `''...''` for multi‑line text and `"..."` for a single line
-- Make aspects themselves static(plain attrset) and configure lambda in shorter scope, for `nixos` or `hm` classes.<br>
+- **Make aspects themselves static(plain attrset)** and configure **lambda in shorter scope**, for `nixos` or `hm` classes.<br>
   One exception to this "shorter scope" is `lib` which can be used in file scope if den needs it (that is module taking in lambda `{ lib, ...}` at file level).
   If this is the case, redeclartion of `{lib, ...}` within shorter scopes is redundant.
 

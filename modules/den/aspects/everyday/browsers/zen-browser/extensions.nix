@@ -2,26 +2,7 @@
   flake-file.inputs.firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
   zen-browser.extensions = {
-    persistUser = {user, ...}: let
-      basePath = ".config/zen/${user.userName}";
-    in {
-      directories =
-        [
-          "browser-extension-data"
-          "extensions"
-        ]
-        |> map (dir: basePath + "/" + dir);
-
-      files =
-        [
-          "extension-preferences.json"
-          "extension-settings.json"
-          "extensions.json"
-        ]
-        |> map (file: basePath + "/" + file);
-    };
-
-    zenUserSettings = {inputs', ...}: {
+    zenProfileSettings = {inputs', ...}: {
       extensions = {
         force = true;
 

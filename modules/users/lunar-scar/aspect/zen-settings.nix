@@ -1,14 +1,10 @@
 {
-  den.aspects.lunar-scar.zenSettings = {
+  den.aspects.lunar-scar.zen-settings = {
     description = ''
       "Additional zen browser settings for lunar-scar."
     '';
 
-    persistUser.files = [
-      ".config/zen/zen-space-routing.jsonlz4"
-    ];
-
-    zenUserSettings = {
+    zenProfileSettings = {
       settings = {
         "font.cjk_pref_fallback_order" = "ja,zh-cn,zh-hk,zh-tw,ko";
         "font.default.ja" = "serif";

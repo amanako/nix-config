@@ -10,6 +10,8 @@
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
   zen-browser.full = {
+    description = "Full aggregator for the Zen Browser aspects, including all sub-aspects.";
+
     includes = [
       zen-browser._
       zen-browser.search._
@@ -18,96 +20,61 @@
 
   zen-browser.entry = {user, ...}: let
     preferedBrowser = user.preferences.browser;
-    isZenPrefered = lib.hasPrefix "zen" preferedBrowser;
+    isZenPrefered = preferedBrowser != null && lib.hasPrefix "zen" preferedBrowser;
 
     # Since binary name remains "zen-twilight" for both twilight and twilight-official
-    # variants, strip "-official" part when passing command to niri.
+    # variants, strip the "zen-" prefix to get the flake/home-module variant name.
     stripZen =
       if isZenPrefered
       then
         (lib.removePrefix "zen-"
           preferedBrowser)
       else "";
-    stripOfficial = lib.removeSuffix "-official" preferedBrowser;
   in {
+    description = "Zen Browser — a Firefox-based browser focused on privacy and customization.";
+
     includes = [
-      zen-browser.userSettingsCollector
+      zen-browser.profileSettingsCollector
     ];
 
-    niriSettings = lib.optionalAttrs isZenPrefered {
-      spawn-at-startup = [
-        {
-          command = [stripOfficial];
-        }
-      ];
-    };
+    niriSettings = let
+      stripOfficial = preferedBrowser |> lib.removePrefix "-official";
+    in
+      lib.optionalAttrs isZenPrefered {
+        spawn-at-startup = [
+          {
+            command = [stripOfficial];
+          }
+        ];
+      };
 
-    persistUser = let
-      basePath = ".config/zen/${user.userName}";
-      dirs = [
-        # "sessionstore-backups"
-        "settings"
-        "storage"
-        "zen-sessions-backup"
-      ];
-
-      files = [
-        # "sessionstore.jsonlz4"
-
-        # Verified certificates
-        "cert9.db"
-
-        # Cookies
-        "cookies.sqlite"
-
-        # Favicons
-        "favicons.sqlite"
-
-        # Logins and encryption
-        "key4.db"
-        "logins.db"
-        "logins.json"
-
-        # Bookmarks and browsing history
-        "places.sqlite"
-        "prefs.js"
-
-        # Store data related to web applications, such as local storage for cookies, preferences, and other information that web apps may need to function properly
-        "webappsstore.sqlite"
-
-        # Zen essentials
-        "zen-live-folders.jsonlz4"
-        # "zen-sessions.jsonlz4"
-      ];
-    in {
-      directories =
-        dirs
-        |> map (dir: basePath + "/" + dir);
-
-      files =
-        files
-        |> map (file: basePath + "/" + file);
-    };
+    persistUser.directories = [
+      ".config/zen/${user.userName}"
+    ];
 
     stylixHMSettings.targets."zen-browser" = {
       enable = true;
       profileNames = ["${user.userName}"];
     };
 
-    hm = {
+    hm = let
+      # The Zen variant whose package we deploy (mirrors the home module below).
+      zenVariant =
+        if isZenPrefered
+        then stripZen
+        else "beta";
+    in {
       imports = [
         # Defaults to recommended beta version
-        inputs.zen-browser.homeModules.${
-          if isZenPrefered
-          then stripZen
-          else "beta"
-        }
+        inputs.zen-browser.homeModules.${zenVariant}
       ];
 
       programs.zen-browser = {
         enable = true;
         setAsDefaultBrowser = isZenPrefered;
       };
+
+      home.sessionVariables.BROWSER = lib.mkIf isZenPrefered preferedBrowser;
     };
   };
 }

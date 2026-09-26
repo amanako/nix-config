@@ -9,7 +9,7 @@
     inputs = {
       # Current workaround for blur: https://github.com/sodiboo/niri-flake/issues/1721
       niri.url = "github:sodiboo/niri-flake/very-refactor";
-      niri-pkgs.url = "github:sodiboo/niri-flake";
+      niri-pkgs.url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
     };
 
     nixConfig = {
@@ -19,6 +19,8 @@
   };
 
   niri.full = {
+    description = "Full aggregator for the niri Wayland compositor aspects, including all sub-aspects.";
+
     includes = [
       niri._
       niri.animations._
@@ -27,7 +29,6 @@
 
   niri.entry = {
     description = ''
-      From [description](https://github.com/niri-wm/niri):
       A scrollable-tiling Wayland compositor.
 
       This is aspect using flake for nix-native setup of niri.

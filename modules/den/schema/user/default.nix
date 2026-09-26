@@ -6,16 +6,18 @@
   den.schema.user = {
     includes = [
       den.batteries.define-user
-      den.batteries.mutual-provider
+      den.batteries.host-aspects
       den.policies.hm-shorthand
-      den.aspects.basic.desktopEntriesCollector
-      den.aspects.basic.homeBackup
+      den.aspects.basic.conflicts-collector
+      den.aspects.basic.home-backup
+      den.aspects.basic.fallbacks-installer
       (
         {user}:
           if user.isPrimaryUser
           then den.batteries.primary-user
           else {}
       )
+      den.aspects.dev.shells
     ];
 
     classes = lib.mkDefault ["homeManager"];

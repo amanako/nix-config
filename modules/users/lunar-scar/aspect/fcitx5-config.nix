@@ -1,7 +1,7 @@
 {den, ...}: {
   den.aspects.lunar-scar.fcitx5 = {
     includes = [
-      den.aspects.utility.fcitx5
+      den.aspects.everyday.utility.fcitx5
     ];
 
     # Addons require access to pkgs instance but fcitx5 is a quirk for settings only.

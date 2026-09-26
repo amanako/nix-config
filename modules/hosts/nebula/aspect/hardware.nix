@@ -2,19 +2,26 @@
   flake.den = den;
   den.aspects.nebula.hardware = {
     includes = [
-      den.aspects.core.hardware.essential
+      den.aspects.core.hardware.common
       den.aspects.core.hardware.nvidia
-      den.aspects.core.hardware.disko
-      den.aspects.core.nix-cachyos-kernel
+      den.aspects.core.disks.disko
+      den.aspects.core.disks.root-btrfs
+      den.aspects.core.disks.swap-subvol
+      den.aspects.extra.performance.cachyos-kernel
     ];
 
     nixos = {modulesPath, ...}: {
-      imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ];
 
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"
       ];
+
+      # For building raspberry pi images
+      boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
       boot = {
         kernelModules = [

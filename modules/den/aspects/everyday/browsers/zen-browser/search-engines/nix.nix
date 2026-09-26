@@ -28,6 +28,13 @@
         icon = noogleDevIcon;
         aliases = ["@ng"];
       };
+
+      # Alternative to nix-pkgs
+      nixsearch = {
+        name = "Nix Search";
+        template = "https://nixsearch.thekoppe.com/?q={searchTerms}";
+        aliases = ["@ns"];
+      };
     };
   };
 }

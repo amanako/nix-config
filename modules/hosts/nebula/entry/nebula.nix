@@ -3,20 +3,24 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
+      extra.performance.cachyos-kernel = {
+        variant = "bore";
+        lto = true;
+        uarch = "zen4";
+      };
+
       core = {
+        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
+
+        disks.esp.size = "2G";
+
         impermanence = {
           btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";
           persistenceDir = "/persist";
-          dontEnableUsers = false;
+          mountHomeDir = false;
         };
 
-        nix-cachyos-kernel = {
-          variant = "bore";
-          lto = true;
-          uarch = "zen4";
-        };
-
-        displayManagers.ly.batteryID = "BAT1";
+        display-managers.ly.batteryID = "BAT1";
 
         boot.limine.wallpapers = [
           {
@@ -42,8 +46,12 @@
               busId = "PCI:0@5:0:0";
             }
           ];
+
+          nvidia.primeMode = "offload";
         };
       };
+
+      security.sops-host.ageKeyFile = "/var/lib/sops-nix/main-key.txt";
     };
   };
 }
