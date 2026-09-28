@@ -1,0 +1,25 @@
+{
+  den.hosts.x86_64-linux.ashikaga = {
+    repoRoot = "/etc/nixos";
+    defaultChannel = "unstable";
+
+    settings = {
+      extra.performance.cachyos-kernel.uarch = "zen4";
+
+      core = {
+        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A";
+
+        display-managers.ly.batteryID = "BAT0";
+
+        hardware.deviceType = "laptop";
+
+        impermanence = {
+          persistenceDir = "/persist";
+          btrfs.disk-partition = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A-part2";
+        };
+      };
+
+      basic.time.timeZone = "Europe/Belgrade";
+    };
+  };
+}

@@ -28,7 +28,7 @@
           Should be specified WITHOUT persist mounpoint.
           Must be persisted across reboots for ephemeral systems, otherwise
           the host can no longer decrypt its own secrets after a reboot.
-          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both as it's unnecessary.
+          Either set this or ${host.hostName}.settings.security.sops-host.ageKeyFile, but not both as it's unnecessary.
         '';
       };
 
@@ -40,7 +40,7 @@
           Optional dedicated age key file used for decryption instead of deriving it
           from SSH host keys. Must be persisted across reboots for ephemeral setups.
           Should be specified WITHOUT persist mounpoint.
-          Either set this or ${host.hostName}.settings.security.sops.ageKeyFile, but not both as it's unnecessary.
+          Either set this or ${host.hostName}.settings.security.sops-host.sshKeyPaths, but not both as it's unnecessary.
         '';
       };
 
@@ -59,7 +59,7 @@
       # relative to this aspect module so Nix copies the files into the store
       # (sops-install-secrets reads them inside a pure-eval sandbox, where an
       # absolute `repoRoot` path is invisible). Reference a secret with
-      # `sopsFile = host.settings.security.sops.secretsDir + "/name.yaml"`.
+      # `sopsFile = host.settings.security.sops-host.secretsDir + "/name.yaml"`.
       secretsDir = mkOption {
         type = types.path;
         default = ../../../../assets/hosts/${host.hostName}/secrets;

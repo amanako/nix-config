@@ -39,7 +39,7 @@
       # relative to this aspect module so Nix copies the files into the store
       # (sops-install-secrets reads them inside a pure-eval sandbox, where an
       # absolute `repoRoot` path is invisible). Reference a secret with
-      # `sopsFile = user.settings.security.sops.secretsDir + "/name.yaml"`.
+      # `sopsFile = user.settings.security.sops-user.secretsDir + "/name.yaml"`.
       secretsDir = mkOption {
         type = types.path;
         default = ../../../../assets/users/${user.userName}/secrets;

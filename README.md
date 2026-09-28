@@ -83,6 +83,12 @@ Having a backup of important data is absolutely recommended.<br>
 Den seems to be a niche spot in already niche Nix environment, so most of the time following their [github repo][den repo] updates and conversations will aid you best.<br>
 Assets from third-party repositories(primarily flake-inputs, den included) are licenced under their respective licences.
 
+### Host/usernames origin
+
+They represent character names from [The Mimic on Roblox][mimic]. They can be looked up in the [official wiki][mimic-wiki] and are supposed to be symbolical.
+
 [cache]: https://app.cachix.org/cache/amanako
 [cachix]: https://www.cachix.org
 [den repo]: https://github.com/denful/den
+[mimic]: https://www.roblox.com/games/6243699076/The-Mimic
+[mimic-wiki]: https://mimic.fandom.com/wiki/The_Mimic_Wiki
