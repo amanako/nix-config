@@ -72,10 +72,10 @@ Consequences that are easy to get wrong:
 
 - A setting attrpath mirrors the aspect attrpath. In entries you write e.g.
   `settings.dev.shell-tools.git.username` for `den.aspects.dev.shell-tools.git` (see
-  `modules/users/lunar-scar/entry/lunar-scar.nix`), or
+  `modules/users/yasu/entry/yasu.nix`), or
   `settings.core.impermanence.persistenceDir` for
   `den.aspects.core.impermanence` (see
-  `modules/hosts/nebula/entry/nebula.nix`).
+  `modules/hosts/kusunoki/entry/kusunoki.nix`).
 - Settings are **pruned**: only aspects the entity (and its host) actually
   includes produce settings. If you add an aspect to `includes`, its settings
   appear; remove it and they vanish from the type.
@@ -292,8 +292,8 @@ preferences, settings = {...} }`; optionally an `aspect/<user>.nix`. `repoRoot`
 defaults to `host.repoRoot` and is read-only unless `isPrimaryUser = true`.
 
 Subaspects are reachable by appending `.`, e.g.
-`den.aspects.lunar-scar._` includes all of that user's direct subaspects
-(`modules/users/lunar-scar/aspect/lunar-scar.nix`).
+`den.aspects.yasu._` includes all of that user's direct subaspects
+(`modules/users/yasu/aspect/yasu.nix`).
 
 ## Important gotchas
 
@@ -320,7 +320,7 @@ Subaspects are reachable by appending `.`, e.g.
   f` parses as `(lib.mapAttrs' f) x` *only* when `f` is fully applied; writing
   `x |> (attrs: lib.mapAttrs' f attrs)` leaves a **partially-applied function**
   as the pipeline result and fails with `expected a set but found a function`
-  (seen at `modules/users/lunar-scar/aspect/secrets.nix`). When a `lib` higher-
+  (seen at `modules/users/yasu/aspect/secrets.nix`). When a `lib` higher-
   order function needs both a fn and the attrset, pipe into a lambda that fully
   applies it and returns the *result*, e.g.
   `secretEnv |> lib.mapAttrsToList (k: v: ...) |> builtins.listToAttrs`, or
