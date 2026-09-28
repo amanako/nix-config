@@ -70,7 +70,7 @@ Unencrypted hosts today include `disko` + `root-btrfs` + `swap-subvol`.
 
 `disko` is what every host includes; it imports `inputs.disko.nixosModules.disko`
 and `includes` the collector **and** `esp` by default. `esp` is configurable via
-`settings.core.disks.esp.size` (default `"4G"`, nebula overrides with `"2G"`).
+`settings.core.disks.esp.size` (default `"4G"`, the laptop host overrides with `"2G"`).
 
 ### `root-btrfs` and `swap-subvol`
 
@@ -188,14 +188,12 @@ nix shell nixpkgs#sops nixpkgs#age -c sops --encrypt \
   --input-type binary --output-type yaml \
   --age "age1<host-...>,age1<you-...>" \
   < /tmp/luks.key > hosts/<hostname>/secrets/luks-keyfile.yaml
-
-# 4. commit it
-git add hosts/<hostname>/secrets/luks-keyfile.yaml
 ```
 
 Recipients are the age keys from `assets/.sops.yaml` (host key via
 `ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub`). For consistency also add a
-`creation_rules` entry for this host's secrets dir there (see nebula's).
+`creation_rules` entry for this host's secrets dir there (see the host-scoped rule
+already present for the laptop host).
 
 The encrypted file holds the whole keyfile under a single `data` value, so
 declare the secret with `key = "data"`:
