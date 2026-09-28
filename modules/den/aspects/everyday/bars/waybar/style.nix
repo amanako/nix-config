@@ -6,6 +6,7 @@
           @define-color fg #d4be98;
           @define-color accent #7daea3;
           @define-color red #ea6962;
+          @define-color green #a9b665;
           @define-color gold #d8a657;
           @define-color pink #d3869b;
           @define-color muted #282828;
@@ -245,15 +246,18 @@
               margin: 2px 1px;
             }
 
-            /* battery: blue when discharging, red when charging/plugged/full */
-            #battery.discharging {
+            /* battery: green when full, blue = sufficient charge (above warning),
+               red = low charge. Charging state is ignored. */
+            #battery.full:not(.warning):not(.critical) {
+              background-color: @green;
+              color: @bg;
+            }
+            #battery:not(.warning):not(.critical) {
               background-color: @accent;
               color: @bg;
             }
-            #battery,
-            #battery.charging,
-            #battery.plugged,
-            #battery.full {
+            #battery.warning,
+            #battery.critical {
               background-color: @red;
               color: @bg;
             }
@@ -363,8 +367,7 @@
                 color: @accent;
             }
 
-            #network.disconnected,
-            #battery.warning {
+            #network.disconnected {
               color: @bg;
             }
 
@@ -375,8 +378,8 @@
               }
             }
 
-            #battery.critical,
-            #battery.critical:not(.charging) {
+            /* blink only while discharging on battery power, never on charger */
+            #battery.critical:not(.charging):not(.plugged) {
               background-color: @red;
               color: @bg;
               animation-name: blink2;
