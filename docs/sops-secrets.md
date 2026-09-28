@@ -37,7 +37,7 @@ an OpenRouter API key as the example.
 ## One-time setup
 
 1. Generate user age key. Write it to the path the
-   repo expects — by default `user.settings.sops-user.security.ageKeyFile`. (look at [den-setup](#den-setup) below)
+   repo expects — by default `user.settings.security.sops-user.ageKeyFile`. (look at [den-setup](#den-setup) below)
    For example:
 
    ```sh
@@ -108,7 +108,7 @@ repo root will not find the config.
 1. For hosts
 
 - Include `den.aspects.security.sops-host`
-- Provide `ageKeyFile` or `sshKeyPaths` in `host.settings.sops-host.security`
+- Provide `ageKeyFile` or `sshKeyPaths` in `host.settings.security.sops-host`
 
 2. For users
 
@@ -119,7 +119,7 @@ repo root will not find the config.
 
 As for example: Declare the secret and point it at the encrypted file. Because api key is a
 user-level secret, declare it in a `hm` block (e.g.
-`modules/users/lunar-scar/aspect/secrets.nix`):
+`modules/users/yasu/aspect/secrets.nix`):
 
 ```nix
 hm = {user, ...}: {
@@ -206,10 +206,10 @@ Fix: re-encrypt the file so its recipient matches `.sops.yaml`. From `assets/`:
 ```sh
 cd assets
 # if it still decrypts, just re-save to re-encrypt:
-nix shell nixpkgs#sops -c sops edit users/lunar-scar/secrets/openrouter-api-key.yaml
+nix shell nixpkgs#sops -c sops edit users/yasu/secrets/openrouter-api-key.yaml
 # if it cannot be decrypted, recreate it (write plaintext, then let sops encrypt
 # it using the creation_rules discovered from assets/.sops.yaml):
-nix shell nixpkgs#sops -c sops users/lunar-scar/secrets/openrouter-api-key.yaml
+nix shell nixpkgs#sops -c sops users/yasu/secrets/openrouter-api-key.yaml
 ```
 
 Then `systemctl --user restart sops-nix.service`.

@@ -1,6 +1,12 @@
 This guide details out installation on raspberry pi version 4. Adjust according to preferences.
 
-The pi4 host uses **disko** for partitioning (btrfs root with subvolumes) with
+Throughout this document the Raspberry Pi host is referred to as `<pi-host>`, which
+stands for its name in this repo — the `nixosConfigurations.<pi-host>` /
+`net.hostName` attribute and the `<pi-host>-disko` / `<pi-host>-vm` flake outputs
+derived from it (`just d`, `just vm`, `just rs`). Substitute the actual name for
+your Raspberry Pi host in every command below.
+
+The Pi host uses **disko** for partitioning (btrfs root with subvolumes) with
 **impermanence** (fresh btrfs root on every boot, selective persistence), same
 as the other hosts — but with a Raspberry Pi-specific `rpi-boot` FAT32 partition
 instead of an EFI System Partition, since the RPi boot ROM does not use UEFI.
@@ -14,7 +20,7 @@ instead of an EFI System Partition, since the RPi boot ROM does not use UEFI.
 - [Partition layout](#partition-layout)
 - [Quick path: flash a pre-built installer image](#quick-path-flash-a-pre-built-installer-image)
 - [Declarative path: partition with disko](#declarative-path-partition-with-disko)
-  * [1. Run the `pi4-disko` package](#1-run-the-pi4-disko-package)
+  * [1. Run the `<pi-host>-disko` package](#1-run-the-pi-host-disko-package)
   * [2. Install NixOS](#2-install-nixos)
   * [3. Install the bootloader manually](#3-install-the-bootloader-manually)
   * [4. First boot & SSH](#4-first-boot--ssh)
@@ -27,7 +33,7 @@ instead of an EFI System Partition, since the RPi boot ROM does not use UEFI.
 
 ### Cross-compilation (optional)
 
-If you build the pi4 image on another host, make sure that host builds with
+If you build the Pi image on another host, make sure that host builds with
 `boot.binfmt.emulatedSystems = ["aarch64-linux"]`. If not, add and rebuild:
 
 ```nix
@@ -59,18 +65,18 @@ It will typically appear as `/dev/sda` or `/dev/sdb` (a USB card reader), or
 | `root`    | btrfs | btrfs | 100% of remaining | `/` on tmpfs |
 | &nbsp;`/root`   | btrfs subvolume | | | `/` (fresh per boot) |
 | &nbsp;`/nix`    | btrfs subvolume | | | `/nix` |
-| &nbsp;`/swap`   | btrfs subvolume (nodatacow) | | swapfile, 4G (default set for pi4) | `/swap` |
+| &nbsp;`/swap`   | btrfs subvolume (nodatacow) | | swapfile, 4G (default set for the Pi host) | `/swap` |
 | &nbsp;`/nix/persist/system` | btrfs subvolume | | | persistent state |
 
 The layout is assembled from `den.aspects.core.disks.disko-rpi` (collector +
 `rpi-boot` instead of `esp`), `root-btrfs`, `swap-subvol`, and `impermanence`,
-all already included by the pi4 host aspect. The disks live under
+all already included by the Pi host aspect. The disks live under
 `modules/den/aspects/core/disks/`; see `docs/disks.md` for how the `diskoConfig`
 quirk folds them together.
 
 ## Quick path: flash a pre-built installer image
 
-If you don't want declarative partitioning yet (e.g. just to get the pi4
+If you don't want declarative partitioning yet (e.g. just to get the Pi
 booted to try things out), flash the upstream installer image instead:
 
 1. Build the image
@@ -94,17 +100,17 @@ later reclaims that space.
 
 ## Declarative path: partition with disko
 
-This wipes the SD card and lays out the full 64GB using the pi4 host's disko
+This wipes the SD card and lays out the full 64GB using the Pi host's disko
 config. **Run it from your PC**, with the card connected — not from the Pi while
 it's running off that card.
 
-### 1. Run the `pi4-disko` package
+### 1. Run the `<pi-host>-disko` package
 
 From this repository on your PC configure disko device and run it's corresponding package. For device path use one as it appears on current host:
 
 ```bash
 # Format card device
-sudo nix --accept-flake-config run .#${pi-host}-disko
+sudo nix --accept-flake-config run .#<pi-host>-disko
 ```
 
 `--mode destroy,format,mount` is baked into the wrapper, so this wipes the card,
@@ -112,7 +118,7 @@ formats it, and mounts it at `/mnt`.
 
 ### 2. Install NixOS
 
-`nixos-install` applies the pi4 host configuration onto `/mnt`. Either build it
+`nixos-install` applies the Pi host configuration onto `/mnt`. Either build it
 here or flash a system already built elsewhere. Both install commands below
 pass `--no-bootloader`; installing from an x86_64 host runs the aarch64
 binaries via QEMU binfmt, and `nixos-install`'s chrooted bootloader step fails
@@ -123,7 +129,7 @@ bootloader is finished manually right after (next subsection).
 [Cross-compilation](#cross-compilation-optional)):
 
 ```bash
-sudo nixos-install --root /mnt --no-bootloader --flake .#pi4
+sudo nixos-install --root /mnt --no-bootloader --flake .#<pi-host>
 ```
 
 **Flash a pre-built system** (built on another machine or present on cache, e.g. because binfmt
@@ -133,7 +139,7 @@ emulation isn't set up on current one):
    symlink:
 
 ```bash
-export closure=$(nix --accept-flake-config build --no-link --print-out-paths .#nixosConfigurations.${hostname}.config.system.build.toplevel)
+export closure=$(nix --accept-flake-config build --no-link --print-out-paths .#nixosConfigurations.<pi-host>.config.system.build.toplevel)
 ```
 
 2. Point `nixos-install` at it instead of `--flake`:
@@ -182,13 +188,13 @@ sudo eject /dev/sdX
 
 ### 4. First boot & SSH
 
-Before relying on SSH, make sure the pi4 config has a user with your SSH public
-key in `openssh.authorizedKeys.keys` (see how `lunar-scar` does it on other
-hosts), since `PasswordAuthentication = false` and the Pi has no interactive
+Before relying on SSH, make sure the Pi config has a user with your SSH public
+key in `openssh.authorizedKeys.keys` (see how the other users in this repo do
+it), since `PasswordAuthentication = false` and the Pi has no interactive
 login set up. Configure that in the config and rebuild before first boot, or add
 the key to the freshly installed system ahead of time.
 
-Because pi4 has the **USB gadget** enabled (`enableUsbGadget = true`), plugging
+Because the Pi host has the **USB gadget** enabled (`enableUsbGadget = true`), plugging
 the Pi into your PC over a USB-C cable makes it appear as a USB Ethernet
 adapter — useful for reaching it headlessly on first boot before it joins the
 Wi-Fi network via iwd.
@@ -202,16 +208,16 @@ machine you run this from (typically the build host) must be able to build
 installed (see [First boot & SSH](#4-first-boot--ssh)):
 
 ```bash
-sudo nixos-rebuild switch --flake .#pi4 --target-host <user>@pi4
+sudo nixos-rebuild switch --flake .#<pi-host> --target-host <user>@<pi-host>
 ```
 
 Or via `nh`, matching how the other hosts in this repo are deployed:
 
 ```bash
-nh os switch --accept-flake-config --ask --diff always --show-trace --hostname pi4 --target-host <user>@pi4
+nh os switch --accept-flake-config --ask --diff always --show-trace --hostname <pi-host> --target-host <user>@<pi-host>
 ```
 
-`--hostname pi4` selects the flake's pi4 configuration and `--target-host`
+`--hostname <pi-host>` selects the flake's Pi configuration and `--target-host`
 the machine it gets activated on. If the Pi has no user with your key yet,
 install one (or add the key) before first boot.
 
@@ -220,7 +226,7 @@ install one (or add the key) before first boot.
 - The RPi kernel always names its SD card `/dev/mmcblk0`, partitions
   `/dev/mmcblk0p1`, `/dev/mmcblk0p2`. This is determined by the MMC controller
   and isn't configurable.
-- The pi4 config references `/dev/mmcblk0` (whole disk for `devicePath`) and
+- The Pi config references `/dev/mmcblk0` (whole disk for `devicePath`) and
   `/dev/mmcblk0p2` (btrfs root, for impermanence's `disk-partition`). Neither
   changes after flashing; they describe what the Pi sees while booting, not what
   the card looks like in another machine's reader.
