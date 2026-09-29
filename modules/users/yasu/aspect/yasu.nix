@@ -57,8 +57,9 @@ in {
 
       den.aspects.extra.nix-utils.nix-index-database
       den.aspects.extra.gaming.optimizations
-      den.aspects.extra.gaming.software
-      den.aspects.extra.bleeding-edge.chaotic
+      den.aspects.extra.gaming.steam
+      den.aspects.extra.gaming.lutris
+      den.aspects.extra.gaming.unstable-packages
 
       # Works for namespaces as well
       zen-browser.full

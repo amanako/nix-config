@@ -1,7 +1,8 @@
 {den, ...}: {
-  den.aspects.extra.gaming.software = {
+  den.aspects.extra.gaming.steam = {
     description = ''
-      Handpicked software used to leverage gaming experience.
+      Steam is a digital distribution proprietary platform
+      for PC games by the American video game studio Valve.
     '';
 
     includes = [
@@ -9,8 +10,6 @@
         "steam"
         "steam-unwrapped"
       ])
-
-      den.aspects.extra.gaming.unstable
     ];
 
     persistUser.directories = [
@@ -25,6 +24,7 @@
       ...
     }: {
       programs = {
+        # Optional but useful packages.
         gamemode = {
           enable = true;
           enableRenice = true;

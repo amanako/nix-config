@@ -1,6 +1,10 @@
 {den, ...}: {
-  den.aspects.extra.gaming.unstable = {
+  den.aspects.extra.gaming.unstable-packages = {
     description = "Unstable/git gaming packages from chaotic overlay (gamescope, steam, etc.).";
+
+    includes = [
+      den.aspects.extra.bleeding-edge.chaotic
+    ];
 
     nixos = {
       user,
@@ -21,7 +25,7 @@
     }:
       lib.optionalAttrs (user.hasAspect den.aspects.extra.bleeding-edge.chaotic) {
         home.packages = with pkgs; [
-          luxtorpeda
+          luxtorpeda # Steam compatibility tool
         ];
       };
   };
