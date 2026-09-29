@@ -32,6 +32,8 @@
       inherit (user.preferences.effective) term;
       termCmd = cmd: "${term} -e ${cmd}";
     in {
+      services.playerctld.enable = !user.hasAspect noctalia.entry;
+
       programs.waybar = {
         enable = true;
 
@@ -58,25 +60,22 @@
               on-scroll-up = "";
               on-scroll-down = "";
 
-              modules-left = [
-                "niri/workspaces"
-                "idle_inhibitor"
-                "tray"
-                "battery"
-              ];
-
-              # The middle section is a single grouped box (see style.nix) holding the
-              # clock cluster: time, date, weather and mpris.
-              modules-center =
+              modules-left =
                 [
-                  "custom/time"
-                  "custom/date"
-                  "custom/weather"
-                  # mpris omitted when the noctalia desktop-shell aspect is active (see note below)
+                  "niri/workspaces"
+                  "idle_inhibitor"
+                  "tray"
+                  "battery"
                 ]
                 ++ lib.optional (!user.hasAspect noctalia.entry) "mpris";
 
+              modules-center = [
+                "clock"
+                "custom/weather"
+              ];
+
               modules-right = [
+                "pulseaudio"
                 "bluetooth"
                 "network"
                 "power-profiles-daemon"
@@ -117,16 +116,16 @@
                 return-type = "json";
               };
 
-              "custom/date" = {
-                exec = ''date +'{"text":"%a","tooltip":"%A, %F"}'';
-                tooltip = true;
-                interval = 60;
-                return-type = "json";
-              };
-
-              "custom/time" = {
-                exec = "date +'%H:%M'";
-                tooltip = false;
+              "clock" = {
+                format = "{:%H:%M}";
+                tooltip-format = "{:%A, %F}\n{calendar}";
+                calendar = {
+                  mode = "month";
+                  weeks-pos = "left";
+                  iso8601 = true;
+                };
+                on-scroll-up = "shift_up";
+                on-scroll-down = "shift_down";
                 interval = 60;
               };
 
@@ -170,14 +169,32 @@
                   default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
                 };
                 format-full = "󰂅";
-                tooltip-format-discharging = "{power:>1.0f}W↓ {capacity}%";
-                tooltip-format-charging = "{power:>1.0f}W↑ {capacity}%";
+                format-time = "{H}h {m}m";
+                tooltip-format-discharging = "Empty in {time}";
+                tooltip-format-charging = "Full in {time}";
                 interval = 5;
-                on-click = "${pkgs.libnotify |> lib.getExe} -u low \"$(cat /sys/class/power_supply/BAT1/status)\"";
                 states = {
                   warning = 20;
                   critical = 10;
                 };
+              };
+
+              "pulseaudio" = {
+                format = "{icon}";
+                format-muted = "󰖁";
+                format-icons = {
+                  default = ["󰕿" "󰖀" "󰕾"];
+                  headset = "󰋋";
+                };
+                states = {
+                  critical = 0;
+                };
+                tooltip = true;
+                tooltip-format = "{desc}\nVolume: {volume}%";
+                scroll-step = 5;
+                max-volume = 100;
+                on-click = termCmd (pkgs.ncpamixer |> lib.getExe);
+                on-click-right = "${"wpctl" |> lib.getExe' pkgs.wireplumber} set-mute @DEFAULT_AUDIO_SINK@ toggle";
               };
 
               "bluetooth" = {
@@ -244,7 +261,7 @@
               "mpris" = {
                 format = "  {dynamic}";
                 format-paused = " {status_icon} {dynamic}";
-                interval = 5;
+                interval = 1;
                 dynamic-order = ["artist" "position" "length"];
                 dynamic-importance-order = ["position" "length" "artist"];
                 tooltip-format = "{player} ({status}):\n{artist} - {title}";
