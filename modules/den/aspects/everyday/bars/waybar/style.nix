@@ -203,10 +203,8 @@
             }
 
 
-            #custom-clock,
+            #clock,
             #custom-weather,
-            #custom-date,
-            #custom-time,
             #mpris {
               color: @fg;
               background-color: transparent;
@@ -218,6 +216,16 @@
             #backlight,
             #pulseaudio {
               padding: 0 10px 0 5px;
+            }
+
+            #pulseaudio.muted {
+              background-color: @red;
+              color: @bg;
+            }
+
+            #pulseaudio.critical {
+              background-color: @red;
+              color: @bg;
             }
 
             #custom-update,
