@@ -82,6 +82,7 @@ in {
 
       nixvim.plugins.gitsigns
       nixvim.plugins.lazygit
+      nixvim.plugins.mini
 
       nixvim.plugins.kitty-scrollback
       nixvim.plugins.lualine
