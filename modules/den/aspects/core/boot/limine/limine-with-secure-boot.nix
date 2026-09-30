@@ -1,5 +1,13 @@
-{lib, ...}: {
-  den.aspects.core.boot.limine.secure-boot = {
+{
+  den,
+  lib,
+  ...
+}: {
+  den.aspects.core.boot.limine.with-secure-boot = {
+    includes = [
+      den.aspects.core.boot.limine
+    ];
+
     persistHost.directories = [
       "/var/lib/sbctl"
     ];

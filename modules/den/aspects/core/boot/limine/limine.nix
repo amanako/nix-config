@@ -1,16 +1,8 @@
-{
-  den,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   den.aspects.core.boot.limine = {
     description = ''
       Modern, secure, portable, multiprotocol bootloader and boot manager.
     '';
-
-    includes = [
-      den.aspects.core.boot.limine.secure-boot
-    ];
 
     stylixNixOSSettings.targets."limine".enable = false;
 

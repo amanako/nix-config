@@ -6,10 +6,7 @@
       den.aspects.extra.stylix
       den.aspects.core.impermanence
 
-      den.aspects.core.boot.limine
-      den.aspects.core.boot.limine.secure-boot
-      den.aspects.core.boot.tweaks.plymouth
-      den.aspects.core.boot.tweaks.silent
+      den.aspects.core.boot.limine.with-secure-boot
 
       den.aspects.core.display-managers.ly
       den.aspects.core.power-management.tlp
