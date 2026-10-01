@@ -24,6 +24,7 @@ Because of diligent work of these people/communities configuration was able to r
 - [Screenshots](#screenshots)
 - [Binary cache](#binary-cache)
 - [Licence and word of warning](#licence-and-word-of-warning)
+  * [Host/usernames origin](#hostusernames-origin)
 
 <!-- tocstop -->
 
