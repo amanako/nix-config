@@ -22,7 +22,7 @@
     |> lib.filter (shell:
       user.hasAspect {
         name = shell;
-        meta.provider = ["dev" "shells"];
+        meta.aspect-chain = ["dev" "shells"];
       });
 in {
   den.aspects.dev.shells = {
