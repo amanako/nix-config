@@ -1,8 +1,8 @@
 This guide details out installation on raspberry pi version 4. Adjust according to preferences.
 
-Throughout this document the Raspberry Pi host is referred to as `<pi-host>`, which
-stands for its name in this repo — the `nixosConfigurations.<pi-host>` /
-`net.hostName` attribute and the `<pi-host>-disko` / `<pi-host>-vm` flake outputs
+Throughout this document the Raspberry Pi host is referred to as `{pi-host}`, which
+stands for its name in this repo — the `nixosConfigurations.{pi-host}` /
+`net.hostName` attribute and the `{pi-host}-disko` / `{pi-host}-vm` flake outputs
 derived from it (`just d`, `just vm`, `just rs`). Substitute the actual name for
 your Raspberry Pi host in every command below.
 
@@ -20,7 +20,7 @@ instead of an EFI System Partition, since the RPi boot ROM does not use UEFI.
 - [Partition layout](#partition-layout)
 - [Quick path: flash a pre-built installer image](#quick-path-flash-a-pre-built-installer-image)
 - [Declarative path: partition with disko](#declarative-path-partition-with-disko)
-  * [1. Run the `<pi-host>-disko` package](#1-run-the-pi-host-disko-package)
+  * [1. Run the `{pi-host}-disko` package](#1-run-the-pi-host-disko-package)
   * [2. Install NixOS](#2-install-nixos)
   * [3. Install the bootloader manually](#3-install-the-bootloader-manually)
   * [4. First boot & SSH](#4-first-boot--ssh)
@@ -104,13 +104,13 @@ This wipes the SD card and lays out the full 64GB using the Pi host's disko
 config. **Run it from your PC**, with the card connected — not from the Pi while
 it's running off that card.
 
-### 1. Run the `<pi-host>-disko` package
+### 1. Run the `{pi-host}-disko` package
 
 From this repository on your PC configure disko device and run it's corresponding package. For device path use one as it appears on current host:
 
 ```bash
 # Format card device
-sudo nix --accept-flake-config run .#<pi-host>-disko
+sudo nix --accept-flake-config run .#{pi-host}-disko
 ```
 
 `--mode destroy,format,mount` is baked into the wrapper, so this wipes the card,
@@ -129,7 +129,7 @@ bootloader is finished manually right after (next subsection).
 [Cross-compilation](#cross-compilation-optional)):
 
 ```bash
-sudo nixos-install --root /mnt --no-bootloader --flake .#<pi-host>
+sudo nixos-install --root /mnt --no-bootloader --flake .#{pi-host}
 ```
 
 **Flash a pre-built system** (built on another machine or present on cache, e.g. because binfmt
@@ -139,7 +139,7 @@ emulation isn't set up on current one):
    symlink:
 
 ```bash
-export closure=$(nix --accept-flake-config build --no-link --print-out-paths .#nixosConfigurations.<pi-host>.config.system.build.toplevel)
+export closure=$(nix --accept-flake-config build --no-link --print-out-paths .#nixosConfigurations.{pi-host}.config.system.build.toplevel)
 ```
 
 2. Point `nixos-install` at it instead of `--flake`:
@@ -208,16 +208,16 @@ machine you run this from (typically the build host) must be able to build
 installed (see [First boot & SSH](#4-first-boot--ssh)):
 
 ```bash
-sudo nixos-rebuild switch --flake .#<pi-host> --target-host <user>@<pi-host>
+sudo nixos-rebuild switch --flake .#{pi-host} --target-host {user}@{pi-host}
 ```
 
 Or via `nh`, matching how the other hosts in this repo are deployed:
 
 ```bash
-nh os switch --accept-flake-config --ask --diff always --show-trace --hostname <pi-host> --target-host <user>@<pi-host>
+nh os switch --accept-flake-config --ask --diff always --show-trace --hostname {pi-host} --target-host {user}@{pi-host}
 ```
 
-`--hostname <pi-host>` selects the flake's Pi configuration and `--target-host`
+`--hostname {pi-host}` selects the flake's Pi configuration and `--target-host`
 the machine it gets activated on. If the Pi has no user with your key yet,
 install one (or add the key) before first boot.
 
