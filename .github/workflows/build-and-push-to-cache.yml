@@ -13,6 +13,7 @@ jobs:
   build-hosts:
     runs-on: ${{ matrix.runner }}
     strategy:
+      fail-fast: false
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     steps:
