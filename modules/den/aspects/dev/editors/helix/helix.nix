@@ -15,7 +15,7 @@
         defaultEditor = user.preferences.editor == "hx";
         package =
           lib.mkIf (user.hasAspect den.aspects.extra.bleeding-edge.chaotic)
-          pkgs.helix_git;
+          pkgs.evil-helix_git;
         ignores = [
           ".build/"
           "!.gitignore"
