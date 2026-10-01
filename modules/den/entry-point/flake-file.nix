@@ -15,6 +15,15 @@
       # If that is the case edit that typo here to point to valid link, then run the command above.
     '';
 
+    prune-lock.program = pkgs:
+      pkgs.writeShellApplication {
+        name = "nix-auto-follow";
+        runtimeInputs = [inputs.nix-auto-follow.packages.${pkgs.stdenv.hostPlatform.system}.default];
+        text = ''
+          auto-follow --ignore nix-cachyos-kernel "$1" > "$2"
+        '';
+      };
+
     formatter = pkgs: pkgs.alejandra;
 
     # When running nix flake check on even slightly outdated flake.lock dependencies error is thrown by hook check app.
