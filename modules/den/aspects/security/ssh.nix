@@ -1,15 +1,43 @@
-{
+{lib, ...}: {
   den.aspects.security.ssh = {
     description = "OpenSSH secure shell client and server configuration.";
 
-    nixos.services.openssh = {
-      enable = true;
-      settings = {
-        # Security hardening
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-        PermitRootLogin = "no";
+    hostSettings = let
+      inherit (lib) mkOption types;
+    in {
+      permitRootLogin = mkOption {
+        type = types.enum [
+          "yes"
+          "without-password"
+          "prohibit-password"
+          "forced-commands-only"
+          "no"
+        ];
+        default = "no";
+        description = "Value for sshd PermitRootLogin.";
       };
+
+      rootAuthorizedKeys = mkOption {
+        type = types.listOf types.str;
+        default = [];
+        description = "Public keys allowed to log in as root.";
+      };
+    };
+
+    nixos = {host, ...}: let
+      cfg = host.settings.security.ssh;
+    in {
+      services.openssh = {
+        enable = true;
+        settings = {
+          # Security hardening
+          PasswordAuthentication = false;
+          KbdInteractiveAuthentication = false;
+          PermitRootLogin = cfg.permitRootLogin;
+        };
+      };
+
+      users.users.root.openssh.authorizedKeys.keys = cfg.rootAuthorizedKeys;
     };
 
     hm = {
