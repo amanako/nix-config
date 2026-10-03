@@ -24,7 +24,7 @@ Because of diligent work of these people/communities configuration was able to r
 - [Screenshots](#screenshots)
 - [Binary cache](#binary-cache)
 - [Licence and word of warning](#licence-and-word-of-warning)
-  * [Host/usernames origin](#hostusernames-origin)
+- [Host/usernames origin](#hostusernames-origin)
 
 <!-- tocstop -->
 
@@ -84,7 +84,7 @@ Having a backup of important data is absolutely recommended.<br>
 Den seems to be a niche spot in already niche Nix environment, so most of the time following their [github repo][den repo] updates and conversations will aid you best.<br>
 Assets from third-party repositories(primarily flake-inputs, den included) are licenced under their respective licences.
 
-### Host/usernames origin
+## Host/usernames origin
 
 They represent character names from [The Mimic on Roblox][mimic]. They can be looked up in the [official wiki][mimic-wiki] and are supposed to be symbolical.
 
