@@ -14,6 +14,7 @@
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
+      den.aspects.core.nix.nh
 
       den.aspects.security.sops-host
     ];
