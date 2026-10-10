@@ -34,7 +34,6 @@ in {
       den.aspects.dev.terminal.yazi.plugins.starship
       den.aspects.dev.terminal.yazi.plugins.zoom
 
-      den.aspects.dev.terminal.vix
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.nushell
       den.aspects.dev.shells.fish

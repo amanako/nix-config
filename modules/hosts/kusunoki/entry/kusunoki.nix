@@ -4,7 +4,7 @@
       basic.time.timeZone = "Europe/Belgrade";
 
       extra.performance.cachyos-kernel = {
-        variant = "bore";
+        variant = "lts";
         lto = true;
         uarch = "zen4";
       };
