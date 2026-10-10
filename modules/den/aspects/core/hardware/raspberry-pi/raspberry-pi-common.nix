@@ -20,7 +20,6 @@
 
     nixos = {
       host,
-      pkgs,
       lib,
       ...
     }: let
