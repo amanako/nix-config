@@ -18,9 +18,10 @@
       ...
     }: let
       cfg = host.settings.core.impermanence;
-    in {
-      home.persistence.${cfg.persistenceDir} = persistUser |> mkPersist;
-    };
+    in
+      lib.optionalAttrs (!cfg.mountHomeDir) {
+        home.persistence.${cfg.persistenceDir} = persistUser |> mkPersist;
+      };
 
     nixos = {
       host,
@@ -33,7 +34,7 @@
         |> lib.elem "homeManager";
       cfg = host.settings.core.impermanence;
     in
-      lib.optionalAttrs (!isInHM) {
+      lib.optionalAttrs (!isInHM && !cfg.mountHomeDir) {
         environment.persistence.${cfg.persistenceDir}.users.${user.userName} = persistUser |> mkPersist;
       };
   };
