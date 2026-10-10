@@ -27,28 +27,27 @@
 in {
   perSystem = {pkgs, ...}: {
     packages =
-      lib.mapAttrs' (hostname: host: let
+      allHosts
+      |> lib.filterAttrs (hostname: _: (hostname |> getDiskoCfg) != {})
+      |> lib.mapAttrs' (hostname: _: let
         devices = hostname |> getDiskoCfg;
       in {
         name = "${hostname}-disko";
 
-        value = lib.mkIf (devices != {}) (
-          pkgs.writeShellApplication {
-            name = "${hostname}-disko";
-            text = let
-              diskoFile = pkgs.writeText "${hostname}-disko-config.nix" ''
-                {
-                  disko.devices = ${pkgs.lib.generators.toPretty {} (devices |> stripInternals)};
-                }
-              '';
-            in ''
-              ${pkgs.sudo |> lib.getExe} ${pkgs.nix |> lib.getExe} --experimental-features "nix-command flakes" run \
-              github:nix-community/disko/latest \
-              -- --mode destroy,format,mount ${diskoFile}
+        value = pkgs.writeShellApplication {
+          name = "${hostname}-disko";
+          text = let
+            diskoFile = pkgs.writeText "${hostname}-disko-config.nix" ''
+              {
+                disko.devices = ${pkgs.lib.generators.toPretty {} (devices |> stripInternals)};
+              }
             '';
-          }
-        );
-      })
-      allHosts;
+          in ''
+            ${pkgs.sudo |> lib.getExe} ${pkgs.nix |> lib.getExe} --experimental-features "nix-command flakes" run \
+            github:nix-community/disko/latest \
+            -- --mode destroy,format,mount ${diskoFile}
+          '';
+        };
+      });
   };
 }
