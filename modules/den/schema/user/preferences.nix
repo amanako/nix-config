@@ -17,7 +17,7 @@
             mkPrefOption = pref: {
               default ? null,
               example ? "",
-              description ? "Preferred ${pref} package name.",
+              description ? "Preferred ${pref} program name.",
             }:
               mkOption {
                 type = lib.types.nullOr lib.types.str;
@@ -110,6 +110,23 @@
               '';
             };
 
+            binaries = mkOption {
+              type = types.attrsOf types.str;
+              default = {
+                helix = "hx";
+                neovim = "nvim";
+              };
+              example = {
+                zen-beta = "zen-twilight";
+              };
+              description = ''
+                Map of program (nixpkgs package or aspect-provided program) names to
+                the binary consumers should run, for programs whose binary name
+                differs from the program or that ship several binaries. A program
+                absent from this map is assumed to run under its own name.
+              '';
+            };
+
             effective = mkOption {
               type = types.attrsOf types.str;
               readOnly = true;
@@ -120,11 +137,13 @@
                 in
                   if pref != null
                   then pref
-                  else fallback);
+                  else fallback)
+                |> lib.mapAttrs (_: program: config.preferences.binaries.${program} or program);
               description = ''
-                Resolved preference: the explicit value when set, otherwise the
-                configured `fallbacks` entry. Single source of truth for consumers
-                that only need a runnable program name.
+                Resolved runnable binary per preference role: the user's explicit
+                program when set, otherwise the configured `fallbacks` program,
+                mapped through `binaries` to the command to run. Single source of
+                truth for consumers that only need a runnable program name.
               '';
             };
           };
