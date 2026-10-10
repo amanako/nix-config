@@ -10,7 +10,6 @@
       den.policies.hm-shorthand
       den.aspects.basic.conflicts-collector
       den.aspects.basic.home-backup
-      den.aspects.basic.fallbacks-installer
       den.aspects.basic.preferences-installer
       (
         {user}:
