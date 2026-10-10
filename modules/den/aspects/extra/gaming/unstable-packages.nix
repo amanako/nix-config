@@ -6,27 +6,15 @@
       den.aspects.extra.bleeding-edge.chaotic
     ];
 
-    nixos = {
-      user,
-      pkgs,
-      lib,
-      ...
-    }:
-      lib.optionalAttrs (user.hasAspect den.aspects.extra.bleeding-edge.chaotic) {
-        programs.gamescope.package = pkgs.gamescope_git;
-        programs.steam.package = pkgs.jovian-chaotic.steam;
-      };
+    nixos = {pkgs, ...}: {
+      programs.gamescope.package = pkgs.gamescope_git;
+      programs.steam.package = pkgs.jovian-chaotic.steam;
+    };
 
-    hm = {
-      user,
-      lib,
-      pkgs,
-      ...
-    }:
-      lib.optionalAttrs (user.hasAspect den.aspects.extra.bleeding-edge.chaotic) {
-        home.packages = with pkgs; [
-          luxtorpeda # Steam compatibility tool
-        ];
-      };
+    hm = {pkgs, ...}: {
+      home.packages = with pkgs; [
+        luxtorpeda # Steam compatibility tool
+      ];
+    };
   };
 }
