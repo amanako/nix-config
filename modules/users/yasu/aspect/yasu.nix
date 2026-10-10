@@ -108,7 +108,6 @@ in {
       "Documents"
       "Downloads"
       "Faks"
-      "nix-config" # Main config
       "Pictures"
       {
         directory = "keys/ssh";
@@ -123,14 +122,9 @@ in {
     hm = {pkgs, ...}: {
       home.packages = with pkgs; [
         nemo
-        youtube-tui
         abiword
-
-        # Nice command line tools
         which
         file
-        pciutils
-        usbutils
         ripgrep
       ];
 

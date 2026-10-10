@@ -15,6 +15,7 @@
       den.aspects.everyday.launchers.vicinae
       den.aspects.everyday.notifications.dunst
       den.aspects.everyday.utility.mpv
+      den.aspects.everyday.utility.localsend
 
       den.aspects.everyday.wallpaper-managers.awww
 
