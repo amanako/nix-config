@@ -7,9 +7,7 @@
       Hibernation case handled via checking for efi variable, in which case roll is boot.
     '';
 
-    hostSettings = {host, ...}: let
-      cfg = host.settings.core.impermanence.btrfs;
-
+    hostSettings = {...}: let
       inherit
         (lib)
         mkOption
@@ -24,42 +22,6 @@
           Can be found by looking at output `ls -l /dev/disk/by-id`.
         '';
       };
-
-      minKeep = mkOption {
-        type =
-          if cfg.maxKeep == null
-          then types.ints.positive
-          else types.ints.between 1 cfg.maxKeep;
-        default = 3;
-        example = 2;
-        description = ''
-          Minimum number of newest archived root subvolumes that are never deleted, no
-          matter how old they are.
-        '';
-      };
-
-      maxKeep = mkOption {
-        type = types.nullOr types.ints.positive;
-        default = 10;
-        example = 5;
-        description = ''
-          Delete archived root subvolumes beyond this number of newest ones.
-          Since the root subvolume holds `/home` unless it is mounted separately,
-          every archive is a full copy of it.
-          `null` disables the bound, which leaves `maxAgeDays` in charge.
-        '';
-      };
-
-      maxAgeDays = mkOption {
-        type = types.nullOr types.ints.positive;
-        default = 7;
-        example = 14;
-        description = ''
-          Delete archived root subvolumes that are older than this many days,
-          even among the newest `maxKeep` ones. `null` keeps archives by count
-          only. `minKeep` is never touched by this.
-        '';
-      };
     };
 
     nixos = {
@@ -71,7 +33,6 @@
     }: let
       cfg = host.settings.core.impermanence;
       btrfsCfg = cfg.btrfs;
-      # persistDir = toString cfg.persistenceDir;
 
       subvolOf = mountPoint: let
         options = config.fileSystems.${mountPoint}.options or [];
@@ -117,18 +78,6 @@
           script = ''
             set -euo pipefail
             IFS=$'\n\t'
-
-            max_keep=${
-              if btrfsCfg.maxKeep == null
-              then ""
-              else toString btrfsCfg.maxKeep
-            }
-            min_keep=${toString btrfsCfg.minKeep}
-            max_age_days=${
-              if btrfsCfg.maxAgeDays == null
-              then ""
-              else toString btrfsCfg.maxAgeDays
-            }
 
             log() { echo "[impermanence] $*"; }
             warn() { echo "[impermanence] warning: $*" >&2; }
@@ -216,65 +165,6 @@
               log "found no root subvolume, creating one."
             fi
 
-            # Deleting a subvolume that holds subvolumes fails, and the path of
-            # a child always sorts after the path of its parent.
-            delete_subvolume() {
-              local target=$1
-              local -a children=()
-              local child line
-              local -a fields
-
-              btrfs subvolume show "$target" > /dev/null 2>&1 \
-                || { warn "$target is not a btrfs subvolume, leaving it alone."; return 1; }
-
-              while IFS= read -r line; do
-                IFS=' ' read -r -a fields <<< "$line"
-                # The header repeats the column names instead of an ID.
-                [[ ''${fields[1]:-} =~ ^[0-9]+$ ]] || continue
-                # `btrfs subvolume list` reports paths relative to the top level
-                # subvolume, which is the one mounted at mountPoint.
-                children+=("${mountPoint}/''${fields[*]:8}")
-              done < <(btrfs subvolume list -o "$target")
-
-              while IFS= read -r child; do
-                # printf renders an empty array as a single empty line.
-                [[ -n $child ]] || continue
-                delete_subvolume "$child" || warn "could not delete $child."
-              done < <(printf '%s\n' "''${children[@]}" | sort -r)
-
-              btrfs subvolume delete "$target"
-            }
-
-            if [[ -d "${oldRootsPath}" ]]; then
-              now=$(date +%s)
-              index=0
-
-              # Newest first, so both the floor and the ceiling are positions.
-              while IFS=' ' read -r -d "" mtime entry; do
-                index=$((index + 1))
-
-                # The newest archives are the fallback and stay whatever happens.
-                if (( index <= min_keep )); then
-                  continue
-                fi
-
-                prune=0
-                if (( max_keep > 0 && index > max_keep )); then
-                  prune=1
-                fi
-                if [[ -n $max_age_days ]] && (( now - ''${mtime%.*} >= max_age_days * 86400 )); then
-                  prune=1
-                fi
-
-                if (( prune == 0 )); then
-                  continue
-                fi
-
-                log "pruning $entry."
-                delete_subvolume "$entry" || warn "could not delete $entry, it has to be removed by hand."
-              done < <(find "${oldRootsPath}" -mindepth 1 -maxdepth 1 -printf '%T@ %p\0' | sort -z -rn)
-            fi
-
             if ! btrfs subvolume create "${rootPath}"; then
               warn "could not create a fresh root subvolume."
               # Booting the previous root is stale but working, which is a much
@@ -305,15 +195,12 @@
               "date"
               "mkdir"
               "mv"
-              "rm"
               "rmdir"
-              "sort"
               "sync"
               "touch"
             ];
 
             other = {
-              find = pkgs.findutils;
               btrfs = pkgs.btrfs-progs;
             };
           in

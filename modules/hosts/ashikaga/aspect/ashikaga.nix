@@ -3,6 +3,7 @@
     includes = [
       den.aspects.ashikaga._
       den.aspects.core.impermanence
+      den.aspects.core.impermanence.btrfs.prune-old-roots
       # Wants power-daemon instead
 
       den.aspects.core.display-managers.ly

@@ -5,6 +5,7 @@
 
       den.aspects.extra.stylix
       den.aspects.core.impermanence
+      den.aspects.core.impermanence.btrfs.prune-old-roots
 
       den.aspects.core.boot.limine.with-secure-boot
 
