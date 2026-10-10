@@ -37,7 +37,7 @@
           })
           |> builtins.listToAttrs;
 
-        pref = user.preferences;
+        eff = user.preferences.effective;
       in
         generatedFocusWorkspace
         // generatedMoveColumn
@@ -89,18 +89,10 @@
 
           "Mod+Shift+P".action.power-off-monitors = [];
           "Mod+Q".action.close-window = [];
-        }
-        // lib.optionalAttrs (pref.term != null) {
-          "Mod+T".action.spawn = pref.term;
-        }
-        // lib.optionalAttrs (pref.browser != null) {
-          "Mod+B".action.spawn = pref.browser;
-        }
-        // lib.optionalAttrs (pref.term != null && pref.editor != null) {
-          "Mod+N" = sh "${pref.term} -e ${pref.editor}";
-        }
-        // lib.optionalAttrs (pref.term != null && pref.fileManager != null) {
-          "Mod+Y" = sh "${pref.term} -e ${pref.fileManager}";
+          "Mod+T".action.spawn = eff.term;
+          "Mod+B".action.spawn = eff.browser;
+          "Mod+N" = sh "${eff.term} -e ${eff.editor}";
+          "Mod+Y" = sh "${eff.term} -e ${eff.fileManager}";
         };
     };
   };

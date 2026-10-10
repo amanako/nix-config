@@ -3,7 +3,6 @@
 
   dms.plugins.nix-monitor = {
     user,
-    lib,
     ...
   }: {
     hm = {pkgs, ...}: {
@@ -20,7 +19,7 @@
           # Delegate task to pkexec since nixos-rebuild requires password
           "bash"
           "-c"
-          "${lib.optionalString (user.preferences.term != null) "TERM=${user.preferences.term} "}pkexec nixos-rebuild switch --flake=${user.repoRoot} 2>&1"
+          "TERM=${user.preferences.effective.term} pkexec nixos-rebuild switch --flake=${user.repoRoot} 2>&1"
         ];
 
         gcCommand = [
