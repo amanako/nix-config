@@ -98,8 +98,11 @@ After completing previous section:
 Make sure your disk is formatted. [Disko][disko] is the recommended approach for this purpose.
 If using this method running:
 
-```
-just disko $HOSTNAME
+```bash
+# no flakes
+sudo nix --accept-flake-config --extra-experimental-features "nix-command flakes" run .#$HOSTNAME-disko
+# flakes enabled
+sudo nix run nixpkgs#just -- disko $HOSTNAME
 ```
 
 should run scripts to take care of partitioning.
@@ -108,7 +111,7 @@ If this is not the case, manual partitioning is required, I recommend taking a l
 
 ```
 # yes unix utility will answer y to all questions regarding usage of flake (trusted extra substituters and keys)
-yes | nixos-install --no-channel-copy --no-bootloader --flake $REPO_DIR.$HOSTNAME
+yes | sudo nixos-install --no-channel-copy --flake $REPO_DIR.$HOSTNAME
 
 Copy configuration over to desired (or persisted) folder (likely in user's home).
 cp -r $CONFIG_DIRECTORY $PATH_TO_FOLDER
