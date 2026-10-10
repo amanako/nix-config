@@ -32,6 +32,11 @@ rebuild-boot host=hostname:
 disko host=hostname:
     nix --accept-flake-config run .#{{ host }}-disko
 
+# Build a raw SD card image for a host, defaults to current host
+[group('packages')]
+image host=hostname:
+    nix --accept-flake-config build .#{{ host }}-image --print-build-logs
+
 # Spin up a virtual machine for a host, defaults to current host
 [group('packages')]
 vm host=hostname:
