@@ -30,7 +30,7 @@
 
         fonts = {
           # Monospace is a per user preference (`preferences.monofont`) and is set in
-          # the user font aspect, since it is not a system wide choice.
+          # the `hm` block below, since it is not a system wide choice.
           sansSerif = {
             package = pkgs.inter;
             name = "Inter";
@@ -42,6 +42,24 @@
             name = "Twemoji";
           };
         };
+      };
+    };
+
+    hm = {
+      user,
+      lib,
+      pkgs,
+      ...
+    }: let
+      monofont = user.preferences.monofont;
+      package =
+        lib.attrByPath (lib.splitString "." monofont.package)
+        (throw "no package named \"${monofont.package}\" in nixpkgs (preferred font)")
+        pkgs;
+    in {
+      stylix.fonts.monospace = {
+        inherit package;
+        inherit (monofont) name;
       };
     };
   };
