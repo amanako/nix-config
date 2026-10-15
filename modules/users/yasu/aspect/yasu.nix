@@ -8,6 +8,17 @@
 }: let
   u = "yasu";
   h = "/home/${u}";
+
+  kintoruUser =
+    den.hosts.aarch64-linux.kintoru.users
+    |> builtins.attrNames
+    |> builtins.head;
+
+  kintoruRemotes = {
+    kintoru-eth = "192.168.100.80";
+    kintoru-wifi = "192.168.100.81";
+    kintoru-usb = "10.0.0.2";
+  };
 in {
   den.aspects.yasu = {
     includes = [
@@ -119,7 +130,11 @@ in {
       }
     ];
 
-    hm = {pkgs, ...}: {
+    hm = {
+      pkgs,
+      lib,
+      ...
+    }: {
       home.packages = with pkgs; [
         nemo
         abiword
@@ -130,15 +145,26 @@ in {
 
       programs.gpg.homedir = "${h}/keys/gnupg";
 
-      programs.ssh.settings."*" = {
-        host = "codeberg.org";
-        hostname = "codeberg.org";
-        user = "git";
-        port = 22;
-        identityFile = "~/keys/ssh/id_ed25519";
-        userKnownHostsFile = "~/keys/ssh/known_hosts";
-        hashKnownHosts = true;
-      };
+      programs.ssh.settings =
+        {
+          "*" = {
+            host = "codeberg.org";
+            hostname = "codeberg.org";
+            user = "git";
+            port = 22;
+            identityFile = "~/keys/ssh/id_ed25519";
+            userKnownHostsFile = "~/keys/ssh/known_hosts";
+            hashKnownHosts = true;
+          };
+        }
+        // (kintoruRemotes
+          |> lib.mapAttrs' (
+            name: hostname:
+              lib.nameValuePair name {
+                inherit hostname;
+                user = kintoruUser;
+              }
+          ));
     };
   };
 }
