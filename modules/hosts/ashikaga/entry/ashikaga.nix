@@ -17,29 +17,29 @@
 
         display-managers.ly.batteryID = "BAT0";
 
-	boot.limine.wallpapers = [
-	  {
-	    url = "https://images4.alphacoders.com/792/thumb-1920-792019.png";
+        boot.limine.wallpapers = [
+          {
+            url = "https://images4.alphacoders.com/792/thumb-1920-792019.png";
             hash = "sha256-UkeEBzNOGx4pRPtxgxcyl9jiEqV7aHWZs1Q8uuBL/KE=";
-	  }
-        ]; 	  
-
-        hardware = {
-	  deviceType = "laptop";
-
-	  gpus = [
-          {
-            manufacturer = "nvidia";
-            busId = "PCI:0@1:0:0";
-          }
-          {
-            manufacturer = "amdgpu";
-            busId = "PCI:0@5:0:0";
           }
         ];
 
-	  nvidia.primeMode = "offload";
-	};
+        hardware = {
+          deviceType = "laptop";
+
+          gpus = [
+            {
+              manufacturer = "nvidia";
+              busId = "PCI:0@1:0:0";
+            }
+            {
+              manufacturer = "amdgpu";
+              busId = "PCI:0@5:0:0";
+            }
+          ];
+
+          nvidia.primeMode = "offload";
+        };
 
         impermanence = {
           persistenceDir = "/persist";

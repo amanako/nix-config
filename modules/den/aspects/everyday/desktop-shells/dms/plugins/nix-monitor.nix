@@ -1,10 +1,7 @@
 {inputs, ...}: {
   flake-file.inputs.nix-monitor.url = "github:antonjah/nix-monitor";
 
-  dms.plugins.nix-monitor = {
-    user,
-    ...
-  }: {
+  dms.plugins.nix-monitor = {user, ...}: {
     hm = {pkgs, ...}: {
       imports = [
         inputs.nix-monitor.hmModules.default

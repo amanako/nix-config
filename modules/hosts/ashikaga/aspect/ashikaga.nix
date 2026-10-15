@@ -11,11 +11,10 @@
       # Wants power-daemon instead
 
       den.aspects.security.sops-host
-      
+
       den.aspects.core.display-managers.ly
       den.aspects.core.boot.limine
       den.aspects.core.nix.common
-      den.aspects.core.nix.gc
 
       den.aspects.core.power-management.thermald
       den.aspects.extra.performance.auto-cpufreq

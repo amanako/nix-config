@@ -20,15 +20,15 @@
 
       everyday.wallpaper-managers.awww = {
         script.args = [
-	  "--transition-fps 60"
-	  "--transition-type simple"
-	  "--resize=fit"
-	];
+          "--transition-fps 60"
+          "--transition-type simple"
+          "--resize=fit"
+        ];
       };
 
       dev.shell-tools.git = {
         username = "IRefactoredThat";
-	email = "nikola.l.savic@protonmail.com";
+        email = "nikola.l.savic@protonmail.com";
         signingKey = "476A11B36C1F3A7B";
       };
     };
