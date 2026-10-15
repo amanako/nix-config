@@ -6,9 +6,6 @@
   niri,
   ...
 }: let
-  u = "yasu";
-  h = "/home/${u}";
-
   kintoruUser =
     den.hosts.aarch64-linux.kintoru.users
     |> builtins.attrNames
@@ -143,7 +140,7 @@ in {
         ripgrep
       ];
 
-      programs.gpg.homedir = "${h}/keys/gnupg";
+      programs.gpg.homedir = "/home/yasu/keys/gnupg";
 
       programs.ssh.settings =
         {
