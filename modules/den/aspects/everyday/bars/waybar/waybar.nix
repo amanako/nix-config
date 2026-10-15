@@ -56,7 +56,7 @@
               spacing = 10;
 
               margin-left = 4;
-	      margin-right = 4;
+              margin-right = 4;
 
               on-scroll-up = "";
               on-scroll-down = "";

@@ -1,4 +1,8 @@
-{den, lib, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   den.aspects.core.hardware.wireless-iwd = {
     description = "Wireless networking using iwd (with dhcpcd).";
 

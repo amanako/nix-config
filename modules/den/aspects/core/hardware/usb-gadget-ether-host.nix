@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  inherit 
-    (lib) 
-    mkOption 
+  inherit
+    (lib)
+    mkOption
     types
-  ;
+    ;
 in {
   den.aspects.core.hardware.usb-gadget-ether-host = {
     description = ''
