@@ -5,7 +5,7 @@
       browser = "zen-beta";
       term = "kitty";
       editor = "nvim";
-      fileManager = "nautilus";
+      fileManager = "yazi";
 
       monofont = {
         package = "nerd-fonts.victor-mono";
@@ -17,6 +17,20 @@
       niri.binds.keyboard-backlight.device = "backlight:amdgpu_bl1";
       dev.shells.defaultShell = "fish";
       everyday.bars.waybar.location = "Nis";
+
+      everyday.wallpaper-managers.awww = {
+        script.args = [
+	  "--transition-fps 60"
+	  "--transition-type simple"
+	  "--resize=fit"
+	];
+      };
+
+      dev.shell-tools.git = {
+        username = "IRefactoredThat";
+	email = "nikola.l.savic@protonmail.com";
+        signingKey = "476A11B36C1F3A7B";
+      };
     };
   };
 }
