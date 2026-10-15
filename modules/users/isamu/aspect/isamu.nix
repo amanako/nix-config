@@ -45,13 +45,13 @@
 
       nixvim.plugins.gitsigns
       nixvim.plugins.lazygit
-      nixvim.plugins.mini 
+      nixvim.plugins.mini
 
       nixvim.plugins.kitty-scrollback
       nixvim.plugins.lualine
       nixvim.plugins.rainbow-delimiters
       nixvim.plugins.which-key
-      
+
       nixvim.plugins.blink-cmp
       nixvim.plugins.lsp-lines
       nixvim.plugins.lsp
@@ -68,6 +68,7 @@
       den.aspects.dev.shell-tools.fzf
       den.aspects.dev.shell-tools.git
       den.aspects.dev.shell-tools.starship
+      den.aspects.dev.shell-tools.direnv-instant
 
       den.aspects.dev.terminal.kitty
       den.aspects.dev.terminal.yazi
