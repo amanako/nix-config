@@ -5,17 +5,15 @@
 }: {
   den.aspects.core.hardware.raspberry-pi.common = {
     description = ''
-      Common includes for a Raspberry Pi system.
-      Includes the base board module plus optional VC4, USB-gadget
-      and bluetooth configuration, then wires up the user-level
-      pieces (openssh, iwd, wpa-supplicant, etc.).
-
-      Override `board`, `enableVc4` and `enableUsbGadget` in the
-      host entry to tune per-board.
+      Common includes for a Raspberry Pi system: the base board module
+      plus the SD-image fallback. Tune the board and display via
+      `board`/`enableVc4` in the host entry. For a USB gadget Ethernet
+      tether, include `core.hardware.usb-gadget-ether-device` separately.
     '';
 
     includes = [
       den.aspects.core.hardware.raspberry-pi
+      den.aspects.core.hardware.raspberry-pi.sd-image
     ];
 
     nixos = {
@@ -62,21 +60,6 @@
           dt-overlays.vc4-kms-v3d.enable = enableVc4;
         };
       };
-
-      # Networking: USB gadget ethernet when enabled, firewall, and
-      # iwd + wpa-supplicant integration. Wi-Fi is configured per-SSID
-      # in the host entry; this is the fallback wired-only profile.
-      #networking =
-      #lib.optionalAttrs enableUsbGadget {
-      #usbGadgetEthernet = {
-      #   address = "10.0.0.1";
-      #    enableIpv6 = false;
-      #  };
-      #}
-      #// {
-      #  firewall.enable = true;
-      #  wireless.iwd.enable = true;
-      #};
 
       # Allow redistributable firmware (RPi bootloader / wifi firmware)
       hardware.enableRedistributableFirmware = true;
