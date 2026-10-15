@@ -16,7 +16,7 @@
             font-size: 14px;
             border: none;
             border-radius: 0px;
-            margin: 0rem 0rem 0rem 0rem;
+            margin: 0rem;
             min-height: 0;
             min-width: 0;
           }
@@ -27,7 +27,7 @@
 
 
           #waybar > box {
-            margin: 0;
+            margin: 0px;
             padding: 8px 6px;
             min-height: 25px;
             border-radius: 12px;
@@ -130,7 +130,15 @@
               opacity: 1;
               border-radius: 8px;
               margin: 2px 1px;
-              padding: 0 4px;
+              padding: 4px 8px;
+              min-height: 20px;
+            }
+
+            /* font renders the wifi glyph off-center; nudge it 2px left */
+            #network,
+            #network.wifi,
+            #network.ethernet {
+              padding: 4px 10px 4px 6px;
             }
 
             /* no wifi / disconnected = red */
@@ -140,7 +148,8 @@
               opacity: 1;
               border-radius: 8px;
               margin: 2px 1px;
-              padding: 0 4px;
+              padding: 4px 10px 4px 6px;
+              min-height: 20px;
             }
 
             #tray,
@@ -373,10 +382,6 @@
 
             #mpris.paused {
                 color: @accent;
-            }
-
-            #network.disconnected {
-              color: @bg;
             }
 
             @keyframes blink2 {

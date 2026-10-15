@@ -6,7 +6,17 @@ window-rule {
 }
 
 layer-rule {
+    exclude namespace="^main$"
     opacity 0.87
+    background-effect {
+        blur true
+    }
+}
+
+layer-rule {
+    match namespace="^main$"
+    opacity 0.87
+    geometry-corner-radius 12
     background-effect {
         blur true
     }

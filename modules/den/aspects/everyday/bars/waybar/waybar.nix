@@ -55,8 +55,9 @@
               exclusive = true;
               spacing = 10;
 
-              margin-left = 20;
-              margin-right = 20;
+              margin-left = 4;
+	      margin-right = 4;
+
               on-scroll-up = "";
               on-scroll-down = "";
 
