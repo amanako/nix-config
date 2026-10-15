@@ -9,7 +9,6 @@
         hardware.raspberry-pi = {
           board = "raspberry-pi-4";
           enableVc4 = true;
-          enableUsbGadget = true;
         };
       };
 

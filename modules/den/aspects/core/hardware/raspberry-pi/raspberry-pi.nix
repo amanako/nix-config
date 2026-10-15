@@ -46,17 +46,6 @@
           on Pi 5 (which uses the RP1 display driver instead).
         '';
       };
-
-      enableUsbGadget = mkOption {
-        type = types.bool;
-        default = false;
-        example = true;
-        description = ''
-          Enable USB Gadget/Ethernet so the Pi advertises itself as an
-          Ethernet device over its USB-C port. Handy for headless setup on
-          Pi Zero / Pi 4 / Pi 5.
-        '';
-      };
     };
 
     nixos = {
