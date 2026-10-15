@@ -14,6 +14,7 @@
   * [Validation (mirrors CI)](#validation-mirrors-ci)
 - [Formatting and pre-commit](#formatting-and-pre-commit)
   * [Do not manually run the formatter](#do-not-manually-run-the-formatter)
+  * [Do not commit](#do-not-commit)
 - [Style conventions (from `docs/design.md`)](#style-conventions-from-docsdesignmd)
 - [Adding things](#adding-things)
 - [Important gotchas](#important-gotchas)
@@ -186,6 +187,15 @@ just fw        # alias for: nix --accept-flake-config run .#write-flake
 typo in an input URL, after which you should re-run `just fw`. `flake.lock` is
 updated by `just fupdate` and committed by CI (see below).
 
+Declare each input **exactly once**. `flake-file` aggregates every
+`flake-file.inputs.*` across all modules, and `import-tree` already loads them
+all, so re-declaring the same input in several modules is redundant — it changes
+nothing in the generated `flake.nix`. Pick one canonical home, ideally the aspect
+that owns the integration (e.g. `inputs.nixos-raspberrypi` is declared only in
+`modules/den/aspects/core/hardware/raspberry-pi/raspberry-pi.nix`). When moving
+or removing a declaration, confirm with `git diff flake.nix` after `just fwrite`
+that the generated flake is unchanged.
+
 ## Commands
 
 `just` is the primary entry point. Recipes (`just --list`):
@@ -249,6 +259,13 @@ partial commits that then fail CI. Just write code in a reasonable style; the
 hook fixes the rest. If you want to verify formatting before committing, run
 `pre-commit run --all-files` rather than calling a formatter directly.
 
+### Do not commit
+
+Do **not** create history: no `git commit`/`git add`-and-commit, no `jj commit`,
+no amend, no push, and no PRs. Make the edits, stage files only when required
+(new `.nix` files must be `git add`ed for `import-tree` to see them), and leave
+committing — and any history shaping like `jj split` — to the user.
+
 ## Style conventions (from `docs/design.md`)
 
 These are enforced by code review and matter for consistency:
@@ -268,13 +285,19 @@ These are enforced by code review and matter for consistency:
 - Keep aspects **static** (plain attrsets) and configure via the shorter-scope
   class lambda (`nixos`/`hm`). `lib` may be used at file scope only if the module
   takes `{lib, ...}` at file level; otherwise redeclare it in the inner lambda.
+- **Derive related values; don't expose redundant options.** Prefer computing
+  dependent values from a single option over separate settings that must be kept
+  consistent. Example: the USB-tether host exposes one `subnet` (`10.0.0.0/24`)
+  and derives the host address and DHCP range from it, rather than separate
+  `address`/`dhcpRange` options.
 - Aim for **consistent, moderate file sizes**; split a file when it becomes
   mentally heavy.
 
 ## Adding things
 
 **New flake input:** add `flake-file.inputs.<name>.url` (+ `nixConfig`
-substituters/keys if needed) in the module that uses it, then `just fw`.
+substituters/keys if needed) in the module that uses it, then `just fw`. Declare
+it in exactly one module — see "`flake.nix` is generated" above.
 
 **New aspect:** create `modules/den/aspects/<group>/<name>.nix` (or a subfolder
 with `default.nix`) setting `den.aspects.<group>.<name> = { includes, nixos?, hm?,
@@ -343,7 +366,19 @@ Subaspects are reachable by appending `.`, e.g.
   `docs/design.md`, including an aspect means opt-in and not-including means
   opt-out. Configure variation through `hostSettings`/`userSettings`, never a
   boolean `enable` guard (see `modules/den/aspects/security/sops-user.nix` for the
-  pattern).
+  pattern). This applies to device hardware features too: give an includable
+  feature its own aspect (e.g. `core.hardware.usb-gadget-ether-device`) instead of
+  an `enableUsbGadget` boolean buried in a broad `hostSettings` bag like
+  `core.hardware.raspberry-pi`.
+- **Cross-host contracts are convention, not construction.** den settings are
+  per-entity, so two cooperating hosts (e.g. a host and a device joined by a USB
+  tether) cannot share a value. Encode the contract as **identically named,
+  identically defaulted** options on two separate aspects and cross-reference each
+  other in their `description`s — e.g. `core.hardware.usb-gadget-ether-host` and
+  `core.hardware.usb-gadget-ether-device` both expose `hostMac` and `subnet`.
+  Nothing enforces agreement; a one-sided edit silently breaks the link (the
+  original symptom here was `g_ether` randomising its MAC so it never matched the
+  host's systemd `.link`). Prefer few, symmetric options and document the pairing.
 - **Quirk data is always a *list* of per-aspect contributions**
   Den's pipe assembly passes quirk data to collectors as a flat list
   where each element is what a single aspect emitted. Accessing like
