@@ -8,6 +8,7 @@
 
     includes = [
       den.aspects.core.hardware.raspberry-pi.common
+      den.aspects.core.hardware.usb-gadget-ether-device
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
       den.aspects.core.hardware.wireless-iwd

@@ -255,10 +255,10 @@ it), since `PasswordAuthentication = false` and the Pi has no interactive
 login set up. Configure that in the config and rebuild before first boot, or add
 the key to the freshly installed system ahead of time.
 
-Because the Pi host has the **USB gadget** enabled (`enableUsbGadget = true`), plugging
-the Pi into your PC over a USB-C cable makes it appear as a USB Ethernet
-adapter — useful for reaching it headlessly on first boot before it joins the
-Wi-Fi network via iwd.
+Because the Pi host includes the **USB gadget Ethernet** aspect
+(`core.hardware.usb-gadget-ether-device`), plugging the Pi into your PC over a
+USB-C cable makes it appear as a USB Ethernet adapter — useful for reaching it
+headlessly on first boot before it joins the Wi-Fi network via iwd.
 
 ## Deploying updates after first boot
 

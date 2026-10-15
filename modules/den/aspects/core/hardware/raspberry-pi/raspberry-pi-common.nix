@@ -25,7 +25,6 @@
         (host.settings.core.hardware.raspberry-pi)
         board
         enableVc4
-        enableUsbGadget
         ;
     in {
       boot = {
@@ -51,8 +50,7 @@
         [
           inputs.nixos-raspberrypi.nixosModules.${board}.base
         ]
-        ++ lib.optional enableVc4 inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.display-vc4
-        ++ lib.optional enableUsbGadget inputs.nixos-raspberrypi.nixosModules.usb-gadget-ethernet;
+        ++ lib.optional enableVc4 inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.display-vc4;
 
       # Firmware / config.txt overrides (Pi 4)
       hardware.raspberry-pi.config = {
