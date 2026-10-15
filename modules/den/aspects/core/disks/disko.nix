@@ -56,10 +56,7 @@ in {
       };
     };
 
-    nixos = {
-      host,
-      ...
-    }: let
+    nixos = {host, ...}: let
       cfg = host.settings.core.disks.disko;
     in {
       imports = [
