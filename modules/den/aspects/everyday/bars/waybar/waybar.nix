@@ -23,6 +23,7 @@
     };
 
     hm = {
+      config,
       lib,
       user,
       pkgs,
@@ -117,13 +118,19 @@
                 return-type = "json";
               };
 
-              "clock" = {
+              "clock" = let
+                colors = config.lib.stylix.colors.withHashtag;
+              in {
                 format = "{:%H:%M}";
-                tooltip-format = "{:%A, %F}\n{calendar}";
+                tooltip-format = "{:%A, %d-%m-%Y}\n{calendar}";
                 calendar = {
                   mode = "month";
-                  weeks-pos = "left";
                   iso8601 = true;
+                  format = {
+                    months = "<span foreground='${colors.base0D}' weight='bold'>{}</span>";
+                    weekdays = "<span foreground='${colors.base03}' weight='bold'>{}</span>";
+                    today = "<span foreground='${colors.base0D}' weight='bold' underline='single'>{}</span>";
+                  };
                 };
                 on-scroll-up = "shift_up";
                 on-scroll-down = "shift_down";

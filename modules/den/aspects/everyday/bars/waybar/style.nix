@@ -1,15 +1,25 @@
 {
   den.aspects.everyday.bars.waybar.style = {
-    hm = {user, ...}: {
+    hm = {
+      config,
+      user,
+      ...
+    }: let
+      colors = config.lib.stylix.colors;
+    in {
       programs.waybar.style = ''
-          @define-color bg #32302f;
-          @define-color fg #d4be98;
-          @define-color accent #7daea3;
-          @define-color red #ea6962;
-          @define-color green #a9b665;
-          @define-color gold #d8a657;
-          @define-color pink #d3869b;
-          @define-color muted #282828;
+          @define-color bg ${colors.withHashtag.base00};
+          @define-color muted ${colors.withHashtag.base01};
+          @define-color surface ${colors.withHashtag.base02};
+          @define-color dim ${colors.withHashtag.base03};
+          @define-color fg ${colors.withHashtag.base05};
+          @define-color red ${colors.withHashtag.base08};
+          @define-color orange ${colors.withHashtag.base09};
+          @define-color gold ${colors.withHashtag.base0A};
+          @define-color green ${colors.withHashtag.base0B};
+          @define-color teal ${colors.withHashtag.base0C};
+          @define-color accent ${colors.withHashtag.base0D};
+          @define-color pink ${colors.withHashtag.base0E};
 
           * {
             font-family: "${user.preferences.monofont.name}";
@@ -77,7 +87,7 @@
             }
 
             #workspaces button {
-                color: @fg;
+                color: @accent;
                 margin: 0 2px;
                 padding: 0 6px;
                 border-radius: 8px;
@@ -85,34 +95,14 @@
                 transition: all 0.2s ease-in-out;
             }
 
+            #workspaces button:hover {
+                background-color: @surface;
+            }
+
             #workspaces button.active {
-                background-color: @red;
+                background-color: @accent;
                 color: @bg;
                 border-radius: 8px;
-            }
-
-            #workspaces button.empty {
-                color: @accent;
-                background-color: transparent;
-                min-width: 20px;
-                padding: 0 6px;
-            }
-
-            #workspaces button.empty.active {
-                background-color: alpha(@red, 0.6);
-                color: @bg;
-                min-width: 20px;
-                padding: 0 6px;
-            }
-
-            #workspaces button:hover {
-                background-color: alpha(@gold, 0.4);
-                color: @bg;
-            }
-
-            #workspaces button.empty:hover {
-                background-color: alpha(@accent, 0.3);
-                color: @fg;
             }
 
             #workspaces button.urgent {
@@ -120,13 +110,13 @@
                 color: @bg;
             }
 
-            /* bluetooth and network as separate rounded pills (pink) */
+            /* bluetooth and network as separate rounded pills (teal = connectivity) */
             #bluetooth,
             #network,
             #network.wifi,
             #network.ethernet {
               color: @bg;
-              background-color: alpha(@pink, 1);
+              background-color: alpha(@teal, 1);
               opacity: 1;
               border-radius: 8px;
               margin: 2px 1px;
@@ -164,9 +154,6 @@
             #pulseaudio,
             #pulseaudio.input,
             #pulseaudio.output,
-            #power-profiles-daemon.performance,
-            #power-profiles-daemon.balanced,
-            #power-profiles-daemon.power-saver,
             #custom-weather,
             #custom-clock,
             #custom-updatespacman,
@@ -189,7 +176,7 @@
                 padding: 0 12px;
             }
 
-            /* bottom-section recoloring: backlight = yellow, power-profiles-daemon = pink */
+            /* bottom-section recoloring: backlight = yellow */
             #backlight {
               color: @bg;
               background-color: @gold;
@@ -198,17 +185,28 @@
               margin: 2px 1px;
             }
 
+            /* power-profiles-daemon: red = performance, orange = balanced, green = power-saver */
             #power-profiles-daemon {
               color: @bg;
-              background-color: alpha(@pink, 1);
+              background-color: alpha(@orange, 1);
               border-radius: 8px;
               padding: 0 6px;
               margin: 2px 1px;
             }
 
-            /* balanced profile stays pink; performance/power-saver keep their colors below */
             #power-profiles-daemon.balanced {
-              background-color: alpha(@pink, 1);
+              background-color: alpha(@orange, 1);
+              color: @bg;
+            }
+
+            #power-profiles-daemon.performance {
+              background-color: @red;
+              color: @bg;
+            }
+
+            #power-profiles-daemon.power-saver {
+              background-color: @green;
+              color: @bg;
             }
 
 
@@ -250,21 +248,34 @@
 
             #idle_inhibitor.activated {
               font-size: 14px;
-              background-color: @red;
+              background-color: @gold;
                 color: @bg;
                 padding: 0 10px 0 5px;
             }
 
-            /* memory/cpu: gold pills */
+            /* memory/cpu: neutral pills, gold on warning, red on critical */
             #memory,
             #cpu {
-              background-color: @gold;
+              background-color: @surface;
+              color: @fg;
               padding: 3px 2px;
               margin: 2px 1px;
             }
 
+            #memory.warning,
+            #cpu.warning {
+              background-color: @gold;
+              color: @bg;
+            }
+
+            #memory.critical,
+            #cpu.critical {
+              background-color: @red;
+              color: @bg;
+            }
+
             /* battery: green when full, blue = sufficient charge (above warning),
-               red = low charge. Charging state is ignored. */
+               gold = low charge, red = critical. Charging state is ignored. */
             #battery.full:not(.warning):not(.critical) {
               background-color: @green;
               color: @bg;
@@ -273,15 +284,13 @@
               background-color: @accent;
               color: @bg;
             }
-            #battery.warning,
+            #battery.warning:not(.critical) {
+              background-color: @gold;
+              color: @bg;
+            }
             #battery.critical {
               background-color: @red;
               color: @bg;
-            }
-
-            #power-profiles-daemon.performance {
-                background-color: @red;
-                color: @bg;
             }
 
             #custom-voxtype,
@@ -306,7 +315,7 @@
 
             tooltip {
              padding: 4px;
-             background: @bg;
+             background-color: @muted;
              font-size: 10px;
              border: 1px solid @accent;
              border-radius: 6px;
@@ -315,6 +324,45 @@
             tooltip label {
                 color: alpha(@fg, 1);
                 font-weight: normal;
+            }
+
+            /* tray / context menus */
+            menu {
+              background-color: @muted;
+              color: @fg;
+              border: 1px solid @accent;
+              border-radius: 8px;
+              padding: 4px 0;
+            }
+
+            menuitem {
+              color: @fg;
+              padding: 2px 12px;
+              min-height: 0;
+            }
+
+            menuitem:hover {
+              background-color: @accent;
+              color: @bg;
+            }
+
+            menuitem:hover label {
+              color: @bg;
+            }
+
+            menuitem:disabled label {
+              color: @dim;
+            }
+
+            /* tray icon states: red tint when an item wants attention */
+            #tray > .passive {
+              -gtk-icon-effect: dim;
+            }
+
+            #tray > .needs-attention {
+              -gtk-icon-effect: highlight;
+              background-color: alpha(@red, 0.3);
+              border-radius: 4px;
             }
 
 
@@ -330,7 +378,7 @@
             }
 
             #custom-waybar-position {
-                background-color: @red;
+                background-color: @pink;
                 color: @bg;
                 padding: 0 6px;
                 margin: 2px 1px;
@@ -339,7 +387,7 @@
             }
 
             #custom-waybar-position:hover {
-                background-color: @red;
+                background-color: alpha(@pink, 0.75);
             }
 
 
@@ -355,7 +403,7 @@
             #custom-screenrecording-indicator.active {
               background-color: transparent;
               padding: 0 13px 0 10px;
-              color: #eb7087;
+              color: @red;
               animation-name: blink-recording;
               animation-duration: 0.5s;
             }
@@ -400,11 +448,6 @@
               animation-timing-function: steps(12);
               animation-iteration-count: infinite;
               animation-direction: alternate;
-            }
-
-            #memory.warning,
-            #cpu.warning {
-                color: @red;
             }
       '';
     };
