@@ -2,10 +2,10 @@
   den.hosts.x86_64-linux.kusunoki = {
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
-      
+
       extra.stylix.base-settings = {
-      	theme = "gruvbox-material-dark-soft";
-	polarity = "dark";
+        theme = "gruvbox-material-dark-soft";
+        polarity = "dark";
       };
 
       extra.performance.cachyos-kernel = {

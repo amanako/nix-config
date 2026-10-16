@@ -1,4 +1,3 @@
-
 {lib, ...}: {
   den.aspects.extra.stylix.base-settings = let
     inherit
@@ -104,4 +103,3 @@
     };
   };
 }
-
