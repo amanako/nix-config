@@ -11,8 +11,6 @@
   den.aspects.dev.terminal.yazi = {
     description = "Blazing-fast terminal file manager written in Rust.";
 
-    stylixHMSettings.targets."yazi".enable = false;
-
     hm = {
       nixpkgs.overlays = [
         inputs.yazi.overlays.default
