@@ -41,31 +41,32 @@ an OpenRouter API key as the example.
    For example:
 
    ```sh
-   mkdir -p ~/.config/sops/age
-   nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
+   mkdir -p ~/.config/sops/age && nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
    ```
 
    This writes the private key to the file **and prints the public key** on the
-   line starting with `Public key: age1...` — copy that now.
+   line starting with `Public key: age1...`.
 
-2. Get your age public key (only if you didn't copy it in step 1) and each
-   host's age public key:
+2. Get your age public key and each host's age public key:
 
    ```sh
-   # your user key, re-derived from the private key file
+   # to get your user key, re-derive it from the private key file
    nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 
-   # For ssh-to-age conversion, otherwise repear similarly to command above
+   # to get the host key, use ssh-to-age conversion
    # Requirement: /etc/ssh mounted as a a filesystem
    nix shell nixpkgs#ssh-to-age -c ssh-to-age < /etc/ssh/ssh_host_ed25519_pub
-   # or from a remote:  ssh-keyscan <host> | nix shell nixpkgs#ssh-to-age -c ssh-to-age
-   ```
+   # or from a remote:
+   ssh-keyscan <host> | nix shell nixpkgs#ssh-to-age -c ssh-to-age
+   # or run command similar to step 1:
+   sudo mkdir -p /etc/sops/age && sudo nix shell nixpkgs#age -c age-keygen -o /etc/sops/age/keys.txt
+   sudo nix shell nixpkgs#age -c age-keygen -y /etc/sops/age/keys.txt
 
    > One advantage of generating age key for host as well is that you don't need to have `/etc/ssh` mounted as filesystem like
    > with age key file approach where only key is enough to persist
    > Just reference key folder in ageKeyFile.
 
-   > *NOTE: For ephemeral hosts save the age key file directly within persisted directory
+   > *NOTE: Include sops host aspect to persist the host key
    > After that run rebuild-switch (`just rs`) to rebuild configuration in place*
    > This way file will be copied to regular directory and available after reboot
 
