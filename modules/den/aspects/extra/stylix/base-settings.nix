@@ -1,19 +1,55 @@
-{
-  den.aspects.extra.stylix.base-settings = {
+
+{lib, ...}: {
+  den.aspects.extra.stylix.base-settings = let
+    inherit
+      (lib)
+      mkOption
+      types
+      ;
+  in {
     description = "Base stylix theming defaults: theme, fonts, and icon pack.";
 
-    # Fixes E79 spam error on startup due to broken variable expanding.
-    # Reference commit: fix(nixvim): remove constant E79 error on startup + QOL.
-    stylixHMSettings.targets."kde".enable = false;
+    hostSettings = {
+      theme = mkOption {
+        type = types.str;
+        default = "gruvbox-material-dark-soft";
+        example = "catppuccin-mocha";
+        description = "Base16 scheme slug from `pkgs.base16-schemes` used for system-wide Stylix theming.";
+      };
+
+      polarity = mkOption {
+        type = types.enum ["light" "dark"];
+        default = "dark";
+        description = "Polarity forced for system-wide Stylix theming.";
+      };
+    };
+
+    userSettings = {
+      theme = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "catppuccin-mocha";
+        description = "Base16 scheme slug from `pkgs.base16-schemes` overriding the system theme for this user. Unset follows the host theme.";
+      };
+
+      polarity = mkOption {
+        type = types.nullOr (types.enum ["light" "dark"]);
+        default = null;
+        description = "Polarity forced for this user's Stylix theming. Unset follows the host polarity.";
+      };
+    };
 
     nixos = {
       pkgs,
       config,
+      host,
       ...
-    }: {
+    }: let
+      cfg = host.settings.extra.stylix.base-settings;
+    in {
       stylix = {
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
-        polarity = "dark";
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
+        inherit (cfg) polarity;
         opacity = {
           applications = 0.87;
           desktop = 0.85;
@@ -29,13 +65,10 @@
         };
 
         fonts = {
-          # Monospace is a per user preference (`preferences.monofont`) and is set in
-          # the `hm` block below, since it is not a system wide choice.
           sansSerif = {
             package = pkgs.inter;
             name = "Inter";
           };
-          # Serif fonts can be bothersome
           serif = config.stylix.fonts.sansSerif;
           emoji = {
             package = pkgs.twemoji-color-font;
@@ -51,16 +84,24 @@
       pkgs,
       ...
     }: let
-      monofont = user.preferences.monofont;
-      package =
-        lib.attrByPath (lib.splitString "." monofont.package)
-        (throw "no package named \"${monofont.package}\" in nixpkgs (preferred font)")
-        pkgs;
+      inherit (user.preferences) monofont;
+      cfg = lib.attrByPath ["extra" "stylix" "base-settings"] null user.settings;
     in {
-      stylix.fonts.monospace = {
-        inherit package;
-        inherit (monofont) name;
-      };
+      stylix = lib.mkMerge [
+        {
+          fonts.monospace = {
+            inherit (monofont) name;
+            package = lib.attrByPath (lib.splitString "." monofont.package) null pkgs;
+          };
+        }
+        (lib.optionalAttrs (cfg != null && cfg.theme != null) {
+          base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
+        })
+        (lib.optionalAttrs (cfg != null && cfg.polarity != null) {
+          inherit (cfg) polarity;
+        })
+      ];
     };
   };
 }
+

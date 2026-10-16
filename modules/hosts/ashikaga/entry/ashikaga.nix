@@ -6,6 +6,11 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
+      extra.stylix.base-settings = {
+        theme = "catppuccin-mocha";
+        polarity = "dark";
+      };
+
       extra.performance.cachyos-kernel = {
         variant = "bore";
         lto = true;
