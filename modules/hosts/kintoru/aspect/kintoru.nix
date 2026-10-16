@@ -15,7 +15,19 @@
       den.aspects.core.nix.lix
 
       den.aspects.security.ssh
+      den.aspects.security.pi-hole-dhcp
     ];
+
+    nixos = {host, ...}: let
+      cfg = host.settings.security.pi-hole-dhcp;
+    in {
+      networking.dhcpcd.extraConfig = ''
+        interface wlan0
+        static ip_address=${cfg.address}/24
+        static routers=${cfg.router}
+        static domain_name_servers=127.0.0.1
+      '';
+    };
 
     persistHost.directories = [
       "/etc/ssh"
