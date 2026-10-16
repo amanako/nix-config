@@ -10,6 +10,8 @@
           board = "raspberry-pi-4";
           enableVc4 = true;
         };
+
+        hardware.wireless-iwd.networkConfiguration = false;
       };
 
       security.ssh = {
