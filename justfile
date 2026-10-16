@@ -27,6 +27,11 @@ rebuild-boot host=hostname:
     just fwrite
     nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
+[group('config')]
+test host=hostname:
+    just fwrite
+    nh os test --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
+
 # Run disko configuration for a host, defaults to current host
 [group('packages')]
 disko host=hostname:
@@ -60,14 +65,13 @@ pull-flake branch="main":
 [group('assertions')]
 [private]
 ensure-zen-closed:
-    #!/usr/bin/env nu
-    if (ps | any {|proc| $proc.name | str contains "zen"}) {
-      error make {
-        msg: "Zen browser is currently running, please close it before proceeding."
-      }
-    }
+    #!/usr/bin/env sh
+    if pgrep zen > /dev/null; then
+    echo "Zen browser is currently running, please close it before proceeding."
+    exit 1
+    fi
 
-hostname := `uname -n`
+hostname := `hostname`
 
 alias h := help
 alias fw := fwrite
@@ -77,3 +81,4 @@ alias rb := rebuild-boot
 alias d := disko
 alias r := repl
 alias pf := pull-flake
+alias t := test
