@@ -19,7 +19,7 @@ in {
       den.aspects.everyday.utility.fcitx5
       den.aspects.everyday.utility.mpv
       den.aspects.everyday.utility.youtube-tui
-      den.aspects.everyday.utility.zathura
+      den.aspects.everyday.pdf-viewers.pdf-cli
 
       den.aspects.everyday.wallpaper-managers.awww
 

@@ -18,6 +18,7 @@
       den.aspects.everyday.utility.mpv
       den.aspects.everyday.utility.localsend
       den.aspects.everyday.wallpaper-managers.awww
+      den.aspects.everyday.pdf-viewers.pdf-cli
 
       den.aspects.core.nix.nh
       den.aspects.core.flatpaks.sober
