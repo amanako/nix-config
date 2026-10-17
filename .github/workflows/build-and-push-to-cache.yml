@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-26.04, ubuntu-24.04-arm]
     steps:
       - uses: actions/checkout@v4
       - uses: wimpysworld/nothing-but-nix@v10
