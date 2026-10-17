@@ -34,7 +34,6 @@
       nixvim.keymaps
       nixvim.extras
       nixvim.extra-config
-      nixvim.colorschemes.gruvbox
       nixvim.dependencies
 
       nixvim.plugins.bufferline

@@ -46,8 +46,6 @@
       )
     ];
 
-    stylixHMSettings.targets."noctalia".enable = false;
-
     persistUser = {
       directories = [
         ".local/state/noctalia/clipboard"

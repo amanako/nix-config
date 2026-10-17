@@ -20,8 +20,6 @@
       It is recommended to try out new v5 alpha from noctalia aspect.
     '';
 
-    stylixHMSettings.targets."noctalia-shell".enable = false;
-
     persistUser.files = [".cache/noctalia/shell-state.json"];
 
     hm = {

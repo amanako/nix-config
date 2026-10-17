@@ -7,23 +7,23 @@
       ...
     }: let
       colors =
-        lib.attrByPath ["lib" "stylix" "colors"]
-        den.aspects.everyday.bars.waybar.fallbackPalette
-        config;
+        config
+        |> lib.attrByPath ["lib" "stylix" "colors" "withHashtag"]
+        den.aspects.everyday.bars.waybar.fallbackPalette;
     in {
       programs.waybar.style = ''
-          @define-color bg ${colors.withHashtag.base00};
-          @define-color muted ${colors.withHashtag.base01};
-          @define-color surface ${colors.withHashtag.base02};
-          @define-color dim ${colors.withHashtag.base03};
-          @define-color fg ${colors.withHashtag.base05};
-          @define-color red ${colors.withHashtag.base08};
-          @define-color orange ${colors.withHashtag.base09};
-          @define-color gold ${colors.withHashtag.base0A};
-          @define-color green ${colors.withHashtag.base0B};
-          @define-color teal ${colors.withHashtag.base0C};
-          @define-color accent ${colors.withHashtag.base0D};
-          @define-color pink ${colors.withHashtag.base0E};
+          @define-color bg ${colors.base00};
+          @define-color muted ${colors.base01};
+          @define-color surface ${colors.base02};
+          @define-color dim ${colors.base03};
+          @define-color fg ${colors.base05};
+          @define-color red ${colors.base08};
+          @define-color orange ${colors.base09};
+          @define-color gold ${colors.base0A};
+          @define-color green ${colors.base0B};
+          @define-color teal ${colors.base0C};
+          @define-color accent ${colors.base0D};
+          @define-color pink ${colors.base0E};
 
           * {
             font-family: "${user.preferences.monofont.name}";
