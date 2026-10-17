@@ -3,7 +3,11 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
 in {
   den.aspects.security.pi-hole-serve = {
     description = "Expose the Pi-hole web interface over the tailnet via Tailscale Serve with an automatically issued certificate.";

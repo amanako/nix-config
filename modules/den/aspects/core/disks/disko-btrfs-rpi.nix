@@ -4,7 +4,11 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
 in {
   den.aspects.core.disks.disko-btrfs-rpi = {
     description = ''

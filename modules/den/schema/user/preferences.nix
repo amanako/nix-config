@@ -1,12 +1,12 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.schema.user = {config, ...}: {
-    options = let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-    in {
+    options = {
       preferences = mkOption {
         type = types.submodule {
           options = let

@@ -4,7 +4,11 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
 in {
   flake-file.inputs.disko.url = "github:nix-community/disko";
 

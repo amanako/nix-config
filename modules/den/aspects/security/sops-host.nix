@@ -3,17 +3,17 @@
   lib,
   inputs,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkIf
+    mkOption
+    types
+    ;
+in {
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
 
-  den.aspects.security.sops-host = let
-    inherit
-      (lib)
-      mkIf
-      mkOption
-      types
-      ;
-  in {
+  den.aspects.security.sops-host = {
     description = "Sops-nix secret management for machine secrets.";
 
     hostSettings = {host, ...}: {

@@ -1,4 +1,10 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.core.impermanence.btrfs.prune-old-roots = {
     description = ''
       Prunes old archived root subvolumes created by the btrfs rolling-root
@@ -10,12 +16,6 @@
 
     hostSettings = {host, ...}: let
       cfg = host.settings.core.impermanence.btrfs.prune-old-roots;
-
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
     in {
       minKeep = mkOption {
         type =

@@ -1,10 +1,14 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.security.ssh = {
     description = "OpenSSH secure shell client and server configuration.";
 
-    hostSettings = let
-      inherit (lib) mkOption types;
-    in {
+    hostSettings = {
       permitRootLogin = mkOption {
         type = types.enum [
           "yes"

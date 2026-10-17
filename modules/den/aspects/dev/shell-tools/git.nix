@@ -1,11 +1,11 @@
-{lib, ...}: {
-  den.aspects.dev.shell-tools.git = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  den.aspects.dev.shell-tools.git = {
     description = "Distributed version control system configuration.";
 
     userSettings = {

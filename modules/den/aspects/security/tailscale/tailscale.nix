@@ -2,14 +2,14 @@
   den,
   lib,
   ...
-}: {
-  den.aspects.security.tailscale = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  den.aspects.security.tailscale = {
     description = "The easiest, most secure way to use WireGuard and 2FA.";
 
     hostSettings = {host, ...}: {

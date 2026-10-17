@@ -3,7 +3,11 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
 in {
   den.aspects.core.hardware.wireless-iwd = {
     description = "Wireless networking using iwd (with dhcpcd).";

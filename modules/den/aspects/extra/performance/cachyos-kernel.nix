@@ -2,7 +2,13 @@
   inputs,
   lib,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   flake-file = {
     inputs.nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
@@ -11,12 +17,6 @@
     description = "CachyOS Linux kernel with various scheduler and optimization variants.";
 
     hostSettings = let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-
       variants = [
         "bore"
         "latest"

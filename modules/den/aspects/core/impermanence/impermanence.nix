@@ -3,16 +3,16 @@
   lib,
   inputs,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
 
-  den.aspects.core.impermanence = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+  den.aspects.core.impermanence = {
     description = "Filesystem state management for NixOS: a fresh btrfs root subvolume on every boot (rolling-root) with selective persistence.";
 
     hostSettings = {host, ...}: {

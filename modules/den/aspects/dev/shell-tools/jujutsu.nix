@@ -2,7 +2,13 @@
   den,
   lib,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   # Jujutsu is tightly related to git (even having git as a dependency).
   # Inherit profile defaults from git if set.
   den.aspects.dev.shell-tools.jujutsu = {
@@ -10,9 +16,7 @@
       A Git-compatible VCS(version control system) that is both simple and powerful.
     '';
 
-    userSettings = {user, ...}: let
-      inherit (lib) mkOption types;
-    in {
+    userSettings = {user, ...}: {
       username = mkOption {
         default =
           user.settings.dev.shell-tools.git.username

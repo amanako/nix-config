@@ -1,4 +1,10 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.core.boot.limine = {
     description = ''
       Modern, secure, portable, multiprotocol bootloader and boot manager.
@@ -6,13 +12,7 @@
 
     stylixNixOSSettings.targets."limine".enable = false;
 
-    hostSettings = let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-    in {
+    hostSettings = {
       wallpapers = mkOption {
         type = types.listOf (types.submoduleWith {
           modules = [

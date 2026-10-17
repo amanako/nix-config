@@ -2,14 +2,14 @@
   inputs,
   lib,
   ...
-}: {
-  den.schema.host.options = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  den.schema.host.options = {
     repoRoot = mkOption {
       type = types.nullOr types.path;
       default = null;

@@ -1,11 +1,11 @@
-{lib, ...}: {
-  den.aspects.core.hardware = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  den.aspects.core.hardware = {
     hostSettings = {
       deviceType = mkOption {
         type = types.enum [

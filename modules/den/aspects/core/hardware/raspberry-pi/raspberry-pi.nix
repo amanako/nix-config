@@ -2,16 +2,16 @@
   inputs,
   lib,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
 
-  den.aspects.core.hardware.raspberry-pi = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+  den.aspects.core.hardware.raspberry-pi = {
     description = ''
       Raspberry Pi board support using the `nixos-raspberrypi` flake.
       Provides the kernel, firmware, device trees and bootloader for the

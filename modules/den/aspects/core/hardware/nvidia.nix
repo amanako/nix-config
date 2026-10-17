@@ -2,7 +2,13 @@
   den,
   lib,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.core.hardware.nvidia = {
     includes = [
       (den.batteries.unfree [
@@ -36,11 +42,6 @@
     ];
 
     hostSettings = {host, ...}: let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
       isHybrid = builtins.length host.settings.core.hardware.gpus >= 2;
     in {
       primeMode = mkOption {

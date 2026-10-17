@@ -1,14 +1,14 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.dev.terminal.zellij = {
     description = "A terminal workspace and multiplexer with batteries included.";
 
-    userSettings = {user, ...}: let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-    in {
+    userSettings = {user, ...}: {
       autoAttach = mkOption {
         default = false;
         example = true;

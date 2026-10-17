@@ -1,10 +1,11 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.everyday.wallpaper-managers.awww.userSettings = {user, ...}: let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
     cfg = user.settings.everyday.wallpaper-managers.awww;
   in {
     service = mkOption {

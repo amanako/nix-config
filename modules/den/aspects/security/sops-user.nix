@@ -2,15 +2,15 @@
   lib,
   inputs,
   ...
-}: {
-  den.aspects.security.sops-user = let
-    inherit
-      (lib)
-      mkIf
-      mkOption
-      types
-      ;
-  in {
+}: let
+  inherit
+    (lib)
+    mkIf
+    mkOption
+    types
+    ;
+in {
+  den.aspects.security.sops-user = {
     description = "Sops-nix secret management for user secrets.";
 
     userSettings = {user, ...}: {

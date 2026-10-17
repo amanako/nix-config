@@ -7,15 +7,9 @@
       Hibernation case handled via checking for efi variable, in which case roll is boot.
     '';
 
-    hostSettings = {...}: let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-    in {
-      disk-partition = mkOption {
-        type = types.str;
+    hostSettings = {
+      disk-partition = lib.mkOption {
+        type = lib.types.str;
         example = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_1TB_ABC123";
         description = ''
           Full name of the partition to wipe on each reboot

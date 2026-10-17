@@ -1,5 +1,9 @@
 {lib, ...}: let
-  inherit (lib) mkOption types;
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
 in {
   den.aspects.monitoring.prometheus = {
     description = "Scrape and retain node_exporter metrics from included hosts.";

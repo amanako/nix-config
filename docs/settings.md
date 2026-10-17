@@ -93,10 +93,14 @@ See den's [Namespaces guide](https://den.denful.dev/guides/namespaces) and
 
 ```nix
 # modules/den/aspects/dev/shell-tools/git.nix (simplified)
-{lib, ...}: {
-  den.aspects.dev.shell-tools.git = let
-    inherit (lib) mkOption types;
-  in {
+{lib, ...}:let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+  in  {
+  den.aspects.dev.shell-tools.git = {
     userSettings = {
       username = mkOption {
         type = types.str;

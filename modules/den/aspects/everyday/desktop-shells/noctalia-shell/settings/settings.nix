@@ -1,11 +1,11 @@
-{lib, ...}: {
-  noctalia-shell.settings = let
-    inherit
-      (lib)
-      mkOption
-      types
-      ;
-  in {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  noctalia-shell.settings = {
     userSettings = {user, ...}: {
       overrides = mkOption {
         type = types.attrs;

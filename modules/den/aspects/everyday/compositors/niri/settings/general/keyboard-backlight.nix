@@ -1,12 +1,12 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   niri.binds.keyboard-backlight = {
-    userSettings = let
-      inherit
-        (lib)
-        mkOption
-        types
-        ;
-    in {
+    userSettings = {
       device = mkOption {
         type = types.nullOr lib.types.str;
         default = null;
