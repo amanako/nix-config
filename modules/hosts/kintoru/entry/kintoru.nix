@@ -27,6 +27,10 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPG5huz0B9qZ1gcuvMhCrc63piDJML/Hc/STMl55GWg awaremi"
         ];
       };
+
+      security.sops-host.sshKeyPaths = [
+        "/etc/ssh/ssh_host_ed25519_key"
+      ];
     };
   };
 }
