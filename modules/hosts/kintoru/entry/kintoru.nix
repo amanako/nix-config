@@ -11,8 +11,6 @@
           board = "raspberry-pi-4";
           enableVc4 = true;
         };
-
-        hardware.wireless-iwd.networkConfiguration = false;
       };
 
       monitoring.grafana.domain = "kintoru.tail729600.ts.net";

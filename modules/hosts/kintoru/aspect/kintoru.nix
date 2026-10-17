@@ -8,7 +8,6 @@
 
     includes = [
       den.aspects.core.hardware.raspberry-pi.common
-      den.aspects.core.hardware.wireless-iwd
       den.aspects.core.hardware.usb-gadget-ether-device
 
       den.aspects.core.nix.common
@@ -29,7 +28,7 @@
       cfg = host.settings.security.pi-hole-dhcp;
     in {
       networking.dhcpcd.extraConfig = ''
-        interface wlan0
+        interface end0
         static ip_address=${cfg.address}/24
         static routers=${cfg.router}
         static domain_name_servers=127.0.0.1
