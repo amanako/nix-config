@@ -30,6 +30,8 @@ in {
       den.aspects.everyday.utility.wifitui
       den.aspects.everyday.utility.bluetui
       den.aspects.everyday.utility.btop
+      den.aspects.everyday.pdf-viewers.pdf-cli
+      den.aspects.services.syncthing-client
 
       den.aspects.everyday.wallpaper-managers.awww
 

@@ -21,6 +21,9 @@
       den.aspects.monitoring.grafana-serve
       den.aspects.monitoring.node-exporter
       den.aspects.monitoring.prometheus
+
+      den.aspects.services.syncthing-serve
+      den.aspects.services.calibre-web-serve
     ];
 
     nixos = {host, ...}: let
