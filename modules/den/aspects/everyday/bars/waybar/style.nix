@@ -1,11 +1,15 @@
-{
+{den, ...}: {
   den.aspects.everyday.bars.waybar.style = {
     hm = {
       config,
+      lib,
       user,
       ...
     }: let
-      colors = config.lib.stylix.colors;
+      colors =
+        lib.attrByPath ["lib" "stylix" "colors"]
+        den.aspects.everyday.bars.waybar.fallbackPalette
+        config;
     in {
       programs.waybar.style = ''
           @define-color bg ${colors.withHashtag.base00};
