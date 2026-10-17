@@ -100,7 +100,7 @@ If using this method running:
 
 ```bash
 # no flakes
-sudo nix --accept-flake-config --extra-experimental-features "nix-command flakes" run .#$HOSTNAME-disko
+sudo nix --accept-flake-config --extra-experimental-features "nix-command flakes" run .#diskoScripts.$HOSTNAME
 # flakes enabled
 sudo nix run nixpkgs#just -- disko $HOSTNAME
 ```

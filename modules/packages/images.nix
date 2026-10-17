@@ -42,12 +42,12 @@
     else null;
 in {
   perSystem = {pkgs, ...}: {
-    packages =
+    legacyPackages.images =
       allHosts
       |> lib.mapAttrs (hostname: _: imageOf pkgs hostname)
       |> lib.filterAttrs (_: value: value != null)
       |> lib.mapAttrs' (hostname: value: {
-        name = "${hostname}-image";
+        name = hostname;
         inherit value;
       });
   };

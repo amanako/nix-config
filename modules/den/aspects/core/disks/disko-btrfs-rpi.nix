@@ -19,10 +19,10 @@ in {
       into the FAT partition root (see `boot.loader.raspberry-pi.firmwarePath`;
       the upstream default `/boot/firmware` would point at a subdirectory the
       Pi boot ROM never reads), and enables disko's image builder so
-      `.#<host>-image` (or `just image <host>`) produces a ready-to-flash raw
+      `.#images.<host>` (or `just image <host>`) produces a ready-to-flash raw
       SD card image carrying the exact disko layout (btrfs subvolumes
       included). The same layout can still be applied to a real card with
-      `.#<host>-disko` via `just d`. The image builder VM runs as
+      `.#diskoScripts.<host>` via `just d`. The image builder VM runs as
       `aarch64-linux`, so prefer an ARM build host (or aarch64 remote builder);
       on x86_64 it builds via binfmt emulation and is slow.
     '';

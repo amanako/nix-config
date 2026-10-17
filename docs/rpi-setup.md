@@ -2,8 +2,9 @@ This guide details out installation on raspberry pi version 4. Adjust according 
 
 Throughout this document the Raspberry Pi host is referred to as `{pi-host}`, which
 stands for its name in this repo — the `nixosConfigurations.{pi-host}` /
-`net.hostName` attribute and the `{pi-host}-disko` / `{pi-host}-vm` / `{pi-host}-image`
-flake outputs derived from it (`just d`, `just vm`, `just image`, `just rs`).
+`net.hostName` attribute and the `diskoScripts.{pi-host}` / `vms.{pi-host}` /
+`images.{pi-host}` flake outputs derived from it (`just d`, `just vm`, `just image`,
+`just rs`).
 Substitute the actual name for your Raspberry Pi host in every command below.
 
 The Pi host uses **disko** for partitioning (btrfs root with subvolumes) with
@@ -24,7 +25,7 @@ instead of an EFI System Partition, since the RPi boot ROM does not use UEFI.
   * [Resize the root on first boot](#resize-the-root-on-first-boot)
   * [How the boot files are laid out](#how-the-boot-files-are-laid-out)
 - [Alternative: partition and install with disko](#alternative-partition-and-install-with-disko)
-  * [1. Run the `{pi-host}-disko` package](#1-run-the-pi-host-disko-package)
+  * [1. Run the `diskoScripts.{pi-host}` package](#1-run-the-diskoscriptspi-host-package)
   * [2. Install NixOS](#2-install-nixos)
   * [3. Install the bootloader manually](#3-install-the-bootloader-manually)
   * [4. First boot & SSH](#4-first-boot--ssh)
@@ -93,7 +94,7 @@ The Pi disk aspect configures disko's **image builder**, so the exact disko
 layout (FAT boot partition + btrfs root with subvolumes + installed bootloader)
 is produced as a raw disk image you can flash directly. No separate `disko`,
 `nixos-install`, or chroot fiddling on the Pi is needed. This works for every
-disko host: `.#<host>-image` / `just image <host>` emits a bootable image of
+disko host: `.#images.<host>` / `just image <host>` emits a bootable image of
 that host's own layout (use it to re-image the Pi or any other machine).
 
 ### Build the image
@@ -105,7 +106,7 @@ just image {pi-host}
 or, to see the derivation being built:
 
 ```bash
-nix --accept-flake-config build .#{pi-host}-image --print-build-logs
+nix --accept-flake-config build .#images.{pi-host} --print-build-logs
 ```
 
 disko creates an image of `core.disks.disko-btrfs-rpi.imageSize` (default `12G`,
@@ -151,13 +152,13 @@ the same disko config as the image. This wipes the SD card and lays out the full
 64GB using the Pi host's disko config. **Run it from your PC**, with the card
 connected — not from the Pi while it's running off that card.
 
-### 1. Run the `{pi-host}-disko` package
+### 1. Run the `diskoScripts.{pi-host}` package
 
 From this repository on your PC configure disko device and run it's corresponding package. For device path use one as it appears on current host:
 
 ```bash
 # Format card device
-sudo nix --accept-flake-config run .#{pi-host}-disko
+sudo nix --accept-flake-config run .#diskoScripts.{pi-host}
 ```
 
 `--mode destroy,format,mount` is baked into the wrapper, so this wipes the card,

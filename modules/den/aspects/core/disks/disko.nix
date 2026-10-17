@@ -16,10 +16,10 @@ in {
     description = ''
       Community tool for declarative disk partitioning on nixos.
 
-      Actual partitioning happens when running script accessible as package
-      $HOSTNAME.disko of repository, runnable via `just disko`.
+      Actual partitioning happens when running the script accessible as
+      `.#diskoScripts.<host>` in the repository, runnable via `just disko`.
 
-      Also enables disko's image builder, so `.#<host>-image` (`just image
+      Also enables disko's image builder, so `.#images.<host>` (`just image
       <host>`) produces a bootable raw disk image carrying this host's disko
       layout. The builder VM runs as `aarch64-linux`/`x86_64-linux` matching
       the host; build it on matching hardware (or via a remote builder).

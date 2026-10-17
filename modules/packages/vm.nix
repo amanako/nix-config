@@ -9,8 +9,8 @@
     system,
     ...
   }: {
-    packages = lib.mapAttrs' (hostname: host: {
-      name = "${hostname}-vm";
+    legacyPackages.vms = lib.mapAttrs' (hostname: host: {
+      name = hostname;
 
       value = pkgs.writeShellApplication {
         name = "${hostname}-vm";

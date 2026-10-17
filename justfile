@@ -41,17 +41,17 @@ test host=hostname:
 # Run disko configuration for a host, defaults to current host
 [group('packages')]
 disko host=hostname:
-    nix --accept-flake-config run .#{{ host }}-disko
+    nix --accept-flake-config run .#diskoScripts.{{ host }}
 
 # Build a raw SD card image for a host, defaults to current host
 [group('packages')]
 image host=hostname:
-    nix --accept-flake-config build .#{{ host }}-image --print-build-logs
+    nix --accept-flake-config build .#images.{{ host }} --print-build-logs
 
 # Spin up a virtual machine for a host, defaults to current host
 [group('packages')]
 vm host=hostname:
-    nix --accept-flake-config run .#{{ host }}-vm
+    nix --accept-flake-config run .#vms.{{ host }}
 
 # Enter nix repl with flake.nix from repo root
 [group('packages')]

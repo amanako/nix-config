@@ -26,16 +26,16 @@
     |> lib.concatMapAttrs (_arch: hosts: hosts);
 in {
   perSystem = {pkgs, ...}: {
-    packages =
+    legacyPackages.diskoScripts =
       allHosts
       |> lib.filterAttrs (hostname: _: (hostname |> getDiskoCfg) != {})
       |> lib.mapAttrs' (hostname: _: let
         devices = hostname |> getDiskoCfg;
       in {
-        name = "${hostname}-disko";
+        name = hostname;
 
         value = pkgs.writeShellApplication {
-          name = "${hostname}-disko";
+          name = "${hostname}-disko-script";
           text = let
             diskoFile = pkgs.writeText "${hostname}-disko-config.nix" ''
               {
