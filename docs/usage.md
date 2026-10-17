@@ -110,8 +110,7 @@ should run scripts to take care of partitioning.
 If this is not the case, manual partitioning is required, I recommend taking a look at this [video].
 
 ```
-# yes unix utility will answer y to all questions regarding usage of flake (trusted extra substituters and keys)
-yes | sudo nixos-install --no-channel-copy --flake $REPO_DIR.$HOSTNAME
+sudo nixos-install --no-channel-copy --flake $REPO_DIR.$HOSTNAME
 
 Copy configuration over to desired (or persisted) folder (likely in user's home).
 cp -r $CONFIG_DIRECTORY $PATH_TO_FOLDER
