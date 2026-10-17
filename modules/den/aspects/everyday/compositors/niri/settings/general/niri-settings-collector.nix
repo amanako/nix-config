@@ -7,6 +7,7 @@
     hm = {
       niriSettings,
       lib,
+      config,
       inputs',
       ...
     }: let
@@ -76,6 +77,13 @@
             |> lib.getExe;
 
           animations.slowdown = 1.5;
+          layout.focus-ring = {
+            width = 4;
+            # Get config from hm since there is stylix, needs attention
+            active.color =
+              config
+              |> lib.attrByPath ["lib" "stylix" "colors" "withHashtag" "base0D"] "#7fc8ff";
+          };
         }
         |> normalizeBinds;
     };
