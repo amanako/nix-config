@@ -13,11 +13,14 @@
     '';
 
     hm = {
+      host,
       user,
       lib,
       pkgs,
       ...
     }: let
+      inherit (host.settings.core.hardware) deviceType;
+
       lookup = name: lib.attrByPath (lib.splitString "." name) null pkgs;
 
       toPackage = program: let
@@ -53,10 +56,14 @@
           then throw "no package named \"${fallback}\" in nixpkgs (fallback for preference `${role}`)"
           else null);
     in {
-      home.packages = lib.unique (
-        [fontPackage]
-        ++ (rolePackages |> lib.filter (package: package != null))
-      );
+      home.packages =
+        if (deviceType == "server")
+        then []
+        else
+          (lib.unique (
+            [fontPackage]
+            ++ (rolePackages |> lib.filter (package: package != null))
+          ));
     };
   };
 }
