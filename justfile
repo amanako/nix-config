@@ -15,6 +15,11 @@ fupdate *inputs:
     nix --accept-flake-config flake update -L {{ inputs }} --flake .
     just fwrite
 
+# Check all flakes validity
+[group('flake')]
+fcheck:
+    nix flake check -L --accept-flake-config --show-trace --all-systems
+
 # Rebuild and activate config of a host with nh and make it the default boot entry, defaults to current host
 [group('config')]
 rebuild-switch host=hostname: ensure-zen-closed
@@ -27,6 +32,7 @@ rebuild-boot host=hostname:
     just fwrite
     nh os boot --accept-flake-config --ask --diff always --show-trace --hostname {{ host }}
 
+# Test new config, defaults to current host
 [group('config')]
 test host=hostname:
     just fwrite
@@ -82,3 +88,4 @@ alias d := disko
 alias r := repl
 alias pf := pull-flake
 alias t := test
+alias fc := fcheck
