@@ -24,6 +24,8 @@
 
       security.pi-hole.listeningMode = "ALL";
 
+      security.pi-hole-serve.domain = "kintoru.tail729600.ts.net";
+
       security.pi-hole-dhcp = {
         address = "192.168.100.81";
         router = "192.168.100.1";
