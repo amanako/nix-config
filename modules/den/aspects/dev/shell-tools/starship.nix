@@ -2,8 +2,6 @@
   den.aspects.dev.shell-tools.starship = {
     description = "The minimal, blazing-fast, and infinitely customizable prompt for any shell.";
 
-    stylixHMSettings.targets."starship".enable = false;
-
     hm = {lib, ...}: {
       programs.starship = {
         enable = true;
@@ -22,38 +20,25 @@
             "$character"
           ];
 
-          palette = "gruvbox_dark";
-
-          palettes.gruvbox_dark = {
-            # this one is more of greenish
-            color_blue = "#458588";
-            color_aqua = "#689d6a";
-            color_main = "#98971a";
-            color_orange = "#d65d0e";
-            color_purple = "#b16286";
-            color_red = "#cc241d";
-            color_yellow = "#d79921";
-          };
-
           directory = {
-            style = "color_orange";
+            style = "orange";
           };
 
           git_branch = {
             symbol = "";
-            style = "color_aqua";
-            format = "[[ $symbol $branch ](color_blue color_aqua)]($style)";
+            style = "cyan";
+            format = "[[ $symbol $branch ](blue cyan)]($style)";
           };
 
           git_status = {
-            style = "color_aqua";
-            format = "[[($all_status$ahead_behind )](color_orange colow_yellow)]($style)";
+            style = "cyan";
+            format = "[[($all_status$ahead_behind )](orange yellow)]($style)";
           };
 
           character = {
-            success_symbol = "[ ](bold color_main)";
-            error_symbol = "[ ](bold color_red)";
-            vimcmd_symbol = "[ ](bold color_purple)";
+            success_symbol = "[ ](bold green)";
+            error_symbol = "[ ](bold red)";
+            vimcmd_symbol = "[ ](bold purple)";
           };
 
           cmd_duration = {

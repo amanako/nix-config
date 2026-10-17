@@ -6,8 +6,6 @@
   dms.entry = {
     description = "DankMaterialShell (DMS) — a feature-rich Wayland desktop shell.";
 
-    stylixHMSettings.targets."dank-material-shell".enable = false;
-
     hm = {
       imports = [
         inputs.dms.homeModules.dank-material-shell

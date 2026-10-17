@@ -11,8 +11,6 @@
       ".local/state/nvim"
     ];
 
-    stylixHMSettings.targets."nixvim".enable = false;
-
     hm = {user, ...}: {
       imports = [inputs.nixvim.homeModules.nixvim];
 

@@ -1,22 +1,31 @@
-{
-  den,
-  lib,
-  ...
-}: {
+{den, ...}: {
   dms.niri = {
     includes = [
       den.aspects.everyday.launchers.conflict-manager
     ];
 
     niriSettings = {
+      config,
+      lib,
+      ...
+    }: let
+      colors =
+        lib.attrByPath ["lib" "stylix" "colors" "withHashtag"] {
+          base03 = "#948f99";
+          base08 = "#f2b8b5";
+          base0D = "#d0bcff";
+          base0E = "#4f378b";
+        }
+        config;
+    in {
       windows.recent-windows.highlight.corner-radius = 12;
       layout = {
         background-color = "transparent";
 
         border = {
-          active-color = "#d0bcff";
-          inactive-color = "#948f99";
-          urgent-color = "#f2b8b5";
+          active-color = colors.base0D;
+          inactive-color = colors.base03;
+          urgent-color = colors.base08;
         };
 
         shadow.color = "#00000070";
@@ -28,16 +37,16 @@
         focus-ring.width = 2;
 
         tab-indicator = {
-          active-color = "#d0bcff";
-          inactive-color = "#948f99";
-          urgent-color = "#f2b8b5";
+          active-color = colors.base0D;
+          inactive-color = colors.base03;
+          urgent-color = colors.base08;
         };
 
-        insert-hint.color = "#d0bcff80";
+        insert-hint.color = "${colors.base0D}80";
 
         recent-windows.highlight = {
-          active-color = "#4f378b";
-          urgent-color = "#f2b8b5";
+          active-color = colors.base0E;
+          urgent-color = colors.base08;
         };
       };
 

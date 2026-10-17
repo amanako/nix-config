@@ -2,8 +2,6 @@
   den.aspects.everyday.notifications.dunst = {
     description = "Lightweight and customizable notification daemon.";
 
-    stylixHMSettings.targets.dunst.enable = false;
-
     hm.services.dunst = {
       enable = true;
       settings = {
@@ -13,12 +11,9 @@
           offset = "30x50";
           origin = "top-right";
           transparency = 10;
-          frame_color = "#eceff1";
         };
 
         urgency_normal = {
-          background = "#37474f";
-          foreground = "#eceff1";
           timeout = 10;
         };
       };

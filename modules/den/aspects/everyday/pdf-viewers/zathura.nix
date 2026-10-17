@@ -2,8 +2,6 @@
   den.aspects.everyday.pdf-viewers.zathura = {
     description = "A minimal, plugin-based document viewer supporting PDF, DjVu, and more.";
 
-    stylixHMSettings.targets."zathura".enable = false;
-
     persistUser.directories = [
       # Remember where user left of
       ".local/share/zathura"
@@ -15,8 +13,6 @@
         options = {
           recolor = true;
           recolor-adjust-lightness = false;
-          recolor-lightcolor = "#32302f";
-          recolor-darkcolor = "#d4be98";
           recolor-keephue = true;
           recolor-reverse-video = false;
 
@@ -45,8 +41,6 @@
           dbus-service = false;
           synctext = false;
 
-          highlight-color = "#32302f";
-          highlight-active-color = "#d3868b";
           highlighter-modifier = "ctrl";
           page-cache-size = 30;
           scroll-step = 60;

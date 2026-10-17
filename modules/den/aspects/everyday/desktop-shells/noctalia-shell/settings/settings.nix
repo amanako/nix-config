@@ -58,10 +58,6 @@
             terminalCommand = "${user.preferences.effective.term} -e";
           };
 
-          colorSchemes = {
-            predefinedScheme = "Gruvbox";
-          };
-
           wallpaper = {
             enabled = false;
             directory = "";
