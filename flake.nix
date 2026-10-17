@@ -13,8 +13,8 @@
     auto-optimise-store = true;
     extra-deprecated-features = ["or-as-identifier"];
     extra-experimental-features = ["pipe-operators" "pipe-operator"];
-    extra-substituters = ["https://nix-community.cachix.org" "https://fzakaria.cachix.org" "https://nixos-raspberrypi.cachix.org" "https://vic.cachix.org" "https://attic.xuyh0120.win/lantian" "https://nix-gaming.cachix.org" "https://nyx-cache.chaotic.cx" "https://vicinae.cachix.org" "https://noctalia.cachix.org" "https://noctalia.cachix.org" "https://niri.cachix.org" "https://yazi.cachix.org" "https://cache.numtide.com" "https://amanako.cachix.org" "http://kintoru.tail729600.ts.net:5000"];
-    extra-trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng=" "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI=" "vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII=" "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=" "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k=" "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=" "amanako-self:Wohj/CUvvZZbmUXYuFEeT+Sjnpk/1BolmF6Y3IgykyA="];
+    extra-substituters = ["https://nix-community.cachix.org" "https://fzakaria.cachix.org" "https://nixos-raspberrypi.cachix.org" "https://vic.cachix.org" "https://attic.xuyh0120.win/lantian" "https://nix-gaming.cachix.org" "https://nyx-cache.chaotic.cx" "https://vicinae.cachix.org" "https://noctalia.cachix.org" "https://noctalia.cachix.org" "https://niri-epireyn.cachix.org" "https://yazi.cachix.org" "https://cache.numtide.com" "https://amanako.cachix.org" "http://kintoru.tail729600.ts.net:5000"];
+    extra-trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng=" "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI=" "vic.cachix.org-1:1fQNG1DxLTGd47MBAtr/IrUYIk+TTXDojOItpqFoxII=" "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=" "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA=" "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k=" "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY=" "amanako-self:Wohj/CUvvZZbmUXYuFEeT+Sjnpk/1BolmF6Y3IgykyA="];
   };
 
   inputs = {
@@ -40,8 +40,7 @@
     import-tree.url = "github:denful/import-tree";
     llm-agents.url = "github:numtide/llm-agents.nix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    niri.url = "github:sodiboo/niri-flake/very-refactor";
-    niri-pkgs.url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
+    niri.url = "github:epireyn/niri-flake";
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
       inputs.nixpkgs.follows = "nixpkgs";

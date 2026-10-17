@@ -59,15 +59,25 @@
 
       window-rule = [
         {
-          geometry-corner-radius = 12;
+          geometry-corner-radius = {
+            top-left = 12.0;
+            top-right = 12.0;
+            bottom-left = 12.0;
+            bottom-right = 12.0;
+          };
           clip-to-geometry = true;
           tiled-state = true;
           draw-border-with-background = false;
         }
         {
+          geometry-corner-radius = {
+            top-left = 12.0;
+            top-right = 12.0;
+            bottom-left = 12.0;
+            bottom-right = 12.0;
+          };
           match-app-id = "^org.gnome$";
           draw-border-with-background = false;
-          geometry-corner-radius = 12;
           clip-to-geometry = true;
         }
         {

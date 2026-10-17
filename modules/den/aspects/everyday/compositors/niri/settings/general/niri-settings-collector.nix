@@ -68,12 +68,8 @@
               |> builtins.head
         )
         |> lib.recursiveUpdate {
-          includes = lib.mkAfter [
-            ./blur.kdl
-          ];
-
           xwayland-satellite.path =
-            inputs'.niri-pkgs.packages.xwayland-satellite-unstable
+            inputs'.niri.packages.xwayland-satellite-unstable
             |> lib.getExe;
 
           animations.slowdown = 1.5;

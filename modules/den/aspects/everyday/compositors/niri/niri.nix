@@ -6,15 +6,11 @@
   imports = [(inputs.den.namespace "niri" false)];
 
   flake-file = {
-    inputs = {
-      # Current workaround for blur: https://github.com/sodiboo/niri-flake/issues/1721
-      niri.url = "github:sodiboo/niri-flake/very-refactor";
-      niri-pkgs.url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
-    };
+    inputs.niri.url = "github:epireyn/niri-flake";
 
     nixConfig = {
-      extra-substituters = ["https://niri.cachix.org"];
-      extra-trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="];
+      extra-substituters = ["https://niri-epireyn.cachix.org"];
+      extra-trusted-public-keys = ["niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="];
     };
   };
 
@@ -41,13 +37,13 @@
 
     nixos = {inputs', ...}: {
       systemd.user.services.niri-flake-polkit.enable = false;
-      nixpkgs.overlays = [inputs.niri-pkgs.overlays.niri];
+      nixpkgs.overlays = [inputs.niri.overlays.niri];
       # Necessary for niri to be enabled via nixos class.
       # This helps since it can be caught by display managers.
       # Also match nixos and home-manager versions.
       programs.niri = {
         enable = true;
-        package = inputs'.niri-pkgs.packages.niri-unstable;
+        package = inputs'.niri.packages.niri-unstable;
       };
     };
 
@@ -65,7 +61,7 @@
 
       programs.niri = {
         enable = true;
-        package = inputs'.niri-pkgs.packages.niri-unstable;
+        package = inputs'.niri.packages.niri-unstable;
       };
     };
   };
