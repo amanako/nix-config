@@ -41,7 +41,11 @@
 
         "Groups/2" = {
           Name = "SR - Latin";
-          "Default Layout" = "rs-latinalternatequotes";
+          # Niri does not let fcitx5 change the compositor XKB layout (only GNOME/KDE can), so the real keymap stays us.
+          # Fcitx5's keyboard engine only does its own keycode→keysym translation when the current IM's layout differs from the group's Default Layout;
+          # Otherwise it "uses system one" and passes niri's us keysyms through.
+          "Default Layout" = "us";
+
           DefaultIM = "keyboard-rs-latinalternatequotes";
         };
         "Groups/2/Items/0".Name = "keyboard-rs-latinalternatequotes";
