@@ -39,6 +39,20 @@ jobs:
             --no-link \
             > /tmp/out-paths.txt
 
+      - name: Build aarch64 images
+        if: matrix.runner == 'ubuntu-24.04-arm'
+        run: |
+          for host in $(
+            nix --accept-flake-config eval --raw '.#den.hosts.aarch64-linux' \
+              --apply 'hosts: builtins.concatStringsSep " " (builtins.attrNames hosts)'
+          ); do
+            nix build ".#images.$host" \
+              --accept-flake-config \
+              --print-out-paths \
+              --no-link \
+              >> /tmp/out-paths.txt
+          done
+
       - name: Push to Cachix
         env:
           CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
