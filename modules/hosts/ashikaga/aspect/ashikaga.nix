@@ -8,7 +8,7 @@
       den.aspects.ashikaga._
       den.aspects.core.impermanence
       den.aspects.core.impermanence.btrfs.prune-old-roots
-      # Wants power-daemon instead
+      den.aspects.core.power-management.power-daemon
 
       den.aspects.security.sops-host
 
@@ -17,7 +17,6 @@
       den.aspects.core.nix.common
 
       den.aspects.core.power-management.thermald
-      den.aspects.extra.performance.auto-cpufreq
       den.aspects.core.nix.nh
     ];
 
