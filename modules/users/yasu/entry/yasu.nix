@@ -42,18 +42,15 @@
 
       dev = {
         shell-tools = {
-          git = let
-            username = "abyssal-twilight";
-          in {
-            inherit username;
-            # Tip from: https://docs.codeberg.org/git/configuring-git
-            email = "${username}@noreply.codeberg.org";
-            signingKey = "A32087F99284F121";
+          git = {
+            username = "amanako";
+            email = "git@kairi6.anonaddy.com";
+            signingKey = "39476BD8508A995B";
           };
 
           jujutsu.signing = {
             backend = "gpg";
-            key = "A32087F99284F121";
+            key = "39476BD8508A995B";
           };
         };
 

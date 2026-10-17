@@ -19,10 +19,10 @@ Clone and enter the repo with either of the following commands:
 
 ```
 # For enabled flakes and nix-command
-nix run nixpkgs#git -- clone https://codeberg.org/abyssal-twilight/nix-config.git && cd nix-config
+nix run nixpkgs#git -- clone https://codeberg.org/amanako/nix-config.git && cd nix-config
 
 # For other users (after running installation flakes are used by default so this is temporary workaround)
-nix-shell -p git --run "git clone https://codeberg.org/abyssal-twilight/nix-config.git" && cd nix-config
+nix-shell -p git --run "git clone https://codeberg.org/amanako/nix-config.git" && cd nix-config
 ```
 
 No matter the choice, option `repoRoot` should be set for either host or user,

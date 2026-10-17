@@ -111,6 +111,7 @@ in {
     user = {
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPG5huz0B9qZ1gcuvMhCrc63piDJML/Hc/STMl55GWg awaremi"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoLBkvzKBHdnEKWGtlk8bWqit8FFSgqonLBg1i/Zv7D SSH key for git-related operations"
       ];
     };
 
@@ -148,13 +149,19 @@ in {
       programs.ssh.settings =
         {
           "*" = {
-            host = "codeberg.org";
+            hashKnownHosts = true;
+            addKeysToAgent = true;
+            userKnownHostsFile = "~/keys/ssh/known_hosts";
+          };
+          "codeberg.org" = {
             hostname = "codeberg.org";
             user = "git";
-            port = 22;
-            identityFile = "~/keys/ssh/id_ed25519";
-            userKnownHostsFile = "~/keys/ssh/known_hosts";
-            hashKnownHosts = true;
+            identityFile = "~/keys/ssh/git_ed25519";
+          };
+          "github.com" = {
+            hostName = "github.com";
+            user = "git";
+            identityFile = "~/keys/ssh/git_ed25519";
           };
         }
         // (kintoruRemotes
