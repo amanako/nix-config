@@ -15,6 +15,17 @@ in {
           source that can reach port 53, so only use it on trusted networks.
         '';
       };
+
+      webPort = mkOption {
+        type = types.port;
+        default = 80;
+        example = 8080;
+        description = ''
+          Local HTTP port for the Pi-hole web interface. Tailscale Serve
+          terminates TLS and proxies to this port, so it must differ from the
+          Tailscale Serve HTTPS port.
+        '';
+      };
     };
 
     nixos = {host, ...}: let
@@ -37,6 +48,15 @@ in {
             };
 
             dhcp.ipv6 = true;
+
+            webserver = {
+              port = toString cfg.webPort;
+
+              api.prettyJSON = true;
+            };
+
+            misc.extraLogging = true;
+            dns.dnssec = false;
           };
 
           lists = [
@@ -51,7 +71,7 @@ in {
 
         pihole-web = {
           enable = true;
-          ports = ["80" "8443s"];
+          ports = [(toString cfg.webPort)];
         };
       };
     };
