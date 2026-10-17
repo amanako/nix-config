@@ -55,7 +55,13 @@ jobs:
           printf '%s\n' "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-          nix copy --substitute-on-destination \
+          # Filters out paths the upstream caches (cache.nixos.org, ...) can
+          # already serve, prints how many will actually be pushed, and copies
+          # only the genuinely-new ones. Uses --substitute-on-destination so
+          # kintoru fetches shared dependencies from upstream itself instead of
+          # receiving them over the tailnet.
+          scripts/push-cache.sh \
             --to "ssh-ng://root@kintoru.tail729600.ts.net" \
-            --no-check-sigs \
-            $(cat /tmp/out-paths.txt)
+            --upstream "https://cache.nixos.org/" \
+            --substitute \
+            < /tmp/out-paths.txt
