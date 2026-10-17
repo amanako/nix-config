@@ -1687,6 +1687,22 @@
         "type": "github"
       }
     },
+    "node-exporter-full": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792132579,
+        "narHash": "sha256-hKzhMxZsagj4i0zHUbAxmx1k+J3ZDwwJW09AAlYgVsQ=",
+        "owner": "rfmoz",
+        "repo": "grafana-dashboards",
+        "rev": "b173daed1bb163ca320cc3624206e07832219113",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rfmoz",
+        "repo": "grafana-dashboards",
+        "type": "github"
+      }
+    },
     "numen": {
       "inputs": {
         "nixpkgs": [
@@ -1787,6 +1803,7 @@
         "nixvim": "nixvim",
         "noctalia": "noctalia",
         "noctalia-shell": "noctalia-shell",
+        "node-exporter-full": "node-exporter-full",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "systems": "systems_5",

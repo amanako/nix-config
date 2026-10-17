@@ -15,6 +15,8 @@
         hardware.wireless-iwd.networkConfiguration = false;
       };
 
+      monitoring.grafana.domain = "kintoru.tail729600.ts.net";
+
       monitoring.prometheus.scrapeTargets = [
         "kintoru:9100"
         "kusunoki:9100"

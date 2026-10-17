@@ -51,7 +51,7 @@ in {
 
         pihole-web = {
           enable = true;
-          ports = ["80" "443s"];
+          ports = ["80" "8443s"];
         };
       };
     };

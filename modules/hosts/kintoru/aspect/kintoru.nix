@@ -18,6 +18,10 @@
       den.aspects.security.tailscale
       den.aspects.security.tailscale.authkey-sops
       den.aspects.security.pi-hole-dhcp
+
+      den.aspects.monitoring.grafana-serve
+      den.aspects.monitoring.node-exporter
+      den.aspects.monitoring.prometheus
     ];
 
     nixos = {host, ...}: let
