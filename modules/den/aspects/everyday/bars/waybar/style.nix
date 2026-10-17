@@ -126,6 +126,14 @@
               margin: 2px 1px;
               padding: 4px 8px;
               min-height: 20px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #bluetooth:hover,
+            #network:hover,
+            #network.wifi:hover,
+            #network.ethernet:hover {
+              background-color: alpha(@teal, 0.75);
             }
 
             /* font renders the wifi glyph off-center; nudge it 2px left */
@@ -144,6 +152,11 @@
               margin: 2px 1px;
               padding: 4px 10px 4px 6px;
               min-height: 20px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #network.disconnected:hover {
+              background-color: alpha(@red, 0.75);
             }
 
             #tray,
@@ -171,6 +184,20 @@
               border-radius: 8px;
               padding: 0 6px;
               margin: 2px 1px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #tray:hover,
+            #idle_inhibitor:hover,
+            #memory:hover,
+            #cpu:hover,
+            #battery:hover,
+            #pulseaudio:hover,
+            #custom-weather:hover,
+            #custom-clock:hover,
+            #custom-updatespacman:hover,
+            #custom-update:hover {
+              background-color: alpha(@accent, 0.75);
             }
 
             #custom-omarchy {
@@ -178,6 +205,11 @@
                 background-color: @red;
                 font-size: 16px;
                 padding: 0 12px;
+                transition: all 0.2s ease-in-out;
+            }
+
+            #custom-omarchy:hover {
+                background-color: alpha(@red, 0.75);
             }
 
             /* bottom-section recoloring: backlight = yellow */
@@ -187,6 +219,11 @@
               border-radius: 8px;
               padding: 0 10px 0 5px;
               margin: 2px 1px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #backlight:hover {
+              background-color: alpha(@gold, 0.75);
             }
 
             /* power-profiles-daemon: red = performance, orange = balanced, green = power-saver */
@@ -196,6 +233,11 @@
               border-radius: 8px;
               padding: 0 6px;
               margin: 2px 1px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #power-profiles-daemon:hover {
+              background-color: alpha(@orange, 0.75);
             }
 
             #power-profiles-daemon.balanced {
@@ -203,14 +245,26 @@
               color: @bg;
             }
 
+            #power-profiles-daemon.balanced:hover {
+              background-color: alpha(@orange, 0.75);
+            }
+
             #power-profiles-daemon.performance {
               background-color: @red;
               color: @bg;
             }
 
+            #power-profiles-daemon.performance:hover {
+              background-color: alpha(@red, 0.75);
+            }
+
             #power-profiles-daemon.power-saver {
               background-color: @green;
               color: @bg;
+            }
+
+            #power-profiles-daemon.power-saver:hover {
+              background-color: alpha(@green, 0.75);
             }
 
 
@@ -222,6 +276,13 @@
               border-radius: 8px;
               margin: 1px 1px;
               padding: 0 4px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #clock:hover,
+            #custom-weather:hover,
+            #mpris:hover {
+              background-color: @surface;
             }
 
             #backlight,
@@ -234,20 +295,38 @@
               color: @bg;
             }
 
+            #pulseaudio.muted:hover {
+              background-color: alpha(@red, 0.75);
+            }
+
             #pulseaudio.critical {
               background-color: @red;
               color: @bg;
             }
 
+            #pulseaudio.critical:hover {
+              background-color: alpha(@red, 0.75);
+            }
+
             #custom-update,
             #custom-updatespacman {
               background-color: @muted;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #custom-update:hover,
+            #custom-updatespacman:hover {
+              background-color: alpha(@muted, 0.75);
             }
 
             #idle_inhibitor.deactivated {
             font-size: 14px;
             padding: 0 10px 0 5px;
             background-color: @accent;
+            }
+
+            #idle_inhibitor.deactivated:hover {
+              background-color: alpha(@accent, 0.75);
             }
 
             #idle_inhibitor.activated {
@@ -257,6 +336,10 @@
                 padding: 0 10px 0 5px;
             }
 
+            #idle_inhibitor.activated:hover {
+              background-color: alpha(@gold, 0.75);
+            }
+
             /* memory/cpu: neutral pills, gold on warning, red on critical */
             #memory,
             #cpu {
@@ -264,6 +347,12 @@
               color: @fg;
               padding: 3px 2px;
               margin: 2px 1px;
+              transition: all 0.2s ease-in-out;
+            }
+
+            #memory:hover,
+            #cpu:hover {
+              background-color: alpha(@surface, 0.75);
             }
 
             #memory.warning,
@@ -272,10 +361,20 @@
               color: @bg;
             }
 
+            #memory.warning:hover,
+            #cpu.warning:hover {
+              background-color: alpha(@gold, 0.75);
+            }
+
             #memory.critical,
             #cpu.critical {
               background-color: @red;
               color: @bg;
+            }
+
+            #memory.critical:hover,
+            #cpu.critical:hover {
+              background-color: alpha(@red, 0.75);
             }
 
             /* battery: green when full, blue = sufficient charge (above warning),
@@ -284,17 +383,29 @@
               background-color: @green;
               color: @bg;
             }
+            #battery.full:not(.warning):not(.critical):hover {
+              background-color: alpha(@green, 0.75);
+            }
             #battery:not(.warning):not(.critical) {
               background-color: @accent;
               color: @bg;
+            }
+            #battery:not(.warning):not(.critical):hover {
+              background-color: alpha(@accent, 0.75);
             }
             #battery.warning:not(.critical) {
               background-color: @gold;
               color: @bg;
             }
+            #battery.warning:not(.critical):hover {
+              background-color: alpha(@gold, 0.75);
+            }
             #battery.critical {
               background-color: @red;
               color: @bg;
+            }
+            #battery.critical:hover {
+              background-color: alpha(@red, 0.75);
             }
 
             #custom-voxtype,
@@ -343,6 +454,8 @@
               color: @fg;
               padding: 2px 12px;
               min-height: 0;
+              border-radius: 6px;
+              transition: all 0.15s ease-in-out;
             }
 
             menuitem:hover {
@@ -388,6 +501,7 @@
                 margin: 2px 1px;
                 border-radius: 8px;
                 min-width: 10px;
+                transition: all 0.2s ease-in-out;
             }
 
             #custom-waybar-position:hover {
@@ -426,6 +540,11 @@
                 border-radius: 8px;
                 min-height: 20px;
                 font-weight: 900;
+                transition: all 0.2s ease-in-out;
+            }
+
+            #mpris:hover {
+                background-color: @surface;
             }
 
             #mpris.playing {
