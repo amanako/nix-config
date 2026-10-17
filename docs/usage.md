@@ -25,8 +25,9 @@ nix run nixpkgs#git -- clone https://codeberg.org/amanako/nix-config.git && cd n
 nix-shell -p git --run "git clone https://codeberg.org/amanako/nix-config.git" && cd nix-config
 ```
 
-No matter the choice, option `repoRoot` should be set for either host or user,
-where user preference overrides host's choice, making both of them eligible.
+Option `repoRoot` is optional and nullable. Set it on the host, or on a primary
+user to override the host value, when included aspects need to read files from
+the repository.
 
 > While it is possible to read them from environment variables that behaviour is impure therefore avoided)<br>
 
@@ -67,8 +68,9 @@ For such users I would suggest making multiple files within `entry` folder with 
 Furthermore, all files can be broken into easy-to-follow pieces which is displayed in the examples.<br>
 Some users and hosts are provided as a starting point. Please reference [`users`](../modules/users) and [`hosts`](../modules/hosts).
 
-There are some necessary options like `user.repoRoot` taking `host.repoRoot` as fallback value, which is supposed to represent directory of cloned repo, and should be set upfront.
-Other than that some other options which are a must-have likely have an assertion forcing repo users to make a declaration.
+`user.repoRoot` inherits `host.repoRoot` by default; both are nullable and may stay unset.
+Set the host value (or a primary user's value) when included aspects need to read files from the repository.
+Other must-have options likely have an assertion forcing repo users to make a declaration.
 
 When using impermanence: to persist configuration add directory containing configuration to `persistHost` / `persistUser` quirk, either with:
 

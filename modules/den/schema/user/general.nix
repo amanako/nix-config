@@ -21,13 +21,14 @@ in {
       };
 
       repoRoot = mkOption {
-        type = types.path;
+        type = types.nullOr types.path;
         default = host.repoRoot;
         example = "/home/user/nix-config";
         description = ''
-          Root folder of repository where flake resides. Corresponding option of `host.repoRoot`
-          This in inherited from host by default and is readonly if user is not primary, that is if isPrimaryUser option is false.
-          Otherwise, setting this option for all users present on host alleviates host the need to set it themself.
+          Root folder of repository where flake resides. Corresponding option of `host.repoRoot`.
+          Optional; inherits `host.repoRoot` by default, which may be null while unset.
+          Read-only unless `isPrimaryUser` is true, so only a primary user can override the host value.
+          Set it (on the host or here) when included aspects need to read files from the repository.
         '';
         readOnly = !config.isPrimaryUser;
       };

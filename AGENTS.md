@@ -307,12 +307,13 @@ relevant `includes` (a host/user aspect or parent aspect).
 **New host:** add `modules/hosts/<host>/entry/<host>.nix` with
 `den.hosts.x86_64-linux.<host> = { settings = { ... }; }` and (optionally)
 `modules/hosts/<host>/aspect/<host>.nix` for its aspect includes. Set
-`settings.repoRoot` (or rely on the user's `repoRoot`).
+`repoRoot` (or rely on a primary user's `repoRoot`).
 
 **New user:** add `modules/users/<user>/entry/<user>.nix` with
-`den.hosts.x86_64-linux.<host>.users.<user> = { isPrimaryUser, repoRoot,
-preferences, settings = {...} }`; optionally an `aspect/<user>.nix`. `repoRoot`
-defaults to `host.repoRoot` and is read-only unless `isPrimaryUser = true`.
+`den.hosts.x86_64-linux.<host>.users.<user> = { isPrimaryUser, preferences,
+settings = {...} }`; optionally an `aspect/<user>.nix`. `repoRoot` is optional
+and inherits `host.repoRoot` (both may be null); it is read-only unless
+`isPrimaryUser = true`.
 
 Subaspects are reachable by appending `.`, e.g.
 `den.aspects.yasu._` includes all of that user's direct subaspects
@@ -354,8 +355,11 @@ Subaspects are reachable by appending `.`, e.g.
   `weekly-flake-update/YYYY-MM-DD` branch and does **not** open a PR; integrate
   it into `dev` manually (e.g. by fast-forwarding `dev` to it). Don't
   hand-edit `flake.lock` except via `just fupdate`.
-- **`repoRoot` is mandatory** for any host/user using paths/data from the repo;
-  assertions fail if neither host nor user sets it.
+- **`repoRoot` is optional and nullable.** Both `host.repoRoot` and
+  `user.repoRoot` default to `null`; a user's value inherits the host's and is
+  read-only unless the user is primary. Aspects that interpolate repo paths
+  (e.g. nh, neovim, sops, noctalia) still need it, so set it on the host or a
+  primary user when they are included.
 - **nixpkgs tracks `nixos-unstable`.** Expect frequent upstream churn; flake
   bumps land on `dev` first.
 - This config targets impermanence (tmpfs root) with persistent dirs collected

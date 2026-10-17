@@ -16,8 +16,8 @@ in {
       example = "/etc/nixos";
       description = ''
         Root folder of repository where flake resides.
-        Evaluation of this option is dependent on whether corresponding user option `user.repoRoot` is set.
-        If no user is present or users haven't defined their option, assertion fails.
+        Optional; defaults to null and is used as the default for `user.repoRoot`.
+        Set it when included aspects need to read files from the repository.
       '';
     };
 
