@@ -21,6 +21,7 @@ keys:
   - &user_yasu age19l5w7et4mzeunr6xl33aa9yapm4n70uapljcjv7q44qf3m365seqa4yprr
   - &host_ashikaga age15ys4wwjv3rnv7zhh30l0j5e8wrw9dc8vz53r4hhglqkztfzvcycsxxwsew
   - &user_izamu age1696chm73s2vf7rk0s9w6qnup76w2pr97csjhtm48l3umztze8atqzzr9er
+  - &host_kintoru age18433wrxe85apgq70y9whzrz66ahq8ac74zyuev2nrxu2v8v7ve3q4mge2k
 
 creation_rules:
   - path_regex: hosts/kusunoki/secrets/.*\.(yaml|json|env|ini)$
@@ -44,3 +45,8 @@ creation_rules:
     key_groups:
       - age:
           - *user_izamu
+  - path_regex: hosts/kintoru/secrets/.*\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *host_kintoru
+          - *user_yasu

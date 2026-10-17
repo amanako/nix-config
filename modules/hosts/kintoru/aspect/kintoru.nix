@@ -16,6 +16,7 @@
 
       den.aspects.security.ssh
       den.aspects.security.tailscale
+      den.aspects.security.tailscale.authkey-sops
       den.aspects.security.pi-hole-dhcp
     ];
 
