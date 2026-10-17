@@ -1,9 +1,5 @@
 {lib, ...}: {
-  den.schema.user = {
-    host,
-    config,
-    ...
-  }: {
+  den.schema.user = {config, ...}: {
     options = let
       inherit
         (lib)
@@ -168,18 +164,6 @@
           `monofont` is the exception, it carries both the package and its family name and
           comes with a default of its own, since neither half is derivable from the other.
         '';
-      };
-
-      repoRoot = mkOption {
-        type = types.path;
-        default = host.repoRoot;
-        example = "/home/user/nix-config";
-        description = ''
-          Root folder of repository where flake resides. Corresponding option of `host.repoRoot`
-          This in inherited from host by default and is readonly if user is not primary, that is if isPrimaryUser option is false.
-          Otherwise, setting this option for all users present on host alleviates host the need to set it themself.
-        '';
-        readOnly = !config.isPrimaryUser;
       };
     };
   };
