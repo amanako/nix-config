@@ -44,6 +44,7 @@ in {
       den.aspects.dev.terminal.yazi.plugins.smart-enter
       den.aspects.dev.terminal.yazi.plugins.starship
       den.aspects.dev.terminal.yazi.plugins.zoom
+      den.aspects.dev.terminal.opencode
 
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.nushell

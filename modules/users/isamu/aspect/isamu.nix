@@ -78,6 +78,7 @@
       den.aspects.dev.terminal.kitty
       den.aspects.dev.terminal.yazi
       den.aspects.dev.terminal.yazi.plugins._
+      den.aspects.dev.terminal.opencode
 
       den.aspects.security.ssh
       den.aspects.security.gpg
