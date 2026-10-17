@@ -37,6 +37,18 @@
             after login, so hostnames resolve once the node is up.
           '';
         };
+
+      advertiseRoutes = mkOption {
+        type = types.listOf types.str;
+        default = [];
+        example = ["192.168.100.0/24"];
+        description = ''
+          LAN subnets this server advertises to the tailnet as subnet routes,
+          so remote tailnet devices can reach services on those subnets without
+          using an exit node. Routes must be approved in the Tailscale admin
+          console after the node comes up.
+        '';
+      };
     };
 
     persistHost.directories = [
@@ -50,12 +62,18 @@
       isServer = hardware.deviceType == "server";
 
       extraSetFlags =
-        lib.optionals isServer [
-          "--ssh"
-          "--advertise-exit-node"
-        ]
+        lib.optionals isServer (
+          [
+            "--ssh"
+            "--advertise-exit-node"
+          ]
+          ++ lib.optionals (tailscale.advertiseRoutes != []) [
+            "--advertise-routes=${lib.concatStringsSep "," tailscale.advertiseRoutes}"
+          ]
+        )
         ++ lib.optionals (tailscale.exitNode != null) [
           "--exit-node=${tailscale.exitNode}"
+          "--exit-node-allow-lan-access"
         ];
     in {
       services.tailscale =

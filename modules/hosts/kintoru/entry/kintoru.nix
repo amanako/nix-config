@@ -22,6 +22,8 @@
         dhcpEnd = "192.168.100.200";
       };
 
+      security.tailscale.advertiseRoutes = ["192.168.100.0/24"];
+
       security.ssh = {
         permitRootLogin = "prohibit-password";
         rootAuthorizedKeys = [
