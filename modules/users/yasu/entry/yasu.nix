@@ -57,7 +57,7 @@
           };
         };
 
-        terminal.kitty.fontFeatures = "VictorMonoNF-Regular +ss08";
+        terminal.kitty.fontOptions.fontFeatures = "VictorMonoNF-Regular +ss08";
         shells.defaultShell = "nushell";
       };
     };
