@@ -2,7 +2,13 @@
   den,
   lib,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   den.aspects.services.syncthing-serve = {
     description = "Expose the Syncthing web UI over the tailnet via Tailscale Serve.";
 
@@ -12,14 +18,14 @@
     ];
 
     hostSettings = {
-      listenPort = lib.mkOption {
-        type = lib.types.port;
+      listenPort = mkOption {
+        type = types.port;
         default = 8384;
         description = "Local port for syncthing serving. Expose it with `services.calibre-web-serve` rather than opening it directly.";
       };
 
-      outwardPort = lib.mkOption {
-        type = lib.types.port;
+      outwardPort = mkOption {
+        type = types.port;
         default = 8445;
         description = "Tailscale port to serve syncthing on.";
       };
@@ -30,7 +36,7 @@
       config,
       ...
     }: let
-      cfg = host.settings.services.syncthing-serve.listenPort;
+      cfg = host.settings.services.syncthing-serve;
     in {
       systemd.services.tailscale-serve-syncthing = {
         description = "Expose Syncthing via Tailscale Serve";
@@ -43,7 +49,7 @@
           Restart = "on-failure";
           RestartSec = "10s";
           TimeoutStartSec = "30s";
-          ExecStart = "${lib.getExe' config.services.tailscale.package "tailscale"} serve --yes --bg --https=${cfg.outwardPort} http://127.0.0.1:${cfg.listenPort}";
+          ExecStart = "${lib.getExe' config.services.tailscale.package "tailscale"} serve --yes --bg --https=${toString cfg.outwardPort} http://127.0.0.1:${toString cfg.listenPort}";
         };
       };
 
