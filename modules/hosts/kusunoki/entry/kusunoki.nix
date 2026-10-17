@@ -56,7 +56,10 @@
         };
       };
 
-      security.sops-host.ageKeyFile = "/var/lib/sops-nix/main-key.txt";
+      security = {
+        sops-host.ageKeyFile = "/var/lib/sops-nix/main-key.txt";
+        tailscale.exitNode = "kintoru";
+      };
     };
   };
 }
