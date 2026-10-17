@@ -1,11 +1,13 @@
 {
   flake-file.nixConfig = {
     extra-substituters = [
-      "https://amanako.cachix.org" # Cache for this repo
+      "https://amanako.cachix.org"
+      "http://kintoru.tail729600.ts.net:5000"
     ];
 
     extra-trusted-public-keys = [
       "amanako.cachix.org-1:sYWzosQAXLkVVLsWjl/36EJy5UqYHyvs5ztnKX2mmmY="
+      "amanako-self:Wohj/CUvvZZbmUXYuFEeT+Sjnpk/1BolmF6Y3IgykyA="
     ];
 
     abort-on-warn = false;

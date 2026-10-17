@@ -12,6 +12,7 @@
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
+      den.aspects.core.nix.harmonia
 
       den.aspects.security.ssh
       den.aspects.security.tailscale

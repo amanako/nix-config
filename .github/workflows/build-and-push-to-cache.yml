@@ -22,6 +22,15 @@ jobs:
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
 
+      - name: Join tailnet
+        continue-on-error: true
+        id: tailnet
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
       - name: Build hosts
         run: |
           nix build ".#hosts" \
@@ -30,9 +39,17 @@ jobs:
             --no-link \
             > /tmp/out-paths.txt
 
-      - name: Push to cache
+      - name: Push to Cachix
         env:
           CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           nix run nixpkgs#cachix -- push amanako \
+            $(cat /tmp/out-paths.txt)
+
+      - name: Push to self-hosted cache
+        if: steps.tailnet.outcome == 'success'
+        run: |
+          nix copy --substitute-on-destination \
+            --to "ssh-ng://root@kintoru.tail729600.ts.net" \
+            --no-check-sigs \
             $(cat /tmp/out-paths.txt)
