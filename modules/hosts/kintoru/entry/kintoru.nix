@@ -25,6 +25,8 @@
         "kintoru:9100"
       ];
 
+      services.book-library.path = "/srv/library";
+
       security = {
         pi-hole = {
           listeningMode = "ALL";
