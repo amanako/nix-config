@@ -30,9 +30,5 @@
         static domain_name_servers=127.0.0.1
       '';
     };
-
-    persistHost.directories = [
-      "/etc/ssh"
-    ];
   };
 }
