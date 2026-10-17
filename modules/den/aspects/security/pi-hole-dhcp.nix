@@ -38,11 +38,18 @@ in {
     in {
       services.pihole-ftl = {
         openFirewallDHCP = true;
-        settings.dhcp = {
-          active = true;
-          start = cfg.dhcpStart;
-          end = cfg.dhcpEnd;
-          router = cfg.router;
+        settings = {
+          dhcp = {
+            active = true;
+            start = cfg.dhcpStart;
+            end = cfg.dhcpEnd;
+            router = cfg.router;
+          };
+
+          dns.reply.host = {
+            force4 = true;
+            IPv4 = cfg.address;
+          };
         };
       };
     };
