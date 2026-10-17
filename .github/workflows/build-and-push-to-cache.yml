@@ -47,7 +47,8 @@ jobs:
             $(cat /tmp/out-paths.txt)
 
       - name: Push to self-hosted cache
-        if: steps.tailnet.outcome == 'success'
+        # limit to host's architecture intentionally for now
+        if: steps.tailnet.outcome == 'success' && matrix.runner == 'ubuntu-24.04-arm'
         env:
           SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
         run: |
