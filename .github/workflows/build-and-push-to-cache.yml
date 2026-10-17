@@ -48,7 +48,13 @@ jobs:
 
       - name: Push to self-hosted cache
         if: steps.tailnet.outcome == 'success'
+        env:
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
         run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
           nix copy --substitute-on-destination \
             --to "ssh-ng://root@kintoru.tail729600.ts.net" \
             --no-check-sigs \
