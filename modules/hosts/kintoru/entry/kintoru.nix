@@ -15,6 +15,11 @@
         hardware.wireless-iwd.networkConfiguration = false;
       };
 
+      monitoring.prometheus.scrapeTargets = [
+        "kintoru:9100"
+        "kusunoki:9100"
+      ];
+
       security.pi-hole.listeningMode = "ALL";
 
       security.pi-hole-dhcp = {

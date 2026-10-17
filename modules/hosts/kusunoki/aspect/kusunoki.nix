@@ -20,6 +20,8 @@
       den.aspects.security.sops-host
       den.aspects.security.tailscale
       den.aspects.security.tailscale.authkey-sops
+
+      den.aspects.monitoring.node-exporter
     ];
 
     nixos.boot.loader.limine.style.wallpaperStyle = "centered";
