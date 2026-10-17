@@ -7,6 +7,9 @@
       ;
   in {
     description = "Base stylix theming defaults: theme, fonts, and icon pack.";
+    # Fixes E79 spam error on nixvim startup due to broken variable expanding.
+    # Reference commit: fix(nixvim): remove constant E79 error on startup + QOL.
+    stylixHMSettings.targets."kde".enable = false;
 
     hostSettings = {
       theme = mkOption {
