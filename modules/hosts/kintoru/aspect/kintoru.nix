@@ -15,6 +15,7 @@
       den.aspects.core.nix.lix
 
       den.aspects.security.ssh
+      den.aspects.security.tailscale
       den.aspects.security.pi-hole-dhcp
     ];
 
