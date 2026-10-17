@@ -39,6 +39,10 @@
         };
     };
 
+    persistHost.directories = [
+      "/var/lib/tailscale"
+    ];
+
     nixos = {host, ...}: let
       inherit (host.settings.core) hardware;
       inherit (host.settings.security) tailscale;
