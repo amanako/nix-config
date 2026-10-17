@@ -11,7 +11,8 @@
       ;
   in {
     repoRoot = mkOption {
-      type = types.path;
+      type = types.nullOr types.path;
+      default = null;
       example = "/etc/nixos";
       description = ''
         Root folder of repository where flake resides.
