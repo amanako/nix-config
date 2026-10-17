@@ -17,7 +17,7 @@ jobs:
       matrix:
         runner: [ubuntu-26.04, ubuntu-24.04-arm]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: wimpysworld/nothing-but-nix@v10
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
@@ -25,7 +25,7 @@ jobs:
       - name: Join tailnet
         continue-on-error: true
         id: tailnet
-        uses: tailscale/github-action@v3
+        uses: tailscale/github-action@v4
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
@@ -55,11 +55,6 @@ jobs:
           printf '%s\n' "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-          # Filters out paths the upstream caches (cache.nixos.org, ...) can
-          # already serve, prints how many will actually be pushed, and copies
-          # only the genuinely-new ones. Uses --substitute-on-destination so
-          # kintoru fetches shared dependencies from upstream itself instead of
-          # receiving them over the tailnet.
           scripts/push-cache.sh \
             --to "ssh-ng://root@kintoru.tail729600.ts.net" \
             --upstream "https://cache.nixos.org/" \
