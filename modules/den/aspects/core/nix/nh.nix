@@ -4,44 +4,29 @@
       enable = true;
 
       clean = {
-        dates = "weekly";
         enable = true;
-        extraArgs = "--keep 10 --keep-since 5d --ask";
+        dates = "weekly";
+        extraArgs = "--keep 10 --keep-since 5d";
       };
     };
+
+    setup = entity:
+      args
+      // {
+        flake = entity.repoRoot;
+      };
   in {
     description = ''
       NH is a modern helper utility that aims to consolidate and reimplement some of the commands
-      and interfaces from various tools within the Nix/NixOS ecosystem. Our goal is to provide a
-      cohesive, easily-understandable interface with more features, better ergonomics and at many
-      times better speed.
+      and interfaces from various tools within the Nix/NixOS ecosystem.
     '';
 
-    nix = {
-      host,
-      lib,
-      ...
-    }: {
-      programs.nh =
-        args
-        |> lib.mergeAttrs {
-          flake = host.repoRoot;
-        };
+    nixos = {host, ...}: {
+      programs.nh = setup host;
     };
 
-    hm = {
-      user,
-      config,
-      lib,
-      ...
-    }: {
-      programs.nh =
-        args
-        |> lib.mergeAttrs {
-          flake = user.repoRoot;
-        };
-
-      home.sessionVariables.NH_FLAKE = config.programs.nh.flake;
+    hm = {user, ...}: {
+      programs.nh = setup user;
     };
   };
 }
