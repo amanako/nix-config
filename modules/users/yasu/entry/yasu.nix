@@ -1,7 +1,7 @@
 {
   den.hosts.x86_64-linux.kusunoki.users.yasu = {
     isPrimaryUser = true;
-    repoRoot = "/home/yasu/nix-config";
+    repoRoot = "/home/yasu/Dev/Projects/nix-config";
 
     preferences = {
       editor = "nvim";
