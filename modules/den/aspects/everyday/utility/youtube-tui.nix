@@ -13,9 +13,10 @@
         pkgs.youtube-tui
       ];
 
-      xdg.desktopEntries."youtube-tui" = {
+      xdg.desktopEntries."${pkgs.youtube-tui.pname}" = {
         name = "Youtube TUI";
         type = "Application";
+	icon = "video-mp4";
         terminal = true;
         exec = pkgs.youtube-tui |> lib.getExe;
         comment = "Youtube content viewer in terminal";
