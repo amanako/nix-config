@@ -231,8 +231,8 @@
               color: @bg;
               background-color: alpha(@orange, 1);
               border-radius: 8px;
-              padding: 0 6px;
-              margin: 2px 1px;
+              padding: 4px 12px 4px 8px;
+	      margin: 2px 0px;
               transition: all 0.2s ease-in-out;
             }
 

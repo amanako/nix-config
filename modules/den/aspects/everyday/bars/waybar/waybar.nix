@@ -55,8 +55,12 @@
       # Launch a TUI inside the user's terminal emulator.
       inherit (user.preferences.effective) term;
       termCmd = cmd: "${term} -e ${cmd}";
+
+      hasBtop = den.aspects.everyday.utility.btop |> user.hasAspect;
+      hasBluetui = den.aspects.everyday.utility.bluetui |> user.hasAspect;
+      hasWifitui = den.aspects.everyday.utility.wifitui |> user.hasAspect;
     in {
-      services.playerctld.enable = !user.hasAspect noctalia.entry;
+      services.playerctld.enable = !(noctalia.entry |> user.hasAspect);
 
       programs.waybar = {
         enable = true;
@@ -81,9 +85,6 @@
 
               margin-left = 4;
               margin-right = 4;
-
-              on-scroll-up = "";
-              on-scroll-down = "";
 
               modules-left =
                 [
@@ -163,29 +164,37 @@
                 interval = 60;
               };
 
-              "cpu" = {
-                interval = 5;
-                format = " {usage}%";
-                tooltip = true;
-                tooltip-format = "CPU: {usage}%";
-                on-click = termCmd (pkgs.btop |> lib.getExe);
-                states = {
-                  warning = 60;
-                  critical = 90;
+              "cpu" =
+                {
+                  interval = 5;
+                  format = " {usage}%";
+                  tooltip = true;
+                  tooltip-format = "CPU: {usage}%";
+                  states = {
+                    warning = 60;
+                    critical = 90;
+                  };
+                }
+                // lib.optionalAttrs hasBtop {
+                  on-click = termCmd (pkgs.btop |> lib.getExe);
                 };
-              };
 
-              "memory" = {
-                interval = 5;
-                format = " {percentage}%";
-                tooltip = true;
-                tooltip-format = "{used:0.1f}GB/{total:0.1f}GB\n{swapState}:{swapUsed:0.1f}/{swapTotal:0.1f}";
-              };
+              "memory" =
+                {
+                  interval = 5;
+                  format = " {percentage}%";
+                  tooltip = true;
+                  tooltip-format = "{used:0.1f}GB/{total:0.1f}GB\n{swapState}:{swapUsed:0.1f}/{swapTotal:0.1f}";
+                }
+                // lib.optionalAttrs hasBtop {
+                  on-click = termCmd (pkgs.btop |> lib.getExe);
+                };
 
               "backlight" = {
-                format = "{icon}";
+	        interval = 5;
+                format = "{icon} {percent}%";
                 tooltip = true;
-                tooltip-format = "Brightness:  {percent}%";
+                tooltip-format = "Brightness: {percent}%";
                 format-alt = "{percent}% {icon}";
                 format-alt-click = "click-right";
                 format-icons = ["󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
@@ -194,7 +203,7 @@
               };
 
               "battery" = {
-                format = "{icon}";
+                format = "{capacity}% {icon}";
                 format-discharging = "{capacity}% {icon}";
                 format-charging = "{capacity}% {icon}";
                 format-plugged = "";
@@ -214,8 +223,9 @@
               };
 
               "pulseaudio" = {
-                format = "{icon}";
+                format = "{icon} {volume}%";
                 format-muted = "󰖁";
+		interval = 5;
                 format-icons = {
                   default = ["󰕿" "󰖀" "󰕾"];
                   headset = "󰋋";
@@ -231,42 +241,48 @@
                 on-click-right = "${"wpctl" |> lib.getExe' pkgs.wireplumber} set-mute @DEFAULT_AUDIO_SINK@ toggle";
               };
 
-              "bluetooth" = {
-                format = " {num_connections}";
-                format-disabled = "󰂲 {status}";
-                format-connected = "󰂱 {num_connections}";
-                tooltip-format = "Devices connected: {num_connections}";
-                on-click = termCmd (pkgs.bluetui |> lib.getExe);
-              };
+              "bluetooth" =
+                {
+                  format = "󰂳 {num_connections}";
+                  format-disabled = "󰂲 {status}";
+                  format-connected = "󰂱 {num_connections}";
+                  tooltip-format = "Devices connected: {num_connections}";
+                }
+                // lib.optionalAttrs hasBluetui {
+                  on-click = termCmd (pkgs.bluetui |> lib.getExe);
+                };
 
-              "network" = {
-                format-icons = [
-                  "󰤯"
-                  "󰤟"
-                  "󰤢"
-                  "󰤥"
-                  "󰤨"
-                ];
-                format = "{icon}";
-                format-wifi = "{icon}";
-                format-ethernet = "󰈀";
-                format-disconnected = "󰤮";
-                tooltip-format-wifi = "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-                tooltip-format-ethernet = "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-                tooltip-format-disconnected = "Disconnected";
-                interval = 3;
-                spacing = 1;
-                justify = "center";
-                on-click = termCmd (pkgs.wifitui |> lib.getExe);
-              };
+              "network" =
+                {
+                  format-icons = [
+                    "󰤯"
+                    "󰤟"
+                    "󰤢"
+                    "󰤥"
+                    "󰤨"
+                  ];
+                  format = "{icon}";
+                  format-wifi = "{icon}";
+                  format-ethernet = "󰈁";
+                  format-disconnected = "󰤮";
+                  tooltip-format-wifi = "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+                  tooltip-format-ethernet = "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+                  tooltip-format-disconnected = "Disconnected";
+                  interval = 3;
+                  spacing = 1;
+                  justify = "center";
+                }
+                // lib.optionalAttrs hasWifitui {
+                  on-click = termCmd (pkgs.wifitui |> lib.getExe);
+                };
 
               "idle_inhibitor" = {
                 format = "{icon}";
                 tooltip-format-activated = "Stay Awake: ON 󱎴";
-                tooltip-format-deactivated = "Stay Awake: OFF 󰶐";
+                tooltip-format-deactivated = "Stay Awake: OFF 󰍹";
                 format-icons = {
                   activated = "󱎴";
-                  deactivated = "󰷛";
+                  deactivated = "󰍹";
                 };
               };
 
@@ -279,9 +295,9 @@
                 format = "{icon}";
                 tooltip-format = "Power profile: {profile}\nDriver: {driver}";
                 format-icons = {
-                  performance = "";
-                  balanced = " ";
-                  power-saver = "󰁳";
+                  performance = "󱓞";
+                  balanced = "󰗑";
+                  power-saver = "󰌪";
                 };
               };
               # The MPRIS module is gated on NOT having the noctalia desktop-shell aspect.
@@ -300,12 +316,13 @@
                 dynamic-importance-order = ["position" "length" "artist"];
                 tooltip-format = "{player} ({status}):\n{artist} - {title}";
                 status-icons = {
-                  paused = "󰝛";
+                  paused = "󰝛 ";
                 };
               };
-            };
+              };
         };
       };
     };
   };
 }
+
