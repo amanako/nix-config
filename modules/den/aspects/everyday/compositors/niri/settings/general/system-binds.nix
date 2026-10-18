@@ -33,7 +33,8 @@
 
           "XF86AudioMute" = sh "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
           "XF86AudioLowerVolume" = sh "${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          "XF86AudioRaiseVolume" = sh "${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+          # -l 1.0 caps the sink at 100%: otherwise uncapped
+          "XF86AudioRaiseVolume" = sh "${wpctl} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
 
           "Alt+Shift+H" = sh "${systemctl} hibernate";
           "Mod+X" = sh "${systemctl} poweroff";
