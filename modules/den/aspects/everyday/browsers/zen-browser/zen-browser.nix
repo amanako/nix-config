@@ -19,16 +19,16 @@
   };
 
   zen-browser.entry = {user, ...}: let
-    preferedBrowser = user.preferences.browser;
-    isZenPrefered = preferedBrowser != null && lib.hasPrefix "zen" preferedBrowser;
+    preferredBrowser = user.preferences.browser;
+    isZenPreferred = preferredBrowser != null && lib.hasPrefix "zen" preferredBrowser;
 
     # Since binary name remains "zen-twilight" for both twilight and twilight-official
     # variants, strip the "zen-" prefix to get the flake/home-module variant name.
     stripZen =
-      if isZenPrefered
+      if isZenPreferred
       then
         (lib.removePrefix "zen-"
-          preferedBrowser)
+          preferredBrowser)
       else "";
   in {
     description = "Zen Browser — a Firefox-based browser focused on privacy and customization.";
@@ -38,9 +38,9 @@
     ];
 
     niriSettings = let
-      stripOfficial = preferedBrowser |> lib.removePrefix "-official";
+      stripOfficial = preferredBrowser |> lib.removePrefix "-official";
     in
-      lib.optionalAttrs isZenPrefered {
+      lib.optionalAttrs isZenPreferred {
         spawn-at-startup = [
           {
             command = [stripOfficial];
@@ -60,7 +60,7 @@
     hm = let
       # The Zen variant whose package we deploy (mirrors the home module below).
       zenVariant =
-        if isZenPrefered
+        if isZenPreferred
         then stripZen
         else "beta";
     in {
@@ -71,10 +71,21 @@
 
       programs.zen-browser = {
         enable = true;
-        setAsDefaultBrowser = isZenPrefered;
+        setAsDefaultBrowser = isZenPreferred;
+      };
+      
+      xdg.mimeApps = lib.optionalAttrs isZenPreferred {
+        defaultApplications = {
+          "text/plain" = [];
+          "application/json" = [];
+        };
+        associations.added = {
+          "text/plain" = [];
+          "application/json" = [];
+        };
       };
 
-      home.sessionVariables.BROWSER = lib.mkIf isZenPrefered preferedBrowser;
+      home.sessionVariables.BROWSER = lib.mkIf isZenPreferred preferredBrowser;
     };
   };
 }
