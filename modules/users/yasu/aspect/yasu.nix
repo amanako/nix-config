@@ -27,6 +27,9 @@ in {
       den.aspects.everyday.utility.fcitx5
       den.aspects.everyday.utility.mpv
       den.aspects.everyday.utility.youtube-tui
+      den.aspects.everyday.utility.wifitui
+      den.aspects.everyday.utility.bluetui
+      den.aspects.everyday.utility.btop
       den.aspects.everyday.pdf-viewers.pdf-cli
 
       den.aspects.everyday.wallpaper-managers.awww
