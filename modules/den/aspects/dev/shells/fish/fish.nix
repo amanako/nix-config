@@ -25,7 +25,6 @@
           bios = "systemctl reboot --firmware-setup";
           # Literally replace cat with bat to keep bat config active
           cat = "bat";
-          cd = "z";
 
           ls = "${config.programs.eza.package |> lib.getExe} --icons -a --group-directories-first";
           man = "${pkgs.bat-extras.batman |> lib.getExe}";
@@ -39,10 +38,6 @@
           {
             name = "fish-you-should-use";
             inherit (pkgs.fishPlugins.fish-you-should-use) src;
-          }
-          {
-            name = "z";
-            inherit (pkgs.fishPlugins.z) src;
           }
           {
             name = "fzf-fish";

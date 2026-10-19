@@ -71,6 +71,7 @@
       den.aspects.dev.shell-tools.eza
       den.aspects.dev.shell-tools.fzf
       den.aspects.dev.shell-tools.git
+      den.aspects.dev.shell-tools.zoxide
       den.aspects.dev.shell-tools.starship
       den.aspects.dev.shell-tools.direnv-instant
 
