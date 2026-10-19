@@ -11,7 +11,12 @@
       ".local/state/nvim"
     ];
 
-    hm = {user, ...}: {
+    hm = {
+      user,
+      lib,
+      config,
+      ...
+    }: {
       imports = [inputs.nixvim.homeModules.nixvim];
 
       programs.nixvim = {
@@ -27,6 +32,15 @@
 
         globals.mapleader = " ";
       };
+
+      # The nixvim wrapper is the `nvim` users should get. `preferences-installer`
+      # also installs a plain nixpkgs `neovim`, whose `bin/nvim` would otherwise
+      # shadow it.
+      home.packages = lib.mkBefore [
+        (
+          lib.hiPrio config.programs.nixvim.build.package
+        )
+      ];
     };
   };
 }
