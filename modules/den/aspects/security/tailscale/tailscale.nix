@@ -55,11 +55,23 @@
       "/var/lib/tailscale"
     ];
 
-    nixos = {host, ...}: let
+    nixos = {
+      host,
+      pkgs,
+      ...
+    }: let
       inherit (host.settings.core) hardware;
       inherit (host.settings.security) tailscale;
 
       isServer = hardware.deviceType == "server";
+
+      # Tailscale performance best practice for exit nodes/subnet routers:
+      # GRO forwarded UDP packets instead of segmenting them, cutting the
+      # per-packet WireGuard cost (Linux 6.2+, Tailscale 1.54+).
+      groForwarding = pkgs.writeShellScript "tailscale-gro-forwarding" ''
+        NETDEV=$(${pkgs.iproute2}/bin/ip -o route get 8.8.8.8 | ${pkgs.coreutils}/bin/cut -f 5 -d " ")
+        exec ${pkgs.ethtool}/bin/ethtool -K "$NETDEV" rx-udp-gro-forwarding on rx-gro-list off
+      '';
 
       extraSetFlags =
         lib.optionals isServer (
@@ -95,6 +107,20 @@
           then "client"
           else "none";
         inherit extraSetFlags;
+      };
+
+      systemd.services = lib.optionalAttrs isServer {
+        tailscale-gro-forwarding = {
+          description = "Enable UDP GRO forwarding on the default-route interface for Tailscale exit-node throughput.";
+          wantedBy = ["multi-user.target"];
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStart = groForwarding;
+          };
+        };
       };
     };
   };
