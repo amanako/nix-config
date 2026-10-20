@@ -76,14 +76,26 @@
           "--exit-node-allow-lan-access"
         ];
     in {
-      services.tailscale =
-        {
-          enable = true;
-          inherit extraSetFlags;
-        }
-        // lib.optionalAttrs isServer {
-          useRoutingFeatures = "server";
-        };
+      services.tailscale = {
+        enable = true;
+        openFirewall = true;
+        # Maps each host's role to the nixpkgs routing-feature mode:
+        # "server" enables IP forwarding (needed to advertise exit nodes /
+        # subnet routes), while "client" loosens reverse path filtering so
+        # return traffic arriving through the tunnel isn't dropped by the
+        # firewall when this host uses someone else's exit node (see the
+        # NixOS wiki). A server that itself uses an exit node needs both,
+        # which nixpkgs models as "both". Hosts with neither get "none".
+        useRoutingFeatures =
+          if isServer && tailscale.exitNode != null
+          then "both"
+          else if isServer
+          then "server"
+          else if tailscale.exitNode != null
+          then "client"
+          else "none";
+        inherit extraSetFlags;
+      };
     };
   };
 }
