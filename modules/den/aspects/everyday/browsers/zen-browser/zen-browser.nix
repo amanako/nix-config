@@ -73,7 +73,7 @@
         enable = true;
         setAsDefaultBrowser = isZenPreferred;
       };
-      
+
       xdg.mimeApps = lib.optionalAttrs isZenPreferred {
         defaultApplications = {
           "text/plain" = [];

@@ -191,7 +191,7 @@
                 };
 
               "backlight" = {
-	        interval = 5;
+                interval = 5;
                 format = "{icon} {percent}%";
                 tooltip = true;
                 tooltip-format = "Brightness: {percent}%";
@@ -225,7 +225,7 @@
               "pulseaudio" = {
                 format = "{icon} {volume}%";
                 format-muted = "󰖁";
-		interval = 5;
+                interval = 5;
                 format-icons = {
                   default = ["󰕿" "󰖀" "󰕾"];
                   headset = "󰋋";
@@ -319,10 +319,9 @@
                   paused = "󰝛 ";
                 };
               };
-              };
+            };
         };
       };
     };
   };
 }
-
