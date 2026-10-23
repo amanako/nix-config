@@ -1,14 +1,12 @@
-{
-  den,
-  inputs,
-  ...
-}: {
+{den, ...}: {
   den.aspects.kintoru = {
     description = "Raspberry Pi 4 model B, 4GB RAM.";
 
     includes = [
       den.aspects.core.hardware.raspberry-pi.common
       den.aspects.core.hardware.usb-gadget-ether-device
+
+      den.aspects.core.disks.disko-btrfs-rpi
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix
