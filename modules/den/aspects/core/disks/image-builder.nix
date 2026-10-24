@@ -65,6 +65,17 @@
         override = args: prev.systemdMinimal.override args;
         overrideAttrs = f: prev.systemdMinimal.overrideAttrs f;
       };
+  }
+  // lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
+    # The `systemdMinimal` override below changes the closure of `avahi`, so
+    # `tinysparql` is rebuilt from source for the builder instead of coming from
+    # the cache. On aarch64 its `test_endpoint_http` test intermittently
+    # segfaults (SIGSEGV in the `tinysparql endpoint` subprocess), which would
+    # block every image build. It is only build-time tooling here, so skip the
+    # test suite rather than gating image builds on a flaky upstream test.
+    tinysparql = prev.tinysparql.overrideAttrs (_: {
+      doCheck = false;
+    });
   };
 in {
   den.aspects.core.disks.image-builder = {
