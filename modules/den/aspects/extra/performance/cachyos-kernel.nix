@@ -11,6 +11,11 @@
 in {
   flake-file = {
     inputs.nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    nixConfig = {
+      extra-substituters = ["https://cache.lantian.pub/lantian"];
+      extra-trusted-public-keys = ["lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="];
+    };
   };
 
   den.aspects.extra.performance.cachyos-kernel = {
