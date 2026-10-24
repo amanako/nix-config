@@ -9,7 +9,14 @@
     types
     ;
 in {
-  flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
+  flake-file = {
+    inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
+
+    nixConfig = {
+      extra-substituters = ["https://nixos-raspberrypi.cachix.org"];
+      extra-trusted-public-keys = ["nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="];
+    };
+  };
 
   den.aspects.core.hardware.raspberry-pi = {
     description = ''
