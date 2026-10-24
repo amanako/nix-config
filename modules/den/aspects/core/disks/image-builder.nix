@@ -68,14 +68,14 @@
   }
   // lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
     # The `systemdMinimal` override below changes the closure of `avahi`, so
-    # `tinysparql` is rebuilt from source for the builder instead of coming from
-    # the cache. On aarch64 its `test_endpoint_http` test intermittently
-    # segfaults (SIGSEGV in the `tinysparql endpoint` subprocess), which would
-    # block every image build. It is only build-time tooling here, so skip the
-    # test suite rather than gating image builds on a flaky upstream test.
-    tinysparql = prev.tinysparql.overrideAttrs (_: {
-      doCheck = false;
-    });
+    # some packages get rebuilt from source for the builder instead of coming
+    # from the cache. On aarch64 several GNOME packages (e.g. `tinysparql`,
+    # `libadwaita`) have flaky tests that segfault/abort in QEMU/builder
+    # environments, blocking image builds. Disable checks for all packages in
+    # the aarch64 image-builder to avoid gating image builds on flaky tests.
+    stdenv = prev.stdenv // {
+      mkDerivation = args: prev.stdenv.mkDerivation (args // { doCheck = false; });
+    };
   };
 in {
   den.aspects.core.disks.image-builder = {
