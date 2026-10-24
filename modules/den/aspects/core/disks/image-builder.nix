@@ -22,61 +22,73 @@
       fi
       exec "$(dirname "$0")/.udevadm-real" "$@"
     '';
-  in {
-    systemdMinimal =
-      (prev.symlinkJoin {
-        name = "systemd-minimal-settle-noop";
-        paths = [prev.systemdMinimal];
-        postBuild = ''
-          # `lndir` symlinks the individual files of `bin` into the read-only
-          # store, so writing through them raises EACCES; replace `bin` with a
-          # real directory that re-links to the pristine systemdMinimal (whose
-          # store path is known at eval time; `$out` is written in place).
-          realBin="${prev.systemdMinimal}/bin"
-          bin="$out/.bin-rebuild"
-          mkdir -p "$bin"
-          for f in "$realBin"/* "$realBin"/.*; do
-            [ -e "$f" ] || continue
-            base=$(basename "$f")
-            case "$base" in
-              . | ..) ;;
-              udevadm)
-                cp ${settleNoopUdevadm} "$bin/udevadm"
-                ln -s "$f" "$bin/.udevadm-real"
-                ;;
-              *) ln -s "$f" "$bin/$base" ;;
-            esac
-          done
-          rm -rf "$out/bin"
-          mv "$bin" "$out/bin"
-        '';
-      })
-      // {
-        # `symlinkJoin` only produces an `out`; consumers that `buildInputs` us
-        # (e.g. dbus, via `lib.getDev`) would otherwise resolve `dev` back to the
-        # joined `out` and fail to find `libsystemd.pc`. Re-expose the pristine
-        # split outputs so they stay cache hits.
-        dev = prev.systemdMinimal.dev;
-        man = prev.systemdMinimal.man;
-        debug = prev.systemdMinimal.debug;
+  in
+    {
+      systemdMinimal =
+        (prev.symlinkJoin {
+          name = "systemd-minimal-settle-noop";
+          paths = [prev.systemdMinimal];
+          postBuild = ''
+            # `lndir` symlinks the individual files of `bin` into the read-only
+            # store, so writing through them raises EACCES; replace `bin` with a
+            # real directory that re-links to the pristine systemdMinimal (whose
+            # store path is known at eval time; `$out` is written in place).
+            realBin="${prev.systemdMinimal}/bin"
+            bin="$out/.bin-rebuild"
+            mkdir -p "$bin"
+            for f in "$realBin"/* "$realBin"/.*; do
+              [ -e "$f" ] || continue
+              base=$(basename "$f")
+              case "$base" in
+                . | ..) ;;
+                udevadm)
+                  cp ${settleNoopUdevadm} "$bin/udevadm"
+                  ln -s "$f" "$bin/.udevadm-real"
+                  ;;
+                *) ln -s "$f" "$bin/$base" ;;
+              esac
+            done
+            rm -rf "$out/bin"
+            mv "$bin" "$out/bin"
+          '';
+        })
+        // {
+          # `symlinkJoin` only produces an `out`; consumers that `buildInputs` us
+          # (e.g. dbus, via `lib.getDev`) would otherwise resolve `dev` back to the
+          # joined `out` and fail to find `libsystemd.pc`. Re-expose the pristine
+          # split outputs so they stay cache hits.
+          dev = prev.systemdMinimal.dev;
+          man = prev.systemdMinimal.man;
+          debug = prev.systemdMinimal.debug;
 
-        # all-packages derives `systemdLibs = systemdMinimal.override {...}`;
-        # forward to the pristine package so that stays a cache hit.
-        override = args: prev.systemdMinimal.override args;
-        overrideAttrs = f: prev.systemdMinimal.overrideAttrs f;
-      };
-  }
-  // lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
-    # The `systemdMinimal` override below changes the closure of `avahi`, so
-    # some packages get rebuilt from source for the builder instead of coming
-    # from the cache. On aarch64 several GNOME packages (e.g. `tinysparql`,
-    # `libadwaita`) have flaky tests that segfault/abort in QEMU/builder
-    # environments, blocking image builds. Disable checks for all packages in
-    # the aarch64 image-builder to avoid gating image builds on flaky tests.
-    stdenv = prev.stdenv // {
-      mkDerivation = args: prev.stdenv.mkDerivation (args // { doCheck = false; });
+          # all-packages derives `systemdLibs = systemdMinimal.override {...}`;
+          # forward to the pristine package so that stays a cache hit.
+          override = args: prev.systemdMinimal.override args;
+          overrideAttrs = f: prev.systemdMinimal.overrideAttrs f;
+        };
+    }
+    // lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
+      # The `systemdMinimal` override below changes the closure of `avahi`, so
+      # some packages get rebuilt from source for the builder instead of coming
+      # from the cache. On aarch64 several GNOME packages (e.g. `tinysparql`,
+      # `libadwaita`) have flaky tests that segfault/abort in QEMU/builder
+      # environments, blocking image builds. Disable checks for all packages in
+      # the aarch64 image-builder to avoid gating image builds on flaky tests.
+      # callPackage accepts package paths as well as functions, so resolve paths
+      # before inspecting arguments and only add flags accepted by the package.
+      callPackage = f: args: let
+        fn =
+          if builtins.isFunction f
+          then f
+          else import f;
+        fnArgs = builtins.functionArgs fn;
+        checkArgs = lib.filterAttrs (name: _: builtins.hasAttr name fnArgs) {
+          doCheck = false;
+          doInstallCheck = false;
+        };
+      in
+        prev.callPackage f (args // checkArgs);
     };
-  };
 in {
   den.aspects.core.disks.image-builder = {
     description = ''
