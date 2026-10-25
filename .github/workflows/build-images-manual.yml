@@ -1,0 +1,74 @@
+name: build-images-manual
+on:
+  workflow_dispatch:
+    inputs:
+      hosts:
+        description: 'Comma-separated list of aarch64 hosts to build images for (leave empty to build all aarch64 hosts)'
+        required: false
+        default: ''
+
+jobs:
+  build-images:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+      - uses: wimpysworld/nothing-but-nix@v10
+
+      - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
+
+      - name: Join tailnet
+        continue-on-error: true
+        id: tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Build aarch64 images
+        env:
+          HOSTS_INPUT: ${{ inputs.hosts }}
+        run: |
+          HOSTS="$HOSTS_INPUT"
+          if [ -z "$HOSTS" ]; then
+            HOSTS=$(
+              nix --accept-flake-config eval --raw '.#den.hosts.aarch64-linux' \
+                --apply 'hosts: builtins.concatStringsSep " " (builtins.attrNames hosts)'
+            )
+          else
+            HOSTS=$(echo "$HOSTS" | tr ',' ' ')
+          fi
+          for host in $HOSTS; do
+            echo "Building image for $host"
+            nix build ".#images.$host" \
+              --accept-flake-config \
+              --print-out-paths \
+              --no-link \
+              >> /tmp/image-paths.txt
+          done
+
+      - name: Push to Cachix
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          if [ -s /tmp/image-paths.txt ]; then
+            nix run nixpkgs#cachix -- push amanako \
+              $(cat /tmp/image-paths.txt)
+          fi
+
+      - name: Push to self-hosted cache
+        if: steps.tailnet.outcome == 'success'
+        env:
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+        run: |
+          if [ -s /tmp/image-paths.txt ]; then
+            mkdir -p ~/.ssh
+            printf '%s\n' "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
+            chmod 600 ~/.ssh/known_hosts
+
+            scripts/push-cache.sh \
+              --to "ssh-ng://root@kintoru.tail729600.ts.net" \
+              --upstream "https://cache.nixos.org/" \
+              --substitute \
+              < /tmp/image-paths.txt
+          fi
