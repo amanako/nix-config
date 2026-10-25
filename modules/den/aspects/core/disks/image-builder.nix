@@ -4,91 +4,34 @@
   # that ping times out and `set -e` aborts the build before anything is
   # formatted. The daemonized systemd-udevd still processes the triggered
   # uevents (and the kernel-provided partition nodes appear via devtmpfs
-  # regardless), so a short best-effort settle suffices. `systemdMinimal` is
-  # replaced with a symlinkJoin whose `udevadm` makes `settle` non-fatal.
-  # `.override`/`.overrideAttrs` forward to the pristine package so downstream
-  # variants (e.g. all-packages' `systemdLibs`) stay cache hits.
+  # regardless), so a short best-effort settle suffices.
+  #
+  # Overriding `systemdMinimal` itself changes the hash of every package in the
+  # builder closure that depends on it, forcing a from-source rebuild of ~90
+  # packages and defeating the binary cache. Instead, prepend a tiny `udevadm`
+  # shim to the builder VM's PATH: it only intercepts `settle` and delegates
+  # everything else to the pristine `udevadm`.
   overlay = final: prev: let
-    # The udevadm replacement must be its own standalone script (not embedded
-    # via a shell heredoc in `postBuild`): `symlinkJoin`'s `lndir` symlinks `bin`
-    # into the read-only store, so writing through it raises EACCES.
-    settleNoopUdevadm = prev.writeShellScript "udevadm-settle-noop" ''
-      # systemd >= 261 requires a running service manager for `settle`; the
-      # disko image VM has none, so make the wait best-effort.
+    settleNoopUdevadm = prev.writeShellScriptBin "udevadm" ''
       if [ "$1" = "settle" ]; then
         shift
-        "$(dirname "$0")/.udevadm-real" settle --timeout=5 2>/dev/null
+        ${prev.systemdMinimal}/bin/udevadm settle --timeout=5 2>/dev/null || true
         exit 0
       fi
-      exec "$(dirname "$0")/.udevadm-real" "$@"
+      exec ${prev.systemdMinimal}/bin/udevadm "$@"
     '';
-  in
-    {
-      systemdMinimal =
-        (prev.symlinkJoin {
-          name = "systemd-minimal-settle-noop";
-          paths = [prev.systemdMinimal];
-          postBuild = ''
-            # `lndir` symlinks the individual files of `bin` into the read-only
-            # store, so writing through them raises EACCES; replace `bin` with a
-            # real directory that re-links to the pristine systemdMinimal (whose
-            # store path is known at eval time; `$out` is written in place).
-            realBin="${prev.systemdMinimal}/bin"
-            bin="$out/.bin-rebuild"
-            mkdir -p "$bin"
-            for f in "$realBin"/* "$realBin"/.*; do
-              [ -e "$f" ] || continue
-              base=$(basename "$f")
-              case "$base" in
-                . | ..) ;;
-                udevadm)
-                  cp ${settleNoopUdevadm} "$bin/udevadm"
-                  ln -s "$f" "$bin/.udevadm-real"
-                  ;;
-                *) ln -s "$f" "$bin/$base" ;;
-              esac
-            done
-            rm -rf "$out/bin"
-            mv "$bin" "$out/bin"
-          '';
-        })
-        // {
-          # `symlinkJoin` only produces an `out`; consumers that `buildInputs` us
-          # (e.g. dbus, via `lib.getDev`) would otherwise resolve `dev` back to the
-          # joined `out` and fail to find `libsystemd.pc`. Re-expose the pristine
-          # split outputs so they stay cache hits.
-          dev = prev.systemdMinimal.dev;
-          man = prev.systemdMinimal.man;
-          debug = prev.systemdMinimal.debug;
-
-          # all-packages derives `systemdLibs = systemdMinimal.override {...}`;
-          # forward to the pristine package so that stays a cache hit.
-          override = args: prev.systemdMinimal.override args;
-          overrideAttrs = f: prev.systemdMinimal.overrideAttrs f;
-        };
-    }
-    // lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
-      # The `systemdMinimal` override below changes the closure of `avahi`, so
-      # some packages get rebuilt from source for the builder instead of coming
-      # from the cache. On aarch64 several GNOME packages (e.g. `tinysparql`,
-      # `libadwaita`) have flaky tests that segfault/abort in QEMU/builder
-      # environments, blocking image builds. Disable checks for all packages in
-      # the aarch64 image-builder to avoid gating image builds on flaky tests.
-      # callPackage accepts package paths as well as functions, so resolve paths
-      # before inspecting arguments and only add flags accepted by the package.
-      callPackage = f: args: let
-        fn =
-          if builtins.isFunction f
-          then f
-          else import f;
-        fnArgs = builtins.functionArgs fn;
-        checkArgs = lib.filterAttrs (name: _: builtins.hasAttr name fnArgs) {
-          doCheck = false;
-          doInstallCheck = false;
-        };
-      in
-        prev.callPackage f (args // checkArgs);
-    };
+  in {
+    vmTools = lib.makeOverridable (args: let
+      baseVmTools = prev.vmTools.override args;
+    in
+      baseVmTools
+      // {
+        runInLinuxVM = drv:
+          baseVmTools.runInLinuxVM (drv.overrideAttrs (old: {
+            buildInputs = [settleNoopUdevadm] ++ (old.buildInputs or []);
+          }));
+      }) {};
+  };
 in {
   den.aspects.core.disks.image-builder = {
     description = ''
@@ -96,10 +39,11 @@ in {
 
       The fixes are scoped to the builder itself: `vmTools` is pointed at the
       flattened kernel image (its bootable-image name derives from
-      `kernel.target`, which disko's `aggregateModules` bundle lacks) and the
-      builder's package set (`disko.imageBuilder.pkgs`) gets a `systemdMinimal`
-      whose `udevadm settle` is non-fatal in the manager-less image VM. The
-      host's own systemd/udev are untouched.
+      `kernel.target`, which disko's `aggregateModules` bundle lacks) and a
+      small `udevadm` shim is prepended to the builder VM's PATH so that
+      `udevadm settle` is non-fatal in the manager-less image VM. The host's
+      own systemd/udev are untouched, and the builder closure stays a binary
+      cache hit.
     '';
 
     nixos = {pkgs, ...}: let
