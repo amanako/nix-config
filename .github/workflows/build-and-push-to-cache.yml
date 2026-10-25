@@ -22,15 +22,6 @@ jobs:
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
 
-      - name: Join tailnet
-        continue-on-error: true
-        id: tailnet
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-
       - name: Build hosts
         run: |
           nix build ".#hosts" \
@@ -45,19 +36,3 @@ jobs:
         run: |
           nix run nixpkgs#cachix -- push amanako \
             $(cat /tmp/out-paths.txt)
-
-      - name: Push to self-hosted cache
-        # limit to host's architecture intentionally for now
-        if: steps.tailnet.outcome == 'success' && matrix.runner == 'ubuntu-24.04-arm'
-        env:
-          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
-          scripts/push-cache.sh \
-            --to "ssh-ng://root@kintoru.tail729600.ts.net" \
-            --upstream "https://cache.nixos.org/" \
-            --substitute \
-            < /tmp/out-paths.txt
