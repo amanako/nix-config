@@ -9,6 +9,7 @@
       (den.batteries.unfree [
         "steam"
         "steam-unwrapped"
+        "steam-jupiter-unwrapped"
       ])
     ];
 
