@@ -4,12 +4,12 @@
       basic.time.timeZone = "Europe/Belgrade";
 
       extra.stylix.base-settings = {
-        theme = "gruvbox-material-dark-soft";
+        theme = "dracula";
         polarity = "dark";
       };
 
       extra.performance.cachyos-kernel = {
-        variant = "lts";
+        variant = "bore";
         lto = true;
         uarch = "zen4";
       };
