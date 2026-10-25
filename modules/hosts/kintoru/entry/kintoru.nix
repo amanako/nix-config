@@ -22,16 +22,16 @@
         "kusunoki:9100"
       ];
 
-      security.pi-hole.listeningMode = "ALL";
+      # security.pi-hole.listeningMode = "ALL";
 
-      security.pi-hole-serve.domain = "kintoru.tail729600.ts.net";
+      # security.pi-hole-serve.domain = "kintoru.tail729600.ts.net";
 
-      security.pi-hole-dhcp = {
-        address = "192.168.100.81";
-        router = "192.168.100.1";
-        dhcpStart = "192.168.100.100";
-        dhcpEnd = "192.168.100.200";
-      };
+      # security.pi-hole-dhcp = {
+      #   address = "192.168.100.81";
+      #   router = "192.168.100.1";
+      #   dhcpStart = "192.168.100.100";
+      #   dhcpEnd = "192.168.100.200";
+      # };
 
       security.tailscale.advertiseRoutes = ["192.168.100.0/24"];
 
