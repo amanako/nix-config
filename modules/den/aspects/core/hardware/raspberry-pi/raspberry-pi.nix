@@ -10,7 +10,15 @@
     ;
 in {
   flake-file = {
-    inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
+    inputs.nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi";
+
+      # Keep upstream's own nixpkgs pin (nixos-26.05). Its binary cache is
+      # built against that exact rev; following our unstable `nixpkgs`
+      # changes the kernel config/build inputs, so every lookup misses and
+      # the aarch64 kernel is compiled locally. `nix-auto-follow` is told to
+      # ignore this input (see entry-point/flake-file.nix) so the pin sticks.
+    };
 
     nixConfig = {
       extra-substituters = ["https://nixos-raspberrypi.cachix.org"];
@@ -56,6 +64,9 @@ in {
     };
 
     nixos = {
+      config,
+      ...
+    }: {
       # The upstream `nixos-raspberrypi` board modules (e.g.
       # `nixosModules.raspberry-pi-4.base`) declare `nixos-raspberrypi` as a
       # module argument. The upstream README mandates passing it via
@@ -75,6 +86,26 @@ in {
         # Trust the upstream RPi binary cache so we don't rebuild the kernel.
         inputs.nixos-raspberrypi.nixosModules.trusted-nix-caches
       ];
+
+      nixpkgs.overlays = [
+        (final: prev: {
+          # The Pi kernel (and its external ZFS module) are built by
+          # nixos-raspberrypi's own nixpkgs pin (26.05), whose kernel modules
+          # predate the `modules.cer` file that the 26.11 kmod aggregator
+          # unconditionally copies when assembling module trees (the NixOS
+          # `system.modulesTree` and disko's image-builder VM). Assemble those
+          # trees with the matching 26.05 aggregator instead.
+          aggregateModules =
+            inputs.nixos-raspberrypi.legacyPackages.${final.stdenv.hostPlatform.system}.aggregateModules;
+        })
+      ];
+
+      # The `nixos-raspberrypi` package set stays on upstream's pinned
+      # `nixpkgs` (26.05) to match its binary cache, but that kernel predates
+      # the `kernel.target` attribute that our 26.11 module system reads for
+      # this option's default. Use the 26.05-era filename (`Image` on the
+      # aarch64 boards) instead of forcing a kernel rebuild.
+      system.boot.loader.kernelFile = lib.mkForce (config.boot.kernelPackages.kernel.target or "Image");
     };
   };
 }

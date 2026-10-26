@@ -20,7 +20,7 @@
         name = "nix-auto-follow";
         runtimeInputs = [inputs.nix-auto-follow.packages.${pkgs.stdenv.hostPlatform.system}.default];
         text = ''
-          auto-follow --ignore nix-cachyos-kernel "$1" > "$2"
+          auto-follow --ignore nix-cachyos-kernel --ignore nixos-raspberrypi "$1" > "$2"
         '';
       };
 
