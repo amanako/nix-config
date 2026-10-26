@@ -15,6 +15,9 @@ jobs:
       - uses: wimpysworld/nothing-but-nix@v10
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
+        with:
+          extra_nix_config: |
+            system-features = nixos-test benchmark big-parallel kvm
 
       - name: Build aarch64 images
         env:
