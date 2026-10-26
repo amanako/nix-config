@@ -297,7 +297,10 @@ These are enforced by code review and matter for consistency:
 
 **New flake input:** add `flake-file.inputs.<name>.url` (+ `nixConfig`
 substituters/keys if needed) in the module that uses it, then `just fw`. Declare
-it in exactly one module — see "`flake.nix` is generated" above.
+it in exactly one module — see "`flake.nix` is generated" above. To keep an
+input on its own `nixpkgs` (e.g. a vendor cache), add it to the `--ignore` list
+of the `nix-auto-follow` wrapper in `modules/den/entry-point/flake-file.nix`;
+otherwise the tool floats it back to our `nixpkgs` and cache hits disappear.
 
 **New aspect:** create `modules/den/aspects/<group>/<name>.nix` (or a subfolder
 with `default.nix`) setting `den.aspects.<group>.<name> = { includes, nixos?, hm?,
@@ -355,6 +358,28 @@ Subaspects are reachable by appending `.`, e.g.
   `weekly-flake-update/YYYY-MM-DD` branch and does **not** open a PR; integrate
   it into `dev` manually (e.g. by fast-forwarding `dev` to it). Don't
   hand-edit `flake.lock` except via `just fupdate`.
+- **Vendor-pinned kernels may predate our module tooling.** Keeping a vendor
+  input on its own `nixpkgs` (e.g. `nixos-raspberrypi` → nixos-26.05) preserves
+  its cache hits, but its kernel/module outputs can be older than our nixpkgs.
+  Nixpkgs ≥26.11's `aggregateModules` unconditionally copies `modules.cer`,
+  which a 26.05 kernel does not produce, so `system.modulesTree` fails with
+  `cp: cannot stat .../modules.cer`. Override `aggregateModules` in the vendor
+  aspect with the vendor's matching package set
+  (`inputs.<vendor>.legacyPackages.${final.stdenv.hostPlatform.system}.aggregateModules`)
+  instead of patching or rebuilding the kernel. A pinned kernel may also lack
+  newer attrs such as `kernel.target`; derive `system.boot.loader.kernelFile`
+  with a fallback. See
+  `modules/den/aspects/core/hardware/raspberry-pi/raspberry-pi.nix`.
+- **The disko image-builder VM is not the target system.** It runs
+  `vmTools.runInLinuxVM`, so it needs a bootable build-platform kernel and its
+  full module set; a target/vendor kernel can leave the VM without modules its
+  initrd expects (the RPi kernel's `CONFIG_PCI_HOST_GENERIC=m` is not loaded by
+  the builder VM's initrd, so the VM may see no virtio PCI devices). Keep
+  `disko.imageBuilder.kernelPackages = pkgs.buildPackages.linuxPackages`
+  (generic and cached) and let only the image contents use the vendor kernel.
+  `runInLinuxVM` also declares `requiredSystemFeatures = [ "kvm" ]`: on a
+  runner without `/dev/kvm`, either advertise `kvm` in `system-features` (qemu
+  then falls back to TCG, slowly) or build on a KVM-capable host.
 - **`repoRoot` is optional and nullable.** Both `host.repoRoot` and
   `user.repoRoot` default to `null`; a user's value inherits the host's and is
   read-only unless the user is primary. Aspects that interpolate repo paths

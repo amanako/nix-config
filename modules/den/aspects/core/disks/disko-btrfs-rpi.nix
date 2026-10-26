@@ -76,7 +76,10 @@ in {
         enableBinfmt = true;
         # Run the builder VM with native (build-platform) packages and only
         # emulate the target arch inside it. This makes cross-building the
-        # image on an x86_64 machine work out of the box.
+        # image on an x86_64 machine work out of the box. The generic build
+        # kernel is a binary-cache hit; the RPi kernel cannot be reused here
+        # because its modules (notably `pci_host_generic`) are not all
+        # available in the VM's initrd.
         kernelPackages = pkgs.buildPackages.linuxPackages;
       };
 
