@@ -25,7 +25,7 @@ in {
             options.manufacturer = mkOption {
               type = types.enum [
                 "nvidia"
-                "amdgpu"
+                "amd"
                 "intel"
               ];
               example = "nvidia";

@@ -167,11 +167,25 @@ in {
       cfg = host.settings.core.hardware;
       isLaptop = cfg.deviceType == "laptop";
       inherit (cfg.nvidia) primeMode package open;
+      gpuNames = {
+        nvidia = {
+          busIdKey = "nvidiaBusId";
+          videoDriver = "nvidia";
+        };
+        amd = {
+          busIdKey = "amdgpuBusId";
+          videoDriver = "amdgpu";
+        };
+        intel = {
+          busIdKey = "intelBusId";
+          videoDriver = "modesetting";
+        };
+      };
 
       busIds =
         cfg.gpus
         |> map (gpu: {
-          name = "${gpu.manufacturer}BusId";
+          name = gpuNames.${gpu.manufacturer}.busIdKey;
           value = gpu.busId;
         })
         |> builtins.listToAttrs;
@@ -198,14 +212,9 @@ in {
         powerManagement.finegrained = true;
       };
     in {
-      services.xserver.videoDrivers = let
-        hasGPUs = cfg.gpus != [];
-      in
-        lib.mkIf hasGPUs
-        (
-          cfg.gpus
-          |> map (g: g.manufacturer)
-        );
+      services.xserver.videoDrivers =
+        lib.mkIf (cfg.gpus != [])
+        (cfg.gpus |> map (g: gpuNames.${g.manufacturer}.videoDriver) |> lib.unique);
 
       hardware.nvidia =
         {

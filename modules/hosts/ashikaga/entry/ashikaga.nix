@@ -38,7 +38,7 @@
               busId = "PCI:0@1:0:0";
             }
             {
-              manufacturer = "amdgpu";
+              manufacturer = "amd";
               busId = "PCI:0@5:0:0";
             }
           ];

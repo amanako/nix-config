@@ -10,7 +10,7 @@
       hasAmdgpu =
         cfg.gpus
         |> map (gpu: gpu.manufacturer)
-        |> lib.elem "amdgpu";
+        |> lib.elem "amd";
     in
       lib.optionalAttrs hasAmdgpu {
         environment.systemPackages = [
