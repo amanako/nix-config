@@ -5,16 +5,16 @@
     hostSettings = {
       size = lib.mkOption {
         type = lib.types.str;
-        default = "256M";
-        example = "512M";
+        default = "512M";
+        example = "1G";
         description = "Size of the boot partition.";
       };
     };
 
     diskoConfig = {host, ...}: {
-      partitions.BOOT = {
+      partitions.boot = {
         priority = 1;
-        name = "BOOT";
+        name = "boot";
         start = "1M";
         end = host.settings.core.disks.rpi-boot.size;
         type = "EF00";
