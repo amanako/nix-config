@@ -83,6 +83,7 @@ in {
         # because its modules (notably `pci_host_generic`) are not all
         # available in the VM's initrd.
         kernelPackages = pkgs.buildPackages.linuxPackages;
+        extraRootModules = ["btrfs"];
       };
 
       disko.devices.disk.main = {
