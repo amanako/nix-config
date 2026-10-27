@@ -17,7 +17,7 @@
         name = "BOOT";
         start = "1M";
         end = host.settings.core.disks.rpi-boot.size;
-        type = "0C01";
+        type = "EF00";
         content = {
           type = "filesystem";
           format = "vfat";
