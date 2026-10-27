@@ -15,9 +15,11 @@
       };
 
       core = {
-        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
-
-        disks.esp.size = "2G";
+        disks = {
+          disko-collector.devicePath = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504";
+          esp.size = "2G";
+          swap.size = "24G";
+        };
 
         impermanence = {
           btrfs.disk-partition = "/dev/disk/by-id/nvme-SAMSUNG_MZVLQ512HBLU-00B00_S6F5NS0T325504-part2";

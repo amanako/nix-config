@@ -7,6 +7,7 @@
       den.aspects.core.hardware.usb-gadget-ether-device
 
       den.aspects.core.disks.disko-btrfs-rpi
+      den.aspects.core.disks.swap
 
       den.aspects.core.nix.common
       den.aspects.core.nix.lix

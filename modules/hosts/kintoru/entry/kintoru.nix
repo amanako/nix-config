@@ -6,7 +6,11 @@
       basic.time.timeZone = "Europe/Belgrade";
 
       core = {
-        disks.disko-collector.devicePath = "/dev/disk/by-path/pci-0000:05:00.3-usb-0:1:1.0-scsi-0:0:0:0";
+        disks = {
+          disko-collector.devicePath = "/dev/disk/by-path/pci-0000:05:00.3-usb-0:1:1.0-scsi-0:0:0:0";
+          rpi-boot.size = "2G";
+          swap.size = "4G";
+        };
         hardware.deviceType = "server";
         hardware.raspberry-pi = {
           board = "raspberry-pi-4";

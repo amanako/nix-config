@@ -47,7 +47,7 @@ in {
           The main partition fills the whole image, so this must fit the host's
           store closure (see `nix path-info -Sh
           .#nixosConfigurations.<host>.config.system.build.toplevel`) plus the
-          swapfile baked in by `swap-subvol` (`swapSize`) plus the ESP.
+          swapfile baked in by `swap` (`size`) plus the ESP.
           The file is sparse until populated, so an over-generous size only
           costs real space while building. Downsize per host to keep images
           lean, e.g.:

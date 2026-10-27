@@ -6,7 +6,7 @@
       den.aspects.core.disks.disko
       den.aspects.core.disks.esp
       den.aspects.core.disks.root-btrfs
-      den.aspects.core.disks.swap-subvol
+      den.aspects.core.disks.swap
       den.aspects.core.hardware.usb-gadget-ether-host
       den.aspects.extra.performance.cachyos-kernel
 

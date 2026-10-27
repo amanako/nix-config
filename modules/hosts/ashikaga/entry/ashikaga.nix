@@ -18,7 +18,10 @@
       };
 
       core = {
-        disks.disko-collector.devicePath = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A";
+        disks = {
+          disko-collector.devicePath = "/dev/disk/by-id/nvme-INTEL_SSDPEKNW512G8H_PHNH207409VP512A";
+          swap.size = "16G";
+        };
 
         display-managers.ly.batteryID = "BAT0";
 

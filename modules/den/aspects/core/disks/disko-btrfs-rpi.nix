@@ -49,8 +49,8 @@ in {
         description = ''
           Size of the generated raw disk image, as passed to `qemu-img create`.
           The btrfs root partition fills the whole image, so this must fit the
-          RPi's store closure plus the swapfile baked in by `swap-subvol`
-          (`swapSize`) plus the FAT boot partition. The file is sparse until
+          RPi's store closure plus the swapfile baked in by `swap`
+          (`size`) plus the FAT boot partition. The file is sparse until
           populated, so build with some headroom.
         '';
       };
