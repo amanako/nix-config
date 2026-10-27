@@ -66,6 +66,15 @@ in {
         };
       };
 
+      systemd.services.grafana = {
+        after = [
+          "time-sync.target"
+        ];
+        wants = [
+          "time-sync.target"
+        ];
+      };
+
       services.grafana = {
         enable = true;
 

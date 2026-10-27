@@ -19,6 +19,7 @@
     nixos = {
       host,
       lib,
+      config,
       ...
     }: let
       inherit
@@ -27,6 +28,22 @@
         enableVc4
         ;
     in {
+      # Fix clock issues on first boot.
+      # Order other services suffering from clock misalignment after `time-sync.target`.
+      systemd.services.wait-for-clock-sync = {
+        description = "Wait until the system clock is synchronized";
+        wantedBy = ["time-sync.target"];
+        before = ["time-sync.target"];
+        after = ["systemd-timesyncd.service"];
+        wants = ["systemd-timesyncd.service"];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${config.systemd.package}/lib/systemd/systemd-time-wait-sync";
+          TimeoutStartSec = "30s"; # don't hang boot forever if there's no network
+        };
+      };
+
       boot = {
         # kernelPackages comes from the upstream `raspberry-pi-*.base` module
         # default (nixos-raspberrypi's own linuxPackages_rpi4), which is
@@ -39,11 +56,6 @@
           "usbhid"
           "usb_storage"
         ];
-
-        loader = {
-          grub.enable = false;
-          generic-extlinux-compatible.enable = true;
-        };
       };
 
       imports =

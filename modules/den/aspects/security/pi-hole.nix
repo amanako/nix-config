@@ -35,6 +35,15 @@ in {
     nixos = {host, ...}: let
       cfg = host.settings.security.pi-hole;
     in {
+      systemd.services.pihole-ftl-setup = {
+        after = [
+          "time-sync.target"
+        ];
+        wants = [
+          "time-sync.target"
+        ];
+      };
+
       services = {
         pihole-ftl = {
           enable = true;
