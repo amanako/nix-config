@@ -15,6 +15,8 @@
 
     settings = {
       niri.binds.keyboard-backlight.device = "backlight:amdgpu_bl1";
+      niri.mirror.targetOutput = "HDMI-A-1";
+
       dev.shells.defaultShell = "fish";
       dev.terminal.kitty.fontOptions.fontFeatures = "VictorMonoNF-Regular +ss08";
       everyday.bars.waybar.location = "Nis";

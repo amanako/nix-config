@@ -17,6 +17,7 @@
 
     settings = {
       niri.binds.keyboard-backlight.device = "asus::kbd_backlight";
+      niri.mirror.targetOutput = "HDMI-A-1";
 
       everyday = {
         utility.anki.profileName = "yoha";
