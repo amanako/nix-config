@@ -48,6 +48,8 @@ in {
             start = cfg.dhcpStart;
             end = cfg.dhcpEnd;
             router = cfg.router;
+            rapidCommit = true;
+            multiDNS = true;
           };
 
           dns.reply.host = {
