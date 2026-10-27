@@ -28,7 +28,6 @@ in {
     includes = [
       den.aspects.core.disks.disko-collector
       den.aspects.core.disks.image-builder
-      den.aspects.core.disks.esp
     ];
 
     hostSettings = {

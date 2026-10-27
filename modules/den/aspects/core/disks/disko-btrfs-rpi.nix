@@ -28,9 +28,11 @@ in {
     '';
 
     includes = [
+      den.aspects.core.disks.disko
       den.aspects.core.disks.disko-collector
       den.aspects.core.disks.image-builder
       den.aspects.core.disks.rpi-boot
+      den.aspects.core.disks.root-btrfs
     ];
 
     hostSettings = {
@@ -70,7 +72,7 @@ in {
         inputs.disko.nixosModules.disko
       ];
 
-      disko.memSize = lib.mkDefault 2048;
+      disko.memSize = lib.mkDefault 4096;
 
       disko.imageBuilder = {
         enableBinfmt = true;

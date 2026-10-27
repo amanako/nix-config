@@ -11,10 +11,11 @@
       `disko-btrfs-rpi` for btrfs/impermanence.
     '';
 
-    nixos = {host, ...}: let
-      cond = !(host.hasAspect den.aspects.core.disks.disko);
-    in {
-      imports = lib.optional cond inputs.nixos-raspberrypi.nixosModules.sd-image;
-    };
+    nixos = {host, ...}:
+      lib.optionalAttrs (!host.hasAspect den.aspects.core.disks.disko) {
+        imports = [
+          inputs.nixos-raspberrypi.nixosModules.sd-image
+        ];
+      };
   };
 }
