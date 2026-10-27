@@ -13,11 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: 'rampage'
+          witness-carnage: true
 
       - uses: samueldr/lix-gha-installer-action@a0fee77b2a98bb7c5c0ed7ae6d6ad4903dbdad0d
         with:
           extra_nix_config: |
             system-features = nixos-test benchmark big-parallel kvm
+            build-dir = /nix/build
 
       - name: Build aarch64 images
         env:
