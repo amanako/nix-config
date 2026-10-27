@@ -43,7 +43,10 @@
             }
           ];
 
-          nvidia.primeMode = "offload";
+          nvidia = {
+            primeMode = "offload";
+            package = "latest";
+          };
         };
 
         impermanence = {

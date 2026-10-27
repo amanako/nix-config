@@ -1,5 +1,6 @@
 {
   den,
+  inputs,
   lib,
   ...
 }: let
@@ -41,9 +42,53 @@ in {
       ])
     ];
 
-    hostSettings = {host, ...}: let
-      isHybrid = builtins.length host.settings.core.hardware.gpus >= 2;
-    in {
+    hostSettings = {host, ...}: {
+      package = let
+        inherit (inputs.self.nixosConfigurations.${host.hostName}.config.boot.kernelPackages) nvidiaPackages;
+        channels = [
+          {
+            name = "stable";
+            desc = "the safe default. A well-tested driver that works for most people.";
+          }
+          {
+            name = "production";
+            desc = "nvidia's long-term, thoroughly vetted driver. Choose this if reliability matters more than new features.";
+          }
+          {
+            name = "latest";
+            desc = "the newest regular release. Gets fixes and support for new GPUs sooner, with slightly less testing.";
+          }
+          {
+            name = "beta";
+            desc = "an early preview of the next release. May have bugs or crashes, so only use it if you need a fix that hasn't landed elsewhere.";
+          }
+          {
+            name = "new_feature";
+            desc = "Nvidia's branch for newly added features. Newer than `production`, but not as long-tested.";
+          }
+          {
+            name = "vulkan_beta";
+            desc = "a preview driver for the latest Vulkan graphics features. Mainly for developers and testers.";
+          }
+        ];
+        available =
+          channels
+          |> lib.filter (p: nvidiaPackages ? ${p.name});
+        names =
+          available
+          |> lib.map (p: p.name);
+      in
+        mkOption rec {
+          type = types.enum names;
+          default = "stable";
+          example = names |> lib.findFirst (n: n != default) default;
+          description = ''
+            Which NVIDIA driver version to use. If you're unsure, leave setting on default value.
+
+            ${available |> lib.concatMapStringsSep "\n" (p: "- `${p.name}`: ${p.desc}")}
+          '';
+        };
+
       primeMode = mkOption {
         type = types.nullOr (
           types.enum [
@@ -71,7 +116,10 @@ in {
 
           Keep the default to leave `hardware.nvidia.prime` untouched.
         '';
-        readOnly = !isHybrid;
+        readOnly = let
+          isHybrid = builtins.length host.settings.core.hardware.gpus >= 2;
+        in
+          !isHybrid;
       };
     };
 
@@ -82,7 +130,7 @@ in {
     }: let
       cfg = host.settings.core.hardware;
       isLaptop = cfg.deviceType == "laptop";
-      inherit (cfg.nvidia) primeMode;
+      inherit (cfg.nvidia) primeMode package;
 
       busIds =
         cfg.gpus
@@ -127,7 +175,7 @@ in {
 
       hardware.nvidia =
         {
-          package = config.boot.kernelPackages.nvidiaPackages.stable;
+          package = config.boot.kernelPackages.nvidiaPackages.${package};
 
           # Turing and newer architectures must use open kernel modules
           open = lib.mkDefault true;
