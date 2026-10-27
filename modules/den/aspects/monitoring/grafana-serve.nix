@@ -25,7 +25,7 @@
           ];
           assertion = cfg.domain != null;
           message = ''
-            monitoring.grafana-serve: set `${host.hostName}.settings.monitoring.grafana.domain`
+            monitoring.grafana-serve: set `${host.name}.settings.monitoring.grafana.domain`
             so Tailscale Serve and Grafana agree on the public hostname.
           '';
         }

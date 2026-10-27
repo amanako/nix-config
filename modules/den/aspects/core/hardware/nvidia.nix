@@ -63,7 +63,7 @@ in {
 
     hostSettings = {host, ...}: {
       package = let
-        inherit (inputs.self.nixosConfigurations.${host.hostName}.config.boot.kernelPackages) nvidiaPackages;
+        inherit (inputs.self.nixosConfigurations.${host.name}.config.boot.kernelPackages) nvidiaPackages;
         channels = [
           {
             name = "stable";

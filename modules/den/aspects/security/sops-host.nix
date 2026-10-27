@@ -28,7 +28,7 @@ in {
           Should be specified WITHOUT persist mounpoint.
           Must be persisted across reboots for ephemeral systems, otherwise
           the host can no longer decrypt its own secrets after a reboot.
-          Either set this or ${host.hostName}.settings.security.sops-host.ageKeyFile, but not both as it's unnecessary.
+          Either set this or ${host.name}.settings.security.sops-host.ageKeyFile, but not both as it's unnecessary.
         '';
       };
 
@@ -40,7 +40,7 @@ in {
           Optional dedicated age key file used for decryption instead of deriving it
           from SSH host keys. Must be persisted across reboots for ephemeral setups.
           Should be specified WITHOUT persist mounpoint.
-          Either set this or ${host.hostName}.settings.security.sops-host.sshKeyPaths, but not both as it's unnecessary.
+          Either set this or ${host.name}.settings.security.sops-host.sshKeyPaths, but not both as it's unnecessary.
         '';
       };
 
@@ -62,7 +62,7 @@ in {
       # `sopsFile = host.settings.security.sops-host.secretsDir + "/name.yaml"`.
       secretsDir = mkOption {
         type = types.path;
-        default = ../../../../assets/hosts/${host.hostName}/secrets;
+        default = ../../../../assets/hosts/${host.name}/secrets;
         description = ''
           Directory of this host's encrypted secret files, imported into the Nix
           store. Convenience tool. Use it to set `sopsFile` on host secrets without hardcoding a
@@ -100,8 +100,8 @@ in {
           assertion =
             cfg.sshKeyPaths != [] || cfg.ageKeyFile != null;
           message = ''
-            security.sops-host: set either `${host.hostName}.settings.security.sops-host.sshKeyPaths`
-            or `${host.hostName}.settings.security.sops-host.ageKeyFile` so the host can decrypt its secrets.
+            security.sops-host: set either `${host.name}.settings.security.sops-host.sshKeyPaths`
+            or `${host.name}.settings.security.sops-host.ageKeyFile` so the host can decrypt its secrets.
           '';
         }
       ])
