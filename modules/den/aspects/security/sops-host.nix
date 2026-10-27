@@ -74,9 +74,7 @@ in {
     persistHost = {host, ...}: let
       cfg = host.settings.security.sops-host;
     in {
-      directories = lib.optionals (cfg.sshKeyPaths != []) [
-        "/etc/ssh"
-      ];
+      directories = cfg.sshKeyPaths;
 
       files = lib.optionals (cfg.ageKeyFile != null) [
         cfg.ageKeyFile
@@ -120,8 +118,7 @@ in {
       ];
 
       sops = {
-        age.sshKeyPaths =
-          lib.optionals (cfg.sshKeyPaths != null)
+        gnupg.sshKeyPaths =
           cfg.sshKeyPaths
           |> map (path: persistenceDir + path);
 
