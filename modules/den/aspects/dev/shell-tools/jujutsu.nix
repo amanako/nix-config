@@ -74,7 +74,7 @@ in {
 
           user = {
             name = cfg.username;
-            email = cfg.email;
+            inherit (cfg) email;
           };
 
           signing = {

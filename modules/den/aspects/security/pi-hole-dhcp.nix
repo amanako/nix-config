@@ -47,7 +47,7 @@ in {
             active = true;
             start = cfg.dhcpStart;
             end = cfg.dhcpEnd;
-            router = cfg.router;
+            inherit (cfg) router;
             rapidCommit = true;
             multiDNS = true;
           };

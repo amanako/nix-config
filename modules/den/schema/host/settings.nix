@@ -92,7 +92,7 @@
     (den.aspects or {})
     // lib.concatMapAttrs (
       nsName: ns: let
-        skipNsKey = k: isStructuralKey k;
+        skipNsKey = isStructuralKey;
         aspectNames = lib.filter (k: !(skipNsKey k)) (builtins.attrNames ns);
       in
         if aspectNames == []
@@ -107,7 +107,7 @@
     if !(builtins.isAttrs node)
     then node
     else let
-      children = lib.filterAttrs (k: v: builtins.isAttrs v && !(skipKey k) && !(v._type or null == "option")) node;
+      children = lib.filterAttrs (k: v: builtins.isAttrs v && !(skipKey k) && v._type or null != "option") node;
       pruned = lib.mapAttrs (k: v: pruneTree includedSet (prefix ++ [k]) v) children;
       kept = lib.filterAttrs (_: v: v != null) pruned;
       selfIncluded = includedSet ? ${lib.concatStringsSep "/" prefix};

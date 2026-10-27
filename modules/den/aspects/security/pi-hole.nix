@@ -57,7 +57,7 @@ in {
                 "2620:fe::fe"
                 "2620:fe::9"
               ];
-              listeningMode = cfg.listeningMode;
+              inherit (cfg) listeningMode;
             };
 
             dhcp.ipv6 = true;

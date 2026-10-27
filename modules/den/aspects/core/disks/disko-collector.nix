@@ -69,7 +69,7 @@ in {
             content =
               lib.removeAttrs luksConfig ["target"]
               // {
-                content = part.content;
+                inherit (part) content;
               };
           }
         else part;
