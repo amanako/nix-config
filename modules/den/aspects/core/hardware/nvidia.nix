@@ -40,6 +40,25 @@ in {
           '';
         }
       ])
+      ({host, ...}: let
+        cfg = host.settings.core.hardware;
+        emptyBusId = cfg.gpus |> lib.filter (g: g.busId == "");
+      in [
+        {
+          subject = [
+            "core.hardware.nvidia"
+          ];
+          target = [
+            "core.hardware.nvidia.prime"
+          ];
+          assertion = cfg.nvidia.primeMode == null || emptyBusId == [];
+          message = ''
+            primeMode is set to ${toString cfg.nvidia.primeMode}, however
+            `busId` has a value of "" for these GPUs: ${emptyBusId |> lib.concatMapStringsSep "," (g: g.manufacturer)}.
+            For configuration reference ${host.name}.settings.core.hardware.gpus option.
+          '';
+        }
+      ])
     ];
 
     hostSettings = {host, ...}: {
@@ -89,6 +108,18 @@ in {
           '';
         };
 
+      open = mkOption {
+        type = types.bool;
+        default = true;
+        example = false;
+        description = ''
+          Use NVIDIA's open kernel modules. Required for Turing and newer
+          (GTX 16xx / RTX 20xx and up); must be `false` for Maxwell, Pascal
+          and Volta (GTX 9xx / 10xx, Titan V). Also gates fine-grained power
+          management, which has the same hardware requirement.
+        '';
+      };
+
       primeMode = mkOption {
         type = types.nullOr (
           types.enum [
@@ -117,9 +148,14 @@ in {
           Keep the default to leave `hardware.nvidia.prime` untouched.
         '';
         readOnly = let
-          isHybrid = builtins.length host.settings.core.hardware.gpus >= 2;
+          cfg = host.settings.core.hardware;
+          isHybrid = builtins.length cfg.gpus >= 2;
+          hasNvidia =
+            cfg.gpus
+            |> lib.any (el: el.manufacturer == "nvidia");
+          isHybridNvidia = isHybrid && hasNvidia;
         in
-          !isHybrid;
+          !isHybridNvidia;
       };
     };
 
@@ -130,7 +166,7 @@ in {
     }: let
       cfg = host.settings.core.hardware;
       isLaptop = cfg.deviceType == "laptop";
-      inherit (cfg.nvidia) primeMode package;
+      inherit (cfg.nvidia) primeMode package open;
 
       busIds =
         cfg.gpus
@@ -163,23 +199,18 @@ in {
       };
     in {
       services.xserver.videoDrivers = let
-        hasGPUs =
-          cfg.gpus
-          |> builtins.any (_: true);
+        hasGPUs = cfg.gpus != [];
       in
         lib.mkIf hasGPUs
         (
           cfg.gpus
-          |> map (el: el.manufacturer)
+          |> map (g: g.manufacturer)
         );
 
       hardware.nvidia =
         {
           package = config.boot.kernelPackages.nvidiaPackages.${package};
-
-          # Turing and newer architectures must use open kernel modules
-          open = lib.mkDefault true;
-
+          inherit open;
           nvidiaSettings = true;
           # Necessary for wayland compositors and generally recommended to reduce tearing
           modesetting.enable = true;
@@ -191,7 +222,7 @@ in {
           # is a runtime decision and checking would be complicated.
           prime = busIds // primeModes.${primeMode};
         }
-        // lib.optionalAttrs (isLaptop && primeMode == "offload")
+        // lib.optionalAttrs (open && isLaptop && primeMode == "offload")
         powerManagement;
     };
   };

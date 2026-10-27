@@ -50,11 +50,11 @@ in {
         default = [];
         example = [
           {
-            type = "intel";
+            manufacturer = "intel";
             busId = "PCI:0@0:2:0";
           }
           {
-            type = "nvidia";
+            manufacturer = "nvidia";
             busId = "PCI:5@1:0:0";
           }
         ];
