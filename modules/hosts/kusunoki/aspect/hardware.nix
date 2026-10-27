@@ -9,6 +9,8 @@
       den.aspects.core.disks.swap-subvol
       den.aspects.core.hardware.usb-gadget-ether-host
       den.aspects.extra.performance.cachyos-kernel
+
+      den.aspects.dev.emulate-aarch64
     ];
 
     nixos = {modulesPath, ...}: {
@@ -20,9 +22,6 @@
         "nvme"
         "xhci_pci"
       ];
-
-      # For building raspberry pi images
-      boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
       boot = {
         kernelModules = [
