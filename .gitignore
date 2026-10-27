@@ -13,3 +13,6 @@ result-*
 
 # Ignore textual files containing temporary ideas and observations
 *.txt
+
+# Test images
+**/*.img
