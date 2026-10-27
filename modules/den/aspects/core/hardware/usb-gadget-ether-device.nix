@@ -16,7 +16,8 @@ in {
       Raspberry Pi USB gadget (`g_ether`, via `nixos-raspberrypi`'s
       `usb-gadget-ethernet` module) with pinned MACs and a static address so
       the paired `core.hardware.usb-gadget-ether-host` can reliably recognise
-      and route to it.
+      and route to it. A high-metric default route via the host keeps the
+      device online over the tether when it has no other uplink.
 
       Include this aspect to opt in; remove it to opt out.
     '';
@@ -61,6 +62,7 @@ in {
       cfg = host.settings.core.hardware.usb-gadget-ether-device;
       cidr = lib.splitString "/" cfg.subnet;
       netPrefix = lib.concatStringsSep "." (lib.take 3 (lib.splitString "." (lib.elemAt cidr 0)));
+      hostAddress = "${netPrefix}.1";
       deviceAddress = "${netPrefix}.2";
     in {
       imports = [
@@ -78,6 +80,17 @@ in {
         {
           address = deviceAddress;
           prefixLength = lib.toInt (lib.elemAt cidr 1);
+        }
+      ];
+
+      # The paired host shares its internet over this link. Keep the route as
+      # a low-priority fallback so a wired/wireless uplink (if present) wins.
+      networking.interfaces.usb0.ipv4.routes = [
+        {
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = hostAddress;
+          options.metric = "2000";
         }
       ];
     };

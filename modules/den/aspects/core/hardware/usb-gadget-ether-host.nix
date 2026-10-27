@@ -17,6 +17,11 @@ in {
       interface to a stable name via systemd.link, and opens the firewall for
       DHCP/DNS on that interface.
 
+      Blacklists the generic `cdc_subset` driver, which otherwise wins the
+      race for the gadget's data interface and leaves the host with a random
+      MAC instead of the pinned `hostMac` (so the rename and profile never
+      match).
+
       Pair with a device-side aspect such as
       `core.hardware.usb-gadget-ether-device`, which advertises the matching
       `hostMac` and joins `subnet`.
@@ -62,6 +67,17 @@ in {
       hostAddress = "${netPrefix}.1/${lib.elemAt cidr 1}";
       deviceAddress = "${netPrefix}.2";
     in {
+      # `g_ether` exposes an ECM configuration next to the RNDIS/CDC-subset
+      # one. `cdc_subset` matches the gadget's vendor/product id (0525:a4a2)
+      # and claims its data interface before `cdc_ether` can bind the control
+      # interface, so `cdc_ether` fails with "Second interface unclaimable"
+      # and usbnet invents a random MAC. The `.link` rename below then never
+      # matches and the shared profile stays inactive. Blacklisting
+      # `cdc_subset` lets `cdc_ether` bind the ECM configuration and read the
+      # pinned `host_addr` from its descriptor.
+      boot.blacklistedKernelModules = ["cdc_subset"];
+      boot.kernelModules = ["cdc_ether"];
+
       systemd.network.links."10-${cfg.interfaceName}" = {
         enable = true;
         matchConfig.MACAddress = cfg.hostMac;
