@@ -62,6 +62,7 @@
       nixvim.plugins.noice
       nixvim.plugins.trouble
       nixvim.plugins.lsp
+      nixvim.plugins.easy-dotnet
 
       nixvim.plugins.treesitter
 
