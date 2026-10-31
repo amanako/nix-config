@@ -104,6 +104,7 @@ in {
       nixvim.plugins.lsp
       nixvim.plugins.noice
       nixvim.plugins.trouble
+      nixvim.plugins.dbee
 
       nixvim.plugins.treesitter
     ];

@@ -155,6 +155,22 @@
         "type": "github"
       }
     },
+    "cmp-dbee": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720538879,
+        "narHash": "sha256-XxB4jQu9xAi/7XDcwsd0hGLSs74ysjg0N/uaTHjqByI=",
+        "owner": "MattiasMTS",
+        "repo": "cmp-dbee",
+        "rev": "1650f67b9bf43c029fc37570665ca895a33cdf5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MattiasMTS",
+        "repo": "cmp-dbee",
+        "type": "github"
+      }
+    },
     "dank-qml-common": {
       "flake": false,
       "locked": {
@@ -1685,6 +1701,7 @@
       "inputs": {
         "ascii-art": "ascii-art",
         "chaotic": "chaotic",
+        "cmp-dbee": "cmp-dbee",
         "den": "den",
         "direnv-instant": "direnv-instant",
         "disko": "disko",

@@ -23,6 +23,10 @@
       flake = false;
     };
     chaotic.url = "github:chaotic-cx/nyx/main";
+    cmp-dbee = {
+      url = "github:MattiasMTS/cmp-dbee";
+      flake = false;
+    };
     den.url = "github:denful/den";
     direnv-instant.url = "github:Mic92/direnv-instant";
     disko.url = "github:nix-community/disko";
