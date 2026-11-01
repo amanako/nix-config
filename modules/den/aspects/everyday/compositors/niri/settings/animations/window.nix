@@ -14,7 +14,7 @@
           duration-ms = 260;
         };
 
-        custom-shader = ''
+        custom-shader.text = ''
           vec4 open_color(vec3 coords_geo, vec3 size_geo) {
               float p = niri_clamped_progress;
 
@@ -51,7 +51,7 @@
           duration-ms = 180;
         };
 
-        custom-shader = ''
+        custom-shader.text = ''
           vec4 close_color(vec3 coords_geo, vec3 size_geo) {
               float p = niri_clamped_progress;
               float inv = 1.0 - p;
@@ -84,7 +84,7 @@
           epsilon = 0.0001;
         };
 
-        custom-shader = ''
+        custom-shader.text = ''
           vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
               vec3 coords_tex_next = niri_geo_to_tex_next * coords_curr_geo;
               vec4 color = texture2D(niri_tex_next, coords_tex_next.st);
