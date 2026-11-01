@@ -63,6 +63,16 @@ in {
       };
     };
 
+    # Per-repo configuration.
+    persistUser.directories = let
+      basePath = ".config/jj";
+    in
+      [
+        "repos"
+        "workspaces"
+      ]
+      |> map (f: "${basePath}/${f}");
+
     hm = {user, ...}: let
       cfg = user.settings.dev.shell-tools.jujutsu;
     in {
