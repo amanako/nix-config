@@ -55,7 +55,7 @@ steps:
         echo "$(git config --global user.email) namespaces=\"git\" $(cat ~/.ssh/signing_key.pub)" > ~/.ssh/allowed_signers
 
       - |
-        BRANCH="weekly-flake-update/$(date +%F)"
+        BRANCH="flake-lock-update/$(date +%F)"
         git checkout -b $BRANCH
         git add flake.lock
 
@@ -66,5 +66,5 @@ steps:
         fi
 
       - |
-        git commit -S -m "Weekly flake.lock update"
+        git commit -S -m "chore(flake): update lock"
         git push https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git "$BRANCH"

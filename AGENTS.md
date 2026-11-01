@@ -189,7 +189,7 @@ updated by `just fupdate` and committed by CI (see below).
 
 Declare each input **exactly once**. `flake-file` aggregates every
 `flake-file.inputs.*` across all modules, and `import-tree` already loads them
-all, so re-declaring the same input in several modules is redundant — it changes
+all, so redeclaring the same input in several modules is redundant — it changes
 nothing in the generated `flake.nix`. Pick one canonical home, ideally the aspect
 that owns the integration (e.g. `inputs.nixos-raspberrypi` is declared only in
 `modules/den/aspects/core/hardware/raspberry-pi/raspberry-pi.nix`). When moving
@@ -355,7 +355,7 @@ Subaspects are reachable by appending `.`, e.g.
 - **`flake.nix`/`flake.lock` are committed and CI-gated.** CI regenerates
   `flake.nix` via `write-flake` and runs `nix flake check -L` on `main`/`dev`.
   A Woodpecker cron (every 2nd Sunday) bumps `flake.lock` into a dated
-  `weekly-flake-update/YYYY-MM-DD` branch and does **not** open a PR; integrate
+  `flake-lock-update/YYYY-MM-DD` branch and does **not** open a PR; integrate
   it into `dev` manually (e.g. by fast-forwarding `dev` to it). Don't
   hand-edit `flake.lock` except via `just fupdate`.
 - **Vendor-pinned kernels may predate our module tooling.** Keeping a vendor

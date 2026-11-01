@@ -14,7 +14,7 @@ steps:
       - |
         REMOTE_URL="https://x-access-token:$${GITEA_TOKEN}@codeberg.org/${CI_REPO}.git"
         cutoff="$(date -u --date='-30 days' +%F)"
-        git ls-remote --heads "$REMOTE_URL" 'refs/heads/weekly-flake-update/*' | while read -r _ ref; do
+        git ls-remote --heads "$REMOTE_URL" 'refs/heads/flake-lock-update/*' | while read -r _ ref; do
           branch="${ref#refs/heads/}"
           date="${branch##*/}"
           if [ "$date" \< "$cutoff" ]; then
