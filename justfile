@@ -15,7 +15,7 @@ fupdate *inputs:
     nix --accept-flake-config flake update -L {{ inputs }} --flake .
     just fwrite
 
-# Check all flakes validity
+# Run flake checks
 [group('flake')]
 fcheck:
     nix flake check -L --accept-flake-config --show-trace --all-systems
@@ -73,11 +73,11 @@ pull-flake branch="main":
 ensure-zen-closed:
     #!/usr/bin/env sh
     if pgrep zen > /dev/null; then
-    echo "Zen browser is currently running, please close it before proceeding."
-    exit 1
+      echo "Zen browser is currently running, please close it before proceeding."
+      exit 1
     fi
 
-hostname := `hostname`
+hostname := `uname -n`
 
 alias h := help
 alias fw := fwrite

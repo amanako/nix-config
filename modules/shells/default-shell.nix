@@ -11,6 +11,8 @@
       default = pkgs.mkShell {
         packages = [
           pkgs.just
+          pkgs.git
+          pkgs.nh
         ];
 
         buildInputs = with pkgs; [
