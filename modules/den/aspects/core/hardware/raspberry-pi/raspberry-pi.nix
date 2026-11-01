@@ -63,10 +63,7 @@ in {
       };
     };
 
-    nixos = {
-      config,
-      ...
-    }: {
+    nixos = {config, ...}: {
       # The upstream `nixos-raspberrypi` board modules (e.g.
       # `nixosModules.raspberry-pi-4.base`) declare `nixos-raspberrypi` as a
       # module argument. The upstream README mandates passing it via
