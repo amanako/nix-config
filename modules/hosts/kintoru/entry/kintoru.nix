@@ -27,7 +27,13 @@
       ];
 
       security = {
-        pi-hole.listeningMode = "ALL";
+        pi-hole = {
+          listeningMode = "ALL";
+          blocklists = [
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt"
+            "https://big.oisd.nl"
+          ];
+        };
         pi-hole-serve.domain = "kintoru.tail729600.ts.net";
         pi-hole-dhcp = {
           address = "192.168.100.81";

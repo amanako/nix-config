@@ -30,6 +30,19 @@ in {
           Tailscale Serve HTTPS port.
         '';
       };
+
+      blocklists = mkOption {
+        type = types.listOf types.str;
+        default = [];
+        example = [
+          "0.0.0.0 ads.example.com"
+          "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro-onlydomains.txt"
+        ];
+        description = ''
+          URLs of blocklists to use. Pi-hole accepts fetched lists with one domain
+          per line or hosts-file format.
+        '';
+      };
     };
 
     nixos = {host, ...}: let
@@ -72,14 +85,15 @@ in {
             dns.dnssec = false;
           };
 
-          lists = [
-            {
-              url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt";
-              type = "block";
-              enabled = true;
-              description = "hagezi pro++";
-            }
-          ];
+          lists =
+            cfg.blocklists
+            |> lib.map (
+              url: {
+                enabled = true;
+                type = "block";
+                inherit url;
+              }
+            );
         };
 
         pihole-web = {
