@@ -11,6 +11,7 @@
       den.aspects.basic.conflicts-collector
       den.aspects.basic.home-backup
       den.aspects.basic.preferences-installer
+      den.aspects.basic.remove-login-timeout
       (
         {user}:
           if user.isPrimaryUser

@@ -26,6 +26,10 @@
             Unit = {
               Description = "Start awww daemon";
               After = ["graphical-session.target"];
+              # Stop with the graphical session on logout; without PartOf the
+              # daemon outlives niri and can keep user units / dbus activation
+              # alive across greeter returns.
+              PartOf = ["graphical-session.target"];
               Wants = ["${cfg.label}.timer"];
             };
 
