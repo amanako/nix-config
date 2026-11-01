@@ -134,10 +134,8 @@
           background-color: alpha(@teal, 0.75);
         }
 
-        /* font renders the wifi glyph off-center; nudge it 2px left */
-        #network,
-        #network.wifi,
-        #network.ethernet {
+        /* font renders the wifi glyph off-center; nudge 2px left */
+        #network.wifi {
           padding: 4px 10px 4px 6px;
         }
 
