@@ -15,7 +15,13 @@
 
     settings = {
       niri.binds.keyboard-backlight.device = "backlight:amdgpu_bl1";
+
       niri.mirror.targetOutput = "HDMI-A-1";
+
+      niri.other = {
+        cursorName = "catppuccin-mocha-blue-cursors";
+        cursorPackage = "catppuccin-cursors.mochaBlue";
+      };
 
       dev.shells.defaultShell = "fish";
       dev.terminal.kitty.fontOptions.fontFeatures = "VictorMonoNF-Regular +ss08";

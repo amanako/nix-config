@@ -17,7 +17,13 @@
 
     settings = {
       niri.binds.keyboard-backlight.device = "asus::kbd_backlight";
+
       niri.mirror.targetOutput = "HDMI-A-1";
+
+      niri.other = {
+        cursorName = "Capitaine Cursors (Gruvbox) - White";
+        cursorPackage = "capitaine-cursors-themed";
+      };
 
       everyday = {
         utility.anki.profileName = "yoha";

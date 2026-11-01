@@ -5,10 +5,13 @@
     ];
 
     niriSettings = {
+      user,
       config,
       lib,
       ...
     }: let
+      cursorSettings = lib.attrByPath ["niri" "other"] {} user.settings;
+
       colors =
         lib.attrByPath ["lib" "stylix" "colors" "withHashtag"] {
           base03 = "#948f99";
@@ -50,12 +53,15 @@
         };
       };
 
-      cursor = {
-        xcursor-theme = "capitaine-cursors-white";
-        xcursor-size = 36;
-        hide-when-typing = true;
-        hide-after-inactive-ms = 4004;
-      };
+      cursor =
+        {
+          xcursor-size = 28;
+          hide-when-typing = true;
+          hide-after-inactive-ms = 4004;
+        }
+        // lib.optionalAttrs ((cursorSettings.cursorName or null) != null) {
+          xcursor-theme = cursorSettings.cursorName;
+        };
 
       window-rule = [
         {
