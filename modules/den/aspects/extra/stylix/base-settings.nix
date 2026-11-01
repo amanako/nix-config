@@ -4,6 +4,15 @@
     mkOption
     types
     ;
+
+  schemePath = pkgs: name: "${pkgs.base16-schemes}/share/themes/${name}.yaml";
+  # Each scheme file has a `variant` node ("light" or "dark"), which both stylix
+  # and the package variants support, so it maps directly to polarity.
+  getPolarityOf = scheme:
+    scheme
+    |> builtins.readFile
+    |> builtins.match ".*variant: \"(light|dark)\".*"
+    |> lib.head;
 in {
   den.aspects.extra.stylix.base-settings = {
     description = "Base stylix theming defaults: theme, fonts, and icon pack.";
@@ -17,16 +26,6 @@ in {
         default = "gruvbox-material-dark-soft";
         example = "catppuccin-mocha";
         description = "Base16 scheme slug from `pkgs.base16-schemes` used for system-wide Stylix theming.";
-      };
-
-      polarity = mkOption {
-        type = types.enum [
-          "light"
-          "dark"
-        ];
-        default = "dark";
-        example = "light";
-        description = "Polarity forced for system-wide Stylix theming.";
       };
 
       icons = mkOption {
@@ -79,12 +78,6 @@ in {
         example = "catppuccin-mocha";
         description = "Base16 scheme slug from `pkgs.base16-schemes` overriding the system theme for this user. Unset follows the host theme.";
       };
-
-      polarity = mkOption {
-        type = types.nullOr (types.enum ["light" "dark"]);
-        default = null;
-        description = "Polarity forced for this user's Stylix theming. Unset follows the host polarity.";
-      };
     };
 
     nixos = {
@@ -94,10 +87,11 @@ in {
       ...
     }: let
       cfg = host.settings.extra.stylix.base-settings;
+      scheme = schemePath pkgs cfg.theme;
     in {
       stylix = {
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
-        inherit (cfg) polarity;
+        base16Scheme = scheme;
+        polarity = getPolarityOf scheme;
         opacity = {
           applications = 0.87;
           desktop = 0.85;
@@ -142,12 +136,12 @@ in {
             package = lib.attrByPath (lib.splitString "." monofont.package) null pkgs;
           };
         }
-        (lib.optionalAttrs (cfg != null && cfg.theme != null) {
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
-        })
-        (lib.optionalAttrs (cfg != null && cfg.polarity != null) {
-          inherit (cfg) polarity;
-        })
+        (lib.optionalAttrs (cfg != null && cfg.theme != null) (let
+          scheme = schemePath pkgs cfg.theme;
+        in {
+          base16Scheme = scheme;
+          polarity = getPolarityOf scheme;
+        }))
       ];
     };
   };

@@ -8,7 +8,6 @@
 
       extra.stylix.base-settings = {
         theme = "catppuccin-mocha";
-        polarity = "dark";
         icons = {
           package = pkgs: pkgs.numix-icon-theme;
           dark = "Numix";

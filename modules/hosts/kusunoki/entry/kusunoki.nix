@@ -5,7 +5,6 @@
 
       extra.stylix.base-settings = {
         theme = "dracula";
-        polarity = "dark";
       };
 
       extra.performance.cachyos-kernel = {
