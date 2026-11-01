@@ -28,7 +28,6 @@
 
           amdgpu = {
             initrd.enable = true;
-            overdrive.enable = true;
           };
 
           firmware = [

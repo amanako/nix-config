@@ -1,8 +1,4 @@
-{
-  den,
-  lib,
-  ...
-}: {
+{den, ...}: {
   den.aspects.ashikaga = {
     includes = [
       den.aspects.ashikaga._
@@ -20,7 +16,14 @@
       den.aspects.core.nix.nh
     ];
 
-    nixos.boot.loader.limine.style.wallpaperStyle = "centered";
+    nixos.boot = {
+      loader.limine.style.wallpaperStyle = "centered";
+      blacklistedKernelModules = [
+        "hp_bioscfg"
+        "acpi_tad"
+      ];
+      kernelParams = ["nowatchdog"];
+    };
 
     provides.to-users = {user, ...}: {
       nixos = {host, ...}: {

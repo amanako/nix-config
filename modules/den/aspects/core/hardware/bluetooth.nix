@@ -11,9 +11,10 @@
 
       settings.General = {
         DiscoverableTimeout = "120";
-        PariableTimeout = "60";
+        PairableTimeout = "60";
         FastConnectable = true;
         Experimental = true;
+        KernelExperimental = true;
       };
     };
   };

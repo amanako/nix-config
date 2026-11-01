@@ -5,5 +5,6 @@
     den.aspects.basic.conflicts-collector
     den.aspects.basic.channel-collector
     den.aspects.basic.no-primary-user-lockout
+    den.aspects.basic.nscd-start-limit
   ];
 }
