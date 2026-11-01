@@ -1,7 +1,7 @@
 # NixOS configuration
 
 <a href="https://nixos.org"><img alt="NixOS" src="https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=%23a89984&labelColor=%2332302f&color=%23a9b665" /></a>
-<a href="https://den.denful.dev"> <img alt="Dendritic Nix" src="https://img.shields.io/badge/Dendritic-Nix-Informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b" /></a>
+<a href="https://den.denful.dev"> <img alt="Den" src="https://img.shields.io/badge/Aspect_oriented-Nix-informational?style=for-the-badge&logo=nixos&logoColor=%23458588&labelColor=%2332302f&color=%23d3869b" /></a>
 
 ![build-and-push](https://img.shields.io/github/actions/workflow/status/amanako/nix-config/build-and-push-to-cache.yml?style=plastic&logo=ebox&logoColor=d4be98&label=build)
 ![checks](https://ci.codeberg.org/api/badges/16923/status.svg)
