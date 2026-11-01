@@ -4,7 +4,7 @@ when:
   - event: manual
 
 steps:
-  - name: update-and-check-flake
+  - name: update-flake
     image: nixos/nix:latest
     environment:
       GITHUB_TOKEN:
