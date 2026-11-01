@@ -14,6 +14,8 @@
     includes = [
       den.aspects.core.hardware.raspberry-pi
       den.aspects.core.hardware.raspberry-pi.sd-image
+      # Sensible default on relatively low RAM devices.
+      den.aspects.core.disks.zram
     ];
 
     nixos = {
