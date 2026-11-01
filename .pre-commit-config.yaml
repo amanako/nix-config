@@ -27,7 +27,6 @@ repos:
         language: system
         files: \.nix$
         stages: [pre-commit]
-        verbose: true
 
   # ── Lua ────────────────────────────────────────────────────
   - repo: https://git.sr.ht/~ramon_ln/pre-commit-lua
