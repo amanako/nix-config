@@ -9,7 +9,7 @@ in {
     description = "Base stylix theming defaults: theme, fonts, and icon pack.";
     # Fixes E79 spam error on nixvim startup due to broken variable expanding.
     # Reference commit: fix(nixvim): remove constant E79 error on startup + QOL.
-    stylixHMSettings.targets."kde".enable = false;
+    stylixHMSettings.targets.kde.enable = false;
 
     hostSettings = {
       theme = mkOption {
@@ -20,9 +20,55 @@ in {
       };
 
       polarity = mkOption {
-        type = types.enum ["light" "dark"];
+        type = types.enum [
+          "light"
+          "dark"
+        ];
         default = "dark";
+        example = "light";
         description = "Polarity forced for system-wide Stylix theming.";
+      };
+
+      icons = mkOption {
+        type = types.submodule {
+          options = {
+            package = mkOption {
+              type = types.functionTo types.package;
+              example = lib.literalExpression "pkgs: pkgs.kdePackages.breeze-icons";
+              description = ''
+                Function taking nixpkgs and returning the icon theme package.
+              '';
+            };
+
+            dark = mkOption {
+              type = types.str;
+              description = "Dark icon theme name.";
+            };
+
+            light = mkOption {
+              type = types.str;
+              description = "Light icon theme name.";
+            };
+          };
+        };
+
+        default = {
+          package = pkgs: pkgs.papirus-icon-theme;
+          dark = "Papirus-Dark";
+          light = "Papirus-Light";
+        };
+
+        defaultText = lib.literalExpression ''
+          {
+            package = pkgs: pkgs.papirus-icon-theme;
+            dark = "Papirus-Dark";
+            light = "Papirus-Light";
+          }
+        '';
+
+        description = ''
+          Icon theme configuration. Defaults to Papirus.
+        '';
       };
     };
 
@@ -61,9 +107,9 @@ in {
 
         icons = {
           enable = true;
-          package = pkgs.papirus-icon-theme;
-          dark = "Papirus-Dark";
-          light = "Papirus-Light";
+          package = cfg.icons.package pkgs;
+          dark = cfg.icons.dark;
+          light = cfg.icons.light;
         };
 
         fonts = {
