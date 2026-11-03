@@ -14,6 +14,8 @@
 
       den.aspects.core.power-management.thermald
       den.aspects.core.nix.nh
+
+      den.aspects.extra.stylix-host
     ];
 
     nixos.boot = {

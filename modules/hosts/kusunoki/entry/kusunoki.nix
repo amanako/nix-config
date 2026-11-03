@@ -3,8 +3,8 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
-      extra.stylix.base-settings = {
-        theme = "dracula";
+      extra.stylix-host.base-settings = {
+        theme = "gruvbox-material-dark-hard";
       };
 
       extra.performance.cachyos-kernel = {

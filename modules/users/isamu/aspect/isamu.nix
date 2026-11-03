@@ -86,8 +86,6 @@
       den.aspects.security.ssh
       den.aspects.security.gpg
 
-      den.aspects.extra.stylix
-
       den.aspects.everyday.bars.waybar
     ];
   };

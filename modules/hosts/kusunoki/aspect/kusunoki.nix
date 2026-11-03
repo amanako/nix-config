@@ -3,7 +3,7 @@
     includes = [
       den.aspects.kusunoki._
 
-      den.aspects.extra.stylix
+      den.aspects.extra.stylix-host
       den.aspects.core.impermanence
       den.aspects.core.impermanence.btrfs.prune-old-roots
 

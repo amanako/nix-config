@@ -6,7 +6,7 @@
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
 
-      extra.stylix.base-settings = {
+      extra.stylix-host.base-settings = {
         theme = "catppuccin-mocha";
         icons = {
           package = pkgs: pkgs.numix-icon-theme;
