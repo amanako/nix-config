@@ -105,6 +105,7 @@ in {
       nixvim.plugins.noice
       nixvim.plugins.trouble
       nixvim.plugins.dbee
+      nixvim.plugins.snacks-dashboard
 
       nixvim.plugins.treesitter
       nixvim.plugins.toggleterm
