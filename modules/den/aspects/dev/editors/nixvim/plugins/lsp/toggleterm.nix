@@ -7,7 +7,7 @@
         keymaps = [
           {
             mode = "n";
-            key = "<leader>tt";
+            key = "<c-\\>";
             action = "<cmd>ToggleTerm<CR>";
             options = {
               desc = "Run ToggleTerm.";
@@ -18,6 +18,7 @@
         plugins.toggleterm = {
           enable = true;
           settings = {
+            open_mapping = "[[<c-\\>]]";
             direction = "float";
             hide_numbers = false;
             autochdir = true;
