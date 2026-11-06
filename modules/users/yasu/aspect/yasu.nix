@@ -30,7 +30,6 @@ in {
       den.aspects.everyday.utility.wifitui
       den.aspects.everyday.utility.bluetui
       den.aspects.everyday.utility.btop
-      den.aspects.everyday.pdf-viewers.pdf-cli
 
       den.aspects.everyday.wallpaper-managers.awww
 
@@ -56,6 +55,7 @@ in {
 
       den.aspects.everyday.launchers.vicinae
       den.aspects.everyday.launchers.vicinae.extensions
+      den.aspects.everyday.pdf-viewers.zathura
       den.aspects.everyday.bars.waybar
       den.aspects.everyday.notifications.dunst
 
@@ -107,6 +107,7 @@ in {
       nixvim.plugins.dbee
 
       nixvim.plugins.treesitter
+      nixvim.plugins.toggleterm
     ];
 
     user = {
