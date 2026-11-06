@@ -31,6 +31,19 @@
         wrapRc = true;
 
         globals.mapleader = " ";
+        autoCmd = [
+          {
+            event = "VimEnter";
+            callback.__raw = ''
+              function()
+                local arg = vim.fn.argv(0)
+                if arg ~= "" and vim.fn.isdirectory(arg) == 1 then
+                  vim.cmd.tcd(arg)
+                end
+              end
+            '';
+          }
+        ];
       };
 
       # The nixvim wrapper is the `nvim` users should get. `preferences-installer`

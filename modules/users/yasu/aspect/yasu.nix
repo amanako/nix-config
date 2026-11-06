@@ -106,6 +106,7 @@ in {
       nixvim.plugins.trouble
       nixvim.plugins.dbee
       nixvim.plugins.snacks-dashboard
+      nixvim.plugins.snacks-explorer
 
       nixvim.plugins.treesitter
       nixvim.plugins.toggleterm

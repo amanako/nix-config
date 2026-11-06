@@ -51,6 +51,7 @@
       nixvim.plugins.lazygit
       nixvim.plugins.mini
       nixvim.plugins.snacks-dashboard
+      nixvim.plugins.snacks-explorer
 
       nixvim.plugins.kitty-scrollback
       nixvim.plugins.lualine
