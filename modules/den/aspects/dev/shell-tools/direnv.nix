@@ -13,6 +13,7 @@
       enable = true;
       nix-direnv.enable = true;
       silent = true;
+      config.warn_timeout = "30s";
     };
   };
 }
