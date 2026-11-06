@@ -1697,6 +1697,22 @@
         "type": "github"
       }
     },
+    "oravim-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789744931,
+        "narHash": "sha256-CyXTJOmkPjSiyTidxbDWYTGR68tlY1LbYKb6oSYXpFk=",
+        "owner": "KaravellasYiannis",
+        "repo": "oravim.nvim",
+        "rev": "25cf5c69103de2f9b7fcba24f94cf11537d6c74a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KaravellasYiannis",
+        "repo": "oravim.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ascii-art": "ascii-art",
@@ -1729,6 +1745,7 @@
         "noctalia": "noctalia",
         "noctalia-shell": "noctalia-shell",
         "node-exporter-full": "node-exporter-full",
+        "oravim-nvim": "oravim-nvim",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "systems": "systems_5",

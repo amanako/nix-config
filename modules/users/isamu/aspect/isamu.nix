@@ -64,7 +64,7 @@
       nixvim.plugins.lsp
 
       nixvim.plugins.easy-dotnet
-      nixvim.plugins.dbee
+      nixvim.plugins.oravim
 
       nixvim.plugins.treesitter
 

@@ -63,6 +63,10 @@
       url = "github:rfmoz/grafana-dashboards";
       flake = false;
     };
+    oravim-nvim = {
+      url = "github:KaravellasYiannis/oravim.nvim";
+      flake = false;
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";
