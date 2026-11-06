@@ -27,6 +27,8 @@
 
       services.flatpak = {
         enable = true;
+        # Silence trace emitted by this option default value.
+        runWithoutGui = false;
         remotes = {
           "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
         };
