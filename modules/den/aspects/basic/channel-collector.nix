@@ -33,7 +33,7 @@
     then prev
     else
       import inputs.${channelInputs.${channel}} {
-        inherit (prev) system;
+        inherit (prev.stdenv.hostPlatform) system;
         config = rawConfig;
       };
 
