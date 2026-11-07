@@ -109,4 +109,38 @@ in {
       ];
     };
   };
+
+  den.aspects.basic.channel-user-collector = {
+    description = ''
+      Home Manager collector which applies userPackageChannels contributions to
+      the user's package set, including packages pinned to a non-default channel.
+    '';
+
+    hm = {
+      userPackageChannels,
+      config,
+      ...
+    }: let
+      usedChannels =
+        userPackageChannels
+        |> lib.concatMap (entry:
+          if lib.isAttrs entry
+          then builtins.attrValues entry
+          else [])
+        |> lib.map normalize
+        |> lib.unique
+        |> lib.filter (channel: !(channelInputs ? ${channel}));
+    in {
+      nixpkgs.overlays = [
+        (overlay userPackageChannels config.nixpkgs.config)
+      ];
+
+      assertions = lib.optionals (usedChannels != []) [
+        {
+          assertion = false;
+          message = "Unknown channel(s) in userPackageChannels quirk: ${lib.concatStringsSep ", " usedChannels}. Available channels: ${lib.concatStringsSep ", " channels}.";
+        }
+      ];
+    };
+  };
 }
