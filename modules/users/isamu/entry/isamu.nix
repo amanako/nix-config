@@ -35,6 +35,12 @@
         ];
       };
 
+      nixvim.plugins.snacks-dashboard.projectDirs = [
+        "~/CSharpProjects"
+        "~/University"
+        "~/nix-config"
+      ];
+
       dev.shell-tools.git = {
         username = "IRefactoredThat";
         email = "nikola.l.savic@protonmail.com";

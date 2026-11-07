@@ -47,6 +47,11 @@
         ageKeyFile = "keys/age/key.txt";
       };
 
+      nixvim.plugins.snacks-dashboard.projectDirs = [
+        "~/Dev/Projects"
+        "~/Faks/Projects"
+      ];
+
       dev = {
         shell-tools = {
           git = {
