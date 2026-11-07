@@ -1,7 +1,7 @@
 {
   den.hosts.x86_64-linux.ashikaga = {
     repoRoot = "/home/isamu/nix-config";
-    defaultChannel = "unstable";
+    defaultChannel = "pkgs";
 
     settings = {
       basic.time.timeZone = "Europe/Belgrade";
