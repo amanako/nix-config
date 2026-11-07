@@ -19,7 +19,7 @@
 
   channels = lib.attrNames channelInputs;
 
-  secondaryChannels = lib.filter (channel: channel != "pkgs") channels;
+  secondaryChannelsFor = entity: lib.filter (channel: channel != entity.defaultChannel) channels;
 
   # Accept either a friendly channel name ("stable") or a full input name
   # ("nixpkgs-stable"), mirroring what the host defaultChannel option allows.
@@ -28,8 +28,8 @@
     then toFriendly channel
     else channel;
 
-  mkChannelSet = channel: rawConfig: prev:
-    if channel == "pkgs"
+  mkChannelSet = entity: channel: rawConfig: prev:
+    if channel == entity.defaultChannel
     then prev
     else
       import inputs.${channelInputs.${channel}} {
@@ -60,18 +60,18 @@
     )
     {};
 
-  overlay = packageChannels: rawConfig: _final: prev: let
+  overlay = entity: packageChannels: rawConfig: _final: prev: let
     declared = packageChannels |> collect;
 
     # Each non-root channel as a namespace: pkgs.<channel>.<pkg>.
     namespaces =
-      lib.genAttrs secondaryChannels (channel: mkChannelSet channel rawConfig prev);
+      lib.genAttrs (secondaryChannelsFor entity) (channel: mkChannelSet entity channel rawConfig prev);
 
     # Packages explicitly pinned via the quirk, resolved from their channel.
     swaps =
       declared
-      |> lib.filterAttrs (_pkg: channel: channel != "pkgs")
-      |> lib.mapAttrs (pkg: channel: (mkChannelSet channel rawConfig prev).${pkg});
+      |> lib.filterAttrs (_pkg: channel: channel != entity.defaultChannel)
+      |> lib.mapAttrs (pkg: channel: (mkChannelSet entity channel rawConfig prev).${pkg});
   in
     namespaces // swaps;
 in {
@@ -83,6 +83,7 @@ in {
     '';
 
     nixos = {
+      host,
       packageChannels,
       config,
       ...
@@ -98,7 +99,7 @@ in {
         |> lib.filter (channel: !(channelInputs ? ${channel}));
     in {
       nixpkgs.overlays = [
-        (overlay packageChannels config.nixpkgs.config)
+        (overlay host packageChannels config.nixpkgs.config)
       ];
 
       assertions = lib.optionals (usedChannels != []) [
@@ -117,6 +118,7 @@ in {
     '';
 
     hm = {
+      user,
       userPackageChannels,
       config,
       ...
@@ -132,7 +134,7 @@ in {
         |> lib.filter (channel: !(channelInputs ? ${channel}));
     in {
       nixpkgs.overlays = [
-        (overlay userPackageChannels config.nixpkgs.config)
+        (overlay user userPackageChannels config.nixpkgs.config)
       ];
 
       assertions = lib.optionals (usedChannels != []) [
