@@ -24,6 +24,9 @@
       ".local/share/Anki2"
     ];
 
+    # Multiple breakages, fragile package.
+    userPackageChannels.anki = "stable";
+
     hm = {
       user,
       lib,
@@ -46,7 +49,6 @@
         });
 
         addons = with pkgs; [
-          # Useful integration
           ankiAddons.anki-connect
         ];
 
