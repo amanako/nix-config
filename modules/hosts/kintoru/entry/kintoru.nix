@@ -15,8 +15,6 @@
           board = "raspberry-pi-4";
           enableVc4 = true;
         };
-
-        nix.harmonia.gc.ensureFree = "20G";
       };
 
       monitoring.grafana.domain = "kintoru.tail729600.ts.net";

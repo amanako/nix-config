@@ -30,84 +30,86 @@ in {
       den.aspects.security.tailscale
     ];
 
-    hostSettings = {
-      endpoint = mkOption {
-        type = types.nullOr types.str;
-        default = null;
-        example = "https://kintoru.tail729600.ts.net";
-        description = ''
-          Public base URL at which the cache is reachable. Leave unset to
-          derive it from the host's own Tailscale Serve URL.
-        '';
-      };
+    hostSettings = {host, ...}:
+      {
+        endpoint = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          example = "https://kintoru.tail729600.ts.net";
+          description = ''
+            Public base URL at which the cache is reachable. Leave unset to
+            derive it from the host's own Tailscale Serve URL.
+          '';
+        };
 
-      message = mkOption {
-        type = types.nullOr types.str;
-        default = null;
-        example = "Nix cache for kintoru, reachable over the tailnet.";
-        description = ''
-          Value served by the cache's `/nix-cache-info` endpoint for its
-          `StoreDir` message field.
-        '';
-      };
+        message = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          example = "Nix cache for kintoru, reachable over the tailnet.";
+          description = ''
+            Value served by the cache's `/nix-cache-info` endpoint for its
+            `StoreDir` message field.
+          '';
+        };
 
-      port = mkOption {
-        type = types.port;
-        default = 5000;
-        description = "Port on which Harmonia listens locally.";
-      };
+        port = mkOption {
+          type = types.port;
+          default = 5000;
+          description = "Port on which Harmonia listens locally.";
+        };
 
-      priority = mkOption {
-        type = types.int;
-        default = 5;
-        description = ''
-          Substituter priority. Lower wins: cache.nixos.org advertises 40 and
-          amanako.cachix.org 10, so 5 makes this cache preferred while a miss
-          still falls through to the others.
-        '';
-      };
+        priority = mkOption {
+          type = types.int;
+          default = 5;
+          description = ''
+            Substituter priority. Lower wins: cache.nixos.org advertises 40 and
+            amanako.cachix.org 10, so 5 makes this cache preferred while a miss
+            still falls through to the others.
+          '';
+        };
 
-      serve = mkOption {
-        type = types.bool;
-        default = true;
-        description = ''
-          Expose the cache via Tailscale Serve (tailnet-only). Set to false when
-          fronting it another way, e.g. `tailscale funnel` for a publicly
-          reachable cache.
-        '';
-      };
-
-      gc = {
-        enable = mkOption {
+        serve = mkOption {
           type = types.bool;
           default = true;
           description = ''
-            Run harmonia-gc automatically to keep the cache from filling the
-            store's filesystem. This only prunes store paths that no longer have
-            a GC root (e.g. build dependencies pulled in for the cache), so it
-            is independent of `nix.gc`.
+            Expose the cache via Tailscale Serve (tailnet-only). Set to false when
+            fronting it another way, e.g. `tailscale funnel` for a publicly
+            reachable cache.
           '';
         };
+      }
+      // lib.optionalAttrs (host.defaultChannel == "pkgs") {
+        gc = lib.mkIf (host.defaultChannel == "pkgs") {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+            description = ''
+              Run harmonia-gc automatically to keep the cache from filling the
+              store's filesystem. This only prunes store paths that no longer have
+              a GC root (e.g. build dependencies pulled in for the cache), so it
+              is independent of `nix.gc`.
+            '';
+          };
 
-        ensureFree = mkOption {
-          type = types.nullOr types.singleLineStr;
-          default = null;
-          example = "20G";
-          description = ''
-            Free space until this much is available, then stop. Accepts an
-            absolute size like "20G" or a percentage like "20%". Unset means
-            only the standard age/root rules apply.
-          '';
-        };
+          ensureFree = mkOption {
+            type = types.nullOr types.singleLineStr;
+            default = null;
+            example = "20G";
+            description = ''
+              Free space until this much is available, then stop. Accepts an
+              absolute size like "20G" or a percentage like "20%". Unset means
+              only the standard age/root rules apply.
+            '';
+          };
 
-        deleteOlderThan = mkOption {
-          type = types.nullOr types.singleLineStr;
-          default = null;
-          example = "30d";
-          description = "Delete profile generations older than this.";
+          deleteOlderThan = mkOption {
+            type = types.nullOr types.singleLineStr;
+            default = null;
+            example = "30d";
+            description = "Delete profile generations older than this.";
+          };
         };
       };
-    };
 
     nixos = {
       config,
@@ -121,21 +123,25 @@ in {
         sopsFile = host.settings.security.sops-host.secretsDir + "/harmonia.yaml";
       };
 
-      services.harmonia.cache = {
-        enable = true;
-        signKeyPaths = [config.sops.secrets.harmonia-key.path];
-        settings =
+      services.harmonia = {
+        cache =
           {
-            inherit (cfg) priority;
-            bind = "[::]:${toString cfg.port}";
+            enable = true;
+            signKeyPaths = [config.sops.secrets.harmonia-key.path];
+            settings =
+              {
+                inherit (cfg) priority;
+                bind = "[::]:${toString cfg.port}";
+              }
+              // lib.optionalAttrs (cfg.message != null) {inherit (cfg) message;};
           }
-          // lib.optionalAttrs (cfg.message != null) {inherit (cfg) message;};
-      };
-
-      services.harmonia.gc = {
-        enable = cfg.gc.enable;
-        automatic = cfg.gc.enable;
-        inherit (cfg.gc) ensureFree deleteOlderThan;
+          // lib.optionalAttrs (config.services.harmonia ? gc) {
+            gc = {
+              enable = cfg.gc.enable;
+              automatic = cfg.gc.enable;
+              inherit (cfg.gc) ensureFree deleteOlderThan;
+            };
+          };
       };
 
       # Harmonia listens on [::]:port (systemd socket activation). Only expose
