@@ -63,7 +63,7 @@
   overlay = entity: packageChannels: rawConfig: _final: prev: let
     declared = packageChannels |> collect;
 
-    # Each non-root channel as a namespace: pkgs.<channel>.<pkg>.
+    # Each non-root channel as a namespace: pkgs.chan.<channel>.<pkg>.
     namespaces =
       lib.genAttrs (secondaryChannelsFor entity) (channel: mkChannelSet entity channel rawConfig prev);
 
@@ -73,13 +73,12 @@
       |> lib.filterAttrs (_pkg: channel: channel != entity.defaultChannel)
       |> lib.mapAttrs (pkg: channel: (mkChannelSet entity channel rawConfig prev).${pkg});
   in
-    namespaces // swaps;
 in {
   den.aspects.basic.channel-collector = {
     description = ''
       Collector which assembles package channels: exposes every non-root channel as
-      `pkgs.<channel>.<pkg>` and resolves packages pinned via the `packageChannels`
-      quirk from their chosen channel.
+      `pkgs.chan.<channel>.<pkg>` and resolves packages pinned via the
+      `packageChannels` quirk from their chosen channel.
     '';
 
     nixos = {
