@@ -25,7 +25,11 @@
         "kintoru:9100"
       ];
 
-      services.book-library.path = "/srv/library";
+      services = {
+        forgejo.user = "git";
+        forgejo-serve.domain = "kintoru.tail729600.ts.net";
+        book-library.path = "/srv/library";
+      };
 
       security = {
         pi-hole = {

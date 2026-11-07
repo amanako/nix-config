@@ -24,7 +24,11 @@
 
       den.aspects.services.syncthing-serve
       den.aspects.services.calibre-web-serve
+
+      den.aspects.services.forgejo-serve
     ];
+
+    packageChannels.forgejo = "pkgs";
 
     nixos = {host, ...}: let
       cfg = host.settings.security.pi-hole-dhcp;
