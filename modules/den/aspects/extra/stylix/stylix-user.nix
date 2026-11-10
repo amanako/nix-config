@@ -6,6 +6,11 @@
   den.aspects.extra.stylix-user = {
     includes = [den.aspects.extra.stylix-user.base-settings];
 
+    # Stylix uses outdated option renamed by upstream
+    # Without this emits warning: "The option `programs.rofi.font' defined in ... has been renamed to `programs.rofi.settings.font`.
+    # TODO: Remove when upstream merges fix.
+    stylixHMSettings.targets.rofi.enable = false;
+
     hm = {
       host ? null,
       stylixHMSettings,
