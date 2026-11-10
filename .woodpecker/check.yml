@@ -1,14 +1,26 @@
 when:
-  - event: [push, pull_request]
+  - event: pull_request
+  - event: push
     branch: [main, dev]
 
 steps:
-  - name: check flake
+  - name: evaluate-toplevels
     image: nixos/nix:latest
     commands:
       - |
-        export NIX_CONFIG=$(cat <<-EOF
-        extra-experimental-features = nix-command flakes
-        EOF
-        )
-      - nix --accept-flake-config flake check -L --all-systems --show-trace
+        export NIX_CONFIG="extra-experimental-features = nix-command flakes"
+        for host in $(nix --accept-flake-config eval --json '.#nixosConfigurations' --apply 'ns: builtins.concatStringsSep " " (builtins.attrNames ns)' | tr -d '"[]'); do
+          echo "Evaluating $host toplevel drvPath..."
+          nix --accept-flake-config eval --no-write-lock-file ".#nixosConfigurations.$host.config.system.build.toplevel.drvPath" >/dev/null
+        done
+
+  - name: flake-check
+    image: nixos/nix:latest
+    commands:
+      - |
+        export NIX_CONFIG="extra-experimental-features = nix-command flakes"
+        if [ "$CI_PIPELINE_EVENT" = "push" ]; then
+          nix --accept-flake-config flake check -L --all-systems --show-trace
+        else
+          nix --accept-flake-config flake check -L --show-trace
+        fi
