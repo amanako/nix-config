@@ -13,7 +13,7 @@
 
     hm = {pkgs, ...}: {
       home.packages = with pkgs; [
-        luxtorpeda # Steam compatibility tool
+        luxtorpeda-bin_edge # Steam compatibility tool
       ];
     };
   };

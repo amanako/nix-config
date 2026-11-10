@@ -53,7 +53,7 @@
           extraCompatPackages = let
             pkg =
               if (user.hasAspect den.aspects.extra.bleeding-edge.chaotic)
-              then pkgs.proton-cachyos
+              then pkgs.proton-cachyos-bin_edge
               else pkgs.proton-ge-bin;
           in [
             pkg
