@@ -1,7 +1,9 @@
 when:
   - event: cron
-    cron: "bump flake" # Runs every 2nd Sunday ~21:56 UTC (cron schedule: @every 336h)
+    cron: "bump flake" # Runs every 2 weeks (cron schedule: @every 336h)
+    branch: dev
   - event: manual
+    branch: dev
 
 steps:
   - name: update-flake
@@ -16,8 +18,7 @@ steps:
         access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
-      - nix profile add nixpkgs#just
-      - just fupdate
+      - nix --accept-flake-config run nixpkgs#just -- fu
 
   - name: commit-and-push
     image: alpine/git:latest
@@ -82,7 +83,6 @@ steps:
           exit 0
         fi
         BRANCH=$(cat .branch)
-        DATE=$${BRANCH##*/}
         curl -fsS -X POST "https://codeberg.org/api/v1/repos/${CI_REPO}/pulls" \
           -H "Authorization: token $${GITEA_TOKEN}" \
           -H "Content-Type: application/json" \
