@@ -25,7 +25,7 @@
     ];
 
     # Multiple breakages, fragile package.
-    userPackageChannels.anki = "stable";
+    userPackageChannels.anki = "nixpkgs-stable";
 
     hm = {
       user,

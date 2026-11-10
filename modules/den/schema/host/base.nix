@@ -25,26 +25,21 @@ in {
       channelList =
         inputs
         |> builtins.attrNames
-        |> lib.filter (name: lib.hasPrefix "nixpkgs" name)
-        |> lib.map (
-          name:
-            if name == "nixpkgs"
-            then "pkgs"
-            else lib.removePrefix "nixpkgs-" name
-        );
-      # If flake has nixpkgs as an input, set option default to it.
-      hasPkgs = channelList |> lib.elem "pkgs";
+        |> lib.filter (name: lib.hasPrefix "nixpkgs" name);
+      # If flake has a root nixpkgs input, set option default to it.
+      hasRoot = channelList |> lib.elem "nixpkgs";
     in
       mkOption {
         type = types.enum channelList;
         example = lib.head channelList;
         description = ''
-          Name of the flake input(without "nixpkgs-" prefix) to use as the default channel for unspecified packages,
-          that is for those not explicitly set by packageChannel quirk.
+          Name of the nixpkgs flake input (e.g. `nixpkgs` or `nixpkgs-stable`) to
+          use as the default channel for unspecified packages, that is for those
+          not explicitly set by the packageChannels quirk.
         '';
       }
-      // lib.optionalAttrs hasPkgs {
-        default = "pkgs";
+      // lib.optionalAttrs hasRoot {
+        default = "nixpkgs";
       };
   };
 }

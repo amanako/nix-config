@@ -13,15 +13,8 @@
       den.aspects.basic.nscd-start-limit
     ];
 
-    imports = let
-      c = host.defaultChannel;
-    in {
-      instantiate =
-        inputs.${
-          if c == "pkgs"
-          then "nixpkgs"
-          else "nixpkgs-${c}"
-        }.lib.nixosSystem;
+    imports = {
+      instantiate = inputs.${host.defaultChannel}.lib.nixosSystem;
     };
   };
 }

@@ -78,8 +78,8 @@ in {
           '';
         };
       }
-      // lib.optionalAttrs (host.defaultChannel == "pkgs") {
-        gc = lib.mkIf (host.defaultChannel == "pkgs") {
+      // lib.optionalAttrs (host.defaultChannel == "nixpkgs") {
+        gc = lib.mkIf (host.defaultChannel == "nixpkgs") {
           enable = mkOption {
             type = types.bool;
             default = true;

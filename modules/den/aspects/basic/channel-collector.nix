@@ -3,36 +3,22 @@
   inputs,
   ...
 }: let
-  # Friendly channel name (as used in settings and the quirk) -> flake input name.
-  toFriendly = name:
-    if name == "nixpkgs"
-    then "pkgs"
-    else lib.removePrefix "nixpkgs-" name;
-
+  # Every nixpkgs flake input, keyed by its input name (e.g. "nixpkgs",
+  # "nixpkgs-stable"). Input names double as channel names everywhere:
+  # settings, quirks and the resulting pkgs namespaces.
   channelInputs =
     inputs
-    |> lib.filterAttrs (name: _: lib.hasPrefix "nixpkgs" name)
-    |> lib.mapAttrs' (name: _: {
-      name = toFriendly name;
-      value = name;
-    });
+    |> lib.filterAttrs (name: _: lib.hasPrefix "nixpkgs" name);
 
   channels = lib.attrNames channelInputs;
 
   secondaryChannelsFor = entity: lib.filter (channel: channel != entity.defaultChannel) channels;
 
-  # Accept either a friendly channel name ("stable") or a full input name
-  # ("nixpkgs-stable"), mirroring what the host defaultChannel option allows.
-  normalize = channel:
-    if lib.hasPrefix "nixpkgs" channel
-    then toFriendly channel
-    else channel;
-
   mkChannelSet = entity: channel: rawConfig: prev:
     if channel == entity.defaultChannel
     then prev
     else
-      import inputs.${channelInputs.${channel}} {
+      import channelInputs.${channel} {
         inherit (prev.stdenv.hostPlatform) system;
         config = rawConfig;
       };
@@ -63,7 +49,7 @@
   overlay = entity: packageChannels: rawConfig: _final: prev: let
     declared = packageChannels |> collect;
 
-    # Each non-root channel as a namespace: pkgs.chan.<channel>.<pkg>.
+    # Each secondary channel as a namespace: pkgs.<channel>.<pkg>.
     namespaces =
       lib.genAttrs (secondaryChannelsFor entity) (channel: mkChannelSet entity channel rawConfig prev);
 
@@ -73,12 +59,14 @@
       |> lib.filterAttrs (_pkg: channel: channel != entity.defaultChannel)
       |> lib.mapAttrs (pkg: channel: (mkChannelSet entity channel rawConfig prev).${pkg});
   in
+    namespaces // swaps;
 in {
   den.aspects.basic.channel-collector = {
     description = ''
-      Collector which assembles package channels: exposes every non-root channel as
-      `pkgs.chan.<channel>.<pkg>` and resolves packages pinned via the
-      `packageChannels` quirk from their chosen channel.
+      Collector which assembles package channels: exposes every non-default
+      channel as `pkgs.<channel>.<pkg>` (e.g. `pkgs.nixpkgs-stable.<pkg>`, where
+      the channel name is the flake input name) and resolves packages pinned via
+      the `packageChannels` quirk from their chosen channel.
     '';
 
     nixos = {
@@ -93,7 +81,6 @@ in {
           if lib.isAttrs entry
           then builtins.attrValues entry
           else [])
-        |> lib.map normalize
         |> lib.unique
         |> lib.filter (channel: !(channelInputs ? ${channel}));
     in {
@@ -128,7 +115,6 @@ in {
           if lib.isAttrs entry
           then builtins.attrValues entry
           else [])
-        |> lib.map normalize
         |> lib.unique
         |> lib.filter (channel: !(channelInputs ? ${channel}));
     in {

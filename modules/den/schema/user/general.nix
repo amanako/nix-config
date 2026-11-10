@@ -41,21 +41,16 @@ in {
         options =
           inputs
           |> builtins.attrNames
-          |> lib.filter (name: lib.hasPrefix "nixpkgs" name)
-          |> lib.map (
-            name:
-              if name == "nixpkgs"
-              then "pkgs"
-              else lib.removePrefix "nixpkgs-" name
-          );
+          |> lib.filter (name: lib.hasPrefix "nixpkgs" name);
       in
         mkOption {
           type = lib.types.enum options;
           default = lib.head options;
           example = lib.head options;
           description = ''
-            Name of the flake input(without "nixpkgs-" prefix) to use as the default channel for unspecified packages,
-            that is for those not explicitly set by userPackageChannel quirk.
+            Name of the nixpkgs flake input (e.g. `nixpkgs` or `nixpkgs-stable`)
+            to use as the default channel for unspecified packages, that is for
+            those not explicitly set by the userPackageChannels quirk.
           '';
         };
     };

@@ -422,15 +422,16 @@ Subaspects are reachable by appending `.`, e.g.
   `pkgs/development/interpreters/python/passthrufun.nix`, among others). An
   overlay that injects a bare attr whose name collides with such a scope
   argument silently retargets every internal consumer — e.g. adding
-  `pkgs.pkgs = <other nixpkgs import>` (the root input's friendly name) makes
-  the *entire* `python313Packages` set resolve `pkgs` from the other channel,
-  mixing channels inside one package set until something asserts (seen as
-  `python3.13-protobuf` failing its protoc-version assertion on kintoru, whose
-  `defaultChannel` is `stable`). This is why
-  `modules/den/aspects/basic/channel-collector.nix` nests channel namespaces
-  under a `pkgs.chan.<channel>` wrapper instead of bare top-level attrs; if you
-  ever need to expose more from an overlay, pick a name no nixpkgs `callPackage`
-  argument uses (grepping both nixpkgs trees for `, <name>,` declarations is a
+  `pkgs.pkgs = <other nixpkgs import>` makes the *entire* `python313Packages`
+  set resolve `pkgs` from the other channel, mixing channels inside one
+  package set until something asserts (seen as `python3.13-protobuf` failing
+  its protoc-version assertion on kintoru, whose `defaultChannel` is
+  `nixpkgs-stable`). This is why `modules/den/aspects/basic/channel-collector.nix`
+  exposes secondary channels as `pkgs.<channel>` using raw flake input names
+  (`nixpkgs-stable` can never be a function parameter because of the dash, and
+  `nixpkgs` is not used as a package-set scope argument anywhere); if you ever
+  need to expose more from an overlay, pick a name no `callPackage` argument
+  uses (grepping the relevant nixpkgs trees for `, <name>,` declarations is a
   decent smoke test).
 - Primary development branch is **`dev`**; `main` is "stable". README's `old`
   branch holds the pre-den config for reference only.

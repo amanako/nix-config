@@ -1,6 +1,6 @@
 {
   den.hosts.aarch64-linux.kintoru = {
-    defaultChannel = "stable";
+    defaultChannel = "nixpkgs-stable";
 
     settings = {
       basic.time.timeZone = "Europe/Belgrade";

@@ -28,7 +28,7 @@
       den.aspects.services.forgejo-serve
     ];
 
-    packageChannels.forgejo = "pkgs";
+    packageChannels.forgejo = "nixpkgs";
 
     nixos = {host, ...}: let
       cfg = host.settings.security.pi-hole-dhcp;
