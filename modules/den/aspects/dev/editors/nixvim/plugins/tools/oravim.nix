@@ -36,7 +36,7 @@
       ...
     }: let
       sqlplus = lib.getExe' pkgs.oracle-instantclient "sqlplus";
-      sqlclLine = ''sqlcl = "${lib.getExe pkgs.sqlcl}",'';
+      sqlclLine = ''sqlcl = "${lib.getExe' pkgs.sqlcl "sqlcl"}",'';
     in {
       home.packages = with pkgs; [
         oracle-instantclient
