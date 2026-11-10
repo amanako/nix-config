@@ -12,6 +12,7 @@
       den.aspects.everyday.bars.conflict-manager
     ];
 
+    # Finicky when it comes to theming and layering with blur.
     stylixHMSettings.targets."waybar".enable = false;
 
     # Fallback base16 palette. Only used when the

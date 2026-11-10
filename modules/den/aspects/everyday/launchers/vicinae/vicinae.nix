@@ -33,8 +33,6 @@
       "Mod+Space".action.spawn-sh = "vicinae toggle";
     };
 
-    stylixHMSettings.targets.vicinae.enable = true;
-
     hm = {
       pkgs,
       user,

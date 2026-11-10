@@ -10,8 +10,6 @@
       ];
     };
 
-    stylixHMSettings.targets."fcitx5".enable = true;
-
     hm = {
       fcitx5Settings,
       lib,

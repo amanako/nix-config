@@ -52,10 +52,7 @@
       ".config/zen/${user.userName}"
     ];
 
-    stylixHMSettings.targets."zen-browser" = {
-      enable = true;
-      profileNames = ["${user.userName}"];
-    };
+    stylixHMSettings.targets."zen-browser".profileNames = ["${user.userName}"];
 
     hm = let
       # The Zen variant whose package we deploy (mirrors the home module below).
