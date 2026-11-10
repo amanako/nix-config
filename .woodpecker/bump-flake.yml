@@ -18,7 +18,7 @@ steps:
         access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
-      - nix --accept-flake-config run nixpkgs#just -- fu
+      - nix --accept-flake-config shell nixpkgs#just -c just fu
 
   - name: commit-and-push
     image: alpine/git:latest
