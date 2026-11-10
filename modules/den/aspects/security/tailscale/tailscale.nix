@@ -109,19 +109,35 @@ in {
         inherit extraSetFlags;
       };
 
-      systemd.services = lib.optionalAttrs isServer {
-        tailscale-gro-forwarding = {
-          description = "Enable UDP GRO forwarding on the default-route interface for Tailscale exit-node throughput.";
-          wantedBy = ["multi-user.target"];
-          wants = ["network-online.target"];
-          after = ["network-online.target"];
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            ExecStart = groForwarding;
+      systemd.services =
+        lib.optionalAttrs isServer {
+          tailscale-gro-forwarding = {
+            description = "Enable UDP GRO forwarding on the default-route interface for Tailscale exit-node throughput.";
+            wantedBy = ["multi-user.target"];
+            wants = ["network-online.target"];
+            after = ["network-online.target"];
+            serviceConfig = {
+              Type = "oneshot";
+              RemainAfterExit = true;
+              ExecStart = groForwarding;
+            };
+          };
+        }
+        # When using hostnames as exit nodes sometimes `tailscaled` service
+        # is up as a process but hasn't yet received its network map, so `tailscaled-set` service can't resolve a hostname
+        # Allow service more leisure and restart option.
+        // lib.optionalAttrs (tailscale.exitNode != null) {
+          tailscaled-set = {
+            serviceConfig = {
+              Restart = "on-failure";
+              RestartSec = 5;
+            };
+            unitConfig = {
+              StartLimitIntervalSec = 120;
+              StartLimitBurst = 10;
+            };
           };
         };
-      };
     };
   };
 }
