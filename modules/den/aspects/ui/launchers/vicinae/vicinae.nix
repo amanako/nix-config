@@ -22,6 +22,8 @@
     persistUser = {
       directories = [
         ".cache/vicinae"
+        # Clipboard contents, databases, themes etc.
+        ".local/share/vicinae"
       ];
 
       files = [

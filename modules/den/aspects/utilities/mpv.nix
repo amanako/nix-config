@@ -11,6 +11,11 @@
       ]
       |> map (path: basePath + path);
 
+    # mpv 0.42 stores resume positions under the XDG state directory.
+    persistUser.directories = [
+      ".local/state/mpv/watch_later"
+    ];
+
     hm = {pkgs, ...}: {
       programs.mpv = {
         enable = true;

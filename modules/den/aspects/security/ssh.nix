@@ -28,6 +28,12 @@ in {
       };
     };
 
+    persistHost = {config, ...}: {
+      files =
+        config.services.openssh.hostKeys
+        |> map (key: key.path);
+    };
+
     nixos = {host, ...}: let
       cfg = host.settings.security.ssh;
     in {

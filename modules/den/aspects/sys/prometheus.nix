@@ -29,6 +29,21 @@ in {
       };
     };
 
+    # Prometheus keeps its TSDB under the service's working directory
+    # (`/var/lib/${stateDir}`). Derive it from the effective systemd value.
+    persistHost = {config, ...}: let
+      stateDir = config.systemd.services.prometheus.serviceConfig.WorkingDirectory;
+    in {
+      directories = [
+        {
+          directory = stateDir;
+          user = "prometheus";
+          group = "prometheus";
+          mode = "0700";
+        }
+      ];
+    };
+
     nixos = {host, ...}: let
       cfg = host.settings.sys.prometheus;
     in {

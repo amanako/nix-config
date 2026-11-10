@@ -36,6 +36,19 @@ in {
       };
     };
 
+    persistHost = {config, ...}: let
+      dataDir = toString config.services.grafana.dataDir;
+    in {
+      directories = [
+        {
+          directory = dataDir;
+          user = "grafana";
+          group = "grafana";
+          mode = "0700";
+        }
+      ];
+    };
+
     nixos = {
       host,
       config,

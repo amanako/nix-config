@@ -45,6 +45,26 @@ in {
       };
     };
 
+    # These are the exact paths the FTL unit declares in its ReadWritePaths.
+    persistHost = {config, ...}: let
+      inherit (config.services.pihole-ftl) configDirectory stateDirectory;
+    in {
+      directories = [
+        {
+          directory = toString configDirectory;
+          user = "pihole";
+          group = "pihole";
+          mode = "0700";
+        }
+        {
+          directory = toString stateDirectory;
+          user = "pihole";
+          group = "pihole";
+          mode = "0700";
+        }
+      ];
+    };
+
     nixos = {host, ...}: let
       cfg = host.settings.security.pi-hole;
     in {
