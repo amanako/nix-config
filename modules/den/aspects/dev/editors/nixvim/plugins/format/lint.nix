@@ -1,17 +1,19 @@
 {
   nixvim.plugins.lint = {
-    hm.programs.nixvim.plugins.lint = {
-      enable = true;
-      lintersByFt = {
-        nix = [
-          "statix"
-        ];
-        cpp = [
-          "cpplint"
-        ];
-      };
+    hm = {pkgs, ...}: {
+      programs.nixvim.plugins.lint = {
+        enable = true;
+        lintersByFt = {
+          nix = ["statix"];
+          cpp = ["clangtidy"];
+        };
 
-      autoInstall.enable = true;
+        autoInstall = {
+          enable = true;
+          # Won't be captured by getPackageOrStateByName.
+          overrides.clangtidy = pkgs.clang-tools;
+        };
+      };
     };
   };
 }
