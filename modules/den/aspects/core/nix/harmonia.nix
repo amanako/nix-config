@@ -79,7 +79,7 @@ in {
         };
       }
       // lib.optionalAttrs (host.defaultChannel == "nixpkgs") {
-        gc = lib.mkIf (host.defaultChannel == "nixpkgs") {
+        gc = {
           enable = mkOption {
             type = types.bool;
             default = true;
@@ -123,9 +123,9 @@ in {
         sopsFile = host.settings.security.sops-host.secretsDir + "/harmonia.yaml";
       };
 
-      services.harmonia = {
-        cache =
-          {
+      services.harmonia =
+        {
+          cache = {
             enable = true;
             signKeyPaths = [config.sops.secrets.harmonia-key.path];
             settings =
@@ -134,15 +134,15 @@ in {
                 bind = "[::]:${toString cfg.port}";
               }
               // lib.optionalAttrs (cfg.message != null) {inherit (cfg) message;};
-          }
-          // lib.optionalAttrs (config.services.harmonia ? gc) {
-            gc = {
-              enable = cfg.gc.enable;
-              automatic = cfg.gc.enable;
-              inherit (cfg.gc) ensureFree deleteOlderThan;
-            };
           };
-      };
+        }
+        // lib.optionalAttrs (config.services.harmonia ? gc) {
+          gc = {
+            enable = cfg.gc.enable;
+            automatic = cfg.gc.enable;
+            inherit (cfg.gc) ensureFree deleteOlderThan;
+          };
+        };
 
       # Harmonia listens on [::]:port (systemd socket activation). Only expose
       # it on the tailnet, not the LAN or the world.
