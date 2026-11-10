@@ -52,3 +52,15 @@ repos:
         language: system
         files: \.md$
         stages: [pre-commit]
+
+  # ── Structure SVG ──────────────────────────────────────────
+  # Regenerate with: python3 scripts/generate-structure-svg.py
+  - repo: local
+    hooks:
+      - id: structure-svg
+        name: structure.svg is up to date
+        entry: python3 scripts/generate-structure-svg.py --check
+        language: system
+        files: ^(assets/structure\.svg|modules/den/aspects/|scripts/generate-structure-svg\.py)
+        pass_filenames: false
+        stages: [pre-commit]

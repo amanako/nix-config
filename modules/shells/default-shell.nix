@@ -26,6 +26,7 @@
           prettier
           markdown-toc
           mdformat
+          python3
         ];
 
         shellHook = ''
