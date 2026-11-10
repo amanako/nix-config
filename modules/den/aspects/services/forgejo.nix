@@ -74,6 +74,9 @@
     }: let
       cfg = host.settings.services.forgejo;
     in {
+      # Interacting with instance via CLI.
+      environment.systemPackages = [pkgs.forgejo];
+
       # Module system assertion fires if two users with the same name have different homes.
       # Temporary satisfy module system condition so the custom descriptive host assertion above fires instead.
       users = lib.optionalAttrs (!(host.users ? ${cfg.user})) {
