@@ -1,8 +1,4 @@
-{
-  den,
-  lib,
-  ...
-}: let
+{lib, ...}: let
   inherit
     (lib)
     mkOption
@@ -16,20 +12,19 @@ in {
       A Git-compatible VCS(version control system) that is both simple and powerful.
     '';
 
-    userSettings = {user, ...}: {
+    userSettings = {user, ...}: let
+      cfg = user.settings;
+    in {
       username = mkOption {
-        default =
-          user.settings.dev.tools.git.username
-          |> lib.optionalString (den.aspects.dev.tools.git |> user.hasAspect);
+        # Attempt to configure from git credentials if configuration if present.
+        default = cfg.dev.tools.git.username or "";
         example = "git";
         type = types.str;
         description = "Name to use for jj version control system";
       };
 
       email = mkOption {
-        default =
-          user.settings.dev.tools.git.email
-          |> lib.optionalString (den.aspects.dev.tools.git |> user.hasAspect);
+        default = cfg.dev.tools.git.email or "";
         type = types.str;
         description = "Email to use for jj version control system";
       };
