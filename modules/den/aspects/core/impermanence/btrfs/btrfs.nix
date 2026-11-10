@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  den,
+  lib,
+  ...
+}: {
   den.aspects.core.impermanence.btrfs = {
     description = ''
       Script included for impermanence functionality on btrfs filesystems.
@@ -17,6 +21,10 @@
         '';
       };
     };
+
+    includes = [
+      den.aspects.core.impermanence
+    ];
 
     nixos = {
       config,

@@ -13,7 +13,7 @@ in {
     description = "Expose the Syncthing web UI over the tailnet via Tailscale Serve.";
 
     includes = [
-      den.aspects.sys.syncthing
+      den.aspects.sys.syncthing.book-serve
       den.aspects.security.tailscale
     ];
 

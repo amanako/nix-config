@@ -41,7 +41,6 @@ in {
     };
 
     includes = [
-      den.aspects.core.impermanence.btrfs
       den.aspects.core.impermanence.persist-host-collector
     ];
 

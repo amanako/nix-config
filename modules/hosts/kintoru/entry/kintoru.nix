@@ -10,6 +10,8 @@
           disko-collector.devicePath = "/dev/disk/by-path/pci-0000:05:00.3-usb-0:1:1.0-scsi-0:0:0:0";
           rpi-boot.size = "1G";
         };
+        # Needed for the rolling-root service when impermanence is enabled.
+        impermanence.btrfs.disk-partition = "/dev/mmcblk0p2";
         hardware.deviceType = "server";
         hardware.raspberry-pi = {
           board = "raspberry-pi-4";
