@@ -10,7 +10,7 @@
         settings = {
           formatters_by_ft = {
             lua = ["stylua"];
-            bash = [
+            sh = [
               "shellcheck"
               "shellharden"
               "shfmt"

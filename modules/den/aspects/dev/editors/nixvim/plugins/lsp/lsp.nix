@@ -14,6 +14,7 @@
             cmake.enable = true;
             html.enable = true;
             just.enable = true;
+            bashls.enable = true;
           };
 
           keymaps = {
