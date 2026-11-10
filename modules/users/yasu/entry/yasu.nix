@@ -67,7 +67,7 @@
         };
 
         terminal.kitty.fontOptions.fontFeatures = "VictorMonoNF-Regular +ss08";
-        shells.defaultShell = "nushell";
+        shells.defaultShell = "bash";
       };
     };
   };

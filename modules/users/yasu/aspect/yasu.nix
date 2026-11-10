@@ -73,6 +73,7 @@ in {
       den.aspects.extra.gaming.steam
       den.aspects.extra.gaming.lutris
       den.aspects.extra.gaming.unstable-packages
+      den.aspects.dev.terminal.vix
 
       # Works for namespaces as well
       zen-browser.full
