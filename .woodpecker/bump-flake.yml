@@ -18,7 +18,9 @@ steps:
         access-tokens = github.com=$${GITHUB_TOKEN}
         EOF
         )
-      - nix --accept-flake-config shell nixpkgs#just -c just fu
+      - |
+        bash -o pipefail -c 'nix --accept-flake-config shell nixpkgs#just -c just fu 2>&1 | tee .flake-update-log'
+        awk '/^• (Updated|Removed) input/{show=1} show && /^fetching /{exit} show' .flake-update-log > .flake-update-changes
 
   - name: commit-and-push
     image: alpine/git:latest
@@ -83,7 +85,9 @@ steps:
           exit 0
         fi
         BRANCH=$(cat .branch)
+        [ -f .flake-update-changes ] || : > .flake-update-changes
+        CHANGES=$(sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' .flake-update-changes | awk 'BEGIN{ORS=""} {printf "%s\\n", $0}')
         curl -fsS -X POST "https://codeberg.org/api/v1/repos/${CI_REPO}/pulls" \
           -H "Authorization: token $${GITEA_TOKEN}" \
           -H "Content-Type: application/json" \
-          -d "{\"head\":\"$BRANCH\",\"base\":\"dev\",\"title\":\"chore(flake): update lock\",\"body\":\"Automated flake.lock update, opened by Woodpecker.\"}"
+          -d "{\"head\":\"$BRANCH\",\"base\":\"dev\",\"title\":\"chore(flake): update lock\",\"body\":\"Automated flake.lock update, opened by Woodpecker.\\n\\nChanges to flake inputs:\\n\\n${CHANGES}\"}"
