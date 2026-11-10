@@ -9,24 +9,21 @@
   den.aspects.default-shell = {
     devShells = {pkgs, ...}: {
       default = pkgs.mkShell {
-        packages = [
-          pkgs.just
-          pkgs.git
-          pkgs.nh
-        ];
-
-        buildInputs = with pkgs; [
-          pre-commit
-          nixd
-          woodpecker-cli
+        packages = with pkgs; [
           alejandra
-          stylua
+          git
+          just
           luaPackages.luacheck
-          nodejs
-          prettier
           markdown-toc
           mdformat
+          nh
+          nixd
+          nodejs
+          pre-commit
+          prettier
           python3
+          stylua
+          woodpecker-cli
         ];
 
         shellHook = ''
