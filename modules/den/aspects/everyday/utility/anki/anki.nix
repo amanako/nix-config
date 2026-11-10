@@ -38,16 +38,6 @@
     in {
       programs.anki = {
         enable = true;
-        package = pkgs.anki.overrideAttrs (old: {
-          nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.pkg-config];
-          buildInputs = old.buildInputs ++ [pkgs.sqlite pkgs.zstd];
-          env =
-            (old.env or {})
-            // {
-              UV_FIND_LINKS = "${old.env.UV_FIND_LINKS},${pkgs.python3Packages.tomlkit.dist}";
-            };
-        });
-
         addons = with pkgs; [
           ankiAddons.anki-connect
         ];
@@ -75,7 +65,6 @@
         minimalistMode = true;
         style = "native";
         theme = "followSystem";
-        videoDriver = "opengl";
       };
     };
   };
