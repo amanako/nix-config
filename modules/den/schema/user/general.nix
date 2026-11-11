@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib,
-  ...
-}: let
+{lib, ...}: let
   inherit
     (lib)
     mkOption
@@ -36,23 +32,6 @@ in {
         '';
         readOnly = !config.isPrimaryUser;
       };
-
-      defaultChannel = let
-        options =
-          inputs
-          |> builtins.attrNames
-          |> lib.filter (name: lib.hasPrefix "nixpkgs" name);
-      in
-        mkOption {
-          type = lib.types.enum options;
-          default = lib.head options;
-          example = lib.head options;
-          description = ''
-            Name of the nixpkgs flake input (e.g. `nixpkgs` or `nixpkgs-stable`)
-            to use as the default channel for unspecified packages, that is for
-            those not explicitly set by the userPackageChannels quirk.
-          '';
-        };
     };
   };
 }

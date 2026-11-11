@@ -1,6 +1,7 @@
 {
   den,
   inputs,
+  lib,
   ...
 }: {
   den.schema.host = {host, ...}: {
@@ -15,6 +16,8 @@
 
     imports = {
       instantiate = inputs.${host.defaultChannel}.lib.nixosSystem;
+      home-manager.module =
+        inputs.${lib.replaceStrings ["nixpkgs"] ["home-manager"] host.defaultChannel}.nixosModules.home-manager;
     };
   };
 }

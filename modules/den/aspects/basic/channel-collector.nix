@@ -99,12 +99,13 @@ in {
 
   den.aspects.basic.channel-user-collector = {
     description = ''
-      Home Manager collector which applies userPackageChannels contributions to
-      the user's package set, including packages pinned to a non-default channel.
+      Home Manager collector which applies userPackageChannels to the user's
+      private package set, using the host's defaultChannel as its base and
+      resolving explicitly pinned packages from their selected input.
     '';
 
     hm = {
-      user,
+      host,
       userPackageChannels,
       config,
       ...
@@ -118,8 +119,9 @@ in {
         |> lib.unique
         |> lib.filter (channel: !(channelInputs ? ${channel}));
     in {
+      # The host supplies the base package set for each user's Home Manager config.
       nixpkgs.overlays = [
-        (overlay user userPackageChannels config.nixpkgs.config)
+        (overlay host userPackageChannels config.nixpkgs.config)
       ];
 
       assertions = lib.optionals (usedChannels != []) [
