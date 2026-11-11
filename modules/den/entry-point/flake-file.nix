@@ -2,7 +2,32 @@
   lib,
   inputs,
   ...
-}: {
+}: let
+  # Keep each Nixpkgs input paired with the Home Manager release tested
+  # against it. The generated Home Manager input follows its paired Nixpkgs.
+  nixpkgsChannels = {
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+      homeManagerBranch = "master";
+    };
+    nixpkgs-stable = {
+      url = "github:NixOS/nixpkgs/nixos-26.05";
+      homeManagerBranch = "release-26.05";
+    };
+  };
+
+  nixpkgsInputs = lib.mapAttrs (_: channel: {inherit (channel) url;}) nixpkgsChannels;
+
+  homeManagerInputs =
+    lib.genAttrs (builtins.attrNames nixpkgsChannels) (nixpkgsInput: {
+      url = "github:nix-community/home-manager/${nixpkgsChannels.${nixpkgsInput}.homeManagerBranch}";
+      inputs.nixpkgs.follows = nixpkgsInput;
+    })
+    |> lib.mapAttrs' (nixpkgsInput: value: {
+      name = lib.replaceStrings ["nixpkgs"] ["home-manager"] nixpkgsInput;
+      inherit value;
+    });
+in {
   # Enable lock flattening: https://flake-file.denful.dev/guides/lock-flattening
   imports = [inputs.flake-file.flakeModules.nix-auto-follow];
 
@@ -30,15 +55,14 @@
     # Disable these checks to help with testing and debugging.
     check-hooks = lib.mkForce [];
 
-    inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-      nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
-      home-manager.url = "github:nix-community/home-manager";
-
-      # Dependencies to flatten:
-      # For flake-utils / noctalia-qs
-      systems.url = "github:nix-systems/default-linux";
-    };
+    inputs =
+      nixpkgsInputs
+      // homeManagerInputs
+      // {
+        # Dependencies to flatten:
+        # For flake-utils / noctalia-qs
+        systems.url = "github:nix-systems/default-linux";
+      };
 
     # Community cache used by various tools / cache for nix-auto-follow
     nixConfig = {
