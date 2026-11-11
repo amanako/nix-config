@@ -66,9 +66,7 @@
       nixvim.plugins.lsp
       nixvim.plugins.toggleterm
 
-      nixvim.plugins.easy-dotnet
       nixvim.plugins.oravim
-
       nixvim.plugins.treesitter
 
       den.aspects.dev.shells.fish

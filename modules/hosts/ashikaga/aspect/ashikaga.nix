@@ -7,6 +7,8 @@
       den.aspects.core.power-management.power-daemon
 
       den.aspects.security.sops-host
+      den.aspects.security.tailscale
+      den.aspects.security.tailscale.authkey-sops
 
       den.aspects.core.display-managers.ly
       den.aspects.core.boot.limine
