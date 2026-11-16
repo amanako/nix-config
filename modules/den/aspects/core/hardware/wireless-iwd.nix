@@ -37,8 +37,8 @@ in {
 
       networking.networkmanager.wifi.backend = "iwd";
 
-      environment.systemPackages = with lib; [
-        (getBin pkgs.wifitui)
+      environment.systemPackages = [
+        (lib.getBin pkgs.wifitui)
       ];
 
       networking.wireless.iwd.settings = {

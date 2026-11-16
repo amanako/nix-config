@@ -276,8 +276,32 @@ These are enforced by code review and matter for consistency:
 - **Descriptions** are proper sentences ending with a period. Use `''...''` for
   multi-line, `"..."` for single line.
 - **Prefer `inherit` over `with`**, except in simple list expressions like
-  `with pkgs; [ ... ]`. One `inherit` per row. Use `inherit (lib) mkOption types;`
-  to avoid repeating `lib`.
+  `with pkgs; [ ... ]`. One `inherit` per row. Do not use `with lib;` (including
+  in package/helper lists) — bind needed helpers explicitly with
+  `inherit (lib) ...;` (e.g. `inherit (lib) mkOption types;` or
+  `inherit (lib) optionalAttrs optionals mkIf mkMerge;`) in a `let` close to use,
+  or call them as `lib.<fn>` when only used sparingly.
+- **Prefer `lib.optionalAttrs` for conditional attrset members** instead of
+  excessive null checks or awkward `if ... then { ... } else { }` branches when
+  merging. Compose with `//` or `lib.mergeAttrs`/`lib.recursiveUpdate` as needed
+  (e.g. `base // lib.optionalAttrs cond { extra = value; }`). Do the same for
+  lists with `lib.optionals` (e.g. `base ++ lib.optionals cond [ item ]`)
+  instead of inline conditionals that obscure intent.
+- **Use module-system conditionals where appropriate.** Prefer `lib.mkIf` (and
+  `lib.mkMerge` for combining conditional fragments) for values inside NixOS/Home
+  Manager/module option definitions, rather than plain `if` expressions at a
+  level that prevents proper merging or evaluation semantics.
+- **Prefer standard `lib`/`builtins` combinators** over ad-hoc recursion or
+  imperative-style assembly: `lib.filterAttrs`, `lib.mapAttrs`,
+  `lib.mapAttrs'`, `lib.mapAttrsToList`, `lib.attrNames`, `lib.attrValues`,
+  `lib.genAttrs`, `lib.concatMap`, `lib.foldl'`, `lib.filter`, `lib.any`,
+  `lib.all`, `lib.mergeAttrsList`, etc. Choose the combinator that expresses the
+  intent directly and keeps data flow clear.
+- **Reference executables via derivations, not bare names.** Prefer
+  `lib.getExe pkgs.<pkg>` for a package's main binary and
+  `lib.getExe' pkgs.<pkg> "<bin>"` for a non-main binary; fall back to
+  `${pkgs.<pkg>}/bin/<name>` only when interpolating into a larger command
+  string. This keeps binaries tracked in the closure and avoids PATH assumptions.
 - **Pipe operators** (`|>`, `<|`) are used extensively (an experimental Nix
   feature enabled repo-wide). Use them for data flow instead of nested `let`.
 - Declare flake-file inputs, custom class definitions, and lambda parameters
