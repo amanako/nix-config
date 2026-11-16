@@ -74,7 +74,7 @@ in {
 
         settings =
           {
-            confirm_os_window_close = -1;
+            confirm_os_window_close = 0;
             window_padding_width = 4;
             hide_window_decorations = true;
 
