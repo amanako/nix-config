@@ -1,7 +1,7 @@
 {den, ...}: {
   den.aspects.yasu.fcitx5 = {
     includes = [
-      den.aspects.everyday.utility.fcitx5
+      den.aspects.utilities.fcitx5
     ];
 
     # Addons require access to pkgs instance but fcitx5 is a quirk for settings only.

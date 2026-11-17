@@ -15,7 +15,7 @@
           # Since both aspects configure same settings for kitty in different ways.
           # Let kitty-scrollback only use this recommended settings when user doesn't enable direnv.
           settings = lib.mkIf (!
-                  (den.aspects.dev.shell-tools.direnv
+              (den.aspects.dev.tools.direnv
             |> user.hasAspect)) {
             allow_remote_control = "socket-only";
             listen_on = "unix:/tmp/kitty";

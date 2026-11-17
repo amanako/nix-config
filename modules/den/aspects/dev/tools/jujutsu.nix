@@ -1,0 +1,98 @@
+{
+  den,
+  lib,
+  ...
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
+  # Jujutsu is tightly related to git (even having git as a dependency).
+  # Inherit profile defaults from git if set.
+  den.aspects.dev.tools.jujutsu = {
+    description = ''
+      A Git-compatible VCS(version control system) that is both simple and powerful.
+    '';
+
+    userSettings = {user, ...}: {
+      username = mkOption {
+        default =
+          user.settings.dev.tools.git.username
+          |> lib.optionalString (den.aspects.dev.tools.git |> user.hasAspect);
+        example = "git";
+        type = types.str;
+        description = "Name to use for jj version control system";
+      };
+
+      email = mkOption {
+        default =
+          user.settings.dev.tools.git.email
+          |> lib.optionalString (den.aspects.dev.tools.git |> user.hasAspect);
+        type = types.str;
+        description = "Email to use for jj version control system";
+      };
+
+      signing = mkOption {
+        default = {
+          backend = "none";
+          key = "";
+        };
+        type = types.submodule {
+          options = {
+            backend = mkOption {
+              default = "none";
+              example = "ssh";
+              type = types.enum [
+                "none"
+                "gpg"
+                "ssh"
+              ];
+              description = "Backend to use for signing commits. None to disable signing.";
+            };
+
+            key = mkOption {
+              default = "";
+              example = "4ED556E9729E000F";
+              type = types.str;
+              description = "Signing key to use for signing commits.";
+            };
+          };
+        };
+      };
+    };
+
+    # Per-repo configuration.
+    persistUser.directories = let
+      basePath = ".config/jj";
+    in
+      [
+        "repos"
+        "workspaces"
+      ]
+      |> map (f: "${basePath}/${f}");
+
+    hm = {user, ...}: let
+      cfg = user.settings.dev.tools.jujutsu;
+    in {
+      programs.jujutsu = {
+        enable = true;
+        settings = {
+          ui.color = "always";
+          commit_id = "green";
+
+          user = {
+            name = cfg.username;
+            inherit (cfg) email;
+          };
+
+          signing = {
+            inherit (cfg.signing) backend key;
+            behavior = "own"; # Sign commits created or edited by user
+          };
+        };
+      };
+    };
+  };
+}

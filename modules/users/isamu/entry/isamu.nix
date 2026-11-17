@@ -25,9 +25,9 @@
 
       dev.shells.defaultShell = "fish";
       dev.terminal.kitty.fontOptions.fontFeatures = "VictorMonoNF-Regular +ss08";
-      everyday.bars.waybar.location = "Nis";
+      ui.bars.waybar.location = "Nis";
 
-      everyday.wallpaper-managers.awww = {
+      ui.wallpaper-managers.awww = {
         script.args = [
           "--transition-fps 60"
           "--transition-type simple"
@@ -41,7 +41,7 @@
         "~/nix-config"
       ];
 
-      dev.shell-tools.git = {
+      dev.tools.git = {
         username = "IRefactoredThat";
         email = "nikola.l.savic@protonmail.com";
         signingKey = "476A11B36C1F3A7B";

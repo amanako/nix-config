@@ -25,9 +25,9 @@
         cursorPackage = "capitaine-cursors-themed";
       };
 
-      everyday = {
-        utility.anki.profileName = "yoha";
+      utilities.anki.profileName = "yoha";
 
+      ui = {
         wallpaper-managers.awww = {
           script.args = [
             "--transition-fps 144"
@@ -53,7 +53,7 @@
       ];
 
       dev = {
-        shell-tools = {
+        tools = {
           git = {
             username = "amanako";
             email = "git@kairi6.anonaddy.com";

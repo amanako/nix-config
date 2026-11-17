@@ -22,17 +22,17 @@ in {
       # Include all direct subaspects created under my user
       den.aspects.yasu._
 
-      den.aspects.everyday.utility.anki
-      den.aspects.everyday.utility.localsend
-      den.aspects.everyday.utility.fcitx5
-      den.aspects.everyday.utility.mpv
-      den.aspects.everyday.utility.youtube-tui
-      den.aspects.everyday.utility.wifitui
-      den.aspects.everyday.utility.bluetui
-      den.aspects.everyday.utility.btop
-      den.aspects.services.syncthing-client
+      den.aspects.utilities.anki
+      den.aspects.utilities.localsend
+      den.aspects.utilities.fcitx5
+      den.aspects.utilities.mpv
+      den.aspects.utilities.youtube-tui
+      den.aspects.utilities.wifitui
+      den.aspects.utilities.bluetui
+      den.aspects.utilities.btop
+      den.aspects.sys.syncthing-client
 
-      den.aspects.everyday.wallpaper-managers.awww
+      den.aspects.ui.wallpaper-managers.awww
 
       den.aspects.dev.terminal.zellij
       den.aspects.dev.terminal.kitty
@@ -48,17 +48,18 @@ in {
 
       den.aspects.dev.editors.helix
       den.aspects.dev.shells.nushell
+      den.aspects.dev.shells.bash
       den.aspects.dev.shells.fish
-      den.aspects.dev.shell-tools._
-      den.aspects.dev.shell-tools.starship
-      den.aspects.dev.shell-tools.jujutsu
-      den.aspects.dev.shell-tools.git
+      den.aspects.dev.tools._
+      den.aspects.dev.tools.starship
+      den.aspects.dev.tools.jujutsu
+      den.aspects.dev.tools.git
 
-      den.aspects.everyday.launchers.vicinae
-      den.aspects.everyday.launchers.vicinae.extensions
-      den.aspects.everyday.pdf-viewers.zathura
-      den.aspects.everyday.bars.waybar
-      den.aspects.everyday.notifications.dunst
+      den.aspects.ui.launchers.vicinae
+      den.aspects.ui.launchers.vicinae.extensions
+      den.aspects.utilities.pdf-viewers.zathura
+      den.aspects.ui.bars.waybar
+      den.aspects.ui.notifications.dunst
 
       den.aspects.security.ssh
       den.aspects.security.gpg
@@ -90,7 +91,6 @@ in {
 
       nixvim.plugins.conform
       nixvim.plugins.lint
-
       nixvim.plugins.gitsigns
       nixvim.plugins.lazygit
       nixvim.plugins.mini

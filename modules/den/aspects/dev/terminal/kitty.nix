@@ -62,7 +62,7 @@ in {
         enable = true;
 
         enableGitIntegration =
-          den.aspects.dev.shell-tools.git
+          den.aspects.dev.tools.git
           |> user.hasAspect;
         shellIntegration.mode = "enabled";
 

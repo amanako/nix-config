@@ -1,0 +1,328 @@
+{
+  den,
+  lib,
+  noctalia,
+  ...
+}: {
+  den.aspects.ui.bars.waybar = {
+    description = "Highly customizable Wayland bar for wlroots-based compositors.";
+
+    includes = [
+      den.aspects.ui.bars.waybar.style
+      den.aspects.ui.bars.conflict-manager
+    ];
+
+    # Finicky when it comes to theming and layering with blur.
+    stylixHMSettings.targets."waybar".enable = false;
+
+    # Fallback base16 palette. Only used when the
+    # Stylix aspect is not delivering colors.
+    fallbackPalette = {
+      withHashtag = {
+        base00 = "#32302f";
+        base01 = "#3c3836";
+        base02 = "#504945";
+        base03 = "#665c54";
+        base04 = "#bdae93";
+        base05 = "#d5c4a1";
+        base06 = "#ebdbb2";
+        base07 = "#fbf1c7";
+        base08 = "#ea6962";
+        base09 = "#e78a4e";
+        base0A = "#d8a657";
+        base0B = "#a9b665";
+        base0C = "#89b482";
+        base0D = "#7daea3";
+        base0E = "#d3869b";
+        base0F = "#8f6e4e";
+      };
+    };
+
+    userSettings = {
+      location = lib.mkOption {
+        type = lib.types.str;
+        example = "London, UK";
+        description = "Location passed to wttrbar for the weather module.";
+      };
+    };
+
+    hm = {
+      config,
+      lib,
+      user,
+      pkgs,
+      ...
+    }: let
+      # Launch a TUI inside the user's terminal emulator.
+      inherit (user.preferences.effective) term;
+      termCmd = cmd: "${term} -e ${cmd}";
+
+      hasBtop = den.aspects.utilities.btop |> user.hasAspect;
+      hasBluetui = den.aspects.utilities.bluetui |> user.hasAspect;
+      hasWifitui = den.aspects.utilities.wifitui |> user.hasAspect;
+    in {
+      services.playerctld.enable = !(noctalia.entry |> user.hasAspect);
+
+      programs.waybar = {
+        enable = true;
+
+        systemd = {
+          enable = true;
+          targets = ["graphical-session.target"];
+          enableDebug = true;
+        };
+
+        settings = {
+          mainBar =
+            {
+              reload_style_on_change = true;
+
+              name = "main";
+              id = "main";
+              layer = "top";
+              position = "top";
+              exclusive = true;
+              spacing = 10;
+
+              margin-left = 4;
+              margin-right = 4;
+
+              modules-left =
+                [
+                  "niri/workspaces"
+                  "idle_inhibitor"
+                  "tray"
+                  "battery"
+                ]
+                ++ lib.optional (!user.hasAspect noctalia.entry) "mpris";
+
+              modules-center = [
+                "clock"
+                "custom/weather"
+              ];
+
+              modules-right = [
+                "pulseaudio"
+                "bluetooth"
+                "network"
+                "power-profiles-daemon"
+                "backlight"
+                "memory"
+                "cpu"
+              ];
+
+              "niri/workspaces" = {
+                disable-scroll = true;
+                all-outputs = true;
+                format = "{icon}";
+                format-icons = {
+                  "1" = "一";
+                  "2" = "二";
+                  "3" = "三";
+                  "4" = "四";
+                  "5" = "五";
+                  "6" = "六";
+                  "7" = "七";
+                  "8" = "八";
+                  "9" = "九";
+                  "10" = "十";
+                  default = "◉";
+                };
+                persistent-workspaces = {
+                  "*" = 3;
+                };
+              };
+
+              "custom/weather" = let
+                cfg = user.settings.ui.bars.waybar;
+              in {
+                format = "{}°";
+                tooltip = true;
+                interval = 3600;
+                exec = "${pkgs.wttrbar |> lib.getExe} --nerd --location '${cfg.location}' || echo '{\"text\":\"\",\"tooltip\":\"weather unavailable\"}'";
+                return-type = "json";
+              };
+
+              "clock" = let
+                colors =
+                  lib.attrByPath ["lib" "stylix" "colors" "withHashtag"]
+                  den.aspects.ui.bars.waybar.fallbackPalette.withHashtag
+                  config;
+              in {
+                format = "{:%H:%M}";
+                tooltip-format = "{:%A, %d-%m-%Y}\n{calendar}";
+                calendar = {
+                  mode = "month";
+                  iso8601 = true;
+                  format = {
+                    months = "<span foreground='${colors.base0D}' weight='bold'>{}</span>";
+                    weekdays = "<span foreground='${colors.base03}' weight='bold'>{}</span>";
+                    today = "<span foreground='${colors.base0D}' weight='bold' underline='single'>{}</span>";
+                  };
+                };
+                on-scroll-up = "shift_up";
+                on-scroll-down = "shift_down";
+                interval = 60;
+              };
+
+              "cpu" =
+                {
+                  interval = 5;
+                  format = " {usage}%";
+                  tooltip = true;
+                  tooltip-format = "CPU: {usage}%";
+                  states = {
+                    warning = 60;
+                    critical = 90;
+                  };
+                }
+                // lib.optionalAttrs hasBtop {
+                  on-click = termCmd (pkgs.btop |> lib.getExe);
+                };
+
+              "memory" =
+                {
+                  interval = 5;
+                  format = " {percentage}%";
+                  tooltip = true;
+                  tooltip-format = "{used:0.1f}GB/{total:0.1f}GB\n{swapState}:{swapUsed:0.1f}/{swapTotal:0.1f}";
+                }
+                // lib.optionalAttrs hasBtop {
+                  on-click = termCmd (pkgs.btop |> lib.getExe);
+                };
+
+              "backlight" = {
+                interval = 5;
+                format = "{icon} {percent}%";
+                tooltip = true;
+                tooltip-format = "Brightness: {percent}%";
+                format-alt = "{percent}% {icon}";
+                format-alt-click = "click-right";
+                format-icons = ["󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
+                on-scroll-down = "${pkgs.brightnessctl |> lib.getExe} s 5%-";
+                on-scroll-up = "${pkgs.brightnessctl |> lib.getExe} s +5%";
+              };
+
+              "battery" = {
+                format = "{capacity}% {icon}";
+                format-discharging = "{capacity}% {icon}";
+                format-charging = "{capacity}% {icon}";
+                format-plugged = "";
+                format-icons = {
+                  charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
+                  default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+                };
+                format-full = "󰂅";
+                format-time = "{H}h {m}m";
+                tooltip-format-discharging = "Empty in {time}";
+                tooltip-format-charging = "Full in {time}";
+                interval = 5;
+                states = {
+                  warning = 20;
+                  critical = 10;
+                };
+              };
+
+              "pulseaudio" = {
+                format = "{icon} {volume}%";
+                format-muted = "󰖁";
+                interval = 5;
+                format-icons = {
+                  default = ["󰕿" "󰖀" "󰕾"];
+                  headset = "󰋋";
+                };
+                states = {
+                  critical = 0;
+                };
+                tooltip = true;
+                tooltip-format = "{desc}\nVolume: {volume}%";
+                scroll-step = 5;
+                max-volume = 100;
+                on-click = termCmd (pkgs.ncpamixer |> lib.getExe);
+                on-click-right = "${"wpctl" |> lib.getExe' pkgs.wireplumber} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              };
+
+              "bluetooth" =
+                {
+                  format = "󰂳 {num_connections}";
+                  format-disabled = "󰂲 {status}";
+                  format-connected = "󰂱 {num_connections}";
+                  tooltip-format = "Devices connected: {num_connections}";
+                }
+                // lib.optionalAttrs hasBluetui {
+                  on-click = termCmd (pkgs.bluetui |> lib.getExe);
+                };
+
+              "network" =
+                {
+                  format-icons = [
+                    "󰤯"
+                    "󰤟"
+                    "󰤢"
+                    "󰤥"
+                    "󰤨"
+                  ];
+                  format = "{icon}";
+                  format-wifi = "{icon}";
+                  format-ethernet = "󰈁";
+                  format-disconnected = "󰤮";
+                  tooltip-format-wifi = "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+                  tooltip-format-ethernet = "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+                  tooltip-format-disconnected = "Disconnected";
+                  interval = 3;
+                  spacing = 1;
+                  justify = "center";
+                }
+                // lib.optionalAttrs hasWifitui {
+                  on-click = termCmd (pkgs.wifitui |> lib.getExe);
+                };
+
+              "idle_inhibitor" = {
+                format = "{icon}";
+                tooltip-format-activated = "Stay Awake: ON 󱎴";
+                tooltip-format-deactivated = "Stay Awake: OFF 󰍹";
+                format-icons = {
+                  activated = "󱎴";
+                  deactivated = "󰍹";
+                };
+              };
+
+              "tray" = {
+                icon-size = 13;
+                spacing = 2;
+              };
+
+              "power-profiles-daemon" = {
+                format = "{icon}";
+                tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+                format-icons = {
+                  performance = "󱓞";
+                  balanced = "󰗑";
+                  power-saver = "󰌪";
+                };
+              };
+              # The MPRIS module is gated on NOT having the noctalia desktop-shell aspect.
+              # noctalia registers its own `dev.noctalia.Mpris` D-Bus service that does not
+              # implement the standard `org.mpris.MediaPlayer2.*` interface, so it monopolizes
+              # the bus and starves playerctl / waybar's stock mpris module (which only see
+              # standard MPRIS players). When noctalia is active, media is surfaced by noctalia
+              # itself; this module is therefore omitted to avoid a permanently-empty slot.
+            }
+            // lib.optionalAttrs (!user.hasAspect noctalia.entry) {
+              "mpris" = {
+                format = "  {dynamic}";
+                format-paused = " {status_icon} {dynamic}";
+                interval = 1;
+                dynamic-order = ["artist" "position" "length"];
+                dynamic-importance-order = ["position" "length" "artist"];
+                tooltip-format = "{player} ({status}):\n{artist} - {title}";
+                status-icons = {
+                  paused = "󰝛 ";
+                };
+              };
+            };
+        };
+      };
+    };
+  };
+}

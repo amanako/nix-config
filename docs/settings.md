@@ -92,7 +92,7 @@ See den's [Namespaces guide](https://den.denful.dev/guides/namespaces) and
 `AGENTS.md` "Namespaces" for the full picture.
 
 ```nix
-# modules/den/aspects/dev/shell-tools/git.nix (simplified)
+# modules/den/aspects/dev/tools/git.nix (simplified)
 {lib, ...}:let
   inherit
     (lib)
@@ -100,7 +100,7 @@ See den's [Namespaces guide](https://den.denful.dev/guides/namespaces) and
     types
     ;
   in  {
-  den.aspects.dev.shell-tools.git = {
+  den.aspects.dev.tools.git = {
     userSettings = {
       username = mkOption {
         type = types.str;

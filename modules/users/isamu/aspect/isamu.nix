@@ -12,17 +12,17 @@
       zen-browser.search.nix
       zen-browser.search.wikis
 
-      den.aspects.everyday.launchers.vicinae
-      den.aspects.everyday.launchers.vicinae.extensions
-      den.aspects.everyday.notifications.dunst
-      den.aspects.everyday.utility.mpv
-      den.aspects.everyday.utility.localsend
-      den.aspects.everyday.utility.youtube-tui
-      den.aspects.everyday.utility.wifitui
-      den.aspects.everyday.utility.bluetui
-      den.aspects.everyday.utility.btop
-      den.aspects.everyday.wallpaper-managers.awww
-      den.aspects.everyday.pdf-viewers.pdf-cli
+      den.aspects.ui.launchers.vicinae
+      den.aspects.ui.launchers.vicinae.extensions
+      den.aspects.ui.notifications.dunst
+      den.aspects.utilities.mpv
+      den.aspects.utilities.localsend
+      den.aspects.utilities.youtube-tui
+      den.aspects.utilities.wifitui
+      den.aspects.utilities.bluetui
+      den.aspects.utilities.btop
+      den.aspects.ui.wallpaper-managers.awww
+      den.aspects.utilities.pdf-viewers.pdf-cli
 
       den.aspects.core.nix.nh
       den.aspects.core.flatpaks.sober
@@ -72,14 +72,14 @@
       nixvim.plugins.treesitter
 
       den.aspects.dev.shells.fish
-      den.aspects.dev.shell-tools.fastfetch
-      den.aspects.dev.shell-tools.bat
-      den.aspects.dev.shell-tools.eza
-      den.aspects.dev.shell-tools.fzf
-      den.aspects.dev.shell-tools.git
-      den.aspects.dev.shell-tools.zoxide
-      den.aspects.dev.shell-tools.starship
-      den.aspects.dev.shell-tools.direnv-instant
+      den.aspects.dev.tools.fastfetch
+      den.aspects.dev.tools.bat
+      den.aspects.dev.tools.eza
+      den.aspects.dev.tools.fzf
+      den.aspects.dev.tools.git
+      den.aspects.dev.tools.zoxide
+      den.aspects.dev.tools.starship
+      den.aspects.dev.tools.direnv-instant
 
       den.aspects.dev.terminal.kitty
       den.aspects.dev.terminal.yazi
@@ -89,7 +89,7 @@
       den.aspects.security.ssh
       den.aspects.security.gpg
 
-      den.aspects.everyday.bars.waybar
+      den.aspects.ui.bars.waybar
     ];
   };
 }

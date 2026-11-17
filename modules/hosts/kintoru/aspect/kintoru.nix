@@ -18,14 +18,14 @@
       den.aspects.security.pi-hole-dhcp
       den.aspects.security.pi-hole-serve
 
-      den.aspects.monitoring.grafana-serve
-      den.aspects.monitoring.node-exporter
-      den.aspects.monitoring.prometheus
+      den.aspects.sys.grafana-serve
+      den.aspects.sys.node-exporter
+      den.aspects.sys.prometheus
 
-      den.aspects.services.syncthing-serve
-      den.aspects.services.calibre-web-serve
+      den.aspects.sys.syncthing-serve
+      den.aspects.sys.calibre-web-serve
 
-      den.aspects.services.forgejo-serve
+      den.aspects.sys.forgejo-serve
     ];
 
     packageChannels.forgejo = "nixpkgs";

@@ -17,13 +17,13 @@
         };
       };
 
-      monitoring.grafana.domain = "kintoru.tail729600.ts.net";
+      sys = {
+        grafana.domain = "kintoru.tail729600.ts.net";
 
-      monitoring.prometheus.scrapeTargets = [
-        "kintoru:9100"
-      ];
+        prometheus.scrapeTargets = [
+          "kintoru:9100"
+        ];
 
-      services = {
         forgejo.user = "git";
         forgejo-serve.domain = "kintoru.tail729600.ts.net";
         book-library.path = "/srv/library";

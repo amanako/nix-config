@@ -72,7 +72,7 @@ layer.
 Consequences that are easy to get wrong:
 
 - A setting attrpath mirrors the aspect attrpath. In entries you write e.g.
-  `settings.dev.shell-tools.git.username` for `den.aspects.dev.shell-tools.git` (see
+  `settings.dev.tools.git.username` for `den.aspects.dev.tools.git` (see
   `modules/users/yasu/entry/yasu.nix`), or
   `settings.core.impermanence.persistenceDir` for
   `den.aspects.core.impermanence` (see
@@ -90,7 +90,7 @@ Consequences that are easy to get wrong:
 - Aspects commonly read their _own_ settings inside their class lambda via the
   entity arg, e.g. `cfg = host.settings.core.impermanence;` (see
   `modules/den/aspects/core/impermanence/impermanence.nix`), or
-  `cfg = user.settings.dev.shell-tools.git;` (see `modules/den/aspects/dev/shell-tools/git.nix`).
+  `cfg = user.settings.dev.tools.git;` (see `modules/den/aspects/dev/tools/git.nix`).
 - `hostSettings` / `userSettings` are **reserved key names** (`den.reservedKeys`);
   do not reuse them for other purposes.
 
