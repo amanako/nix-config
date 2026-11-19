@@ -89,5 +89,15 @@
 
       den.aspects.ui.bars.waybar
     ];
+
+    hm = {pkgs, ...}: {
+      home.packages = with pkgs; [
+        nemo
+        abiword
+        which
+        file
+        ripgrep
+      ];
+    };
   };
 }
