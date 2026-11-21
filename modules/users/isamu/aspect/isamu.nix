@@ -15,6 +15,7 @@
       den.aspects.ui.launchers.vicinae
       den.aspects.ui.launchers.vicinae.extensions
       den.aspects.ui.notifications.dunst
+      den.aspects.isamu.fcitx5
       den.aspects.utilities.mpv
       den.aspects.utilities.localsend
       den.aspects.utilities.youtube-tui
