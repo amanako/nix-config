@@ -8,13 +8,13 @@
 
     nixos = {pkgs, ...}: {
       programs.gamescope.package = pkgs.gamescope_git;
-      programs.steam.package = pkgs.jovian-chaotic.steam;
-    };
-
-    hm = {pkgs, ...}: {
-      home.packages = with pkgs; [
-        luxtorpeda-bin_edge # Steam compatibility tool
-      ];
+      programs.steam = {
+        package = pkgs.jovian-chaotic.steam;
+        # luxtorpeda's default output is a placeholder text file that must not
+        # land in home.packages (buildEnv rejects non-directories). Its actual
+        # content lives in the steamcompattool output, which this option uses.
+        extraCompatPackages = [pkgs.luxtorpeda-bin_edge];
+      };
     };
   };
 }
