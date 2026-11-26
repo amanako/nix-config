@@ -76,30 +76,6 @@
           }
         '';
       };
-
-      window-resize = {
-        kind.spring = {
-          damping-ratio = 1.0;
-          stiffness = 720;
-          epsilon = 0.0001;
-        };
-
-        custom-shader.text = ''
-          vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
-              vec3 coords_tex_next = niri_geo_to_tex_next * coords_curr_geo;
-              vec4 color = texture2D(niri_tex_next, coords_tex_next.st);
-
-              vec2 uv = coords_curr_geo.xy;
-              float edge =
-                  min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
-
-              float vignette = smoothstep(0.0, 0.06, edge);
-              color.rgb *= mix(0.985, 1.0, vignette);
-
-              return color;
-          }
-        '';
-      };
     };
   };
 }
